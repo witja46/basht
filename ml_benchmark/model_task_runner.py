@@ -3,10 +3,12 @@ from sklearn.model_selection import train_test_split
 from torchvision.datasets import MNIST
 from torch.utils.data import TensorDataset
 from torchvision import transforms
+import time
 
 from ml_benchmark.mlp_objective import MLPObjective
 
 
+# TODO: dataclass for results and assert if some results are missing
 class ModelTaskRunner:
 
     def __init__(self, configuration) -> None:
@@ -14,7 +16,8 @@ class ModelTaskRunner:
         self.seed = 1337  # TODO: improve seed setting
         self.epochs = 100  # TODO: improve epoch setting
         self.objective_cls = MLPObjective
-        self.objective = self._set_up_objective(configuration)
+        self.configuration = configuration
+        self.objective = self._set_up_objective(self.configuration)
 
         """
         configuration = {"hyperparameters"
@@ -30,9 +33,9 @@ class ModelTaskRunner:
         train_loader = DataLoader(train_data, batch_size=configuration["train_batch_size"], shuffle=True)
         val_loader = DataLoader(val_data, batch_size=configuration["val_batch_size"], shuffle=True)
         test_loader = DataLoader(test_data, batch_size=configuration["test_batch_size"], shuffle=True)
-        return self.objective_cls(
-            epochs=self.epochs, hyperparameters=configuration["hyperparameters"], train_loader=train_loader,
-            val_loader=val_loader, test_loader=test_loader, device=configuration["device"])
+        return dict(
+            epochs=self.epochs, train_loader=train_loader,
+            val_loader=val_loader, test_loader=test_loader)
 
     def split_data(self, dataset, val_split_ratio):
         X_train, X_val, y_train, y_val = train_test_split(
@@ -53,16 +56,37 @@ class ModelTaskRunner:
         mnist_data.data = mnist_data.data.view(-1, 28 * 28).float()
         return mnist_data
 
-    def run(self):
-        results = self.objective.run_objective()
+    def run(self, hyperparameters, device):
+        """This function runs the training, validation and test of the objective.
+        This function is supposed to work as an entrypoint for hyperparameter optimization.
+
+        Args:
+            hyperparameters ([type]): [description]
+            device ([type]): [description]
+
+        Returns:
+            [type]: [description]
+        """
+        self.objective.set_device(device)
+        self.objective.set_hyperparameters(hyperparameters)
+        start_time = time.time()
+        training_loss = self.train()
+        validation_scores = self.validate()
+        test_scores = self.test()
+        results = dict(
+            training_loss=training_loss,
+            validation_scores=validation_scores,
+            test_scores=test_scores,
+            execution_time=time.time() - start_time
+        )
         return results
 
 
 if __name__ == "__main__":
-    runner = ModelTaskRunner({
-        "hyperparameters": dict(input_size=28*28, learning_rate=1e-2, weight_decay=1e-6,
-                                hidden_layer_config=[50], output_size=10),
-        "val_split_ratio": 0.2, "train_batch_size": 128, "val_batch_size": 64, "test_batch_size": 64,
-        "device": "cpu"})
-    results = runner.run()
+    configuration = {
+        "val_split_ratio": 0.2, "train_batch_size": 128, "val_batch_size": 64, "test_batch_size": 64}
+    runner = ModelTaskRunner(configuration)
+    hyperparameters = dict(
+        input_size=28*28, learning_rate=1e-2, weight_decay=1e-6, hidden_layer_config=[50, 25], output_size=10)
+    results = runner.run(hyperparameters=hyperparameters, device="cuda")
     print(results)  # TODO: results saving

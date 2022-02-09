@@ -2,34 +2,27 @@
 import torch
 import tqdm
 from sklearn.metrics import classification_report
-import time
 from ml_benchmark.models.mlp import MLP
 
 
-# TODO: validation loss, dataclass for results and assert if some results are missing
 class MLPObjective:
 
-    def __init__(self, epochs, hyperparameters, train_loader, val_loader, test_loader, device) -> None:
+    def __init__(self, epochs, train_loader, val_loader, test_loader) -> None:
         super().__init__()
         self.train_loader = train_loader
         self.val_laoder = val_loader
         self.test_loader = test_loader
-        self.hyperparameters = hyperparameters
+        self.hyperparameters = None
         self.epochs = epochs
-        self.device = device
+        self.device = None
+
+    def set_hyperparameters(self, hyperparameters):
+        self.hyperparameters = hyperparameters
+
+    def set_device(self, device_str):
+        self.device = torch.device(device_str)
 
     def train(self):
-        # for optuna usage
-        # hyperparameters = dict(
-        #     input_size=20,
-        #     learning_rate=trial.suggest_float("learning_rate", 1e-3, 0.1, log=True),
-        #     weight_decay=trial.suggest_float("weight_decay", 1e-6, 1e-4, log=True),
-        #     hidden_layer_config=[
-        #         trial.suggest_int(f"layer_{idx}_size", 10, 100)
-        #         for idx in range(trial.suggest_int("n_layers", 1, 3))],
-        #     output_size=1
-        # )
-
         # model setup
         self.model = MLP(**self.hyperparameters)
         self.model.to(self.device)
@@ -77,16 +70,3 @@ class MLPObjective:
         test_targets = torch.cat(test_targets).cpu().numpy()
         test_predictions = torch.cat(test_predictions).cpu().numpy()
         return classification_report(test_targets, test_predictions, output_dict=True)
-
-    def run_objective(self):
-        start_time = time.time()
-        training_loss = self.train()
-        validation_scores = self.validate()
-        test_scores = self.test()
-        results = dict(
-            training_loss=training_loss,
-            validation_scores=validation_scores,
-            test_scores=test_scores,
-            execution_time=time.time() - start_time
-        )
-        return results
