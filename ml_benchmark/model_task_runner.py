@@ -5,15 +5,14 @@ from torch.utils.data import TensorDataset
 from torchvision import transforms
 
 from ml_benchmark.mlp_objective import MLPObjective
-from ml_benchmark.utils.data_reader import DataReader
 
 
 class ModelTaskRunner:
 
     def __init__(self, configuration) -> None:
 
-        self.seed = 1337
-        self.data_reader = DataReader()
+        self.seed = 1337  # TODO: improve seed setting
+        self.epochs = 100  # TODO: improve epoch setting
         self.objective_cls = MLPObjective
         self.objective = self._set_up_objective(configuration)
 
@@ -32,7 +31,7 @@ class ModelTaskRunner:
         val_loader = DataLoader(val_data, batch_size=configuration["val_batch_size"], shuffle=True)
         test_loader = DataLoader(test_data, batch_size=configuration["test_batch_size"], shuffle=True)
         return self.objective_cls(
-            epochs=2, hyperparameters=configuration["hyperparameters"], train_loader=train_loader,
+            epochs=self.epochs, hyperparameters=configuration["hyperparameters"], train_loader=train_loader,
             val_loader=val_loader, test_loader=test_loader, device=configuration["device"])
 
     def split_data(self, dataset, val_split_ratio):
