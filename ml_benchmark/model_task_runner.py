@@ -65,4 +65,4 @@ if __name__ == "__main__":
         "val_split_ratio": 0.2, "train_batch_size": 128, "val_batch_size": 64, "test_batch_size": 64,
         "device": "cpu"})
     results = runner.run()
-    print(results)
+    print(results)  # TODO: results saving
