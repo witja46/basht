@@ -70,12 +70,14 @@ class ModelTaskRunner:
         self.objective.set_device(device)
         self.objective.set_hyperparameters(hyperparameters)
         start_time = time.time()
+
+        # these are the results, that can be used for the hyperparameter search
         training_loss = self.train()
         validation_scores = self.validate()
+
+        # these are the results needed for the benchmark
         test_scores = self.test()
         results = dict(
-            training_loss=training_loss,
-            validation_scores=validation_scores,
             test_scores=test_scores,
             execution_time=time.time() - start_time
         )
