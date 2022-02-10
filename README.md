@@ -19,6 +19,8 @@ Note: If you run your benchmark on GPU make sure to install [Cuda](https://docs.
 
 ## Class Explanation
 
-ModelTaskRunner - Runs the MNIST Task and has a run function that be modified for the hyperparameter optimization
-MLPObjective - The Job that needs to be executed, if adjustments for the training are necessary, modify them here.
-MLP - the model that is trained over the MNIST Task.
+|Class|Description|
+|---|---|
+|ModelTaskRunner|Runs the MNIST Task and has a run function that be modified for the hyperparameter optimization|
+|MLPObjective|The Job that needs to be executed, if adjustments for the training are necessary, modify them here.|
+|MLP|the model that is trained over the MNIST Task.|
