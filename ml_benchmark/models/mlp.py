@@ -20,7 +20,7 @@ class MLP(NNModel):
         self.layers = self._construct_layer(
             input_size=input_size, hidden_layer_config=hidden_layer_config, output_size=output_size)
         self.criterion = nn.CrossEntropyLoss()
-        self.softmax = nn.Softmax()
+        self.softmax = nn.Softmax(dim=1)
         self.relu = nn.LeakyReLU()
 
     def _construct_layer(self, input_size, hidden_layer_config, output_size):

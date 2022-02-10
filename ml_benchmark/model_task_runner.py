@@ -4,6 +4,9 @@ from torchvision.datasets import MNIST
 from torch.utils.data import TensorDataset
 from torchvision import transforms
 import time
+from rapidflow.experiments.study_result_saver import StudyResultSaver
+import os
+import shutil
 
 from ml_benchmark.mlp_objective import MLPObjective
 
@@ -14,18 +17,26 @@ class ModelTaskRunner:
     def __init__(self, configuration) -> None:
 
         self.seed = 1337  # TODO: improve seed setting
-        self.epochs = 100  # TODO: improve epoch setting
+        self.epochs = configuration["epochs"]  # TODO: improve epoch setting
         self.objective_cls = MLPObjective
         self.configuration = configuration
         self.objective = self._set_up_objective(self.configuration)
+        self.save_path = self._create_experiment_folder(
+            experiment_file_path=os.path.abspath(os.path.dirname(__file__)), model_name="MLPObjective")
+        self.saver = StudyResultSaver(experiment_path=self.save_path)
 
-        """
-        configuration = {"hyperparameters"
-        "train_batch_size"
-        "test_batch_size"
-        "val_batch_size"
-        "val_split_ratio"}
-        """
+    def _create_experiment_folder(
+            self, experiment_file_path, model_name, overwrite=True):
+        # dict_byte_string = json.dumps(hyperparameter).encode("utf-8")
+        # = hashlib.sha1(dict_byte_string).hexdigest()
+        if not model_name:
+            model_name = ""
+        folder_name = f"exp__{model_name}"
+        experiment_path = os.path.join(experiment_file_path, folder_name)
+        if os.path.exists(experiment_path) and overwrite:
+            shutil.rmtree(experiment_path)
+        os.mkdir(experiment_path)
+        return experiment_path
 
     def _set_up_objective(self, configuration):
         dataset = self.get_data()
@@ -33,9 +44,9 @@ class ModelTaskRunner:
         train_loader = DataLoader(train_data, batch_size=configuration["train_batch_size"], shuffle=True)
         val_loader = DataLoader(val_data, batch_size=configuration["val_batch_size"], shuffle=True)
         test_loader = DataLoader(test_data, batch_size=configuration["test_batch_size"], shuffle=True)
-        return dict(
+        return self.objective_cls(**dict(
             epochs=self.epochs, train_loader=train_loader,
-            val_loader=val_loader, test_loader=test_loader)
+            val_loader=val_loader, test_loader=test_loader))
 
     def split_data(self, dataset, val_split_ratio):
         X_train, X_val, y_train, y_val = train_test_split(
@@ -56,6 +67,10 @@ class ModelTaskRunner:
         mnist_data.data = mnist_data.data.view(-1, 28 * 28).float()
         return mnist_data
 
+    def _save_results_and_model(self, results, model, hyperparameters):
+        self.saver.save_best_model(0, model, hyperparameters, self.save_path)
+        self.saver.save_study_metrics(results, "experiment_results", self.save_path)
+
     def run(self, hyperparameters, device):
         """This function runs the training, validation and test of the objective.
         This function is supposed to work as an entrypoint for hyperparameter optimization.
@@ -72,23 +87,30 @@ class ModelTaskRunner:
         start_time = time.time()
 
         # these are the results, that can be used for the hyperparameter search
-        training_loss = self.train()
-        validation_scores = self.validate()
+        training_loss = self.objective.train()
+        validation_scores = self.objective.validate()
 
         # these are the results needed for the benchmark
-        test_scores = self.test()
+        test_scores = self.objective.test()
         results = dict(
             test_scores=test_scores,
-            execution_time=time.time() - start_time
+            execution_time=time.time() - start_time,
+            training_loss=training_loss
         )
+        self._save_results_and_model(results, self.objective.model, self.objective.hyperparameters)
         return results
 
 
 if __name__ == "__main__":
     configuration = {
-        "val_split_ratio": 0.2, "train_batch_size": 128, "val_batch_size": 64, "test_batch_size": 64}
+        "epochs": 100,
+        "val_split_ratio": 0.2, "train_batch_size": 512, "val_batch_size": 128, "test_batch_size": 128}
     runner = ModelTaskRunner(configuration)
+
+    # these are the elements that need to be optimized
     hyperparameters = dict(
         input_size=28*28, learning_rate=1e-2, weight_decay=1e-6, hidden_layer_config=[50, 25], output_size=10)
-    results = runner.run(hyperparameters=hyperparameters, device="cuda")
+    # the device where you want to run your model (cpu, cuda)
+    device = "cuda"
+    results = runner.run(hyperparameters=hyperparameters, device=device)
     print(results)  # TODO: results saving
