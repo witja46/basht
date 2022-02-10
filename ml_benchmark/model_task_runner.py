@@ -71,6 +71,9 @@ class ModelTaskRunner:
         self.saver.save_best_model(0, model, hyperparameters, self.save_path)
         self.saver.save_study_metrics(results, "experiment_results", self.save_path)
 
+    def set_run_function(self, run_function):
+        self._run = run_function
+
     def run(self, hyperparameters, device):
         """This function runs the training, validation and test of the objective.
         This function is supposed to work as an entrypoint for hyperparameter optimization.
@@ -101,6 +104,7 @@ class ModelTaskRunner:
 
 
 if __name__ == "__main__":
+    # TODO: run function class to make customizable for hyperparameter tuning framework, strategy pattern to inject in the task runner
     configuration = {
         "epochs": 100,
         "val_split_ratio": 0.2, "train_batch_size": 512, "val_batch_size": 128, "test_batch_size": 128}

@@ -1,0 +1,1 @@
+from ml_benchmark.mlp_objective import MLPObjective
