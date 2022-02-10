@@ -6,7 +6,7 @@ This repository supplies a job to benchmark hyperparameter tuning.
 
 ### Prerequisites
 
-* Ubuntu (not tested on MAC OS)
+* Ubuntu >= 16.04 (not tested on MAC OS)
 * Python >= 3.7.0
 * [PyTorch](https://pytorch.org/get-started/locally/)
 
