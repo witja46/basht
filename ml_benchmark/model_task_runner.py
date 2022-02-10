@@ -98,7 +98,6 @@ class ModelTaskRunner:
             training_loss=training_loss
         )
         self._save_results_and_model(results, self.objective.model, self.objective.hyperparameters)
-        return results
 
 
 if __name__ == "__main__":
@@ -111,6 +110,6 @@ if __name__ == "__main__":
     hyperparameters = dict(
         input_size=28*28, learning_rate=1e-2, weight_decay=1e-6, hidden_layer_config=[50, 25], output_size=10)
     # the device where you want to run your model (cpu, cuda)
-    device = "cuda"
-    results = runner.run(hyperparameters=hyperparameters, device=device)
-    print(results)  # TODO: results saving
+    device = "cpu"
+    runner.run(hyperparameters=hyperparameters, device=device)
+    print("Done!")
