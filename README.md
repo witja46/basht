@@ -27,6 +27,6 @@ Note: If you run your benchmark on GPU make sure to install [Cuda](https://docs.
 
 |Class|Description|
 |---|---|
-|ModelTaskRunner|Runs the MNIST Task and has a run function that be modified for the hyperparameter optimization|
-|MLPObjective|The Job that needs to be executed, if adjustments for the training are necessary, modify them here.|
-|MLP|the model that is trained over the MNIST Task.|
+|MNISTTask|Use it to get the Data for the Model. Please do not change its configuration|
+|MLPObjective|The Job that needs to be executed. Adjustments should not be neccessary.|
+|MLP|The model that is trained over the MNIST Task.|

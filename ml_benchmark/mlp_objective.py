@@ -1,7 +1,7 @@
 import torch
 import tqdm
 from sklearn.metrics import classification_report
-from ml_benchmark.models.mlp import MLP
+from ml_benchmark.mlp import MLP
 
 
 class MLPObjective:
