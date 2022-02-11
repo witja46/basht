@@ -1,10 +1,9 @@
 import torch.nn as nn
 import torch
-from rapidflow.nn_model import NNModel
 from torch.optim import Adam
 
 
-class MLP(NNModel):
+class MLP(nn.Module):
     def __init__(self, input_size, hidden_layer_config, output_size, learning_rate, weight_decay):
         """
         A simple Feed Forward Network with a Sigmoid Activation Function after the final layer.
@@ -16,12 +15,13 @@ class MLP(NNModel):
             learning_rate ([type]): [description]
             weight_decay ([type]): [description]
         """
-        super().__init__(lr=learning_rate, weight_decay=weight_decay)
+        super().__init__()
         self.layers = self._construct_layer(
             input_size=input_size, hidden_layer_config=hidden_layer_config, output_size=output_size)
         self.criterion = nn.CrossEntropyLoss()
         self.softmax = nn.Softmax(dim=1)
         self.relu = nn.LeakyReLU()
+        self.optimizer = Adam(self.parameters(), lr=learning_rate, weight_decay=weight_decay)
 
     def _construct_layer(self, input_size, hidden_layer_config, output_size):
         """
@@ -65,8 +65,3 @@ class MLP(NNModel):
         logits = self(x)
         predictions = self.predict(logits)
         return predictions
-
-    def create_optimizer(self):
-        """Needs to be defined in order to set the optimizer.
-        """
-        self.optimizer = Adam(self.parameters(), lr=self.lr, weight_decay=self.weight_decay)

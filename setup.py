@@ -4,7 +4,7 @@ from setuptools import find_packages, setup
 URL = "https://github.com/gebauerm/ml_benchmark"
 __version__ = "0.1.0"
 
-install_requires = ["scikit-learn", "scipy>=1.7.0", "torch", "tqdm==4.62.3", "rapidflow"],
+install_requires = ["scikit-learn", "scipy", "tqdm"],
 
 setup(
     name='ml_benchmark',
@@ -18,6 +18,6 @@ setup(
     packages=find_packages(),
     install_requires=install_requires,
     dependency_links=[""],
-    python_requires=">=3.7",
+    python_requires=">=3.6",
     include_package_data=True,
 )

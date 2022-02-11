@@ -3,9 +3,6 @@ from sklearn.model_selection import train_test_split
 from torchvision.datasets import MNIST
 from torch.utils.data import TensorDataset
 from torchvision import transforms
-import time
-import os
-import shutil
 
 
 # TODO: dataclass for results and assert if some results are missing
