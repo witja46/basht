@@ -24,7 +24,7 @@ def raytune_func(config):
     tune.report(macro_f1_score=validation_scores["macro avg"]["f1-score"])
 
 
-def main(epochs, configuration, hyperparameters, device):
+def main(epochs, configuration, hyperparameters, device=None):
     task = MnistTask()
     train_loader, val_loader, test_loader = task.create_data_loader(configuration)
     objective = NeuronMLPObjective(
@@ -38,7 +38,9 @@ def main(epochs, configuration, hyperparameters, device):
             objective=objective,
             hyperparameters=hyperparameters,
             device=device
-            )
+            ),
+        local_dir="/tmp/ray_results",
+        resources_per_trial={"cpu": 4, "gpu": 1 if device else 0}
         )
 
     # evaluating and retrieving the best model to generate test results.
