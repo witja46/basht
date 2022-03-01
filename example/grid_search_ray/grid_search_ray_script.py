@@ -40,8 +40,11 @@ def main(epochs, configuration, hyperparameters, device=None):
             hyperparameters=hyperparameters,
             device=device
             ),
+        sync_config=tune.SyncConfig(
+            syncer=None  # Disable syncing
+            ),
         local_dir="/tmp/ray_results",
-        resources_per_trial={"cpu": 4, "gpu": 1 if device else 0}
+        resources_per_trial={"cpu": 12, "gpu": 1 if device else 0}
         )
 
     # evaluating and retrieving the best model to generate test results.
@@ -65,7 +68,7 @@ def main(epochs, configuration, hyperparameters, device=None):
 if __name__ == "__main__":
     device = "cpu"  # GPUs can only be enabled via setting in raytune
     # configuration for your job and data, please do not change!
-    epochs = 5
+    epochs = 50
     configuration = {
             "val_split_ratio": 0.2, "train_batch_size": 512, "val_batch_size": 128, "test_batch_size": 128}
     # Add your hyperparameter setting procedure here

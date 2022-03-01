@@ -2,6 +2,7 @@ import torch
 import tqdm
 from sklearn.metrics import classification_report
 from ml_benchmark.mlp import MLP
+from pympler import asizeof
 
 
 class MLPObjective:
@@ -68,3 +69,28 @@ class MLPObjective:
         test_targets = torch.cat(test_targets).cpu().numpy()
         test_predictions = torch.cat(test_predictions).cpu().numpy()
         return classification_report(test_targets, test_predictions, output_dict=True, zero_division=1)
+
+
+if __name__ == "__main__":
+
+    from ml_benchmark.mnist_task import MnistTask
+    task = MnistTask()
+    epochs = 5
+    configuration = {
+            "val_split_ratio": 0.2, "train_batch_size": 512, "val_batch_size": 128, "test_batch_size": 128}
+    train_loader, val_loader, test_loader = task.create_data_loader(configuration)
+    for _ in range(5):
+        objective = MLPObjective(
+            epochs=epochs, train_loader=train_loader, val_loader=val_loader, test_loader=test_loader)
+        objective.set_device("cpu")
+        hyperparameters = dict(
+                input_size=28*28, learning_rate=1e-4,
+                weight_decay=1e-6,
+                hidden_layer_config=[10, 10],
+                output_size=10)
+        objective.set_hyperparameters(hyperparameters)
+        # these are the results, that can be used for the hyperparameter search
+        objective.train()
+        validation_scores = objective.validate()
+    test_scores = objective.test()
+    print(test_scores)
