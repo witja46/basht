@@ -7,7 +7,6 @@ ctx = multiprocessing.get_context("spawn")
 
 
 class GridSearch:
-
     def __init__(self, objective_cls, objective_args, grid, device, threads=None) -> None:
         """_summary_
 
