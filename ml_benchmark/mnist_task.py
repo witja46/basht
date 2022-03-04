@@ -14,6 +14,8 @@ class MnistTask:
     def __init__(self) -> None:
 
         self.seed = 1337  # TODO: improve seed setting
+        self.input_size = 28*28
+        self.output_size = 10
 
     def create_data_loader(self, configuration):
         dataset = self._get_data()
