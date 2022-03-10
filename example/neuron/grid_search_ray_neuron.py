@@ -1,5 +1,5 @@
 from ml_benchmark.mnist_task import MnistTask
-from ml_benchmark.neuron_mlp_objective import NeuronMLPObjective
+from ml_benchmark.neuron.neuron_mlp_objective import NeuronMLPObjective
 from ml_benchmark.result_saver import ResultSaver
 from ray import tune
 import time
