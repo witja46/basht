@@ -5,7 +5,7 @@ from ml_benchmark.mlp import MLP
 import torch_neuron
 import uuid
 import os
-from ml_benchmark.neuron_mlp import NeuronMLP
+from ml_benchmark.neuron.neuron_mlp import NeuronMLP
 
 
 class NeuronMLPObjective:
