@@ -30,3 +30,12 @@ Note: If you run your benchmark on GPU make sure to install [Cuda](https://docs.
 |MNISTTask|Use it to get the Data for the Model. Please do not change its configuration|
 |MLPObjective|The Job that needs to be executed. Adjustments should not be neccessary.|
 |MLP|The model that is trained over the MNIST Task.|
+
+
+# Benchmark Methodolegy
+
+Each implementation uses a common **experiment-docker-container** that represents the full lifecycle of a benchmarking experiment, see the lifecycle figure.
+
+![lifecycle](docs/lifecycle.jpg).
+
+The docker container stub is located [here](todo).
