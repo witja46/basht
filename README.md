@@ -52,3 +52,9 @@ Each implementation uses a common **experiment-docker-container** that represent
 |Un-Deploy| The clean-up procedure to undeploy all components of the HPO Framework.|
 
 The docker container stub is located [here](todo).
+
+# System Components
+
+Adresses all components that perform necessary task in an HPO. E.g. Scheduling, I/O Operations etc.
+A component is not necessarily one Object within the framework, but it can be a collection of multiple objects performing similar elemental tasks.
+A fair compairison between HPO Frameworks would map all HPO Frameworks into these components and measure their performed tasks against each other.
