@@ -49,8 +49,15 @@ The Lifecycle consists of 7 steps, that we describe in detail in the following:
 |Load| Primarily includes all I/O operations that are needed to provide a Trial with the required data, as well as initializations of the model class, with a certain hyperparameter setting. |
 |Train| The training procedure of a model, which computes model parameters to solve a classification or regression problem. Generally training is repeated for a fixed number of epochs.|
 |Validate| The trained model has to be validated on a given dataset. Validation captures the performance of a hyperparameter setting of a certain model. The performance of this model on the validation set is later used to find the best hyperparameter setting.|
-|Result Collection| The collection of models, classifcation/regression results or other metrics for the problem at hand of each trial. After running of all trials results have to be consolidated for a compairison. Depending on the framework, this step might be a continues process that end once all trails are compleat or a process that is triggered after the framework under test observed the compleation of all trails. 
-However, for this benchmark we allways measure the result collection as the time between the last compleated trail and the identification of the best performing hyperparameter set.|
+|Result Collection| The collection of models, classifcation/regression results or other metrics for the problem at hand of each trial. After running of all trials results have to be consolidated for a compairison. Depending on the framework, this step might be a continues process that end once all trails are compleat or a process that is triggered after the framework under test observed the compleation of all trails. However, for this benchmark we allways measure the result collection as the time between the last compleated trail and the identification of the best performing hyperparameter set.|
 |Test|The final evaluation of the model which performed the best of all trials on the validation set. The test results are thus the final results for the model with the best hyperparameter setting.|
 |Metric Collection| Describes the collection of all gathered Metrics, which are not used by the HPO framework (Latencies, CPU Resources, etc.). This step runs outside of the HPO Framework.|
 |Un-Deploy| The clean-up procedure to undeploy all components of the HPO Framework that were deployed in the **Deploy** step.|
+
+The docker container stub is located [here](todo).
+
+# System Components
+
+Adresses all components that perform necessary task in an HPO. E.g. Scheduling, I/O Operations etc.
+A component is not necessarily one Object within the framework, but it can be a collection of multiple objects performing similar elemental tasks.
+A fair compairison between HPO Frameworks would map all HPO Frameworks into these components and measure their performed tasks against each other.
