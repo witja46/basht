@@ -36,29 +36,21 @@ Note: If you run your benchmark on GPU make sure to install [Cuda](https://docs.
 
 Each implementation uses a common **experiment-docker-container** that represents the full lifecycle of a benchmarking experiment, see the lifecycle figure.
 
-![lifecycle](docs/lifecycle.jpg).
-
-The docker container stub is located [here](todo).
-
 ## Lifecycle
 The Lifecycle consists of 7 steps, that we describe in detail in the following:
-
-### Deploy
-The first step in each bechmark is the provisioning/deployment of the resouces used in the benchmark, e.g,. in the case of kubernetes it referes to the steps nassary to deploy all pods and services in kubernetes.
-### Setup
-The Setup refers to all nassesary steps the hyperparameter optimiation client needs to perfrom in order to start the seach process. This includes the loading of the framework, configuring the framework, seach space etc. 
-The setup step will also initiate the distributed trails, thus, the setup step ends when the first trail is submitted to the underling cloud platfrom.
-### Trail
-A trail is a single training loop for a specific hyperparameter set. Within each trail, traingsdata is loaded, the model is trained and validated. 
-### Result Collection
-Result collection is the process of collecting the results of all distributed trails to find the best perfoming hyperparameter for the provided model. Depending on the framework, this step might be a continues process that end once all trails are compleat or a process that is triggered after the framework under test observed the compleation of all trails. 
-However, for this benchmark we allways measure the result collection as the time between the last compleated trail and the identification of the best performing hyperparameter set.
-
-### Test
+![lifecycle](docs/lifecycle.jpg).
 
 
-### Metric Collection
-Metrics Collection is a nessary step of the benchmarking process and might require the collection of logs and other measurmentes from all deployed resouces, thus it can only happen after the test step, however, the duration of this step is not critical for the comparison of benchmarking results.
-
-### Un-Deploy
-This step records the time it takes until all resocues that were deployed in the **Deploy** step are removed, or reset into a state so that the same benchmark can run again, starting with the Deploy step.
+|Step|Description|
+|----|-----------|
+|Deploy|Describes all deployment operations necessary to run the required components of a hyperparameter optimization (HPO) framework to run the HPO task. With the completion of this step the desired architecture of the HPO Framework should be running on a platform, e.g,. in the case of Kubernetes it referes to the steps nassary to deploy all pods and services in kubernetes.|
+|Setup| All operations needed to initialize and start a trial. For instance the handover of relevant classes to other workers, or the scheduling of a new worker. |
+|Trial| A Trial defines the loading, training and validation of a model with a specific hyperparameter setting. A hyperparameter setting is one combination of hyperparameters, which can be used to initialize a model. E.g.`learning_rate=1e-2` etc.|
+|Load| Primarily includes all I/O operations that are needed to provide a Trial with the required data, as well as initializations of the model class, with a certain hyperparameter setting. |
+|Train| The training procedure of a model, which computes model parameters to solve a classification or regression problem. Generally training is repeated for a fixed number of epochs.|
+|Validate| The trained model has to be validated on a given dataset. Validation captures the performance of a hyperparameter setting of a certain model. The performance of this model on the validation set is later used to find the best hyperparameter setting.|
+|Result Collection| The collection of models, classifcation/regression results or other metrics for the problem at hand of each trial. After running of all trials results have to be consolidated for a compairison. Depending on the framework, this step might be a continues process that end once all trails are compleat or a process that is triggered after the framework under test observed the compleation of all trails. 
+However, for this benchmark we allways measure the result collection as the time between the last compleated trail and the identification of the best performing hyperparameter set.|
+|Test|The final evaluation of the model which performed the best of all trials on the validation set. The test results are thus the final results for the model with the best hyperparameter setting.|
+|Metric Collection| Describes the collection of all gathered Metrics, which are not used by the HPO framework (Latencies, CPU Resources, etc.). This step runs outside of the HPO Framework.|
+|Un-Deploy| The clean-up procedure to undeploy all components of the HPO Framework that were deployed in the **Deploy** step.|
