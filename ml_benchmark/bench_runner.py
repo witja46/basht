@@ -32,6 +32,7 @@ class Benchmark(ABC):
         Every Operation that is needed before the actual optimization (trial) starts and that is not relevant
         for starting up workers or the necessary architecture.
         """
+        pass
 
     @abstractmethod
     def run(self, *args, **kwargs):
@@ -47,6 +48,7 @@ class Benchmark(ABC):
         This step collects all necessary results from all performed trials. Necessary results are results that
         are used in order to retrieve the best hyperparameter setting and to collect benchmark metrics.
         """
+        pass
 
     @abstractmethod
     def test(self, *args, **kwargs):
