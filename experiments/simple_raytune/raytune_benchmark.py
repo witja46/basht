@@ -1,9 +1,12 @@
 from ray import tune
+import os
+import torch
 
-from ml_benchmark.bench_runner import BenchmarkRunner
+from ml_benchmark.bench_runner import Benchmark, BenchmarkRunner
+from ml_benchmark.utils.result_saver import ResultSaver
 
 
-class RaytuneRun(BenchmarkRunner):
+class RaytuneBenchmark(Benchmark):
 
     def __init__(self, benchName, config) -> None:
         super().__init__(benchName, config)
@@ -39,7 +42,7 @@ class RaytuneRun(BenchmarkRunner):
             validation_scores = objective.validate()
             tune.report(macro_f1_score=validation_scores["macro avg"]["f1-score"])
 
-        analysis = tune.run(
+        self.analysis = tune.run(
             raytune_func,
             config=dict(
                 objective=self.objective,
@@ -50,10 +53,8 @@ class RaytuneRun(BenchmarkRunner):
                 syncer=None  # Disable syncing
                 ),
             local_dir="/tmp/ray_results",
-            resources_per_trial={"cpu": 12, "gpu": 1 if self.resources["device"] else 0}
+            resources_per_trial={"cpu": self.resources["cpu"], "gpu": self.resources["device"]}
         )
-
-        return analysis
 
     def collect_trial_results(self):
         self.best_config = self.analysis.get_best_config(metric="macro_f1_score", mode="max")["hyperparameters"]
@@ -77,7 +78,8 @@ class RaytuneRun(BenchmarkRunner):
 
         # TODO: saving has to be adjusted
         saver = ResultSaver(
-        experiment_name="GridSearch_MLP_MNIST", experiment_path=os.path.abspath(os.path.dirname(__file__)))
+            experiment_name="GridSearch_MLP_MNIST",
+            experiment_path=os.path.abspath(os.path.dirname(__file__)))
         saver.save_results(results)
 
     def undeploy(self):
@@ -85,3 +87,21 @@ class RaytuneRun(BenchmarkRunner):
             The clean-up procedure to undeploy all components of the HPO Framework that were deployed in the Deploy step.
         """
         pass
+
+
+if __name__ == "__main__":
+    config = {
+            "val_split_ratio": 0.2, "train_batch_size": 512, "val_batch_size": 128,
+            "test_batch_size": 128, "epochs": 1}
+    resources = {"cpu": 12, "device": 1 if torch.cuda.is_available() else 0}
+    # Add your hyperparameter setting procedure here
+    # your hyperparameter grid you want to search over
+    hyperparameters = dict(
+            input_size=28*28, learning_rate=tune.grid_search([1e-4, 1e-2]),
+            weight_decay=1e-6,
+            hidden_layer_config=tune.grid_search([[20], [10, 10]]),
+            output_size=10)
+
+    runner = BenchmarkRunner(
+        benchmark_cls=RaytuneBenchmark, config=config, grid=hyperparameters, resources=resources)
+    runner.run()

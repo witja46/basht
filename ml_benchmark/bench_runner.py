@@ -79,7 +79,9 @@ class Benchmark(ABC):
 class BenchmarkRunner():
     task_registry = {"mnist": MnistTask}
 
-    def __init__(self, benchmark_cls: Benchmark, task_str: str, config: dict, grid: dict, resources: dict) -> None:
+    def __init__(
+            self, benchmark_cls: Benchmark, config: dict, grid: dict,
+            resources: dict, task_str: str = "mnist",) -> None:
         """
             benchName: uniqueName of the bechmark, used in logging
             config: configuration object
@@ -109,7 +111,7 @@ class BenchmarkRunner():
         self.logger = Metrics([self.bench_name, self.config_name, self.rundate], ["name", "config", "date"])
         # TODO: add maximum available resources??
 
-    def main(self, fname: str):
+    def run(self, fname: str):
         self.logger.run_start = datetime.now()
         self.benchmark.deploy()
         self.logger.setup_start = datetime.now()
