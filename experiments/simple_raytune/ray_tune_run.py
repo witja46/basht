@@ -4,6 +4,7 @@ from ml_benchmark.bench_runner import BenchmarkRunner
 from ml_benchmark.workload.mnist.mnist_task import MnistTask
 from ml_benchmark.workload.mnist.mlp_objective import MLPObjective
 
+
 class RaytuneRun(BenchmarkRunner):
 
     def __init__(self, benchName, config) -> None:
@@ -16,10 +17,7 @@ class RaytuneRun(BenchmarkRunner):
         pass
 
     def setup(self):
-        task = MnistTask()
-        train_loader, val_loader, test_loader = task.create_data_loader(configuration)
-        self.objective = MLPObjective(
-            epochs=epochs, train_loader=train_loader, val_loader=val_loader, test_loader=test_loader)
+        pass
 
     def run(self,m:Metrics) -> str:
         """

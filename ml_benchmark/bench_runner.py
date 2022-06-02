@@ -1,115 +1,40 @@
-#! python3
-import logging
-from datetime import datetime, timedelta
-from tkinter.messagebox import NO
-import numpy as np
-import pandas as pd
 import base64
+import json
+import datetime
 
-from torch import FunctionSchema
-
-
-
-class Metrics():
-    def __init__(self,fields:list,fieldnames:list) ->None:
-        self.fields = fields
-        self.fieldnames = fieldnames
-        if len(fields) != len(fieldnames):
-            raise ValueError("Fields and fieldnames must have the same length")
-
-        self.run_start = None
-        self.setup_start = None
-        self.setup_end = None
-        self.run_end = None
-        self.trail_times = []
-        self.resultcollection_start = None
-        self.resultcollection_end  = None
-        self.test_start = None
-        self.test_end = None
-        self.collect_end = None
-        self.undeploy_end = None
-
-    def setup_time(self) -> timedelta:
-        return self.setup_end - self.run_start
-
-    def optimization_time(self) -> timedelta:
-        return self.test_end - self.setup_start
-
-    def addTrailTime(self, load: timedelta,train:timedelta,validate:timedelta) -> None:
-        self.trail_times.append([load,train,validate])
-
-    def evaluate_time(self) ->timedelta:
-        return self.test_end - self.resultcollection_start
-
-    def trail_times(self) -> np.array:
-        arr = np.array(self.trail_times)
-        return arr.sum(axis=1)
-
-    def load_times(self) -> np.array:
-        arr = np.array(self.trail_times)
-        return arr[:,0]
-
-    def train_times(self) -> np.array:
-        arr = np.array(self.trail_times)
-        return arr[:,1]
-
-    def validate_times(self) -> np.array:
-        arr = np.array(self.trail_times)
-        return arr[:,2]
-
-    def runtime(self) -> timedelta:
-        return self.setup_start-self.run_start + self.optimization_time() + self.undeploy_end - self.collect_end
-
-    def asPanda(self) -> pd.DataFrame:
-        """
-            asPanda(): returns an exploed view of all measumentes, containg all key measurmentes as columns replicated for each trail
-        """
-        columns = self.fieldnames + ["trail_id","setup_start","setup_end","run_start","run_end","collect_start","collect_end","test_start","test_end","undeploy_start","undeploy_end","setup_time","optimization_time","evaluate_time","total_runtime","load","train","validate"]
-
-        basevalues = [self.setup_start,self.setup_end,self.run_start,self.run_end,self.resultcollection_start,self.resultcollection_end,self.test_start,self.test_end,self.collect_end,self.undeploy_end,self.setup_time(),self.optimization_time(),self.evaluate_time(),self.runtime()]
-
-        data = []
-        for i in range(len(self.trail_times)):
-            values = self.fields+ + [i] + basevalues + self.trail_times[i]
-            data.append(values)
-
-        return pd.DataFrame(data,columns=columns)
-
-    def asCompactPanda(self,identifier:str) -> pd.DataFrame:
-        columns = self.fieldnames + ["id","setup_start","setup_end","run_start","run_end","collect_start","collect_end","test_start","test_end","undeploy_start","undeploy_end","setup_time","optimization_time","evaluate_time","total_runtime"]
-        basevalues = self.fields + [identifier] +[self.setup_start,self.setup_end,self.run_start,self.run_end,self.resultcollection_start,self.resultcollection_end,self.test_start,self.test_end,self.collect_end,self.undeploy_end,self.setup_time(),self.optimization_time(),self.evaluate_time(),self.runtime()]
-
-        data = []
-        for i in range(len(self.trail_times)):
-            values = [identifier] + self.trail_times[i]
-            data.append(values)
-
-        return pd.DataFrame(basevalues,columns=columns), pd.DataFrame(data,columns=["id","load","train","validate"])
-
-    def store(self, fname: str) -> None:
-        """
-            store(fname:str): stores the metrics in the file fname
-        """
-        df = self.asPanda()
-        df.to_csv(fname)
+from ml_benchmark.workload.mnist.mnist_task import MnistTask
+from ml_benchmark.metrics import Metrics
 
 
 class BenchmarkRunner():
+    task_registry = {"mnist": MnistTask}
 
-    def __init__(self, benchName, config) -> None:
+    def __init__(self, bench_name: str, config: dict, task_str: str, grid: dict) -> None:
         """
             benchName: uniqueName of the bechmark, used in logging
             config: configuration object
         """
 
-        self.benchName = benchName
-        #generate a unique name from the config
-        base64_bytes = base64.b64encode(str(config).encode('ascii'))
-        self.configName = str(base64_bytes, 'ascii')
+        self.bench_name = bench_name
+        # generate a unique name from the config
+        base64_bytes = base64.b64encode(json.dumps(config).encode('ascii'))
+        self.config_name = str(base64_bytes, 'ascii')
 
         self.rundate = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-        #perpare logger
-        self.logger = Metrics([self.benchName,self.configName,self.rundate],["name","config","date"])
+        # perpare logger
+        self.logger = Metrics([self.bench_name, self.config_name, self.rundate], ["name", "config", "date"])
+
+        # objective set up
+        task = self.task_registry.get(task_str)()
+        train_loader, val_loader, test_loader = task.create_data_loader(config)
+        self.objective = task.objective_cls(
+            epochs=config["epochs"],
+            train_loader=train_loader, val_loader=val_loader, test_loader=test_loader)
+
+        # hyperparameter adding
+        grid["input_size"] = task.input_size
+        grid["output_size"] = task.output_size
+        self.grid = grid
 
     def deploy(self) -> None:
         """
@@ -120,7 +45,7 @@ class BenchmarkRunner():
     def setup(self):
         pass
 
-    def run(self,m:Metrics) -> str:
+    def run(self, m: Metrics) -> str:
         """
             Executing the hyperparameter optimization on the deployed platfrom.
             use the metrics object to collect and store all measurments on the workers.
@@ -129,14 +54,16 @@ class BenchmarkRunner():
 
     def collect_benchmark_metrics(self):
         """
-            Describes the collection of all gathered metrics, which are not used by the HPO framework (Latencies, CPU Resources, etc.). This step runs outside of the HPO Framework.
+            Describes the collection of all gathered metrics, which are not used by the HPO framework
+            (Latencies, CPU Resources, etc.). This step runs outside of the HPO Framework.
             Ensure to optain all metrics loggs and combine into the metrics object.
         """
         pass
 
     def undeploy(self):
         """
-            The clean-up procedure to undeploy all components of the HPO Framework that were deployed in the Deploy step.
+            The clean-up procedure to undeploy all components of the HPO Framework that were deployed in the
+            Deploy step.
         """
         pass
 
@@ -146,7 +73,7 @@ class BenchmarkRunner():
     def collect_trial_results(self):
         pass
 
-    def main(self,fname:str):
+    def main(self, fname: str):
         self.logger.run_start = datetime.now()
         self.deploy()
         self.logger.setup_start = datetime.now()
