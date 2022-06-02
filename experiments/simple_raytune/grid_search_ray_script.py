@@ -1,6 +1,6 @@
-from ml_benchmark.mnist_task import MnistTask
-from ml_benchmark.neuron.neuron_mlp_objective import NeuronMLPObjective
-from ml_benchmark.result_saver import ResultSaver
+from ml_benchmark.workload.mnist_task import MnistTask
+from ml_benchmark.workload.mlp_objective import MLPObjective
+from ml_benchmark.utils.result_saver import ResultSaver
 from ray import tune
 import time
 import os
@@ -9,6 +9,7 @@ import os
 # -------------  Only runs if you install raytune: https://github.com/ray-project/ray -----------------------
 def raytune_func(config):
     """The function for training and validation, that is used for hyperparameter optimization.
+    Beware Ray Synchronisation: https://docs.ray.io/en/latest/tune/user-guide.html
 
     Args:
         config ([type]): [description]
@@ -27,7 +28,7 @@ def raytune_func(config):
 def main(epochs, configuration, hyperparameters, device=None):
     task = MnistTask()
     train_loader, val_loader, test_loader = task.create_data_loader(configuration)
-    objective = NeuronMLPObjective(
+    objective = MLPObjective(
         epochs=epochs, train_loader=train_loader, val_loader=val_loader, test_loader=test_loader)
 
     # starting the tuning
@@ -39,8 +40,11 @@ def main(epochs, configuration, hyperparameters, device=None):
             hyperparameters=hyperparameters,
             device=device
             ),
+        sync_config=tune.SyncConfig(
+            syncer=None  # Disable syncing
+            ),
         local_dir="/tmp/ray_results",
-        resources_per_trial={"cpu": 4, "gpu": 1 if device else 0}
+        resources_per_trial={"cpu": 12, "gpu": 1 if device else 0}
         )
 
     # evaluating and retrieving the best model to generate test results.
@@ -64,7 +68,7 @@ def main(epochs, configuration, hyperparameters, device=None):
 if __name__ == "__main__":
     device = "cpu"  # GPUs can only be enabled via setting in raytune
     # configuration for your job and data, please do not change!
-    epochs = 5
+    epochs = 50
     configuration = {
             "val_split_ratio": 0.2, "train_batch_size": 512, "val_batch_size": 128, "test_batch_size": 128}
     # Add your hyperparameter setting procedure here

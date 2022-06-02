@@ -1,7 +1,6 @@
 from torch.utils.data import DataLoader
 from sklearn.model_selection import train_test_split
 from torchvision.datasets import MNIST
-from torch.utils.data import Dataset
 from torch.utils.data import TensorDataset
 from torchvision import transforms
 from ml_benchmark.config import Path
@@ -43,15 +42,3 @@ class MnistTask:
     def mnist_preprocessing(self, mnist_data):
         mnist_data.data = mnist_data.data.view(-1, 28 * 28).float()
         return mnist_data
-
-
-class MNISTDataset(Dataset):
-    def __init__(self) -> None:
-        super().__init__()
-        mnist_path = os.path.join(Path.data_path, "MNIST")
-
-    def __getitem__(self, index):
-        return super().__getitem__(index)
-
-    def __len__(self):
-        return 1

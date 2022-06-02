@@ -6,6 +6,10 @@ import numpy as np
 import pandas as pd
 import base64
 
+from torch import FunctionSchema
+
+
+
 class Metrics():
     def __init__(self,fields:list,fieldnames:list) ->None:
         self.fields = fields
@@ -27,20 +31,20 @@ class Metrics():
 
     def setup_time(self) -> timedelta:
         return self.setup_end - self.run_start
-    
+
     def optimization_time(self) -> timedelta:
         return self.test_end - self.setup_start
 
     def addTrailTime(self, load: timedelta,train:timedelta,validate:timedelta) -> None:
         self.trail_times.append([load,train,validate])
-    
+
     def evaluate_time(self) ->timedelta:
         return self.test_end - self.resultcollection_start
-    
+
     def trail_times(self) -> np.array:
         arr = np.array(self.trail_times)
         return arr.sum(axis=1)
-    
+
     def load_times(self) -> np.array:
         arr = np.array(self.trail_times)
         return arr[:,0]
@@ -63,7 +67,7 @@ class Metrics():
         columns = self.fieldnames + ["trail_id","setup_start","setup_end","run_start","run_end","collect_start","collect_end","test_start","test_end","undeploy_start","undeploy_end","setup_time","optimization_time","evaluate_time","total_runtime","load","train","validate"]
 
         basevalues = [self.setup_start,self.setup_end,self.run_start,self.run_end,self.resultcollection_start,self.resultcollection_end,self.test_start,self.test_end,self.collect_end,self.undeploy_end,self.setup_time(),self.optimization_time(),self.evaluate_time(),self.runtime()]
-        
+
         data = []
         for i in range(len(self.trail_times)):
             values = self.fields+ + [i] + basevalues + self.trail_times[i]
@@ -82,22 +86,22 @@ class Metrics():
 
         return pd.DataFrame(basevalues,columns=columns), pd.DataFrame(data,columns=["id","load","train","validate"])
 
-    def store(self,fname:str) -> None:
+    def store(self, fname: str) -> None:
         """
             store(fname:str): stores the metrics in the file fname
         """
         df = self.asPanda()
         df.to_csv(fname)
-    
+
 
 class BenchmarkRunner():
 
-    def __init__(self,benchName,config) -> None:
+    def __init__(self, benchName, config) -> None:
         """
-            benchName: uniqueName of the bechmark, used in logging  
+            benchName: uniqueName of the bechmark, used in logging
             config: configuration object
         """
-    
+
         self.benchName = benchName
         #generate a unique name from the config
         base64_bytes = base64.b64encode(str(config).encode('ascii'))
@@ -113,6 +117,9 @@ class BenchmarkRunner():
         """
         pass
 
+    def setup(self):
+        pass
+
     def run(self,m:Metrics) -> str:
         """
             Executing the hyperparameter optimization on the deployed platfrom.
@@ -120,7 +127,7 @@ class BenchmarkRunner():
         """
         pass
 
-    def collectMetrics(self):
+    def collect_benchmark_metrics(self):
         """
             Describes the collection of all gathered metrics, which are not used by the HPO framework (Latencies, CPU Resources, etc.). This step runs outside of the HPO Framework.
             Ensure to optain all metrics loggs and combine into the metrics object.
@@ -133,7 +140,13 @@ class BenchmarkRunner():
         """
         pass
 
-    def run(self,fname:str):
+    def test(self):
+        pass
+
+    def collect_trial_results(self):
+        pass
+
+    def main(self,fname:str):
         self.logger.run_start = datetime.now()
         self.deploy()
         self.logger.setup_start = datetime.now()
@@ -148,5 +161,3 @@ class BenchmarkRunner():
 
         if fname is not None:
             self.logger.store(fname)
-
-        
