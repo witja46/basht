@@ -2,17 +2,29 @@ import base64
 import json
 from datetime import datetime
 from abc import ABC, abstractmethod
+import inspect
+import os
+import torch
+import numpy as np
+import random
 
 from ml_benchmark.workload.mnist.mnist_task import MnistTask
 from ml_benchmark.metrics import Metrics
 
 
 class Benchmark(ABC):
+    """
+    This class serves as an Interface for a benchmark. All neccessary methods have to be implemented in the
+    subclass that is using the interface. Make sure to use the predefined static variables. Your benchmark
+    will most likely not run properly if the variables value remains to be "None".
+
+    Args:
+        ABC (_type_): Abstract Base Class
+    """
 
     objective = None
     grid = None
     resources = None
-    benchmark_path = None
 
     @abstractmethod
     def deploy(self) -> None:
@@ -24,7 +36,7 @@ class Benchmark(ABC):
         pass
 
     @abstractmethod
-    def setup(self, *args, **kwargs):
+    def setup(self):
         """
         Every Operation that is needed before the actual optimization (trial) starts and that is not relevant
         for starting up workers or the necessary architecture.
@@ -32,7 +44,7 @@ class Benchmark(ABC):
         pass
 
     @abstractmethod
-    def run(self, *args, **kwargs):
+    def run(self):
         """
             Executing the hyperparameter optimization on the deployed platfrom.
             use the metrics object to collect and store all measurments on the workers.
@@ -40,7 +52,7 @@ class Benchmark(ABC):
         pass
 
     @abstractmethod
-    def collect_trial_results(self, *args, **kwargs):
+    def collect_run_results(self):
         """
         This step collects all necessary results from all performed trials. Necessary results are results that
         are used in order to retrieve the best hyperparameter setting and to collect benchmark metrics.
@@ -48,7 +60,7 @@ class Benchmark(ABC):
         pass
 
     @abstractmethod
-    def test(self, *args, **kwargs):
+    def test(self):
         """
         This step tests the model instantiated with the best hyperparameter setting on the test split of the
         provided task.
@@ -56,16 +68,18 @@ class Benchmark(ABC):
         pass
 
     @abstractmethod
-    def collect_benchmark_metrics(self, *args, **kwargs):
+    def collect_benchmark_metrics(self):
         """
             Describes the collection of all gathered metrics, which are not used by the HPO framework
             (Latencies, CPU Resources, etc.). This step runs outside of the HPO Framework.
             Ensure to optain all metrics loggs and combine into the metrics object.
+
+            This function needs to RETURN all gathered metrics.
         """
         pass
 
     @abstractmethod
-    def undeploy(self, *args, **kwargs):
+    def undeploy(self):
         """
             The clean-up procedure to undeploy all components of the HPO Framework that were deployed in the
             Deploy step.
@@ -73,25 +87,106 @@ class Benchmark(ABC):
         pass
 
 
+class BenchmarkWrapper:
+
+    def __init__(self, benchmark: Benchmark) -> None:
+        self.benchmark = benchmark
+
+    @property
+    def grid(self):
+        benchmark_grid = self.benchmark.grid
+        if benchmark_grid:
+            return benchmark_grid
+        else:
+            raise AttributeError("No Grid set! Your Benchmark wont run!")
+
+    @grid.setter
+    def grid(self, benchmark_grid):
+        self.benchmark.grid = benchmark_grid
+
+    @property
+    def resources(self):
+        benchmark_resources = self.benchmark.resources
+        if benchmark_resources:
+            return benchmark_resources
+        else:
+            raise AttributeError("No resources set! Your Benchmark wont run!")
+
+    @resources.setter
+    def resources(self, benchmark_resources):
+        self.benchmark.resources = benchmark_resources
+
+    @property
+    def objective(self):
+        benchmark_objective = self.benchmark.objective
+        if benchmark_objective:
+            return benchmark_objective
+        else:
+            raise AttributeError("No objective set! Your Benchmark wont run!")
+
+    @objective.setter
+    def objective(self, benchmark_objective):
+        self.benchmark.objective = benchmark_objective
+
+    @property
+    def resources(self):
+        benchmark_resources = self.benchmark.resources
+        if benchmark_resources:
+            return benchmark_resources
+        else:
+            raise AttributeError("No resources set! Your Benchmark wont run!")
+
+    @resources.setter
+    def resources(self, benchmark_resources):
+        self.benchmark.resources = benchmark_resources
+
+    def deploy(self) -> None:
+        self.benchmark.deploy()
+
+    def setup(self):
+        self.benchmark.setup()
+
+    def run(self):
+        # TODO: get run results through objective and write them into runner results
+        self.benchmark.run()
+
+    def collect_run_results(self):
+        self.benchmark.collect_run_results()
+
+    def test(self):
+        self.benchmark.test()
+
+    def collect_benchmark_metrics(self):
+        self.benchmark.collect_benchmark_metrics()
+
+    def undeploy(self):
+        self.benchmark.undeploy()
+
+
 class BenchmarkRunner():
     task_registry = {"mnist": MnistTask}
 
     def __init__(
             self, benchmark_cls: Benchmark, config: dict, grid: dict,
-            resources: dict, task_str: str = "mnist",) -> None:
-        # TODO: set seed
+            resources: dict, task_str: str = "mnist") -> None:
         """
             benchName: uniqueName of the bechmark, used in logging
             config: configuration object
         """
 
+        # get task
+        task = self.task_registry.get(task_str)()
+
         # generate a unique name from the config
         base64_bytes = base64.b64encode(json.dumps(config).encode('ascii'))
         self.config_name = str(base64_bytes, 'ascii')
         self.rundate = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+        benchmark_path = os.path.abspath(os.path.dirname(inspect.getabsfile(benchmark_cls)))
+        self.bench_name = f"{task.__class__.__name__}__{benchmark_cls.__name__}"
+        self.benchmark_folder = os.path.join(benchmark_path, f"benchmark__{self.bench_name}")
+        self.create_benchmark_folder(self.benchmark_folder)
 
-        # setup benchmark
-        task = self.task_registry.get(task_str)()
+        # create loader
         epochs = config.pop("epochs")
         train_loader, val_loader, test_loader = task.create_data_loader(**config)
         objective = task.objective_cls(
@@ -102,9 +197,7 @@ class BenchmarkRunner():
         grid["output_size"] = task.output_size
         grid = grid
         resources = resources
-        self.benchmark = benchmark_cls(objective, grid, resources)
-
-        self.bench_name = f"{task.__class__.__name__}__{self.benchmark.__class__.__name__}"
+        self.benchmark = BenchmarkWrapper(benchmark_cls(objective, grid, resources))
 
         # set seeds
         self._set_all_seeds()
@@ -114,22 +207,63 @@ class BenchmarkRunner():
         # TODO: add maximum available resources??
 
     def run(self):
-        self.logger.run_start = datetime.now()
-        self.benchmark.deploy()
-        self.logger.setup_start = datetime.now()
-        self.benchmark.run()
-        self.logger.run_end = datetime.now()
-        self.logger.setup_start = datetime.now()
-        self.benchmark.collect_trial_results()
-        self.logger.run_end = datetime.now()
-        self.logger.setup_start = datetime.now()
-        self.benchmark.test()
-        self.logger.run_end = datetime.now()
-        self.logger.resultcollection_start = datetime.now()
-        self.benchmark.collect_benchmark_metrics()
-        self.logger.resultcollection_end = datetime.now()
-        self.benchmark.undeploy()
-        self.logger.undeploy_end = datetime.now()
+        run_process = [
+            self.benchmark.depoy, self.benchmark.run, self.benchmark.collect_run_results,
+            self.benchmark.test, self.benchmark.collect_benchmark_metrics,
+            self.benchmark.undeploy]
+
+        for benchmark_fun in run_process:
+            # TODO: Add metrics recording before and after
+            benchmark_fun()
+
+        benchmark_results = dict(
+            run=benchmark_run_trials_results
+        )
+        self.save_benchmark_results(benchmark_results)
 
     def _set_all_seeds(self):
-        pass
+        torch.manual_seed(1337)
+        np.random.seed(1337)
+        random.seed(1337)
+
+    def save_benchmark_results(self, benchmark_results):
+        benchmark_config_dict = dict(
+            objective=self.benchmark.objective.__class__.__name__,
+            grid=self.benchmark.grid,
+            resources=self.benchmark.resources,
+        )
+        benchmark_result_dict = dict(
+            benchmark_metrics=benchmark_results,
+            benchmark_configuration=benchmark_config_dict
+        )
+        benchmark_result_dict = self._check_json_serializabile_grid(benchmark_result_dict)
+        with open(
+            os.path.join(
+                self.benchmark_folder,
+                f"benchmark_results__{self.rundate}__id_{self.config_name}.json"), "w"
+                ) as f:
+            json.dump(benchmark_result_dict, f)
+            print("Results saved!")
+
+    def create_benchmark_folder(self, folder_path):
+        if os.path.isdir(folder_path):
+            print(Warning("Folder already exists! No new folder will be created"))
+        else:
+            os.makedirs(folder_path, exist_ok=True)
+            print(f"Benchmark Folder created under: {self.benchmark_folder}")
+
+    def _check_json_serializabile_grid(self, to_serialize_dict):
+        """Grid uses custom functions from optimization packages, therefore it might be anything. Make sure it
+        is serializable.
+
+        Args:
+            to_serialize_dict (_type_): _description_
+
+        Returns:
+            _type_: _description_
+        """
+        try:
+            json.dumps(to_serialize_dict)
+        except TypeError:
+            to_serialize_dict["grid"] = str(to_serialize_dict["grid"])
+        return to_serialize_dict

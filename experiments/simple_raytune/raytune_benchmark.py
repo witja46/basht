@@ -1,8 +1,7 @@
 from ray import tune
-import os
 
 from ml_benchmark.benchmark_runner import Benchmark, BenchmarkRunner
-from ml_benchmark.utils.result_saver import ResultSaver
+from ml_benchmark.config import MnistConfig
 
 
 class RaytuneBenchmark(Benchmark):
@@ -11,7 +10,6 @@ class RaytuneBenchmark(Benchmark):
         self.objective = objective
         self.grid = grid
         self.resources = resources
-        self.benchmark_path = os.path.abspath(os.path.dirname(__file__))
 
     def deploy(self) -> None:
         """
@@ -57,7 +55,7 @@ class RaytuneBenchmark(Benchmark):
             resources_per_trial={"cpu": self.resources["cpu"]}
         )
 
-    def collect_trial_results(self):
+    def collect_run_results(self):
         self.best_config = self.analysis.get_best_config(metric="macro_f1_score", mode="max")["hyperparameters"]
 
     def test(self):
@@ -77,11 +75,7 @@ class RaytuneBenchmark(Benchmark):
             training_loss=self.training_loss
             )
 
-        # TODO: saving has to be adjusted
-        saver = ResultSaver(
-            experiment_name="GridSearch_MLP_MNIST",
-            experiment_path=self.benchmark_path)
-        saver.save_results(results)
+        return results
 
     def undeploy(self):
         """
@@ -92,9 +86,10 @@ class RaytuneBenchmark(Benchmark):
 
 
 if __name__ == "__main__":
-    config = {
-            "val_split_ratio": 0.2, "train_batch_size": 512, "val_batch_size": 128,
-            "test_batch_size": 128, "epochs": 1}
+
+    # The basic config for the workload. For testing purposes set epochs to one. For Benchmark take the default value
+    config = MnistConfig(epochs=1).to_dict()
+    # your ressources the optimization should run on
     resources = {"cpu": 12}
     # Add your hyperparameter setting procedure here
     # your hyperparameter grid you want to search over
@@ -104,6 +99,7 @@ if __name__ == "__main__":
             hidden_layer_config=tune.grid_search([[20], [10, 10]]),
             output_size=10)
 
+    # import an use the runner
     runner = BenchmarkRunner(
         benchmark_cls=RaytuneBenchmark, config=config, grid=hyperparameters, resources=resources)
     runner.run()
