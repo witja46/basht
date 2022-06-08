@@ -9,7 +9,7 @@ import numpy as np
 import random
 
 from ml_benchmark.workload.mnist.mnist_task import MnistTask
-from ml_benchmark.metrics import Metrics
+from ml_benchmark.latency_tracker import LatencyTracker, Latency
 
 
 class Benchmark(ABC):
@@ -80,87 +80,12 @@ class Benchmark(ABC):
 
     @abstractmethod
     def undeploy(self):
+        # TODO: might be moved before collecting all metrics
         """
             The clean-up procedure to undeploy all components of the HPO Framework that were deployed in the
             Deploy step.
         """
         pass
-
-
-class BenchmarkWrapper:
-
-    def __init__(self, benchmark: Benchmark) -> None:
-        self.benchmark = benchmark
-
-    @property
-    def grid(self):
-        benchmark_grid = self.benchmark.grid
-        if benchmark_grid:
-            return benchmark_grid
-        else:
-            raise AttributeError("No Grid set! Your Benchmark wont run!")
-
-    @grid.setter
-    def grid(self, benchmark_grid):
-        self.benchmark.grid = benchmark_grid
-
-    @property
-    def resources(self):
-        benchmark_resources = self.benchmark.resources
-        if benchmark_resources:
-            return benchmark_resources
-        else:
-            raise AttributeError("No resources set! Your Benchmark wont run!")
-
-    @resources.setter
-    def resources(self, benchmark_resources):
-        self.benchmark.resources = benchmark_resources
-
-    @property
-    def objective(self):
-        benchmark_objective = self.benchmark.objective
-        if benchmark_objective:
-            return benchmark_objective
-        else:
-            raise AttributeError("No objective set! Your Benchmark wont run!")
-
-    @objective.setter
-    def objective(self, benchmark_objective):
-        self.benchmark.objective = benchmark_objective
-
-    @property
-    def resources(self):
-        benchmark_resources = self.benchmark.resources
-        if benchmark_resources:
-            return benchmark_resources
-        else:
-            raise AttributeError("No resources set! Your Benchmark wont run!")
-
-    @resources.setter
-    def resources(self, benchmark_resources):
-        self.benchmark.resources = benchmark_resources
-
-    def deploy(self) -> None:
-        self.benchmark.deploy()
-
-    def setup(self):
-        self.benchmark.setup()
-
-    def run(self):
-        # TODO: get run results through objective and write them into runner results
-        self.benchmark.run()
-
-    def collect_run_results(self):
-        self.benchmark.collect_run_results()
-
-    def test(self):
-        self.benchmark.test()
-
-    def collect_benchmark_metrics(self):
-        self.benchmark.collect_benchmark_metrics()
-
-    def undeploy(self):
-        self.benchmark.undeploy()
 
 
 class BenchmarkRunner():
@@ -197,27 +122,32 @@ class BenchmarkRunner():
         grid["output_size"] = task.output_size
         grid = grid
         resources = resources
-        self.benchmark = BenchmarkWrapper(benchmark_cls(objective, grid, resources))
+        self.benchmark = benchmark_cls(objective, grid, resources)
 
         # set seeds
         self._set_all_seeds()
 
-        # perpare logger
-        self.logger = Metrics([self.bench_name, self.config_name, self.rundate], ["name", "config", "date"])
+        # prepare tracker
+        self.latency_tracker = LatencyTracker()
         # TODO: add maximum available resources??
 
     def run(self):
         run_process = [
-            self.benchmark.depoy, self.benchmark.run, self.benchmark.collect_run_results,
+            self.benchmark.deploy, self.benchmark.run, self.benchmark.collect_run_results,
             self.benchmark.test, self.benchmark.collect_benchmark_metrics,
             self.benchmark.undeploy]
 
         for benchmark_fun in run_process:
-            # TODO: Add metrics recording before and after
-            benchmark_fun()
+            with Latency(benchmark_fun.__name__) as latency:
+                results = benchmark_fun()
+            self.latency_tracker.track(latency)
+            if benchmark_fun.__name__ == self.benchmark.collect_benchmark_metrics.__name__:
+                benchmark_execution_results = results
 
+        benchmark_process_latencies = self.latency_tracker.get_recorded_latencies()
         benchmark_results = dict(
-            run=benchmark_run_trials_results
+            benchmark_process_latencies=benchmark_process_latencies,
+            benchmark_execution_results=benchmark_execution_results
         )
         self.save_benchmark_results(benchmark_results)
 
@@ -243,7 +173,7 @@ class BenchmarkRunner():
                 f"benchmark_results__{self.rundate}__id_{self.config_name}.json"), "w"
                 ) as f:
             json.dump(benchmark_result_dict, f)
-            print("Results saved!")
+        print("Results saved!")
 
     def create_benchmark_folder(self, folder_path):
         if os.path.isdir(folder_path):
@@ -265,5 +195,5 @@ class BenchmarkRunner():
         try:
             json.dumps(to_serialize_dict)
         except TypeError:
-            to_serialize_dict["grid"] = str(to_serialize_dict["grid"])
+            to_serialize_dict["benchmark_configuration"]["grid"] = str(to_serialize_dict["benchmark_configuration"]["grid"])
         return to_serialize_dict

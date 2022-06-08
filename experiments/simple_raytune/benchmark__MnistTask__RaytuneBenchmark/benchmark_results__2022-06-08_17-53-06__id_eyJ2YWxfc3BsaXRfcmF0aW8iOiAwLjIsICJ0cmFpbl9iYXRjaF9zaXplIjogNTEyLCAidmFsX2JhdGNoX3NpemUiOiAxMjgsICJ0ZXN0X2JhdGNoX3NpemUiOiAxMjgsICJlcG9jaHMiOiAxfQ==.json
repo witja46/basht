@@ -1,0 +1,164 @@
+{
+    "benchmark_metrics": {
+        "benchmark_process_latencies": [
+            {
+                "deploy": {
+                    "start_time": 1654703586.213871,
+                    "end_time": 1654703586.213876,
+                    "duration": 5e-06
+                }
+            },
+            {
+                "run": {
+                    "start_time": 1654703586.213881,
+                    "end_time": 1654703652.473378,
+                    "duration": 66.259497
+                }
+            },
+            {
+                "collect_run_results": {
+                    "start_time": 1654703652.47339,
+                    "end_time": 1654703652.473407,
+                    "duration": 1.7e-05
+                }
+            },
+            {
+                "test": {
+                    "start_time": 1654703652.473411,
+                    "end_time": 1654703653.479721,
+                    "duration": 1.00631
+                }
+            },
+            {
+                "collect_benchmark_metrics": {
+                    "start_time": 1654703653.479733,
+                    "end_time": 1654703653.479735,
+                    "duration": 2e-06
+                }
+            },
+            {
+                "undeploy": {
+                    "start_time": 1654703653.479738,
+                    "end_time": 1654703653.479739,
+                    "duration": 1e-06
+                }
+            }
+        ],
+        "benchmark_execution_results": {
+            "test_scores": {
+                "0": {
+                    "precision": 0.09871666666666666,
+                    "recall": 1.0,
+                    "f1-score": 0.17969449205891722,
+                    "support": 5923
+                },
+                "1": {
+                    "precision": 1.0,
+                    "recall": 0.0,
+                    "f1-score": 0.0,
+                    "support": 6742
+                },
+                "2": {
+                    "precision": 1.0,
+                    "recall": 0.0,
+                    "f1-score": 0.0,
+                    "support": 5958
+                },
+                "3": {
+                    "precision": 1.0,
+                    "recall": 0.0,
+                    "f1-score": 0.0,
+                    "support": 6131
+                },
+                "4": {
+                    "precision": 1.0,
+                    "recall": 0.0,
+                    "f1-score": 0.0,
+                    "support": 5842
+                },
+                "5": {
+                    "precision": 1.0,
+                    "recall": 0.0,
+                    "f1-score": 0.0,
+                    "support": 5421
+                },
+                "6": {
+                    "precision": 1.0,
+                    "recall": 0.0,
+                    "f1-score": 0.0,
+                    "support": 5918
+                },
+                "7": {
+                    "precision": 1.0,
+                    "recall": 0.0,
+                    "f1-score": 0.0,
+                    "support": 6265
+                },
+                "8": {
+                    "precision": 1.0,
+                    "recall": 0.0,
+                    "f1-score": 0.0,
+                    "support": 5851
+                },
+                "9": {
+                    "precision": 1.0,
+                    "recall": 0.0,
+                    "f1-score": 0.0,
+                    "support": 5949
+                },
+                "accuracy": 0.09871666666666666,
+                "macro avg": {
+                    "precision": 0.9098716666666666,
+                    "recall": 0.1,
+                    "f1-score": 0.017969449205891722,
+                    "support": 60000
+                },
+                "weighted avg": {
+                    "precision": 0.9110283136111111,
+                    "recall": 0.09871666666666666,
+                    "f1-score": 0.017738841274416113,
+                    "support": 60000
+                }
+            },
+            "training_loss": {
+                "train_loss": [
+                    5.891427688142087
+                ],
+                "latency": {
+                    "trail__train": {
+                        "start_time": 1654703652.473415,
+                        "end_time": 1654703652.937629,
+                        "duration": 0.464214
+                    }
+                }
+            }
+        }
+    },
+    "benchmark_configuration": {
+        "objective": "MLPObjective",
+        "grid": {
+            "input_size": 784,
+            "learning_rate": {
+                "grid_search": [
+                    0.0001
+                ]
+            },
+            "weight_decay": 1e-06,
+            "hidden_layer_config": {
+                "grid_search": [
+                    [
+                        20
+                    ],
+                    [
+                        10,
+                        10
+                    ]
+                ]
+            },
+            "output_size": 10
+        },
+        "resources": {
+            "cpu": 12
+        }
+    }
+}

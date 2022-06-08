@@ -87,7 +87,8 @@ class RaytuneBenchmark(Benchmark):
 
 if __name__ == "__main__":
 
-    # The basic config for the workload. For testing purposes set epochs to one. For Benchmark take the default value
+    # The basic config for the workload. For testing purposes set epochs to one.
+    # For benchmarking take the default value of 100
     config = MnistConfig(epochs=1).to_dict()
     # your ressources the optimization should run on
     resources = {"cpu": 12}
@@ -101,5 +102,6 @@ if __name__ == "__main__":
 
     # import an use the runner
     runner = BenchmarkRunner(
-        benchmark_cls=RaytuneBenchmark, config=config, grid=hyperparameters, resources=resources)
+        benchmark_cls=RaytuneBenchmark, config=config, grid=hyperparameters, resources=resources,
+        task_str="mnist")
     runner.run()
