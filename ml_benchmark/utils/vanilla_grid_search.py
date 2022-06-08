@@ -115,8 +115,8 @@ class TuneJob:
 
 
 if __name__ == "__main__":
-    from ml_benchmark.workload.mlp_objective import MLPObjective
-    from ml_benchmark.workload.mnist_task import MnistTask
+    from ml_benchmark.workload.mnist.mlp_objective import MLPObjective
+    from ml_benchmark.workload.mnist.mnist_task import MnistTask
     epochs = 5
     configuration = {
             "val_split_ratio": 0.2, "train_batch_size": 512, "val_batch_size": 128, "test_batch_size": 128}
@@ -127,6 +127,7 @@ if __name__ == "__main__":
             weight_decay=[1e-6],
             hidden_layer_config=[[20], [10, 10]],
             output_size=[task.output_size])
+    resources = dict(processes=2)
 
     train_loader, val_loader, test_loader = task.create_data_loader(configuration)
     objective_cls = MLPObjective
@@ -138,5 +139,6 @@ if __name__ == "__main__":
         )
     device = "cpu"
     grid_search = VanillaGridSearch(
-        objective_cls=objective_cls, objective_args=objective_args, grid=grid, device=device, num_processes=2)
+        objective_cls=objective_cls, objective_args=objective_args, grid=grid, device=device,
+        num_processes=resources["processes"])
     grid_search.main()

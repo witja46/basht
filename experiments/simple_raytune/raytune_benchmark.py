@@ -1,19 +1,23 @@
 from ray import tune
 import os
-import torch
 
-from ml_benchmark.bench_runner import Benchmark, BenchmarkRunner
+from ml_benchmark.benchmark_runner import Benchmark, BenchmarkRunner
 from ml_benchmark.utils.result_saver import ResultSaver
 
 
 class RaytuneBenchmark(Benchmark):
 
-    def __init__(self, benchName, config) -> None:
-        super().__init__(benchName, config)
+    def __init__(self, objective, grid, resources) -> None:
+        self.objective = objective
+        self.grid = grid
+        self.resources = resources
+        self.benchmark_path = os.path.abspath(os.path.dirname(__file__))
 
     def deploy(self) -> None:
         """
-            With the completion of this step the desired architecture of the HPO Framework should be running on a platform, e.g,. in the case of Kubernetes it referes to the steps nassary to deploy all pods and services in kubernetes.
+            With the completion of this step the desired architecture of the HPO Framework should be running
+            on a platform, e.g,. in the case of Kubernetes it referes to the steps nassary to deploy all pods
+            and services in kubernetes.
         """
         pass
 
@@ -34,8 +38,6 @@ class RaytuneBenchmark(Benchmark):
             """
             objective = config.get("objective")
             hyperparameters = config.get("hyperparameters")
-            device = config.get("device")
-            objective.set_device(device)
             objective.set_hyperparameters(hyperparameters)
             # these are the results, that can be used for the hyperparameter search
             objective.train()
@@ -47,13 +49,12 @@ class RaytuneBenchmark(Benchmark):
             config=dict(
                 objective=self.objective,
                 hyperparameters=self.grid,
-                device=self.resources["device"]
                 ),
             sync_config=tune.SyncConfig(
                 syncer=None  # Disable syncing
                 ),
             local_dir="/tmp/ray_results",
-            resources_per_trial={"cpu": self.resources["cpu"], "gpu": self.resources["device"]}
+            resources_per_trial={"cpu": self.resources["cpu"]}
         )
 
     def collect_trial_results(self):
@@ -61,14 +62,14 @@ class RaytuneBenchmark(Benchmark):
 
     def test(self):
         # evaluating and retrieving the best model to generate test results.
-        self.objective.set_device(self.resources["device"])
         self.objective.set_hyperparameters(self.best_config)
         self.training_loss = self.objective.train()
         self.test_scores = self.objective.test()
 
     def collect_benchmark_metrics(self):
         """
-            Describes the collection of all gathered metrics, which are not used by the HPO framework (Latencies, CPU Resources, etc.). This step runs outside of the HPO Framework.
+            Describes the collection of all gathered metrics, which are not used by the HPO framework
+            (Latencies, CPU Resources, etc.). This step runs outside of the HPO Framework.
             Ensure to optain all metrics loggs and combine into the metrics object.
         """
         results = dict(
@@ -79,12 +80,13 @@ class RaytuneBenchmark(Benchmark):
         # TODO: saving has to be adjusted
         saver = ResultSaver(
             experiment_name="GridSearch_MLP_MNIST",
-            experiment_path=os.path.abspath(os.path.dirname(__file__)))
+            experiment_path=self.benchmark_path)
         saver.save_results(results)
 
     def undeploy(self):
         """
-            The clean-up procedure to undeploy all components of the HPO Framework that were deployed in the Deploy step.
+            The clean-up procedure to undeploy all components of the HPO Framework that were deployed in the
+            Deploy step.
         """
         pass
 
@@ -93,11 +95,11 @@ if __name__ == "__main__":
     config = {
             "val_split_ratio": 0.2, "train_batch_size": 512, "val_batch_size": 128,
             "test_batch_size": 128, "epochs": 1}
-    resources = {"cpu": 12, "device": 1 if torch.cuda.is_available() else 0}
+    resources = {"cpu": 12}
     # Add your hyperparameter setting procedure here
     # your hyperparameter grid you want to search over
     hyperparameters = dict(
-            input_size=28*28, learning_rate=tune.grid_search([1e-4, 1e-2]),
+            input_size=28*28, learning_rate=tune.grid_search([1e-4]),
             weight_decay=1e-6,
             hidden_layer_config=tune.grid_search([[20], [10, 10]]),
             output_size=10)

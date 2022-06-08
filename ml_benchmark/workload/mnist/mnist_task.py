@@ -19,11 +19,11 @@ class MnistTask:
         self.dataset = self._get_data()
         self.objective_cls = MLPObjective
 
-    def create_data_loader(self, configuration):
-        train_data, val_data, test_data = self.split_data(self.dataset, configuration["val_split_ratio"])
-        train_loader = DataLoader(train_data, batch_size=configuration["train_batch_size"], shuffle=True)
-        val_loader = DataLoader(val_data, batch_size=configuration["val_batch_size"], shuffle=True)
-        test_loader = DataLoader(test_data, batch_size=configuration["test_batch_size"], shuffle=True)
+    def create_data_loader(self, train_batch_size, val_batch_size, test_batch_size, val_split_ratio):
+        train_data, val_data, test_data = self.split_data(val_split_ratio)
+        train_loader = DataLoader(train_data, batch_size=train_batch_size, shuffle=True)
+        val_loader = DataLoader(val_data, batch_size=val_batch_size, shuffle=True)
+        test_loader = DataLoader(test_data, batch_size=test_batch_size, shuffle=True)
         return train_loader, val_loader, test_loader
 
     def split_data(self, val_split_ratio):

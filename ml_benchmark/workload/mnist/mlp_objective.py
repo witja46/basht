@@ -18,8 +18,11 @@ class MLPObjective:
     def set_hyperparameters(self, hyperparameters):
         self.hyperparameters = hyperparameters
 
-    def set_device(self, device_str):
-        self.device = torch.device(device_str)
+    def set_device(self, device_str=None):
+        if device_str:
+            self.device = torch.device(device_str)
+        else:
+            self.device = torch.device("cpu")
 
     def train(self):
         # model setup
@@ -72,7 +75,7 @@ class MLPObjective:
 
 if __name__ == "__main__":
 
-    from ml_benchmark.workload.mnist_task import MnistTask
+    from ml_benchmark.workload.mnist.mnist_task import MnistTask
     task = MnistTask()
     epochs = 5
     configuration = {

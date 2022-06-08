@@ -1,6 +1,6 @@
 import base64
 import json
-import datetime
+from datetime import datetime
 from abc import ABC, abstractmethod
 
 from ml_benchmark.workload.mnist.mnist_task import MnistTask
@@ -12,10 +12,7 @@ class Benchmark(ABC):
     objective = None
     grid = None
     resources = None
-
-    @abstractmethod
-    def __init__(self, objective, grid: dict, resources: dict) -> None:
-        pass
+    benchmark_path = None
 
     @abstractmethod
     def deploy(self) -> None:
@@ -82,10 +79,16 @@ class BenchmarkRunner():
     def __init__(
             self, benchmark_cls: Benchmark, config: dict, grid: dict,
             resources: dict, task_str: str = "mnist",) -> None:
+        # TODO: set seed
         """
             benchName: uniqueName of the bechmark, used in logging
             config: configuration object
         """
+
+        # generate a unique name from the config
+        base64_bytes = base64.b64encode(json.dumps(config).encode('ascii'))
+        self.config_name = str(base64_bytes, 'ascii')
+        self.rundate = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
 
         # setup benchmark
         task = self.task_registry.get(task_str)()
@@ -101,21 +104,20 @@ class BenchmarkRunner():
         resources = resources
         self.benchmark = benchmark_cls(objective, grid, resources)
 
-        self.bench_name = f"{task.__class__.__name__}__{self.benchmark_cls.__name__}"
-        # generate a unique name from the config
-        base64_bytes = base64.b64encode(json.dumps(config).encode('ascii'))
-        self.config_name = str(base64_bytes, 'ascii')
+        self.bench_name = f"{task.__class__.__name__}__{self.benchmark.__class__.__name__}"
 
-        self.rundate = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+        # set seeds
+        self._set_all_seeds()
+
         # perpare logger
         self.logger = Metrics([self.bench_name, self.config_name, self.rundate], ["name", "config", "date"])
         # TODO: add maximum available resources??
 
-    def run(self, fname: str):
+    def run(self):
         self.logger.run_start = datetime.now()
         self.benchmark.deploy()
         self.logger.setup_start = datetime.now()
-        self.benchmark.run(self.logger)
+        self.benchmark.run()
         self.logger.run_end = datetime.now()
         self.logger.setup_start = datetime.now()
         self.benchmark.collect_trial_results()
@@ -124,10 +126,10 @@ class BenchmarkRunner():
         self.benchmark.test()
         self.logger.run_end = datetime.now()
         self.logger.resultcollection_start = datetime.now()
-        self.benchmark.collect_benchmark_metrics
+        self.benchmark.collect_benchmark_metrics()
         self.logger.resultcollection_end = datetime.now()
         self.benchmark.undeploy()
         self.logger.undeploy_end = datetime.now()
 
-        if fname is not None:
-            self.logger.store(fname)
+    def _set_all_seeds(self):
+        pass
