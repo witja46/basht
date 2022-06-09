@@ -25,7 +25,6 @@ class MLPObjective:
         else:
             self.device = torch.device("cpu")
 
-    @latency_decorator
     def train(self):
         # model setup
         self.model = MLP(**self.hyperparameters)
@@ -42,7 +41,6 @@ class MLPObjective:
             epoch_losses.append(sum(batch_losses)/len(batch_losses))
         return {"train_loss": epoch_losses}
 
-    @latency_decorator
     def validate(self):
         self.model.eval()
         self.model = self.model.to(self.device)
@@ -59,7 +57,6 @@ class MLPObjective:
         val_preds = torch.cat(val_preds).cpu().numpy()
         return classification_report(val_targets, val_preds, output_dict=True, zero_division=1)
 
-    @latency_decorator
     def test(self):
         self.model.eval()
         self.model = self.model.to(self.device)

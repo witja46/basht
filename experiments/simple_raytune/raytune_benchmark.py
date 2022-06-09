@@ -2,6 +2,7 @@ from ray import tune
 
 from ml_benchmark.benchmark_runner import Benchmark, BenchmarkRunner
 from ml_benchmark.config import MnistConfig
+from ml_benchmark.latency_tracker import Latency, LatencyTracker
 
 
 class RaytuneBenchmark(Benchmark):
@@ -38,7 +39,10 @@ class RaytuneBenchmark(Benchmark):
             hyperparameters = config.get("hyperparameters")
             objective.set_hyperparameters(hyperparameters)
             # these are the results, that can be used for the hyperparameter search
-            objective.train()
+            with Latency(objective.train) as latency:
+                objective.train()
+            latency_tracker = LatencyTracker(address="")
+            latency_tracker.track(latency)
             validation_scores = objective.validate()
             tune.report(macro_f1_score=validation_scores["macro avg"]["f1-score"])
 
@@ -57,6 +61,7 @@ class RaytuneBenchmark(Benchmark):
 
     def collect_run_results(self):
         self.best_config = self.analysis.get_best_config(metric="macro_f1_score", mode="max")["hyperparameters"]
+        self.latency = self.analysis.dataframe(metric="latency")
 
     def test(self):
         # evaluating and retrieving the best model to generate test results.
@@ -72,7 +77,8 @@ class RaytuneBenchmark(Benchmark):
         """
         results = dict(
             test_scores=self.test_scores,
-            training_loss=self.training_loss
+            training_loss=self.training_loss,
+            latency=self.latency
             )
 
         return results

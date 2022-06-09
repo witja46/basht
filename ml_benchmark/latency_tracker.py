@@ -1,4 +1,4 @@
-from dataclasses import dataclass, asdict
+import os
 from datetime import datetime, timedelta
 
 
@@ -6,8 +6,10 @@ class LatencyTracker:
 
     def __init__(self) -> None:
         self.recorded_latencies = []
+        self.metric_pesistor = None
 
     def track(self, latency):
+        # implement tracking routine for postgres
         self.recorded_latencies.append(latency)
 
     def get_recorded_latencies(self):
@@ -15,21 +17,25 @@ class LatencyTracker:
 
 
 # TODO: decorator for trial latencies?
-@dataclass
+
 class Latency:
 
-    name: str
-    start_time: float = None
-    end_time: float = None
-    duration: float = None
+    def __init__(self, name) -> None:
+        self.name: str = f"{name}__pid_{os.getpid()}"
+        self.start_time: float = None
+        self.end_time: float = None
+        self.duration: float = None
 
     def to_dict(self):
-        latency_dict = asdict(self)
-        latency_title = latency_dict.pop("name")
+        latency_dict = dict(
+            start_time=self.start_time,
+            end_time=self.end_time,
+            duration=self.duration
+        )
         latency_dict = {key: self._convert_times_to_float(value) for key, value in latency_dict.items()}
 
         return {
-            latency_title: latency_dict
+            self.name: latency_dict
         }
 
     def __enter__(self):
@@ -51,8 +57,9 @@ class Latency:
 
 
 def latency_decorator(func):
+    # TODO add adress argument to tracker? use it as decorator in objective. Automatically tracks into right db
     def latency_func(*args, **kwargs):
-        with Latency(f"trail__{func.__name__}") as latency:
+        with Latency(func.__name__) as latency:
             result = func(*args, **kwargs)
         result["latency"] = latency.to_dict()
         return result
