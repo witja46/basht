@@ -2,7 +2,6 @@ import torch
 import tqdm
 from sklearn.metrics import classification_report
 from ml_benchmark.workload.mnist.mlp import MLP
-from ml_benchmark.latency_tracker import latency_decorator
 
 
 class MLPObjective:

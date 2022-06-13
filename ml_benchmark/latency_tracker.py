@@ -1,12 +1,22 @@
 import os
 from datetime import datetime, timedelta
+from abc import ABC, abstractmethod
+
+from ml_benchmark.metric_persistor import MetricPersistor
 
 
-class LatencyTracker:
+class Tracker(ABC):
+
+    @abstractmethod
+    def track(self, metric):
+        pass
+
+
+class LatencyTracker(Tracker):
 
     def __init__(self) -> None:
         self.recorded_latencies = []
-        self.metric_pesistor = None
+        self.metric_persistor = MetricPersistor()
 
     def track(self, latency):
         # implement tracking routine for postgres
@@ -15,13 +25,18 @@ class LatencyTracker:
     def get_recorded_latencies(self):
         return [latency.to_dict() for latency in self.recorded_latencies]
 
+    def _create_table(self):
+        pass
+
 
 # TODO: decorator for trial latencies?
-
 class Latency:
 
-    def __init__(self, name) -> None:
-        self.name: str = f"{name}__pid_{os.getpid()}"
+    def __init__(self, func) -> None:
+        # TODO: how to maintain identifiability for one trial?
+        self.name: str = func.__name__
+        self.process_id = os.getpid()
+        self.id = f"pi_{self.process_id}__name_{self.name}"
         self.start_time: float = None
         self.end_time: float = None
         self.duration: float = None

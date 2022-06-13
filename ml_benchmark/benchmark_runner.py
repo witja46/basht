@@ -7,6 +7,7 @@ import os
 import torch
 import numpy as np
 import random
+from ml_benchmark.metric_persistor import MetricPersistor
 
 from ml_benchmark.workload.mnist.mnist_task import MnistTask
 from ml_benchmark.latency_tracker import LatencyTracker, Latency
@@ -137,18 +138,22 @@ class BenchmarkRunner():
             self.benchmark.test, self.benchmark.collect_benchmark_metrics,
             self.benchmark.undeploy]
 
+        metric_persistor = MetricPersistor()
         for benchmark_fun in run_process:
-            with Latency(benchmark_fun.__name__) as latency:
-                results = benchmark_fun()
+            with Latency(benchmark_fun) as latency:
+                benchmark_fun()
             self.latency_tracker.track(latency)
-            if benchmark_fun.__name__ == self.benchmark.collect_benchmark_metrics.__name__:
-                benchmark_execution_results = results
+            # TODO: seperate classification results from benchmark metrics
+            # if benchmark_fun.__name__ == self.benchmark.collect_benchmark_metrics.__name__:
+            #     benchmark_execution_results = results
 
-        benchmark_process_latencies = self.latency_tracker.get_recorded_latencies()
-        benchmark_results = dict(
-            benchmark_process_latencies=benchmark_process_latencies,
-            benchmark_execution_results=benchmark_execution_results
-        )
+        # benchmark_process_latencies = self.latency_tracker.get_recorded_latencies()
+        # benchmark_results = dict(
+        #     benchmark_process_latencies=benchmark_process_latencies,
+        #     benchmark_execution_results=benchmark_execution_results
+        # )
+
+        benchmark_results = metric_persistor.get_all_benchmark_results()
         self.save_benchmark_results(benchmark_results)
 
     def _set_all_seeds(self):
