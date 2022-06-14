@@ -5,7 +5,11 @@ from ml_benchmark.metrics_storage import MetricsStorage
 
 class Objective(ABC):
 
-    # need possibility to set dynamically
+    """
+    Interface for a training, validation and test procedure of a model.
+    """
+
+    # need possibility to set dynamically - public IP if ssh connect
     metrics_storage_address = MetricsStorage.connection_string
 
     @abstractmethod

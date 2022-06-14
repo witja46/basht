@@ -1,6 +1,6 @@
 import time
 import docker
-from sqlalchemy import create_engine, MetaData, Table, Column, Integer, String, Float, insert, select
+from sqlalchemy import create_engine, MetaData, Table, Column, String, Float, select
 
 
 class MetricsStorage:
@@ -13,6 +13,16 @@ class MetricsStorage:
     connection_string = f"postgresql://{user}:{password}@{host}:{port}/{db}"
 
     def __init__(self, connection_string: str = None) -> None:
+        """
+        The MetricsStorage serves as the representation of the databse.
+        It sets up a postgres database in a docker container and creates tables for every recorded metric.
+
+        The default address of the Storage is constructed by its default static variables.
+        The address might be different for Objective running in a different execution environment.
+
+        Args:
+            connection_string (str, optional): _description_. Defaults to None.
+        """
         if connection_string:
             self.connection_string = connection_string
         self.latency = None
@@ -28,7 +38,8 @@ class MetricsStorage:
         self.client = docker.from_env()
         self.client.containers.run(
             "postgres:14.1", detach=True,
-            environment=[f"POSTGRES_PASSWORD={self.password}", f"POSTGRES_DB={self.db}", f"POSTGRES_USER={self.user}"],
+            environment=[
+                f"POSTGRES_PASSWORD={self.password}", f"POSTGRES_DB={self.db}", f"POSTGRES_USER={self.user}"],
             ports={f'{self.port}/tcp': 5432},
             name="postgres",
             remove=True)
@@ -43,8 +54,13 @@ class MetricsStorage:
         container.stop()
 
     def create_metrics_table(self):
+        """
+        Creates all tables in the postges database to record the Metrics form a Benchmark.
+        """
         self.meta = MetaData()
         self.create_latency_table()
+        self.create_resource_table()
+        self.create_classification_metrics_table()
         self.meta.create_all(self.engine)
 
     def create_latency_table(self):
@@ -58,6 +74,9 @@ class MetricsStorage:
         )
 
     def create_resource_table(self):
+        pass
+
+    def create_classification_metrics_table(self):
         pass
 
     def get_benchmark_results(self):

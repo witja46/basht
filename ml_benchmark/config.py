@@ -13,7 +13,6 @@ class Path:
 
 @dataclass
 class MnistConfig:
-
     val_split_ratio: float = 0.2
     train_batch_size: int = 512
     val_batch_size: int = 128

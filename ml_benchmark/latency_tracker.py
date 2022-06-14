@@ -14,6 +14,13 @@ class Tracker(ABC):
 
 
 class LatencyTracker(Tracker):
+    """
+    A Tracker that establishes a connection to the Latency Table in the postgres database. The LatencyTracker
+    is used to write a latency into the postgres database.
+
+    Args:
+        Tracker (_type_): _description_
+    """
 
     def __init__(self, connection_string: str = None) -> None:
         if connection_string:
@@ -27,20 +34,42 @@ class LatencyTracker(Tracker):
         return engine
 
     def track(self, latency_obj):
+        """
+        Records a latency by writing it into a postgres database. First the table is retrieved, afterwards
+        a connection is established and an INSERT statement is executed to save the results.
+
+        Args:
+            latency_obj (_type_): _description_
+        """
         # TODO: test this shit
         metadata = MetaData(bind=self.engine)
         latency = Table("latency", metadata, autoload_with=self.engine)
         with self.engine.connect() as conn:
             stmt = insert(latency).values(latency_obj.to_dict())
-            result = conn.execute(stmt)
-        print(result)
+            conn.execute(stmt)
+        print(f"Latency Recorded! Latency: {latency_obj.to_dict()}")
 
 
 # TODO: decorator for trial latencies?
 class Latency:
 
     def __init__(self, func) -> None:
-        # TODO: how to maintain identifiability for one trial?
+        """The latency of provided function gfives the duration of the start_time and end_time of the provided
+        function.
+        The id is generated from:
+            * the process the function is running on, the name of the function
+            * the object which the function is a class method of
+            * a randomly generated number, to maintain uniqueness of the id.
+
+        The object hash shall identify a single trail as it is assumed that a trail used 'train' and 'test'
+        from the same Objective object.
+
+        Args:
+            func (_type_): _description_
+
+        Raises:
+            AttributeError: _description_
+        """
         self.name: str = func.__name__
         self.process_id = os.getpid()
         try:
@@ -66,10 +95,18 @@ class Latency:
         return latency_dict
 
     def __enter__(self):
+        """Entering point of the context manager.
+
+        Returns:
+            _type_: _description_
+        """
         self.start_time = datetime.now()
         return self
 
     def __exit__(self, *args):
+        """
+        Exit point of the context manager.
+        """
         self.end_time = datetime.now()
         self._calculate_duration()
 
@@ -85,6 +122,12 @@ class Latency:
 
 # decorators overwrite a decorated function once it is passed to the compiler
 def latency_decorator(func):
+    """A Decorator to record the latency of the decorated function. Once it is recorded the LatencyTracker
+    writes the result into the postgres databse.
+
+    Args:
+        func (_type_): _description_
+    """
     def latency_func(*args, **kwargs):
         func.__self__ = args[0]
         with Latency(func) as latency:

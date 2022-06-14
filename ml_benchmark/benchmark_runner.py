@@ -3,7 +3,6 @@ import json
 from datetime import datetime
 from abc import ABC, abstractmethod
 import inspect
-from multiprocessing.sharedctypes import Value
 import os
 import torch
 import numpy as np
@@ -98,8 +97,23 @@ class BenchmarkRunner():
             self, benchmark_cls: Benchmark, config: dict, grid: dict,
             resources: dict, task_str: str = "mnist") -> None:
         """
-            benchName: uniqueName of the bechmark, used in logging
-            config: configuration object
+        This class runs a Benchmark.
+        It is responsibile for setting up everything that is needed upfront to run the benchmark and manages
+        recording and saving of benchmark results. It aswell records the Latency of every Step of an
+        object that inherits the Benchmark ABC.
+        Before a Benchmark is run seeds are set to ensure identical results for every probabilistic
+        interference.
+
+        On initialization the BenchmarkRunner creates a folder to store results. Benchmark run on tasks, which
+        can be varied. Data and necessary static configurations, that do not affect the Benchmark are loaded
+        with the task.
+
+        Args:
+            benchmark_cls (Benchmark): _description_
+            config (dict): _description_
+            grid (dict): _description_
+            resources (dict): _description_
+            task_str (str, optional): _description_. Defaults to "mnist".
         """
 
         # get task
@@ -121,6 +135,7 @@ class BenchmarkRunner():
             epochs=epochs,
             train_loader=train_loader, val_loader=val_loader, test_loader=test_loader)
 
+        # add input and output size to the benchmark.
         grid["input_size"] = task.input_size
         grid["output_size"] = task.output_size
         grid = grid
@@ -136,6 +151,13 @@ class BenchmarkRunner():
         self.latency_tracker = LatencyTracker(MetricsStorage.connection_string)
 
     def run(self):
+        """
+        Runs all functions of a Benchmark and records its latencies. Saves the results afterwards
+        in a predefined folder.
+
+        Raises:
+            ValueError: _description_
+        """
         run_process = [
             self.benchmark.deploy, self.benchmark.run, self.benchmark.collect_run_results,
             self.benchmark.test, self.benchmark.collect_benchmark_metrics,
@@ -167,11 +189,22 @@ class BenchmarkRunner():
         self.save_benchmark_results(benchmark_results)
 
     def _set_all_seeds(self):
+        """
+        Set all relevant seeds to exclude probabilistic interferences.
+        """
         torch.manual_seed(1337)
         np.random.seed(1337)
         random.seed(1337)
 
     def save_benchmark_results(self, benchmark_results):
+        """
+        Save Benchmark Results in from of a Json. The json includes the configuration, the hyperparameter grid
+        and the results of the benchmark. The grid may use custom functions of the hyperparameter framework,
+        therefore saving can be troublesome.
+
+        Args:
+            benchmark_results (_type_): _description_
+        """
         benchmark_config_dict = dict(
             objective=self.benchmark.objective.__class__.__name__,
             grid=self.benchmark.grid,

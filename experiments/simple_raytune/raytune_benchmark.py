@@ -2,7 +2,6 @@ from ray import tune
 
 from ml_benchmark.benchmark_runner import Benchmark, BenchmarkRunner
 from ml_benchmark.config import MnistConfig
-from ml_benchmark.latency_tracker import Latency, LatencyTracker
 
 
 class RaytuneBenchmark(Benchmark):
@@ -57,7 +56,8 @@ class RaytuneBenchmark(Benchmark):
         )
 
     def collect_run_results(self):
-        self.best_config = self.analysis.get_best_config(metric="macro_f1_score", mode="max")["hyperparameters"]
+        self.best_config = self.analysis.get_best_config(
+            metric="macro_f1_score", mode="max")["hyperparameters"]
         self.latency = self.analysis.dataframe(metric="latency")
 
     def test(self):
@@ -93,8 +93,10 @@ if __name__ == "__main__":
     # The basic config for the workload. For testing purposes set epochs to one.
     # For benchmarking take the default value of 100
     config = MnistConfig(epochs=1).to_dict()
+
     # your ressources the optimization should run on
     resources = {"cpu": 12}
+
     # Add your hyperparameter setting procedure here
     # your hyperparameter grid you want to search over
     hyperparameters = dict(
