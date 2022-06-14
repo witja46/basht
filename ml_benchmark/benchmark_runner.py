@@ -7,8 +7,9 @@ import os
 import torch
 import numpy as np
 import random
-from ml_benchmark.metric_persistor import MetricPersistor
+import docker
 
+from ml_benchmark.metrics_storage import MetricsStorage
 from ml_benchmark.workload.mnist.mnist_task import MnistTask
 from ml_benchmark.latency_tracker import LatencyTracker, Latency
 
@@ -129,8 +130,8 @@ class BenchmarkRunner():
         self._set_all_seeds()
 
         # prepare tracker
+        self.metrics_storage = MetricsStorage()
         self.latency_tracker = LatencyTracker()
-        # TODO: add maximum available resources??
 
     def run(self):
         run_process = [
@@ -138,11 +139,14 @@ class BenchmarkRunner():
             self.benchmark.test, self.benchmark.collect_benchmark_metrics,
             self.benchmark.undeploy]
 
-        metric_persistor = MetricPersistor()
-        for benchmark_fun in run_process:
-            with Latency(benchmark_fun) as latency:
-                benchmark_fun()
-            self.latency_tracker.track(latency)
+        try:
+            self.metrics_storage.start_db()
+            for benchmark_fun in run_process:
+                with Latency(benchmark_fun) as latency:
+                    benchmark_fun()
+                self.latency_tracker.track(latency)
+                benchmark_results = self.metrics_storage.get_benchmark_results()
+            self.metrics_storage.stop_db()
             # TODO: seperate classification results from benchmark metrics
             # if benchmark_fun.__name__ == self.benchmark.collect_benchmark_metrics.__name__:
             #     benchmark_execution_results = results
@@ -152,8 +156,9 @@ class BenchmarkRunner():
         #     benchmark_process_latencies=benchmark_process_latencies,
         #     benchmark_execution_results=benchmark_execution_results
         # )
+        except (docker.errors.APIError, AttributeError, ValueError, RuntimeError):
+            self.metrics_storage.stop_db()
 
-        benchmark_results = metric_persistor.get_all_benchmark_results()
         self.save_benchmark_results(benchmark_results)
 
     def _set_all_seeds(self):

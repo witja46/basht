@@ -1,0 +1,80 @@
+import time
+import docker
+from sqlalchemy import create_engine, MetaData, Table, Column, Integer, String, Float, insert, select
+
+
+class MetricsStorage:
+
+    port = 5432
+    user = "root"
+    password = "1234"
+    db = "benchmark_metrics"
+    host = "localhost"
+    connection_string = f"postgresql://{user}:{password}@{host}:{port}/{db}"
+
+    def __init__(self, connection_string: str = None) -> None:
+        if connection_string:
+            self.connection_string = connection_string
+        self.latency = None
+
+    def start_db(self):
+        self.setup_db()
+        self.engine = create_engine(self.connection_string)
+        self.create_metrics_table()
+        self.create_resource_table()
+        return self
+
+    def setup_db(self):
+        self.client = docker.from_env()
+        self.client.containers.run(
+            "postgres:14.1", detach=True,
+            environment=[f"POSTGRES_PASSWORD={self.password}", f"POSTGRES_DB={self.db}", f"POSTGRES_USER={self.user}"],
+            ports={f'{self.port}/tcp': 5432},
+            name="postgres",
+            remove=True)
+        container = self.client.containers.get("postgres")
+        # checks if db is up
+        while "accepting connections" not in container.exec_run("pg_isready").output.decode():
+            time.sleep(2)
+        print("DB-Container Running")
+
+    def stop_db(self):
+        container = self.client.containers.get("postgres")
+        container.stop()
+
+    def create_metrics_table(self):
+        self.meta = MetaData()
+        self.create_latency_table()
+        self.meta.create_all(self.engine)
+
+    def create_latency_table(self):
+        self.latency = Table(
+            "latency", self.meta,
+            Column("id", String, primary_key=True),
+            Column("name", String),
+            Column("start_time", String),
+            Column("end_time", String),
+            Column("duration", Float)
+        )
+
+    def create_resource_table(self):
+        pass
+
+    def get_benchmark_results(self):
+        latency = self.get_latency_results()
+        resources = self.get_resource_results()
+        classification = self.get_classification_results()
+        return dict(latency=latency, resources=resources, classification=classification)
+
+    def get_latency_results(self):
+        with self.engine.connect() as conn:
+            stmt = select(self.latency)
+            result = conn.execute(stmt)
+        result = result.mappings().all()
+        return result
+
+    def get_resource_results(self):
+        pass
+
+    def get_classification_results(self):
+        pass

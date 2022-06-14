@@ -1,8 +1,9 @@
 import os
 from datetime import datetime, timedelta
 from abc import ABC, abstractmethod
-
-from ml_benchmark.metric_persistor import MetricPersistor
+from uuid import uuid4
+from sqlalchemy import create_engine, MetaData, Table, insert
+import psycopg2
 
 
 class Tracker(ABC):
@@ -14,19 +15,25 @@ class Tracker(ABC):
 
 class LatencyTracker(Tracker):
 
-    def __init__(self) -> None:
-        self.recorded_latencies = []
-        self.metric_persistor = MetricPersistor()
+    def __init__(self, connection_string: str = None) -> None:
+        if connection_string:
+            self.engine = self._create_engine(connection_string)
 
-    def track(self, latency):
-        # implement tracking routine for postgres
-        self.recorded_latencies.append(latency)
+    def _create_engine(self, connection_string):
+        try:
+            engine = create_engine(connection_string, echo=True)
+        except psycopg2.Error:
+            raise ConnectionError("Could not create an Engine for the Postgres DB.")
+        return engine
 
-    def get_recorded_latencies(self):
-        return [latency.to_dict() for latency in self.recorded_latencies]
-
-    def _create_table(self):
-        pass
+    def track(self, latency_obj):
+        # TODO: test this shit
+        metadata = MetaData(bind=self.engine)
+        latency = Table("latency", metadata, autoload_with=self.engine)
+        with self.engine.connect() as conn:
+            stmt = insert(latency).values(latency_obj.to_dict())
+            result = conn.execute(stmt)
+        print(result)
 
 
 # TODO: decorator for trial latencies?
@@ -36,22 +43,26 @@ class Latency:
         # TODO: how to maintain identifiability for one trial?
         self.name: str = func.__name__
         self.process_id = os.getpid()
-        self.id = f"pi_{self.process_id}__name_{self.name}"
+        try:
+            self.obj_hash = hash(func.__self__)
+        except AttributeError:
+            raise AttributeError("Functions need to be part of a class in order to measure their latency.")
+        self.id = f"pid_{self.process_id}__name_{self.name}__objHash_{self.obj_hash}__id_{uuid4()}"
         self.start_time: float = None
         self.end_time: float = None
         self.duration: float = None
 
     def to_dict(self):
         latency_dict = dict(
+            id=self.id,
+            name=self.name,
             start_time=self.start_time,
             end_time=self.end_time,
             duration=self.duration
         )
         latency_dict = {key: self._convert_times_to_float(value) for key, value in latency_dict.items()}
 
-        return {
-            self.name: latency_dict
-        }
+        return latency_dict
 
     def __enter__(self):
         self.start_time = datetime.now()
@@ -68,24 +79,50 @@ class Latency:
         if isinstance(value, timedelta):
             return value.total_seconds()
         else:
-            return value.timestamp()
+            return str(value)
 
 
+# decorators overwrite a decorated function once it is passed to the compiler
 def latency_decorator(func):
-    # TODO add adress argument to tracker? use it as decorator in objective. Automatically tracks into right db
     def latency_func(*args, **kwargs):
-        with Latency(func.__name__) as latency:
+        func.__self__ = args[0]
+        with Latency(func) as latency:
             result = func(*args, **kwargs)
-        result["latency"] = latency.to_dict()
+        latency_tracker = LatencyTracker(connection_string=func.__self__.metrics_storage_address)
+        latency_tracker.track(latency)
+        func.__self__ = None
         return result
     return latency_func
 
 
 if __name__ == "__main__":
 
-    def a(b):
-        return b
-    with Latency(a.__name__) as latency:
-        a(2)
-    print(latency.duration)
-    print(latency.to_dict())
+    from ml_benchmark.metrics_storage import MetricsStorage
+    import docker
+
+    storage = MetricsStorage()
+
+    class Test:
+        metrics_storage_address = MetricsStorage.connection_string
+
+        def __init__(self) -> None:
+            pass
+
+        @latency_decorator
+        def a(self, b):
+            return b
+
+        @latency_decorator
+        def c(self, b):
+            return b
+
+    try:
+        storage.start_db()
+        testclass = Test()
+        testclass.a(2)
+        testclass.c(2)
+        result = storage.get_benchmark_results()
+        storage.stop_db()
+    except docker.errors.APIError:
+        storage.stop_db()
+    print(result)
