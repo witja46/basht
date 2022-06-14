@@ -67,11 +67,14 @@ class MetricsStorage:
         return dict(latency=latency, resources=resources, classification=classification)
 
     def get_latency_results(self):
+        result_list = []
         with self.engine.connect() as conn:
             stmt = select(self.latency)
-            result = conn.execute(stmt)
-        result = result.mappings().all()
-        return result
+            cursor = conn.execute(stmt)
+        cursor = cursor.mappings().all()
+        for row in cursor:
+            result_list.append(dict(row))
+        return result_list
 
     def get_resource_results(self):
         pass

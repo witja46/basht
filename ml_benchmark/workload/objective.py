@@ -1,9 +1,12 @@
 from abc import ABC, abstractmethod
 
+from ml_benchmark.metrics_storage import MetricsStorage
+
 
 class Objective(ABC):
 
-    metrics_persistor_address = None
+    # need possibility to set dynamically
+    metrics_storage_address = MetricsStorage.connection_string
 
     @abstractmethod
     def train(self):

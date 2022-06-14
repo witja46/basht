@@ -39,10 +39,7 @@ class RaytuneBenchmark(Benchmark):
             hyperparameters = config.get("hyperparameters")
             objective.set_hyperparameters(hyperparameters)
             # these are the results, that can be used for the hyperparameter search
-            with Latency(objective.train) as latency:
-                objective.train()
-            latency_tracker = LatencyTracker(address="")
-            latency_tracker.track(latency)
+            objective.train()
             validation_scores = objective.validate()
             tune.report(macro_f1_score=validation_scores["macro avg"]["f1-score"])
 

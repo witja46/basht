@@ -45,7 +45,8 @@ class Latency:
         self.process_id = os.getpid()
         try:
             self.obj_hash = hash(func.__self__)
-        except AttributeError:
+        except AttributeError as e:
+            print(e)
             raise AttributeError("Functions need to be part of a class in order to measure their latency.")
         self.id = f"pid_{self.process_id}__name_{self.name}__objHash_{self.obj_hash}__id_{uuid4()}"
         self.start_time: float = None
@@ -99,6 +100,7 @@ if __name__ == "__main__":
 
     from ml_benchmark.metrics_storage import MetricsStorage
     import docker
+    import json
 
     storage = MetricsStorage()
 
@@ -125,4 +127,4 @@ if __name__ == "__main__":
         storage.stop_db()
     except docker.errors.APIError:
         storage.stop_db()
-    print(result)
+    print(json.dumps(result))

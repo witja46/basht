@@ -3,6 +3,7 @@ import json
 from datetime import datetime
 from abc import ABC, abstractmethod
 import inspect
+from multiprocessing.sharedctypes import Value
 import os
 import torch
 import numpy as np
@@ -124,6 +125,7 @@ class BenchmarkRunner():
         grid["output_size"] = task.output_size
         grid = grid
         resources = resources
+        # TODO: set metrics persistor location dynamically here?
         self.benchmark = benchmark_cls(objective, grid, resources)
 
         # set seeds
@@ -131,13 +133,14 @@ class BenchmarkRunner():
 
         # prepare tracker
         self.metrics_storage = MetricsStorage()
-        self.latency_tracker = LatencyTracker()
+        self.latency_tracker = LatencyTracker(MetricsStorage.connection_string)
 
     def run(self):
         run_process = [
             self.benchmark.deploy, self.benchmark.run, self.benchmark.collect_run_results,
             self.benchmark.test, self.benchmark.collect_benchmark_metrics,
             self.benchmark.undeploy]
+        benchmark_results = None
 
         try:
             self.metrics_storage.start_db()
@@ -156,8 +159,10 @@ class BenchmarkRunner():
         #     benchmark_process_latencies=benchmark_process_latencies,
         #     benchmark_execution_results=benchmark_execution_results
         # )
-        except (docker.errors.APIError, AttributeError, ValueError, RuntimeError):
+        except (docker.errors.APIError, AttributeError, ValueError, RuntimeError) as e:
             self.metrics_storage.stop_db()
+            print(e)
+            raise ValueError("No Results obtained, Benchmark failed.")
 
         self.save_benchmark_results(benchmark_results)
 
