@@ -46,7 +46,7 @@ class Latency(Metric):
         self.add_to_id(f"name_{self.name}__objHash_{self.obj_hash}")
         self.start_time: float = None
         self.end_time: float = None
-        self.duration: float = None
+        self.duration_sec: float = None
 
     def to_dict(self):
         latency_dict = dict(
@@ -54,7 +54,7 @@ class Latency(Metric):
             name=self.name,
             start_time=self.start_time,
             end_time=self.end_time,
-            duration_sec=self.duration
+            duration_sec=self.duration_sec
         )
         latency_dict = {key: self._convert_times_to_float(value) for key, value in latency_dict.items()}
 
@@ -77,7 +77,7 @@ class Latency(Metric):
         self._calculate_duration()
 
     def _calculate_duration(self):
-        self.duration = self.end_time - self.start_time
+        self.duration_sec = self.end_time - self.start_time
 
     def _convert_times_to_float(self, value):
         if isinstance(value, timedelta):

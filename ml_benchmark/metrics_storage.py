@@ -70,7 +70,7 @@ class MetricsStorage:
             Column("name", String),
             Column("start_time", String),
             Column("end_time", String),
-            Column("duration", Float)
+            Column("duration_sec", Float)
         )
 
     def create_resource_table(self):
@@ -100,3 +100,4 @@ class MetricsStorage:
 
     def get_classification_results(self):
         pass
+
