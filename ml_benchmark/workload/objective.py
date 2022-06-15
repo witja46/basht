@@ -10,7 +10,7 @@ class Objective(ABC):
     """
 
     # need possibility to set dynamically - public IP if ssh connect
-    metrics_storage_address = MetricsStorage.connection_string
+    metrics_storage_address = MetricsStorage.connection_string # create on object init
 
     @abstractmethod
     def train(self):
