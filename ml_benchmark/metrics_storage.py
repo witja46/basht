@@ -66,8 +66,8 @@ class MetricsStorage:
     def create_latency_table(self):
         self.latency = Table(
             "latency", self.meta,
-            Column("id", String, primary_key=True),
-            Column("name", String),
+            Column("metric_id", String, primary_key=True),
+            Column("function_name", String),
             Column("start_time", String),
             Column("end_time", String),
             Column("duration_sec", Float)

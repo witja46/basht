@@ -2,19 +2,23 @@ import os
 from datetime import datetime, timedelta
 from uuid import uuid4
 import socket
+from dataclasses import dataclass, asdict
 
 
+@dataclass
 class Metric:
-    def __init__(self) -> None:
-        """
-        Metric Parentclass. Creates a unique identifier for every metric and gathers basic information.
-        """
-        self.process_id = os.getpid()
-        self.hostname = socket.gethostname()
-        self.id = f"id_{uuid4()}__pid_{self.process_id}__hostname_{self.hostname}"
+    """
+    Metric Parentclass. Creates a unique identifier for every metric and gathers basic information.
+    """
+    process_id = os.getpid()
+    hostname = socket.gethostname()
+    metric_id = f"id_{uuid4()}__pid_{process_id}__hostname_{hostname}"
 
     def add_to_id(self, id_addition):
-        self.id = self.id + f"__{id_addition}"
+        self.metric_id = self.metric_id + f"__{id_addition}"
+
+    def to_dict(self):
+        return asdict(self)
 
 
 class Latency(Metric):
@@ -37,25 +41,26 @@ class Latency(Metric):
             AttributeError: _description_
         """
         super().__init__()
-        self.name: str = func.__name__
+        self.function_name: str = func.__name__
         try:
             self.obj_hash = hash(func.__self__)
         except AttributeError as e:
             print(e)
             raise AttributeError("Functions need to be part of a class in order to measure their latency.")
-        self.add_to_id(f"name_{self.name}__objHash_{self.obj_hash}")
+        self.add_to_id(f"function-name_{self.function_name}__objHash_{self.obj_hash}")
         self.start_time: float = None
         self.end_time: float = None
         self.duration_sec: float = None
 
     def to_dict(self):
         latency_dict = dict(
-            id=self.id,
-            name=self.name,
+            metric_id=self.metric_id,
+            function_name=self.function_name,
             start_time=self.start_time,
             end_time=self.end_time,
             duration_sec=self.duration_sec
         )
+        # latency_dict.update(super().to_dict())
         latency_dict = {key: self._convert_times_to_float(value) for key, value in latency_dict.items()}
 
         return latency_dict
