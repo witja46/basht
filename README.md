@@ -56,7 +56,11 @@ The Lifecycle consists of 7 steps, that we describe in detail in the following:
 
 The docker container stub is located [here](todo).
 
-# System Components
+## Collaboration
+
+Make sure to fork the repository. For informations on how to fork read [here](https://docs.github.com/en/get-started/quickstart/fork-a-repo). When you start working on your code, in your forked repositry, make sure to create a new branch with `collaborator_name/feature_name`. When performing your work assure, that you keep your `main` branch of your forked repository up to date with the `main` brain of this repository as it is a direct copy. How to sync your `main` branch with the one of this repository can be read [here](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/syncing-a-fork). Once your work is done submit a pull request to the original repository (this one). A guide can be found [here](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request-from-a-fork). For the Pull Request regular rules apply. Provide a short description of the feature you are adding and make sure your code is in a good shape (decent amount of documentation, no extremely long script files). If you use Python it is recommended to use `Flake8`.
+
+## System Components
 
 Adresses all components that perform necessary task in an HPO. E.g. Scheduling, I/O Operations etc.
 A component is not necessarily one Object within the framework, but it can be a collection of multiple objects performing similar elemental tasks.

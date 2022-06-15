@@ -21,5 +21,5 @@ class ResultSaver:
         return experiment_path
 
     def save_results(self, results):
-        with open(os.path.join(self.experiment_path, "test_results.json"), "w") as f:
+        with open(os.path.join(self.experiment_path, "benchmark_results.json"), "w") as f:
             json.dump(results, f)

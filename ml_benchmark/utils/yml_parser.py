@@ -3,13 +3,11 @@ from yaml import load, Loader
 
 class YMLParser:
 
-
     @staticmethod
     def parse(hyperparameter_file_path):
         with open(hyperparameter_file_path, "r") as f:
             hyper_dict = load(f, Loader=Loader)
         return hyper_dict
-
 
 
 if __name__ == "__main__":

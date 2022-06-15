@@ -1,16 +1,16 @@
 import multiprocessing
 import time
 from itertools import product
-from multiprocessing import Pool, cpu_count
+from multiprocessing import cpu_count
 import os
 import json
 
 ctx = multiprocessing.get_context("spawn")
 
 
-class GridSearch:
+class VanillaGridSearch:
     def __init__(
-        self, objective_cls, objective_args, grid, result_path=None, device="cpu", num_processes=None) -> None:
+        self, objective_cls, objective_args, grid, result_path=None, resources=None) -> None:
         """_summary_
 
         Args:
@@ -23,10 +23,13 @@ class GridSearch:
         self.objective_args = objective_args
         self.grid = self._generate_parameters(grid)
         self.device = device
-        if num_processes:
-            self.num_processes = num_processes
+        if resources:
+            self.num_processes = resources.get("num_processes", cpu_count())
+            self.device = resources.get("device", "cpu")
         else:
             self.num_processes = cpu_count()
+            self.deivce = "cpu"
+
         if result_path:
             self.result_path = result_path
         else:
@@ -112,8 +115,8 @@ class TuneJob:
 
 
 if __name__ == "__main__":
-    from ml_benchmark.mlp_objective import MLPObjective
-    from ml_benchmark.mnist_task import MnistTask
+    from ml_benchmark.workload.mnist.mlp_objective import MLPObjective
+    from ml_benchmark.workload.mnist.mnist_task import MnistTask
     epochs = 5
     configuration = {
             "val_split_ratio": 0.2, "train_batch_size": 512, "val_batch_size": 128, "test_batch_size": 128}
@@ -124,6 +127,7 @@ if __name__ == "__main__":
             weight_decay=[1e-6],
             hidden_layer_config=[[20], [10, 10]],
             output_size=[task.output_size])
+    resources = dict(processes=2)
 
     train_loader, val_loader, test_loader = task.create_data_loader(configuration)
     objective_cls = MLPObjective
@@ -134,6 +138,7 @@ if __name__ == "__main__":
         test_loader=test_loader
         )
     device = "cpu"
-    grid_search = GridSearch(
-        objective_cls=objective_cls, objective_args=objective_args, grid=grid, device=device, num_processes=2)
+    grid_search = VanillaGridSearch(
+        objective_cls=objective_cls, objective_args=objective_args, grid=grid, device=device,
+        num_processes=resources["processes"])
     grid_search.main()
