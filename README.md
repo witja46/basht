@@ -1,5 +1,8 @@
+![main branch status](https://github.com/gebauerm/ml_benchmark/actions/workflows/package-pipeline.yml/badge.svg?branch=main)
+
 # ml_benchmark
 This repository supplies a job to benchmark hyperparameter tuning.
+
 
 
 ## Start up
@@ -19,9 +22,14 @@ Note: If you run your benchmark on GPU make sure to install [Cuda](https://docs.
 2. Create a Python environment with `python -m venv .venv`.
 3. Activate your environment with `source .venv/bin/activate`
 4. Upgrade pip with `pip install pip --upgrade`
-5. If not already installed install [PyTorch](https://pytorch.org/get-started/locally/)
+5. If not already installed install [PyTorch and Torchvision](https://pytorch.org/get-started/locally/)
 6. To install the benchmark and use it locally type, switch to the root_folder of the repository and type in `pip install -e .`
 
+
+For running the raytune example add the following after the process above:
+
+1. `pip install ray[tune]`
+2. `pip install pandas`
 
 ## Class Explanation
 
