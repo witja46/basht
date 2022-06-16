@@ -23,9 +23,7 @@ jobs:
     - name: Install dependencies
       run: |
         pip install torch torchvision
-        pip install -e .
-        pip install ray[tune]
-        pip install pandas
+        pip install -e .["test"]
     - name: test_package
       run: |
         pytest --cov test/

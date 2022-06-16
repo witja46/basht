@@ -7,6 +7,7 @@ __version__ = "0.2.0"
 install_requires = [
     "scikit-learn==0.24.2", "scipy==1.7.0", "tqdm==4.62.3", "SQLAlchemy==1.4.31", "docker==5.0.3",
     "psycopg2-binary"],
+test_install_requires = ["pytest==7.1.2", "pytest-cov==3.0.0"]
 
 setup(
     name='ml_benchmark',
@@ -22,4 +23,5 @@ setup(
     dependency_links=[""],
     python_requires=">=3.6",
     include_package_data=True,
-)
+    extras_require={"test": test_install_requires}
+    )
