@@ -26,6 +26,6 @@ jobs:
         pip install -e .
         pip install ray[tune]
         pip install pandas
-    - name: test_raytune
+    - name: test_package
       run: |
-        python ./experiments/simple_raytune/raytune_benchmark.py
+        pytest --cov test/
