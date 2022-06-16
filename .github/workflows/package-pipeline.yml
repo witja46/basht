@@ -7,7 +7,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  test-package:
 
     runs-on: ubuntu-latest
     strategy:
@@ -24,6 +24,7 @@ jobs:
       run: |
         pip install torch
         pip install -e .
+        pip install ray
     - name: test_raytune
       run: |
         python ./experiments/simple_raytune/raytune_benchmark.py
