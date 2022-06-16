@@ -1,8 +1,8 @@
+![main branch status](https://github.com/gebauerm/ml_benchmark/actions/workflows/package-pipeline.yml/badge.svg?branch=main)
+
 # ml_benchmark
 This repository supplies a job to benchmark hyperparameter tuning.
 
-
-![main branch status](https://github.com/gebauerm/ml_benchmark/actions/workflows/package-pipeline.yml/badge.svg?branch=main)
 
 
 ## Start up
