@@ -1,6 +1,4 @@
-from ml_benchmark.latency_tracker import latency_decorator
 from ml_benchmark.metrics_storage import MetricsStorage
-import pytest
 import docker
 import json
 
