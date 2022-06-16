@@ -25,6 +25,7 @@ jobs:
         pip install torch
         pip install -e .
         pip install ray
+        pip install pandas
     - name: test_raytune
       run: |
         python ./experiments/simple_raytune/raytune_benchmark.py
