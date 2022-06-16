@@ -22,7 +22,7 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
       run: |
-        pip install torch
+        pip install torch torchvision
         pip install -e .
         pip install ray[tune]
         pip install pandas
