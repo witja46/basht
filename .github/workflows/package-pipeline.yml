@@ -24,7 +24,7 @@ jobs:
       run: |
         pip install torch
         pip install -e .
-        pip install ray
+        pip install ray[tune]
         pip install pandas
     - name: test_raytune
       run: |
