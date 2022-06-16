@@ -170,7 +170,7 @@ class BenchmarkRunner():
                 with Latency(benchmark_fun) as latency:
                     benchmark_fun()
                 self.latency_tracker.track(latency)
-                benchmark_results = self.metrics_storage.get_benchmark_results()
+            benchmark_results = self.metrics_storage.get_benchmark_results()
             self.metrics_storage.stop_db()
         except (docker.errors.APIError, AttributeError, ValueError, RuntimeError) as e:
             self.metrics_storage.stop_db()
