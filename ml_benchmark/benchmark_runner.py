@@ -24,6 +24,7 @@ class Benchmark(ABC):
         ABC (_type_): Abstract Base Class
     """
 
+    # TODO: move objective into another class that enherits benchmark
     objective = None
     grid = None
     resources = None

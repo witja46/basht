@@ -14,7 +14,7 @@ setup(
     version=__version__,
     description='ml_benchmark - A ML-Job for Benchmarking.',
     license='MIT',
-    author='Michael Gebauer',
+    author='Michael Gebauer, Sebastian Werner',
     author_email='gebauerm23@gmail.com',
     url=URL,
     download_url=f'{URL}/archive/{__version__}.tar.gz',
@@ -23,5 +23,6 @@ setup(
     dependency_links=[""],
     python_requires=">=3.6",
     include_package_data=True,
-    extras_require={"test": test_install_requires}
+    extras_require={"test": test_install_requires},
+    long_description="README.md"
     )
