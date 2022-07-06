@@ -77,8 +77,10 @@ if __name__ == "__main__":
             hidden_layer_config=tune.grid_search([[20], [10, 10]]),
             output_size=10)
 
+
     # import an use the runner
     runner = BenchmarkRunner(
         benchmark_cls=RaytuneBenchmark, config=config, grid=hyperparameters, resources=resources,
         task_str="mnist")
     runner.run()
+
