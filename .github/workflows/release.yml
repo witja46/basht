@@ -1,13 +1,11 @@
 name: Python package
 
 on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+  release:
+    types: [created]
 
 jobs:
-  test-package:
+  release-package:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -26,3 +24,18 @@ jobs:
       run: |
         pytest --cov=ml_benchmark test/
         echo $GITHUB_REF
+    - name: Build Dist
+      run: |
+        VERSION=$(echo $GITHUB_REF | sed 's#.*/tags/##')
+        PLACEHOLDER='__version__ = "develop"'
+        VERSION_FILE='setup.py.'
+        sed -i "s/$PLACEHOLDER/__version__ = \"${VERSION}\"/g" "$VERSION_FILE"
+        pip install build==0.8.0 twine==4.0.1
+        python -m build
+    - name: Publish package
+      uses: pypa/gh-action-pypi-publish@release/v1
+      with:
+        user: __token__
+        password: ${{secrets.PYPI_ACCESS}}
+        verbose: true
+
