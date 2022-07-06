@@ -2,7 +2,7 @@ name: Python package
 
 on:
   push:
-    branches: [ "main", "docker_example" ]
+    branches: [ "main", "feature/docker_example" ]
   pull_request:
     branches: [ "main" ]
 
