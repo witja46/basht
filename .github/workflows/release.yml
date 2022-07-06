@@ -26,12 +26,13 @@ jobs:
         echo $GITHUB_REF
     - name: Build Dist
       run: |
-        VERSION=$(echo $GITHUB_REF | sed 's#.*/##')
+        # from refs/tags/v1.2.3 get 1.2.3
+        VERSION=$(echo $GITHUB_REF | sed 's#.*/v##')
         PLACEHOLDER='__version__ = "develop"'
         VERSION_FILE='ml_benchmark/__init__.py
         sed -i "s/$PLACEHOLDER/__version__ = \"${VERSION}\"/g" "$VERSION_FILE"
         pip install build==0.8.0 twine==4.0.1
-        python -m build
+        python -m build .
     - name: Publish package
       uses: pypa/gh-action-pypi-publish@release/v1
       with:
