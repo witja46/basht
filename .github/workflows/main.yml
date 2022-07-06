@@ -25,6 +25,7 @@ jobs:
     - name: Test Package
       run: |
         pytest --cov=ml_benchmark test/
+        echo $GITHUB_REF
 
   publish-package:
     runs-on: ubuntu-latest
@@ -36,9 +37,9 @@ jobs:
     steps:
     - name: Build Dist
       run: |
-        VERSION=$(echo $GITHUB_REF | sed 's#.*/v##')
+        VERSION=$(echo $GITHUB_REF | sed 's#.*/tags/##')
         PLACEHOLDER='__version__ = "develop"'
-        VERSION_FILE='setup.py.py'
+        VERSION_FILE='setup.py.'
         sed -i "s/$PLACEHOLDER/__version__ = \"${VERSION}\"/g" "$VERSION_FILE"
         pip install build==0.8.0 twine==4.0.1
         python -m build
