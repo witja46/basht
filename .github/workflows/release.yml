@@ -26,7 +26,6 @@ jobs:
         echo $GITHUB_REF
     - name: Build Dist
       run: |
-        # from refs/tags/v1.2.3 get 1.2.3
         VERSION=$(echo $GITHUB_REF | sed 's#.*/v##')
         PLACEHOLDER='__version__ = "develop"'
         VERSION_FILE='ml_benchmark/__init__.py
