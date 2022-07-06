@@ -82,4 +82,3 @@ if __name__ == "__main__":
         benchmark_cls=RaytuneBenchmark, config=config, grid=hyperparameters, resources=resources,
         task_str="mnist")
     runner.run()
-

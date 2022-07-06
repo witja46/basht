@@ -16,15 +16,20 @@ def raytune_func(config):
             validation_scores = objective.validate()
             tune.report(macro_f1_score=validation_scores["macro avg"]["f1-score"])
 
-analysis = tune.run(
-    raytune_func,
-    config=dict(
-        objective=objective,
-        hyperparameters=grid,
-        ),
-    sync_config=tune.SyncConfig(
-        syncer=None  # Disable syncing
-        ),
-    local_dir="/volume/ray_results",
-    resources_per_trial={"cpu": resources["cpu"]}
-)
+# def main():
+#     analysis = tune.run(
+#         raytune_func,
+#         config=dict(
+#             objective=objective,
+#             hyperparameters=grid,
+#             ),
+#         sync_config=tune.SyncConfig(
+#             syncer=None  # Disable syncing
+#             ),
+#         local_dir="/volume/ray_results",
+#         resources_per_trial={"cpu": resources["cpu"]}
+#     )
+
+
+# if __name__ == "__main__":
+#     main()
