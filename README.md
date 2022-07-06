@@ -23,7 +23,7 @@ Note: If you run your benchmark on GPU make sure to install [Cuda](https://docs.
 3. Activate your environment with `source .venv/bin/activate`
 4. Upgrade pip with `pip install pip --upgrade`
 5. If not already installed install [PyTorch and Torchvision](https://pytorch.org/get-started/locally/)
-6. To install the benchmark and use it locally type, switch to the root_folder of the repository and type in `pip install -e .`
+6. To install the benchmark and use it locally , clone the repository and switch to the root_folder of the repository and type in `pip install -e .`. Otherwise you can also install the package via PyPi with `pip install ml-benchmark`
 
 
 For running the raytune example add the following after the process above:

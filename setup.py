@@ -2,7 +2,7 @@ from setuptools import find_packages, setup
 
 
 URL = "https://github.com/gebauerm/ml_benchmark"
-__version__ = "0.2.0"
+__version__ = "develop"
 
 install_requires = [
     "scikit-learn==0.24.2", "scipy==1.7.0", "tqdm==4.62.3", "SQLAlchemy==1.4.31", "docker==5.0.3",
@@ -24,5 +24,5 @@ setup(
     python_requires=">=3.6",
     include_package_data=True,
     extras_require={"test": test_install_requires},
-    long_description="README.md"
+    long_description="/README.md"
     )
