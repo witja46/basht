@@ -1,28 +1,27 @@
 from setuptools import find_packages, setup
 
 
-URL = "https://github.com/gebauerm/ml_benchmark"
-__version__ = "develop"
+def main():
+    import ml_benchmark as package
 
-install_requires = [
-    "scikit-learn==0.24.2", "scipy==1.7.0", "tqdm==4.62.3", "SQLAlchemy==1.4.31", "docker==5.0.3",
-    "psycopg2-binary"],
-test_install_requires = ["pytest==7.1.2", "pytest-cov==3.0.0"]
+    setup(
+        name='ml_benchmark',
+        version=package.__version__,
+        description='ml_benchmark - A ML-Job for Benchmarking.',
+        license='MIT',
+        author='Michael Gebauer, Sebastian Werner',
+        author_email='gebauerm23@gmail.com',
+        url=package.URL,
+        download_url=f'{package.URL}/archive/{package.__version__}.tar.gz',
+        packages=find_packages(),
+        install_requires=package.install_requires,
+        dependency_links=[""],
+        python_requires=">=3.6",
+        include_package_data=True,
+        extras_require={"test": package.test_install_requires},
+        long_description="/README.md"
+        )
 
-setup(
-    name='ml_benchmark',
-    version=__version__,
-    description='ml_benchmark - A ML-Job for Benchmarking.',
-    license='MIT',
-    author='Michael Gebauer, Sebastian Werner',
-    author_email='gebauerm23@gmail.com',
-    url=URL,
-    download_url=f'{URL}/archive/{__version__}.tar.gz',
-    packages=find_packages(),
-    install_requires=install_requires,
-    dependency_links=[""],
-    python_requires=">=3.6",
-    include_package_data=True,
-    extras_require={"test": test_install_requires},
-    long_description="/README.md"
-    )
+
+if __name__ == "__main__":
+    main()
