@@ -2,15 +2,17 @@ import time
 import docker
 from sqlalchemy import create_engine, MetaData, Table, Column, String, Float, select
 
+from ml_benchmark.config import MetricsStorageConfig
+
 
 class MetricsStorage:
 
-    port = 5432
-    user = "root"
-    password = "1234"
-    db = "benchmark_metrics"
-    host = "localhost"
-    connection_string = f"postgresql://{user}:{password}@{host}:{port}/{db}"
+    port = MetricsStorageConfig.port
+    user = MetricsStorageConfig.user
+    password = MetricsStorageConfig.password
+    db = MetricsStorageConfig.db
+    host = MetricsStorageConfig.host
+    connection_string = MetricsStorageConfig.connection_string
 
     def __init__(self, connection_string: str = None) -> None:
         """
