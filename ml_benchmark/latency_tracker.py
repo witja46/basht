@@ -61,7 +61,7 @@ def latency_decorator(func):
         func.__self__ = args[0]
         with Latency(func) as latency:
             result = func(*args, **kwargs)
-        latency_tracker = LatencyTracker(connection_string=func.__self__.metrics_storage_address) # TODO: fallback env variable
+        latency_tracker = LatencyTracker(connection_string=func.__self__.metrics_storage_adress)  # TODO: fallback env variable
         latency_tracker.track(latency)
         func.__self__ = None
         return result
