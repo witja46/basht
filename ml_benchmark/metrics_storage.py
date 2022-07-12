@@ -102,4 +102,3 @@ class MetricsStorage:
 
     def get_classification_results(self):
         pass
-

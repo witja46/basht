@@ -1,15 +1,14 @@
 import pytest
 from ml_benchmark.latency_tracker import latency_decorator
-from ml_benchmark.workload.objective import Objective, ObjectiveHelper
+from ml_benchmark.workload.objective import Objective
 
 
 @pytest.fixture
 def objective():
-    class TestObjective(Objective, ObjectiveHelper):
+    class TestObjective(Objective):
 
         def __init__(self) -> None:
-            super(TestObjective, self).__init__()
-
+            pass
         @latency_decorator
         def train(self):
             pass

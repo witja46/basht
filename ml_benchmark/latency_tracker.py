@@ -1,7 +1,10 @@
 from abc import ABC, abstractmethod
 from sqlalchemy import create_engine, MetaData, Table, insert
 import psycopg2
+import os
+
 from ml_benchmark.metrics import Latency
+from ml_benchmark.config import MetricsStorageConfig
 
 
 class Tracker(ABC):
@@ -21,8 +24,9 @@ class LatencyTracker(Tracker):
     """
 
     def __init__(self, connection_string: str = None) -> None:
-        if connection_string:
-            self.engine = self._create_engine(connection_string)
+        self.connection_string = self._get_connection_string(connection_string)
+        if self.connection_string:
+            self.engine = self._create_engine(self.connection_string)
 
     def _create_engine(self, connection_string):
         try:
@@ -47,6 +51,14 @@ class LatencyTracker(Tracker):
             conn.execute(stmt)
         print(f"Latency Recorded! Latency: {latency_obj.to_dict()}")
 
+    def _get_connection_string(self, connection_string):
+        if connection_string:
+            return connection_string
+        elif os.environ.get("METRICS_STORAGE_ADRESS", None):
+            return os.environ.get("METRICS_STORAGE_ADRESS", None)
+        else:
+            return MetricsStorageConfig.connection_string
+
 
 def latency_decorator(func):
     """A Decorator to record the latency of the decorated function. Once it is recorded the LatencyTracker
@@ -61,7 +73,7 @@ def latency_decorator(func):
         func.__self__ = args[0]
         with Latency(func) as latency:
             result = func(*args, **kwargs)
-        latency_tracker = LatencyTracker(connection_string=func.__self__.metrics_storage_adress)  # TODO: fallback env variable
+        latency_tracker = LatencyTracker()
         latency_tracker.track(latency)
         func.__self__ = None
         return result
