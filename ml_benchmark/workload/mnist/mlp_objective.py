@@ -3,13 +3,12 @@ import tqdm
 from sklearn.metrics import classification_report
 from ml_benchmark.workload.mnist.mlp import MLP
 from ml_benchmark.latency_tracker import latency_decorator
-from ml_benchmark.workload.objective import Objective, ObjectiveHelper
+from ml_benchmark.workload.objective import Objective
 
 
-class MLPObjective(Objective, ObjectiveHelper):
+class MLPObjective(Objective):
 
     def __init__(self, epochs, train_loader, val_loader, test_loader) -> None:
-        super(MLPObjective, self).__init__()
         self.train_loader = train_loader
         self.val_laoder = val_loader
         self.test_loader = test_loader
