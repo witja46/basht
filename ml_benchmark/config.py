@@ -21,3 +21,12 @@ class MnistConfig:
 
     def to_dict(self):
         return asdict(self)
+
+
+class MetricsStorageConfig:
+    port = 5432
+    user = "root"
+    password = "1234"
+    db = "benchmark_metrics"
+    host = "localhost"
+    connection_string = f"postgresql://{user}:{password}@{host}:{port}/{db}"

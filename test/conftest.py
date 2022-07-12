@@ -1,15 +1,14 @@
 import pytest
-from ml_benchmark.metrics_storage import MetricsStorage
 from ml_benchmark.latency_tracker import latency_decorator
+from ml_benchmark.workload.objective import Objective, ObjectiveHelper
 
 
 @pytest.fixture
 def objective():
-    class TestObjective:
-        metrics_storage_address = MetricsStorage.connection_string
+    class TestObjective(Objective, ObjectiveHelper):
 
         def __init__(self) -> None:
-            pass
+            super(TestObjective, self).__init__()
 
         @latency_decorator
         def train(self):
