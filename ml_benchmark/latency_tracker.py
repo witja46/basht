@@ -19,6 +19,10 @@ class LatencyTracker(Tracker):
     A Tracker that establishes a connection to the Latency Table in the postgres database. The LatencyTracker
     is used to write a latency into the postgres database.
 
+    THe Adress of the MetricsStorage has to be known and written to the ENV Variable "METRICS_STORAGE_ADRESS",
+    otherwise the tracker will assumed that the tracking is performed on the same environment as the
+    benchmark is running on.
+
     Args:
         Tracker (_type_): _description_
     """
