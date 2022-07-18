@@ -24,7 +24,7 @@ class Benchmark(ABC):
         ABC (_type_): Abstract Base Class
     """
 
-    # TODO: move objective into another class that enherits benchmark
+    # TODO: objective and grid are not allowed to be in the benchmark
     objective = None
     grid = None
     resources = None
@@ -130,11 +130,7 @@ class BenchmarkRunner():
         self.create_benchmark_folder(self.benchmark_folder)
 
         # create loader
-        epochs = config.pop("epochs")
-        train_loader, val_loader, test_loader = task.create_data_loader(**config)
-        objective = task.objective_cls(
-            epochs=epochs,
-            train_loader=train_loader, val_loader=val_loader, test_loader=test_loader)
+        objective = task.create_objective()
 
         # add input and output size to the benchmark.
         grid["input_size"] = task.input_size

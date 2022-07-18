@@ -17,7 +17,7 @@ class MnistConfig:
     train_batch_size: int = 512
     val_batch_size: int = 128
     test_batch_size: int = 128
-    epochs: int = 1
+    epochs: int = 100
 
     def to_dict(self):
         return asdict(self)

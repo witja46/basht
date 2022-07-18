@@ -6,6 +6,7 @@ from torchvision import transforms
 from ml_benchmark.config import Path
 import os
 from ml_benchmark.workload.mnist.mlp_objective import MLPObjective
+from ml_benchmark.config import MnistConfig
 
 
 # TODO: dataclass for results and assert if some results are missing
@@ -18,12 +19,13 @@ class MnistTask:
         self.output_size = 10
         self.dataset = self._get_data()
         self.objective_cls = MLPObjective
+        self.mnist_config = MnistConfig()
 
-    def create_data_loader(self, train_batch_size, val_batch_size, test_batch_size, val_split_ratio):
-        train_data, val_data, test_data = self.split_data(val_split_ratio)
-        train_loader = DataLoader(train_data, batch_size=train_batch_size, shuffle=True)
-        val_loader = DataLoader(val_data, batch_size=val_batch_size, shuffle=True)
-        test_loader = DataLoader(test_data, batch_size=test_batch_size, shuffle=True)
+    def create_data_loader(self, task_config: MnistConfig):
+        train_data, val_data, test_data = self.split_data(task_config.val_split_ratio)
+        train_loader = DataLoader(train_data, batch_size=task_config.train_batch_size, shuffle=True)
+        val_loader = DataLoader(val_data, batch_size=task_config.val_batch_size, shuffle=True)
+        test_loader = DataLoader(test_data, batch_size=task_config.test_batch_size, shuffle=True)
         return train_loader, val_loader, test_loader
 
     def split_data(self, val_split_ratio):
@@ -44,3 +46,7 @@ class MnistTask:
     def mnist_preprocessing(self, mnist_data):
         mnist_data.data = mnist_data.data.view(-1, 28 * 28).float()
         return mnist_data
+
+    def create_objective(self):
+        train_loader, val_loader, test_loader = self.create_data_loader(self.mnist_config)
+        return self.objective_cls(self.mnist_config.epochs, train_loader, val_loader, test_loader)
