@@ -42,7 +42,7 @@ class MetricsStorage:
             "postgres:14.1", detach=True,
             environment=[
                 f"POSTGRES_PASSWORD={self.password}", f"POSTGRES_DB={self.db}", f"POSTGRES_USER={self.user}"],
-            ports={f'{self.port}/tcp': 5432},
+            ports={f'{self.port}/tcp': self.port},
             name="postgres",
             remove=True)
         container = self.client.containers.get("postgres")

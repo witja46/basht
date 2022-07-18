@@ -6,8 +6,7 @@ from ml_benchmark.workload.mnist.mnist_task import MnistTask
 
 class RaytuneBenchmark(Benchmark):
 
-    def __init__(self, grid, resources) -> None:
-        self.grid = grid
+    def __init__(self, resources) -> None:
         self.resources = resources
 
     def deploy(self) -> None:
@@ -41,12 +40,17 @@ class RaytuneBenchmark(Benchmark):
             validation_scores = objective.validate()
             tune.report(macro_f1_score=validation_scores["macro avg"]["f1-score"])
 
+        grid = dict(
+            input_size=28*28, learning_rate=tune.grid_search([1e-4]),
+            weight_decay=1e-6,
+            hidden_layer_config=tune.grid_search([[20], [10, 10]]),
+            output_size=10)
         task = MnistTask(config_init={"epochs": 1})
         self.analysis = tune.run(
             raytune_func,
             config=dict(
                 objective=task.create_objective(),
-                hyperparameters=self.grid,
+                hyperparameters=grid,
                 ),
             sync_config=tune.SyncConfig(
                 syncer=None  # Disable syncing
@@ -76,7 +80,6 @@ class RaytuneBenchmark(Benchmark):
         results = dict(
             test_scores=self.test_scores,
             training_loss=self.training_loss,
-            latency=self.latency
             )
 
         return results
@@ -100,13 +103,8 @@ if __name__ == "__main__":
 
     # Add your hyperparameter setting procedure here
     # your hyperparameter grid you want to search over
-    hyperparameters = dict(
-            input_size=28*28, learning_rate=tune.grid_search([1e-4]),
-            weight_decay=1e-6,
-            hidden_layer_config=tune.grid_search([[20], [10, 10]]),
-            output_size=10)
 
     # import an use the runner
     runner = BenchmarkRunner(
-        benchmark_cls=RaytuneBenchmark, grid=hyperparameters, resources=resources)
+        benchmark_cls=RaytuneBenchmark, resources=resources)
     runner.run()

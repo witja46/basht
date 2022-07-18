@@ -4,26 +4,30 @@ from sklearn.metrics import classification_report
 from ml_benchmark.workload.mnist.mlp import MLP
 from ml_benchmark.latency_tracker import latency_decorator
 from ml_benchmark.workload.objective import Objective
+from ml_benchmark.config import MLPHyperparameter
 
 
+# TODO: use a task for initialization?
 class MLPObjective(Objective):
 
     def __init__(self, epochs, train_loader, val_loader, test_loader, input_size, output_size) -> None:
         self.train_loader = train_loader
         self.val_laoder = val_loader
         self.test_loader = test_loader
-        self.hyperparameters = None
+        self.hyperparameters = MLPHyperparameter().to_dict()
         self.epochs = epochs
         self.device = None
         self.input_size = input_size
         self.output_size = output_size
 
-    def set_hyperparameters(self, hyperparameters):
+    def set_hyperparameters(self, hyperparameters: dict):
         hyperparameters["input_size"] = self.input_size
         hyperparameters["output_size"] = self.output_size
-        self.hyperparameters = hyperparameters
+        print(self.hyperparameters)
+        self.hyperparameters.update(hyperparameters)
+        print(self.hyperparameters)
 
-    def set_device(self, device_str=None):
+    def set_device(self, device_str: str = None):
         if device_str:
             self.device = torch.device(device_str)
         else:

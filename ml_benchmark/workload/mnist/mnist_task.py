@@ -1,15 +1,14 @@
-from torch.utils.data import DataLoader
-from sklearn.model_selection import train_test_split
-from torchvision.datasets import MNIST
-from torch.utils.data import TensorDataset
-from torchvision import transforms
-from ml_benchmark.config import Path
 import os
+
+from ml_benchmark.config import MnistConfig, Path
 from ml_benchmark.workload.mnist.mlp_objective import MLPObjective
-from ml_benchmark.config import MnistConfig
+from sklearn.model_selection import train_test_split
+from torch.utils.data import DataLoader, TensorDataset
+from torchvision import transforms
+from torchvision.datasets import MNIST
 
 
-# TODO: dataclass for results and assert if some results are missing
+# TODO: config_init and hyperparameter handling have to be improved
 class MnistTask:
 
     def __init__(self, config_init: dict = None) -> None:
@@ -54,3 +53,7 @@ class MnistTask:
         return self.objective_cls(
             self.mnist_config.epochs, train_loader, val_loader, test_loader, self.input_size,
             self.output_size)
+
+
+if __name__ == "__main__":
+    task = MnistTask(config_init={"epochs": 1})

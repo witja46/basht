@@ -1,17 +1,17 @@
 import base64
-import json
-from datetime import datetime
-from abc import ABC, abstractmethod
 import inspect
+import json
 import os
-import torch
-import numpy as np
 import random
-import docker
+from abc import ABC, abstractmethod
+from datetime import datetime
 
+import docker
+import numpy as np
+import torch
+
+from ml_benchmark.latency_tracker import Latency, LatencyTracker
 from ml_benchmark.metrics_storage import MetricsStorage
-from ml_benchmark.workload.mnist.mnist_task import MnistTask
-from ml_benchmark.latency_tracker import LatencyTracker, Latency
 
 
 class Benchmark(ABC):
@@ -25,7 +25,6 @@ class Benchmark(ABC):
     """
 
     # TODO: objective and grid are not allowed to be in the benchmark
-    grid = None
     resources = None
 
     @abstractmethod
@@ -93,7 +92,7 @@ class Benchmark(ABC):
 class BenchmarkRunner():
 
     def __init__(
-            self, benchmark_cls: Benchmark, grid: dict,
+            self, benchmark_cls: Benchmark,
             resources: dict) -> None:
         """
         This class runs a Benchmark.
@@ -123,7 +122,7 @@ class BenchmarkRunner():
         self.create_benchmark_folder(self.benchmark_folder)
 
         # add input and output size to the benchmark.
-        self.benchmark = benchmark_cls(grid, resources)
+        self.benchmark = benchmark_cls(resources)
 
         # set seeds
         self._set_all_seeds()
@@ -141,9 +140,9 @@ class BenchmarkRunner():
             ValueError: _description_
         """
         run_process = [
-            self.benchmark.deploy, self.benchmark.run, self.benchmark.collect_run_results,
-            self.benchmark.test, self.benchmark.collect_benchmark_metrics,
-            self.benchmark.undeploy]
+            self.benchmark.deploy, self.benchmark.setup, self.benchmark.run,
+            self.benchmark.collect_run_results,
+            self.benchmark.test, self.benchmark.collect_benchmark_metrics]
         benchmark_results = None
 
         try:
@@ -155,9 +154,18 @@ class BenchmarkRunner():
             benchmark_results = self.metrics_storage.get_benchmark_results()
             self.metrics_storage.stop_db()
         except (docker.errors.APIError, AttributeError, ValueError, RuntimeError) as e:
-            self.metrics_storage.stop_db()
             print(e)
             raise ValueError("No Results obtained, Benchmark failed.")
+        finally:
+            try:
+                self.benchmark.undeploy()
+            except Exception:
+                pass
+
+            try:
+                self.metrics_storage.stop_db()
+            except Exception:
+                pass
 
         self.save_benchmark_results(benchmark_results)
 
@@ -179,14 +187,12 @@ class BenchmarkRunner():
             benchmark_results (_type_): _description_
         """
         benchmark_config_dict = dict(
-            grid=self.benchmark.grid,
             resources=self.benchmark.resources,
         )
         benchmark_result_dict = dict(
             benchmark_metrics=benchmark_results,
             benchmark_configuration=benchmark_config_dict
         )
-        benchmark_result_dict = self._check_json_serializabile_grid(benchmark_result_dict)
         with open(
             os.path.join(
                 self.benchmark_folder,
@@ -202,18 +208,18 @@ class BenchmarkRunner():
             os.makedirs(folder_path, exist_ok=True)
             print(f"Benchmark Folder created under: {self.benchmark_folder}")
 
-    def _check_json_serializabile_grid(self, to_serialize_dict):
-        """Grid uses custom functions from optimization packages, therefore it might be anything. Make sure it
-        is serializable.
+    # def _check_json_serializabile_grid(self, to_serialize_dict):
+    #     """Grid uses custom functions from optimization packages, therefore it might be anything. Make sure it
+    #     is serializable.
 
-        Args:
-            to_serialize_dict (_type_): _description_
+    #     Args:
+    #         to_serialize_dict (_type_): _description_
 
-        Returns:
-            _type_: _description_
-        """
-        try:
-            json.dumps(to_serialize_dict)
-        except TypeError:
-            to_serialize_dict["benchmark_configuration"]["grid"] = str(to_serialize_dict["benchmark_configuration"]["grid"])
-        return to_serialize_dict
+    #     Returns:
+    #         _type_: _description_
+    #     """
+    #     try:
+    #         json.dumps(to_serialize_dict)
+    #     except TypeError:
+    #         to_serialize_dict["benchmark_configuration"]["grid"] = str(to_serialize_dict["benchmark_configuration"]["grid"])
+    #     return to_serialize_dict

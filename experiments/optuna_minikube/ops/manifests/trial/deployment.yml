@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: optuna-trial
+  labels:
+    app: trial
+spec:
+  strategy:
+    type: Recreate
+  replicas: 2
+  selector:
+    matchLabels:
+      app: trial
+  template:
+    metadata:
+      labels:
+        app: trial
+    spec:
+      containers:
+      - name: trial
+        image: optuna-trial:latest
+        imagePullPolicy: Never
+        resources:
+          limits:
+            cpu: 4.0
+            memory: 10G
+        env:
+          - name: STUDY_NAME
+            value: "optuna_study"
+          - name: DB_CONN
+            value: "postgresql://postgresadmin:admin123@postgres:5432/postgresdb"
+
