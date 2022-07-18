@@ -25,7 +25,6 @@ class Benchmark(ABC):
     """
 
     # TODO: objective and grid are not allowed to be in the benchmark
-    objective = None
     grid = None
     resources = None
 
@@ -92,11 +91,10 @@ class Benchmark(ABC):
 
 
 class BenchmarkRunner():
-    task_registry = {"mnist": MnistTask}
 
     def __init__(
-            self, benchmark_cls: Benchmark, config: dict, grid: dict,
-            resources: dict, task_str: str = "mnist") -> None:
+            self, benchmark_cls: Benchmark, grid: dict,
+            resources: dict) -> None:
         """
         This class runs a Benchmark.
         It is responsibile for setting up everything that is needed upfront to run the benchmark and manages
@@ -117,28 +115,15 @@ class BenchmarkRunner():
             task_str (str, optional): _description_. Defaults to "mnist".
         """
 
-        # get task
-        task = self.task_registry.get(task_str)()
-
         # generate a unique name from the config
-        base64_bytes = base64.b64encode(json.dumps(config).encode('ascii'))
-        self.config_name = str(base64_bytes, 'ascii')
         self.rundate = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
         benchmark_path = os.path.abspath(os.path.dirname(inspect.getabsfile(benchmark_cls)))
-        self.bench_name = f"{task.__class__.__name__}__{benchmark_cls.__name__}"
+        self.bench_name = f"{benchmark_cls.__name__}"
         self.benchmark_folder = os.path.join(benchmark_path, f"benchmark__{self.bench_name}")
         self.create_benchmark_folder(self.benchmark_folder)
 
-        # create loader
-        objective = task.create_objective()
-
         # add input and output size to the benchmark.
-        grid["input_size"] = task.input_size
-        grid["output_size"] = task.output_size
-        grid = grid
-        resources = resources
-        # TODO: set metrics persistor location dynamically here?
-        self.benchmark = benchmark_cls(objective, grid, resources)
+        self.benchmark = benchmark_cls(grid, resources)
 
         # set seeds
         self._set_all_seeds()
@@ -194,7 +179,6 @@ class BenchmarkRunner():
             benchmark_results (_type_): _description_
         """
         benchmark_config_dict = dict(
-            objective=self.benchmark.objective.__class__.__name__,
             grid=self.benchmark.grid,
             resources=self.benchmark.resources,
         )
@@ -206,7 +190,7 @@ class BenchmarkRunner():
         with open(
             os.path.join(
                 self.benchmark_folder,
-                f"benchmark_results__{self.rundate}__id_{self.config_name}.json"), "w"
+                f"benchmark_results__{self.rundate}__id.json"), "w"
                 ) as f:
             json.dump(benchmark_result_dict, f)
         print("Results saved!")

@@ -12,14 +12,16 @@ from ml_benchmark.config import MnistConfig
 # TODO: dataclass for results and assert if some results are missing
 class MnistTask:
 
-    def __init__(self) -> None:
+    def __init__(self, config_init: dict = None) -> None:
 
         self.seed = 1337  # TODO: improve seed setting
         self.input_size = 28*28
         self.output_size = 10
         self.dataset = self._get_data()
         self.objective_cls = MLPObjective
-        self.mnist_config = MnistConfig()
+        if not config_init:
+            config_init = {}
+        self.mnist_config = MnistConfig(**config_init)
 
     def create_data_loader(self, task_config: MnistConfig):
         train_data, val_data, test_data = self.split_data(task_config.val_split_ratio)
@@ -49,4 +51,6 @@ class MnistTask:
 
     def create_objective(self):
         train_loader, val_loader, test_loader = self.create_data_loader(self.mnist_config)
-        return self.objective_cls(self.mnist_config.epochs, train_loader, val_loader, test_loader)
+        return self.objective_cls(
+            self.mnist_config.epochs, train_loader, val_loader, test_loader, self.input_size,
+            self.output_size)

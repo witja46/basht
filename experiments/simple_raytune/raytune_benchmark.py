@@ -1,12 +1,12 @@
 from ray import tune
 
 from ml_benchmark.benchmark_runner import Benchmark
+from ml_benchmark.workload.mnist.mnist_task import MnistTask
 
 
 class RaytuneBenchmark(Benchmark):
 
-    def __init__(self, objective, grid, resources) -> None:
-        self.objective = objective
+    def __init__(self, grid, resources) -> None:
         self.grid = grid
         self.resources = resources
 
@@ -41,10 +41,11 @@ class RaytuneBenchmark(Benchmark):
             validation_scores = objective.validate()
             tune.report(macro_f1_score=validation_scores["macro avg"]["f1-score"])
 
+        task = MnistTask(config_init={"epochs": 1})
         self.analysis = tune.run(
             raytune_func,
             config=dict(
-                objective=self.objective,
+                objective=task.create_objective(),
                 hyperparameters=self.grid,
                 ),
             sync_config=tune.SyncConfig(
@@ -55,15 +56,16 @@ class RaytuneBenchmark(Benchmark):
         )
 
     def collect_run_results(self):
-        self.best_config = self.analysis.get_best_config(
+        self.best_hyp_config = self.analysis.get_best_config(
             metric="macro_f1_score", mode="max")["hyperparameters"]
-        self.latency = self.analysis.dataframe(metric="latency")
 
     def test(self):
         # evaluating and retrieving the best model to generate test results.
-        self.objective.set_hyperparameters(self.best_config)
-        self.training_loss = self.objective.train()
-        self.test_scores = self.objective.test()
+        task = MnistTask(config_init={"epochs": 1})
+        objective = task.create_objective()
+        objective.set_hyperparameters(self.best_hyp_config)
+        self.training_loss = objective.train()
+        self.test_scores = objective.test()
 
     def collect_benchmark_metrics(self):
         """
@@ -88,12 +90,10 @@ class RaytuneBenchmark(Benchmark):
 
 
 if __name__ == "__main__":
-    from ml_benchmark.config import MnistConfig
     from ml_benchmark.benchmark_runner import BenchmarkRunner
 
     # The basic config for the workload. For testing purposes set epochs to one.
     # For benchmarking take the default value of 100
-    config = MnistConfig(epochs=1).to_dict()
 
     # your ressources the optimization should run on
     resources = {"cpu": 12}
@@ -108,6 +108,5 @@ if __name__ == "__main__":
 
     # import an use the runner
     runner = BenchmarkRunner(
-        benchmark_cls=RaytuneBenchmark, config=config, grid=hyperparameters, resources=resources,
-        task_str="mnist")
+        benchmark_cls=RaytuneBenchmark, grid=hyperparameters, resources=resources)
     runner.run()

@@ -1,6 +1,8 @@
 import optuna
 import os
 
+from ml_benchmark.workload.mnist.mnist_task import MnistTask
+
 
 def optuna_trial(trial):
     """The function for training and validation, that is used for hyperparameter optimization.
@@ -9,7 +11,7 @@ def optuna_trial(trial):
     Args:
         config ([type]): [description]
     """
-    objective = config.get("objective")
+    objective = MnistTask(config_init={"epochs": 1}).create_objective()
     hyperparameters = config.get("hyperparameters")
     objective.set_hyperparameters(hyperparameters)
     # these are the results, that can be used for the hyperparameter search
