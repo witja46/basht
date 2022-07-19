@@ -1,10 +1,12 @@
-from abc import ABC, abstractmethod
-from sqlalchemy import create_engine, MetaData, Table, insert
-import psycopg2
 import os
+from abc import ABC, abstractmethod
 
-from ml_benchmark.metrics import Latency
+import psycopg2
+from sqlalchemy import MetaData, Table, create_engine, insert
+
+
 from ml_benchmark.config import MetricsStorageConfig
+from ml_benchmark.metrics import Latency
 
 
 class Tracker(ABC):
@@ -28,9 +30,13 @@ class LatencyTracker(Tracker):
     """
 
     def __init__(self, connection_string: str = None) -> None:
-        self.connection_string = self._get_connection_string(connection_string)
+        if connection_string:
+            self.connection_string = connection_string
+        else:
+            self.connection_string = self._get_connection_string()
         if self.connection_string:
             self.engine = self._create_engine(self.connection_string)
+        print(f"------------------ {self.connection_string} -----------------")
 
     def _create_engine(self, connection_string):
         try:
@@ -47,21 +53,35 @@ class LatencyTracker(Tracker):
         Args:
             latency_obj (_type_): _description_
         """
-        # TODO: test this shit
-        metadata = MetaData(bind=self.engine)
-        latency = Table("latency", metadata, autoload_with=self.engine)
-        with self.engine.connect() as conn:
-            stmt = insert(latency).values(latency_obj.to_dict())
-            conn.execute(stmt)
-        print(f"Latency Recorded! Latency: {latency_obj.to_dict()}")
+        try:
+            # TODO: test this shit
+            metadata = MetaData(bind=self.engine)
+            latency = Table("latency", metadata, autoload_with=self.engine)
+            with self.engine.connect() as conn:
+                stmt = insert(latency).values(latency_obj.to_dict())
+                conn.execute(stmt)
+            print(f"Latency Recorded! Latency: {latency_obj.to_dict()}")
+        except Exception:
+            print(f"Failed to record latency: {latency_obj.to_dict()}")
 
-    def _get_connection_string(self, connection_string):
-        if connection_string:
-            return connection_string
-        elif os.environ.get("METRICS_STORAGE_ADRESS", None):
-            return os.environ.get("METRICS_STORAGE_ADRESS", None)
-        else:
-            return MetricsStorageConfig.connection_string
+    def _get_connection_string(self):
+        #XXX: list order is implicitly a priority
+        connection_string_actions_registry = [
+            ("env", os.environ.get("METRICS_STORAGE_HOST", None))
+        ]
+        for method, value in connection_string_actions_registry:
+            if value:
+                print(f"Tracker Connection String retrieved from: {method} using {value}")
+                return self.shape_connection_string(value)
+        print("No Method was succsessful. Setting Tracker URL to current Host.")
+        return MetricsStorageConfig.connection_string
+
+    def shape_connection_string(self, host):
+        user = MetricsStorageConfig.user
+        password = MetricsStorageConfig.password
+        port = MetricsStorageConfig.port
+        db = MetricsStorageConfig.db
+        return f"postgresql://{user}:{password}@{host}:{port}/{db}"
 
 
 def latency_decorator(func):
@@ -86,11 +106,15 @@ def latency_decorator(func):
 
 if __name__ == "__main__":
 
-    from ml_benchmark.metrics_storage import MetricsStorage
-    import docker
     import json
 
+    import docker
+
+    from ml_benchmark.metrics_storage import MetricsStorage
+
     storage = MetricsStorage()
+    result = []
+
 
     class Test:
         metrics_storage_address = MetricsStorage.connection_string

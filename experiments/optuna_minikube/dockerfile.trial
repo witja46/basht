@@ -1,9 +1,13 @@
 FROM pytorch/pytorch:1.12.0-cuda11.3-cudnn8-runtime
 
 RUN pip install pip --upgrade
-RUN pip install ml_benchmark
 RUN pip install optuna==2.10.1
 
-COPY optuna_trial.py optuna_trial.py
+COPY experiments experiments
+COPY data data
+COPY setup.py setup.py
+COPY ml_benchmark ml_benchmark
 
-CMD ["python", "optuna_trial.py"]
+RUN pip install -e .
+
+CMD ["python", "experiments/optuna_minikube/optuna_trial.py"]

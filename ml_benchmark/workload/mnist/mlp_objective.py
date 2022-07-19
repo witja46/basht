@@ -1,10 +1,10 @@
 import torch
 import tqdm
-from sklearn.metrics import classification_report
-from ml_benchmark.workload.mnist.mlp import MLP
-from ml_benchmark.latency_tracker import latency_decorator
-from ml_benchmark.workload.objective import Objective
 from ml_benchmark.config import MLPHyperparameter
+from ml_benchmark.latency_tracker import latency_decorator
+from ml_benchmark.workload.mnist.mlp import MLP
+from ml_benchmark.workload.objective import Objective
+from sklearn.metrics import classification_report
 
 
 # TODO: use a task for initialization?

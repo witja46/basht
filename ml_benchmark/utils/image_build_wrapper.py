@@ -24,14 +24,13 @@ class MinikubeImageBuilder(ImageBuildWrapper):
     def get_url(self):
         return subprocess.check_output("minikube ip", shell=True).decode("utf-8").strip("\n")
 
-    def deploy_image(self, image, tag):
-        working_dir = os.path.dirname(os.path.abspath(image))
+    def deploy_image(self, image, tag, build_context):
         call = subprocess.run(
-            ["minikube", "image", "build", "-t", tag,  "-f", os.path.basename(image), "."], cwd=working_dir,
-            capture_output=True)
+            ["minikube", "image", "build", "-t", tag,  "-f", image, "."], cwd=build_context,
+            capture_output=True)  # doesnt seem to work
 
         if call.returncode != 0:
-            print(call.stderr.decute("utf-8").strip("\n"))
+            print(call.stderr.decode("utf-8").strip("\n"))
             raise Exception("Failed to deploy image")
         print("IMAGE IMAGE ", call.stdout, call.stderr)
 

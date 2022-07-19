@@ -6,6 +6,7 @@ import optuna
 from kubernetes import client, config, utils, watch
 from kubernetes.utils import create_from_yaml
 from ml_benchmark.benchmark_runner import Benchmark
+from ml_benchmark.config import Path
 from ml_benchmark.utils.image_build_wrapper import MinikubeImageBuilder
 from ml_benchmark.workload.mnist.mnist_task import MnistTask
 
@@ -16,7 +17,7 @@ class OptunaMinikubeBenchmark(Benchmark):
 
     def __init__(self, resources) -> None:
         self.resources = resources
-        self.namespace = f"optuna-study-{random.randint(0, 10024)}"
+        self.namespace = f"optuna-study"#-{random.randint(0, 10024)}"
         self.image_builder = MinikubeImageBuilder()
         self.master_ip = self.image_builder.get_url()
 
@@ -24,28 +25,19 @@ class OptunaMinikubeBenchmark(Benchmark):
         """
         Deploy DB
         """
-
+        #TODO: deal with exsiting resources...
         client.CoreV1Api().create_namespace(client.V1Namespace(metadata=client.V1ObjectMeta(name=self.namespace)))
 
         k8s_beta = client.ApiClient()
         resp = create_from_yaml(k8s_beta, path.join(path.dirname(__file__),"ops/manifests/db/db-deployment.yml"), namespace=self.namespace, verbose=True)
         print("Deployment created. status='%s'" % str(resp))
 
-        # wait for DB to be ready
-        # w = watch.Watch()
-        # for event in w.stream(client.CoreV1Api().list_namespaced_service,
-        # namespace=self.namespace,
-        # _request_timeout=60):
-        #     if event["object"].metadata.name == "postgres" and event["object"].status.phase == "Running":
-        #         w.stop()
-        #         return
-
     def setup(self):
         """
 
         """
         self.trial_tag = "optuna-trial:latest"
-        logs = self.image_builder.deploy_image(path.join(path.dirname(__file__), "dockerfile.trial"), self.trial_tag)
+        logs = self.image_builder.deploy_image("experiments/optuna_minikube/dockerfile.trial", self.trial_tag, Path.root_path)
         print(f"Image: {self.trial_tag}")
         for line in logs:
             print(line)
@@ -54,7 +46,7 @@ class OptunaMinikubeBenchmark(Benchmark):
         """Start Trial Containers in Subprocesses
         """
         # deploy
-        file_path = path.join(path.dirname(__file__), "ops/manifests/trial/deployment.yml")
+        file_path = path.join(path.dirname(__file__), "ops/manifests/trial/job.yml")
         k8s_beta = client.ApiClient()
         resp = create_from_yaml(k8s_beta, file_path, namespace=self.namespace, verbose=True)
         print("Deployment created. status='%s'" % str(resp))
@@ -64,7 +56,7 @@ class OptunaMinikubeBenchmark(Benchmark):
         postgres_sepc = cmd.read_namespaced_service(namespace=self.namespace, name="postgres")
         if postgres_sepc is not None:
             if len(postgres_sepc.spec.ports) > 0 and postgres_sepc.spec.ports[0].node_port > 0:
-                #XXX: hardcoded credentaials - should match ops/mainifests/db/db-deployment.yaml#ostgres-config
+                # XXX: hardcoded credentaials - should match ops/mainifests/db/db-deployment.yaml#ostgres-config
                 url = f"postgresql://postgresadmin:admin123@{self.master_ip}:{postgres_sepc.spec.ports[0].node_port}/postgresdb"
                 print(url)
                 return url
@@ -74,10 +66,19 @@ class OptunaMinikubeBenchmark(Benchmark):
     def collect_run_results(self):
         """Collect results form container or on master?
         """
-        sleep(10)
+        self._watch_trials()
         study = optuna.load_study(study_name="optuna_study", storage=self.getDBUrl())
-        study.get_trials()
         self.best_trial = study.best_trial
+
+    def _watch_trials(self):
+        w = watch.Watch()
+        c = client.BatchV1Api()
+        for e in w.stream(c.list_namespaced_job, namespace=self.namespace, timeout_seconds=10):
+            if "object" in e and e["object"].status.completion_time is not None:
+                w.stop()
+                return
+
+        print("Trials completed! Collecting Results")
 
     def test(self):
 
@@ -103,7 +104,8 @@ class OptunaMinikubeBenchmark(Benchmark):
         """Kill all containers
         """
         cmd = client.CoreV1Api()
-        #cmd.delete_namespace(self.namespace)
+        cmd.delete_namespace(self.namespace)
+        # TODO: delete image mby?
 
 
 if __name__ == "__main__":
@@ -114,7 +116,7 @@ if __name__ == "__main__":
     # The basic config for the workload. For testing purposes set epochs to one.
     # For benchmarking take the default value of 100
     # your ressources the optimization should run on
-    resources = {"cpu": 12}
+    resources = {"cpu": 12} # TODO: this doesnt work
 
     # Add your hyperparameter setting procedure here
     # your hyperparameter grid you want to search over

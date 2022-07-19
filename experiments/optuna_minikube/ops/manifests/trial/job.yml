@@ -1,24 +1,14 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: batch/v1
+kind: Job
 metadata:
   name: optuna-trial
-  labels:
-    app: trial
 spec:
-  strategy:
-    type: Recreate
-  replicas: 2
-  selector:
-    matchLabels:
-      app: trial
+  completions: 2
+  parallelism: 2
   template:
-    metadata:
-      labels:
-        app: trial
-        name: trail-container
     spec:
       containers:
-      - name: trial
+      - name: optuna-trial
         image: optuna-trial:latest
         imagePullPolicy: Never
         resources:
@@ -32,3 +22,5 @@ spec:
             value: "postgresql://postgresadmin:admin123@postgres:5432/postgresdb"
           - name: "METRICS_STORAGE_HOST"
             value: "130.149.158.243"
+      restartPolicy: OnFailure
+

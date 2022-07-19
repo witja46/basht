@@ -4,6 +4,7 @@ import os
 import random
 from abc import ABC, abstractmethod
 from datetime import datetime
+from time import sleep
 
 import docker
 import numpy as np
@@ -151,6 +152,10 @@ class BenchmarkRunner():
                     benchmark_fun()
                 self.latency_tracker.track(latency)
             benchmark_results = self.metrics_storage.get_benchmark_results()
+
+            # just to be save we wait a bit before killing shit.
+            sleep(5)
+
             self.metrics_storage.stop_db()
         except (docker.errors.APIError, AttributeError, ValueError, RuntimeError) as e:
             print(e)
