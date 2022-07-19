@@ -40,7 +40,6 @@ class OptunaMinikubeBenchmark(Benchmark):
         #         w.stop()
         #         return
 
-
     def setup(self):
         """
 
