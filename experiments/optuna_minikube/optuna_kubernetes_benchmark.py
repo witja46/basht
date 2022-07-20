@@ -1,5 +1,6 @@
 import random
 from os import path
+import subprocess
 from time import sleep
 
 import optuna
@@ -10,16 +11,26 @@ from ml_benchmark.config import Path
 from ml_benchmark.utils.image_build_wrapper import MinikubeImageBuilder
 from ml_benchmark.workload.mnist.mnist_task import MnistTask
 
-config.load_kube_config()
-
-
 class OptunaMinikubeBenchmark(Benchmark):
 
     def __init__(self, resources) -> None:
         self.resources = resources
         self.namespace = f"optuna-study"#-{random.randint(0, 10024)}"
-        self.image_builder = MinikubeImageBuilder()
-        self.master_ip = self.image_builder.get_url()
+        
+        #set up the image builder
+        if "dockerImageBuilder" in self.resources:
+            self.image_builder = self.resources["dockerImageBuilder"]
+        else:
+            self.image_builder = MinikubeImageBuilder()
+
+        #ensures that we can work with kubernetes
+        #TODO: if this fails we woun't know about it until we try to run the experiment...
+        if "kubernetsContext" in self.resources:
+            config.load_kube_config(context=self.resources["kubernetsContext"])
+        else:
+            config.load_kube_config()
+
+        self.master_ip = subprocess.check_output("minikube ip", shell=True).decode("utf-8").strip("\n")
 
     def deploy(self) -> None:
         """
@@ -111,15 +122,13 @@ if __name__ == "__main__":
     # The basic config for the workload. For testing purposes set epochs to one.
     # For benchmarking take the default value of 100
     # your ressources the optimization should run on
-    resources = {"cpu": 12} # TODO: this doesnt work
+    resources = {
+        "cpu": 12, # TODO: this doesnt work
+        "dockerImageBuilder": MinikubeImageBuilder(),
+        "kubernetesContext": "minikube",
+    } 
 
-    # Add your hyperparameter setting procedure here
-    # your hyperparameter grid you want to search over
-    hyperparameters = dict(
-            input_size=28*28, learning_rate=tune.grid_search([1e-4]),
-            weight_decay=1e-6,
-            hidden_layer_config=tune.grid_search([[20], [10, 10]]),
-            output_size=10)
+    #TODO: hyperparams.
 
     # import an use the runner
     runner = BenchmarkRunner(

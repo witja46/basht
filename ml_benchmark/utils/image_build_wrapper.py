@@ -8,10 +8,6 @@ from ml_benchmark.config import Path
 class ImageBuildWrapper(ABC):
 
     @abstractmethod
-    def get_url(self):
-        pass
-
-    @abstractmethod
     def deploy_image(self, image, tag):
         pass
 
@@ -24,9 +20,6 @@ class MinikubeImageBuilder(ImageBuildWrapper):
 
     def __init__(self) -> None:
         pass
-
-    def get_url(self):
-        return subprocess.check_output("minikube ip", shell=True).decode("utf-8").strip("\n")
 
     def deploy_image(self, image, tag, build_context):
         call = subprocess.run(
@@ -46,8 +39,6 @@ class MinikubeImageBuilder(ImageBuildWrapper):
             raise Exception("Failed to cleanup")
 
 class DockerImageBuilder(ImageBuildWrapper):
-    def __init__(self) -> None:
-        pass
 
     def deploy_image(self, image, tag, build_context):
         call = subprocess.run(

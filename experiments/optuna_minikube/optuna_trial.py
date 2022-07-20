@@ -4,6 +4,7 @@ from time import sleep
 import optuna
 from ml_benchmark.workload.mnist.mnist_task import MnistTask
 
+#TODO: can we extract this to a point were we can use a config to drive this?
 
 def optuna_trial(trial):
     task = MnistTask(config_init={"epochs": 1})
