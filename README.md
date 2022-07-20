@@ -26,11 +26,12 @@ Note: If you run your benchmark on GPU make sure to install [Cuda](https://docs.
 6. To install the benchmark and use it locally , clone the repository and switch to the root_folder of the repository and type in `pip install -e .`. Otherwise you can also install the package via PyPi with `pip install ml-benchmark`
 
 
-For running the raytune example add the following after the process above:
+For running the raytune example experiment add the following after the process above:
 
 1. `pip install ray[tune]`
 2. `pip install pandas`
 
+For all opther experiments, install the requirements.txt if present.
 ## Class Explanation
 
 |Class|Description|
