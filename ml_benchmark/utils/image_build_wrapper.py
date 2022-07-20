@@ -15,6 +15,10 @@ class ImageBuildWrapper(ABC):
     def deploy_image(self, image, tag):
         pass
 
+    @abstractmethod
+    def cleanup(self,tag):
+        pass
+
 
 class MinikubeImageBuilder(ImageBuildWrapper):
 
@@ -35,3 +39,8 @@ class MinikubeImageBuilder(ImageBuildWrapper):
         print("IMAGE IMAGE ", call.stdout, call.stderr)
 
         return call.stdout.decode("utf-8").strip("\n")
+
+    def cleanup(self, tag):
+        call = subprocess.run(["minikube", "delete",tag], shell=True, check=True)
+        if call.returncode != 0:
+            raise Exception("Failed to cleanup")

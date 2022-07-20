@@ -27,9 +27,7 @@ class OptunaMinikubeBenchmark(Benchmark):
         """
         #TODO: deal with exsiting resources...
         client.CoreV1Api().create_namespace(client.V1Namespace(metadata=client.V1ObjectMeta(name=self.namespace)))
-
-        k8s_beta = client.ApiClient()
-        resp = create_from_yaml(k8s_beta, path.join(path.dirname(__file__),"ops/manifests/db/db-deployment.yml"), namespace=self.namespace, verbose=True)
+        resp = create_from_yaml(client.ApiClient(), path.join(path.dirname(__file__),"ops/manifests/db/db-deployment.yml"), namespace=self.namespace, verbose=True)
         print("Deployment created. status='%s'" % str(resp))
 
     def setup(self):
@@ -47,8 +45,7 @@ class OptunaMinikubeBenchmark(Benchmark):
         """
         # deploy
         file_path = path.join(path.dirname(__file__), "ops/manifests/trial/job.yml")
-        k8s_beta = client.ApiClient()
-        resp = create_from_yaml(k8s_beta, file_path, namespace=self.namespace, verbose=True)
+        resp = create_from_yaml(client.ApiClient(), file_path, namespace=self.namespace, verbose=True)
         print("Deployment created. status='%s'" % str(resp))
 
     def getDBUrl(self):
@@ -58,7 +55,6 @@ class OptunaMinikubeBenchmark(Benchmark):
             if len(postgres_sepc.spec.ports) > 0 and postgres_sepc.spec.ports[0].node_port > 0:
                 # XXX: hardcoded credentaials - should match ops/mainifests/db/db-deployment.yaml#ostgres-config
                 url = f"postgresql://postgresadmin:admin123@{self.master_ip}:{postgres_sepc.spec.ports[0].node_port}/postgresdb"
-                print(url)
                 return url
             raise Exception("Postgres DB not found - spec dose not have node port}"+str(postgres_sepc))
         raise Exception("Postgres DB URL not found")
@@ -103,9 +99,8 @@ class OptunaMinikubeBenchmark(Benchmark):
     def undeploy(self):
         """Kill all containers
         """
-        cmd = client.CoreV1Api()
-        cmd.delete_namespace(self.namespace)
-        # TODO: delete image mby?
+        client.CoreV1Api().delete_namespace(self.namespace)
+        self.image_builder.cleanup(self.trial_tag)
 
 
 if __name__ == "__main__":
