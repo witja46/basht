@@ -56,7 +56,7 @@ class RaytuneBenchmark(Benchmark):
                 syncer=None  # Disable syncing
                 ),
             local_dir="/tmp/ray_results",
-            resources_per_trial={"cpu": self.resources["cpu"]}
+            resources_per_trial={"cpu": self.resources["workerCpu"]}
         )
 
     def collect_run_results(self):
@@ -99,7 +99,7 @@ if __name__ == "__main__":
     # For benchmarking take the default value of 100
 
     # your ressources the optimization should run on
-    resources = {"cpu": 12}
+    resources = {"workerCpu": 12}
 
     # Add your hyperparameter setting procedure here
     # your hyperparameter grid you want to search over
