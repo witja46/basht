@@ -3,24 +3,24 @@ kind: Job
 metadata:
   name: optuna-trial
 spec:
-  completions: 2
-  parallelism: 2
+  completions: $worker_num
+  parallelism: $worker_num
   template:
     spec:
       containers:
       - name: optuna-trial
-        image: optuna-trial:latest
-        imagePullPolicy: Never
+        image: $worker_image
+        # imagePullPolicy: Never
         resources:
           limits:
-            cpu: 4.0
-            memory: 4G
+            cpu: $worker_cpu
+            memory: $worker_mem
         env:
           - name: STUDY_NAME
-            value: "optuna_study"
+            value: "$study_name"
           - name: DB_CONN
             value: "postgresql://postgresadmin:admin123@postgres:5432/postgresdb"
           - name: "METRICS_STORAGE_HOST"
-            value: "130.149.158.243"
+            value: "$metrics_ip"
       restartPolicy: OnFailure
 

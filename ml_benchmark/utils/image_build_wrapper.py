@@ -2,7 +2,14 @@ import os
 import subprocess
 from abc import ABC, abstractmethod
 
-from ml_benchmark.config import Path
+
+def builder_from_string(builder_string):
+    if builder_string == "docker":
+        return DockerImageBuilder()
+    elif builder_string == "minikube":
+        return MinikubeImageBuilder()
+    else:
+        raise ValueError("Unknown builder string: " + builder_string)
 
 
 class ImageBuildWrapper(ABC):
@@ -43,10 +50,9 @@ class DockerImageBuilder(ImageBuildWrapper):
     def deploy_image(self, image, tag, build_context):
         call = subprocess.run(
             ["docker", "build", "-t", tag,  "-f", image, "."], cwd=build_context,
-            capture_output=True)  # doesnt seem to work
+            check=True)  # doesnt seem to work
 
         if call.returncode != 0:
-            print(call.stderr.decode("utf-8").strip("\n"))
             raise Exception("Failed to build image")
 
         call = subprocess.run(
@@ -56,9 +62,7 @@ class DockerImageBuilder(ImageBuildWrapper):
             print(call.stderr.decode("utf-8").strip("\n"))
             raise Exception("Failed to deploy image")
 
-        print("IMAGE IMAGE ", call.stdout, call.stderr)
-
-        return call.stdout.decode("utf-8").strip("\n")
+        return ""
 
     def cleanup(self, tag):
         call = subprocess.run(

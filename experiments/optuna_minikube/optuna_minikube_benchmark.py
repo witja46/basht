@@ -1,7 +1,9 @@
-from experiments.optuna_minikube.optuna_benchmark import OptunaMinikubeBenchmark
+
 
 if __name__ == "__main__":
+    from . import OptunaMinikubeBenchmark
     from ml_benchmark.benchmark_runner import BenchmarkRunner
+    import subprocess
     from urllib.request import urlopen
     # The basic config for the workload. For testing purposes set epochs to one.
     # For benchmarking take the default value of 100
@@ -11,13 +13,12 @@ if __name__ == "__main__":
         "workerMemory": 2,
         "workerCount": 4,
         "metricsIP": urlopen("https://checkip.amazonaws.com").read().decode("utf-8").strip(),
-        "studyName": "optuna-study",
+        "kubernetesMasterIP": subprocess.check_output("minikube ip", shell=True).decode("utf-8").strip("\n"),
         "dockerImageTag": "tawalaya/optuna-trial:latest",
-        "dockerImageBuilder": "docker",
+        "dockerImageBuilder": "minikube",
         "kubernetesNamespace": "optuna-study",
-        "kubernetesContext": "admin@smile",
-        "kubernetesMasterIP": "130.149.158.143",
-        "deleteAfterRun": False,
+        "kubernetesContext": "minikube",
+        "deleteAfterRun": True,
     } 
 
     #TODO: hyperparams.

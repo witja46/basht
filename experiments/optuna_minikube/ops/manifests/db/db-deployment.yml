@@ -71,7 +71,7 @@ spec:
           resources:
             limits:
               cpu: 1.0
-              memory: 4G
+              memory: 1G
       # volumes:
       #   - name: postgredb
       #     persistentVolumeClaim:
