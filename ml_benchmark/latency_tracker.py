@@ -65,7 +65,7 @@ class LatencyTracker(Tracker):
             print(f"Failed to record latency: {latency_obj.to_dict()}")
 
     def _get_connection_string(self):
-        #XXX: list order is implicitly a priority
+        # XXX: list order is implicitly a priority
         connection_string_actions_registry = [
             ("env", os.environ.get("METRICS_STORAGE_HOST", None))
         ]
@@ -114,7 +114,6 @@ if __name__ == "__main__":
 
     storage = MetricsStorage()
     result = []
-
 
     class Test:
         metrics_storage_address = MetricsStorage.connection_string

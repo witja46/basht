@@ -113,7 +113,7 @@ class BenchmarkRunner():
             resources (dict): _description_
             task_str (str, optional): _description_. Defaults to "mnist".
         """
-
+        # TODO: add a benchmark validator, which checks if things are correctly defined e.g.: helper functions only: "_functionname"
         # generate a unique name from the config
         self.rundate = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
         benchmark_path = os.path.abspath(os.path.dirname(inspect.getabsfile(benchmark_cls)))

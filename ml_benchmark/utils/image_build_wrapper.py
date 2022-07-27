@@ -1,29 +1,28 @@
-import os
 import subprocess
 from abc import ABC, abstractmethod
 
 
 def builder_from_string(builder_string):
     if builder_string == "docker":
-        return DockerImageBuilder()
+        return DockerImageBuilder
     elif builder_string == "minikube":
-        return MinikubeImageBuilder()
+        return MinikubeImageBuilder
     else:
         raise ValueError("Unknown builder string: " + builder_string)
 
 
-class ImageBuildWrapper(ABC):
+class ImageBuilder(ABC):
 
     @abstractmethod
     def deploy_image(self, image, tag):
         pass
 
     @abstractmethod
-    def cleanup(self,tag):
+    def cleanup(self, tag):
         pass
 
 
-class MinikubeImageBuilder(ImageBuildWrapper):
+class MinikubeImageBuilder(ImageBuilder):
 
     def __init__(self) -> None:
         pass
@@ -41,11 +40,12 @@ class MinikubeImageBuilder(ImageBuildWrapper):
         return call.stdout.decode("utf-8").strip("\n")
 
     def cleanup(self, tag):
-        call = subprocess.run(["minikube","image", "rm",tag], shell=True, check=True)
+        call = subprocess.run(["minikube", "image", "rm", tag], shell=True, check=True)
         if call.returncode != 0:
             raise Exception("Failed to cleanup")
 
-class DockerImageBuilder(ImageBuildWrapper):
+
+class DockerImageBuilder(ImageBuilder):
 
     def deploy_image(self, image, tag, build_context):
         call = subprocess.run(
@@ -56,7 +56,7 @@ class DockerImageBuilder(ImageBuildWrapper):
             raise Exception("Failed to build image")
 
         call = subprocess.run(
-            ["docker", "push",tag] ,check=True)  # doesnt seem to work
+            ["docker", "push", tag], check=True)  # doesnt seem to work
 
         if call.returncode != 0:
             print(call.stderr.decode("utf-8").strip("\n"))
@@ -66,6 +66,6 @@ class DockerImageBuilder(ImageBuildWrapper):
 
     def cleanup(self, tag):
         call = subprocess.run(
-            ["docker", "image","rm",tag], check=True)  # doesnt seem to work
+            ["docker", "image", "rm", tag], check=True)  # doesnt seem to work
         if call.returncode != 0:
             raise Exception("Failed to cleanup")
