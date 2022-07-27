@@ -1,0 +1,26 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: optuna-trial
+spec:
+  completions: $worker_num
+  parallelism: $worker_num
+  template:
+    spec:
+      containers:
+      - name: optuna-trial
+        image: $worker_image
+        # imagePullPolicy: Never
+        resources:
+          limits:
+            cpu: $worker_cpu
+            memory: $worker_mem
+        env:
+          - name: STUDY_NAME
+            value: "$study_name"
+          - name: DB_CONN
+            value: "postgresql://postgresadmin:admin123@postgres:5432/postgresdb"
+          - name: "METRICS_STORAGE_HOST"
+            value: "$metrics_ip"
+      restartPolicy: OnFailure
+

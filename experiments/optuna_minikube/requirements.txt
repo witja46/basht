@@ -1,0 +1,2 @@
+optuna==2.10.1
+kubernetes==24.2.0

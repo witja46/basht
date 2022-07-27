@@ -1,17 +1,17 @@
-import base64
-import json
-from datetime import datetime
-from abc import ABC, abstractmethod
 import inspect
+import json
 import os
-import torch
-import numpy as np
 import random
-import docker
+from abc import ABC, abstractmethod
+from datetime import datetime
+from time import sleep
 
+import docker
+import numpy as np
+import torch
+
+from ml_benchmark.latency_tracker import Latency, LatencyTracker
 from ml_benchmark.metrics_storage import MetricsStorage
-from ml_benchmark.workload.mnist.mnist_task import MnistTask
-from ml_benchmark.latency_tracker import LatencyTracker, Latency
 
 
 class Benchmark(ABC):
@@ -24,9 +24,7 @@ class Benchmark(ABC):
         ABC (_type_): Abstract Base Class
     """
 
-    # TODO: move objective into another class that enherits benchmark
-    objective = None
-    grid = None
+    # TODO: objective and grid are not allowed to be in the benchmark
     resources = None
 
     @abstractmethod
@@ -92,11 +90,10 @@ class Benchmark(ABC):
 
 
 class BenchmarkRunner():
-    task_registry = {"mnist": MnistTask}
 
     def __init__(
-            self, benchmark_cls: Benchmark, config: dict, grid: dict,
-            resources: dict, task_str: str = "mnist") -> None:
+            self, benchmark_cls: Benchmark,
+            resources: dict) -> None:
         """
         This class runs a Benchmark.
         It is responsibile for setting up everything that is needed upfront to run the benchmark and manages
@@ -116,33 +113,16 @@ class BenchmarkRunner():
             resources (dict): _description_
             task_str (str, optional): _description_. Defaults to "mnist".
         """
-
-        # get task
-        task = self.task_registry.get(task_str)()
-
+        # TODO: add a benchmark validator, which checks if things are correctly defined e.g.: helper functions only: "_functionname"
         # generate a unique name from the config
-        base64_bytes = base64.b64encode(json.dumps(config).encode('ascii'))
-        self.config_name = str(base64_bytes, 'ascii')
         self.rundate = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
         benchmark_path = os.path.abspath(os.path.dirname(inspect.getabsfile(benchmark_cls)))
-        self.bench_name = f"{task.__class__.__name__}__{benchmark_cls.__name__}"
+        self.bench_name = f"{benchmark_cls.__name__}"
         self.benchmark_folder = os.path.join(benchmark_path, f"benchmark__{self.bench_name}")
         self.create_benchmark_folder(self.benchmark_folder)
 
-        # create loader
-        epochs = config.pop("epochs")
-        train_loader, val_loader, test_loader = task.create_data_loader(**config)
-        objective = task.objective_cls(
-            epochs=epochs,
-            train_loader=train_loader, val_loader=val_loader, test_loader=test_loader)
-
         # add input and output size to the benchmark.
-        grid["input_size"] = task.input_size
-        grid["output_size"] = task.output_size
-        grid = grid
-        resources = resources
-        # TODO: set metrics persistor location dynamically here?
-        self.benchmark = benchmark_cls(objective, grid, resources)
+        self.benchmark = benchmark_cls(resources)
 
         # set seeds
         self._set_all_seeds()
@@ -160,9 +140,9 @@ class BenchmarkRunner():
             ValueError: _description_
         """
         run_process = [
-            self.benchmark.deploy, self.benchmark.run, self.benchmark.collect_run_results,
-            self.benchmark.test, self.benchmark.collect_benchmark_metrics,
-            self.benchmark.undeploy]
+            self.benchmark.deploy, self.benchmark.setup, self.benchmark.run,
+            self.benchmark.collect_run_results,
+            self.benchmark.test, self.benchmark.collect_benchmark_metrics]
         benchmark_results = None
 
         try:
@@ -172,11 +152,24 @@ class BenchmarkRunner():
                     benchmark_fun()
                 self.latency_tracker.track(latency)
             benchmark_results = self.metrics_storage.get_benchmark_results()
+
+            # just to be save we wait a bit before killing shit.
+            sleep(5)
+
             self.metrics_storage.stop_db()
         except (docker.errors.APIError, AttributeError, ValueError, RuntimeError) as e:
-            self.metrics_storage.stop_db()
             print(e)
             raise ValueError("No Results obtained, Benchmark failed.")
+        finally:
+            try:
+                self.benchmark.undeploy()
+            except Exception:
+                pass
+
+            try:
+                self.metrics_storage.stop_db()
+            except Exception:
+                pass
 
         self.save_benchmark_results(benchmark_results)
 
@@ -198,19 +191,16 @@ class BenchmarkRunner():
             benchmark_results (_type_): _description_
         """
         benchmark_config_dict = dict(
-            objective=self.benchmark.objective.__class__.__name__,
-            grid=self.benchmark.grid,
             resources=self.benchmark.resources,
         )
         benchmark_result_dict = dict(
             benchmark_metrics=benchmark_results,
             benchmark_configuration=benchmark_config_dict
         )
-        benchmark_result_dict = self._check_json_serializabile_grid(benchmark_result_dict)
         with open(
             os.path.join(
                 self.benchmark_folder,
-                f"benchmark_results__{self.rundate}__id_{self.config_name}.json"), "w"
+                f"benchmark_results__{self.rundate}__id.json"), "w"
                 ) as f:
             json.dump(benchmark_result_dict, f)
         print("Results saved!")
@@ -222,18 +212,18 @@ class BenchmarkRunner():
             os.makedirs(folder_path, exist_ok=True)
             print(f"Benchmark Folder created under: {self.benchmark_folder}")
 
-    def _check_json_serializabile_grid(self, to_serialize_dict):
-        """Grid uses custom functions from optimization packages, therefore it might be anything. Make sure it
-        is serializable.
+    # def _check_json_serializabile_grid(self, to_serialize_dict):
+    #     """Grid uses custom functions from optimization packages, therefore it might be anything. Make sure it
+    #     is serializable.
 
-        Args:
-            to_serialize_dict (_type_): _description_
+    #     Args:
+    #         to_serialize_dict (_type_): _description_
 
-        Returns:
-            _type_: _description_
-        """
-        try:
-            json.dumps(to_serialize_dict)
-        except TypeError:
-            to_serialize_dict["benchmark_configuration"]["grid"] = str(to_serialize_dict["benchmark_configuration"]["grid"])
-        return to_serialize_dict
+    #     Returns:
+    #         _type_: _description_
+    #     """
+    #     try:
+    #         json.dumps(to_serialize_dict)
+    #     except TypeError:
+    #         to_serialize_dict["benchmark_configuration"]["grid"] = str(to_serialize_dict["benchmark_configuration"]["grid"])
+    #     return to_serialize_dict

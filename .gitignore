@@ -129,3 +129,7 @@ dmypy.json
 # Pyre type checker
 .pyre/
 exp__*
+experiments/simple_raytune/benchmark__RaytuneBenchmark
+experiments/optuna_minikube/benchmark__OptunaMinikubeBenchmark
+
+data/
