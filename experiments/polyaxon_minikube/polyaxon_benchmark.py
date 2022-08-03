@@ -36,11 +36,12 @@ class PolyaxonBenchmark(Benchmark):
         self.experiment_file_name = "grid.yaml"
         self.project_description = "Somer random description"
         self.polyaxon_addr="http://localhost:31833/"
-
+        
         config.load_kube_config()
 
-        
-        log.basicConfig(format='%(asctime)s %(levelname)s: %(message)s',level=log.INFO)
+        self.logging_level= self.resources.get("loggingLevel",log.CRITICAL)
+
+        log.basicConfig(format='%(asctime)s %(levelname)s: %(message)s',level=self.logging_level)
 
     
         if "dockerImageTag" in self.resources:
@@ -112,29 +113,29 @@ class PolyaxonBenchmark(Benchmark):
         # c = client.AppsV1Api()
         deployed = 0
 
+
         log.info("Waiting for polyaxon pods to be read:")
+        # From all pods that polyaxon starts we are onlly really intrested for following 4 that are crucial for runnig of the experiments 
         monitored_pods = ["polyaxon-polyaxon-streams","polyaxon-polyaxon-operator","polyaxon-polyaxon-gateway","polyaxon-polyaxon-api"]
         # TODO changing to list_namespaced_deployments?
         for e in w.stream(c.list_namespaced_pod, namespace="polyaxon"):
             ob = e["object"]          
             
             for name in monitored_pods:
-                if name in ob.metadata.name:
-                    #   log.info(ob.metadata.name)
-                    #log.info(ob)
 
+                #checking if it is one of the pods that we want to monitor 
+                if name in ob.metadata.name:
+                    
+                    # Checking if the pod already is runnig and its underlying containers are ready
                     if ob.status.phase == "Running" and ob.status.container_statuses[0].ready: 
-                    # if ob.status.ready_replicas is not None and ob.status.ready_replicas >= 1:
                         log.info(f'{ob.metadata.name} is ready')
                         monitored_pods.remove(name)
                         deployed = deployed + 1
-                    #   log.info(ob)
+
+                        #if all monitored pods are running the deployment process was ended
                         if(deployed == 4 ):
                             w.stop()
-                            log.info("Finished deploying")
-
-                            res = os.popen('kubectl get deployment -n polyaxon').read()
-                            log.info(res)
+                            log.info("Finished deploying crucial pods")
                             
 
         
@@ -217,7 +218,7 @@ class PolyaxonBenchmark(Benchmark):
         log.info(res)
 
         
-        #TODO change to kubernetes api for monitoring runing trials  
+        #TODO switch to kubernetes api for monitoring runing trials  
         log.info("Waiting for the run to finish:")
         finished = False
         while not finished:
@@ -325,7 +326,8 @@ if __name__ == "__main__":
         #    "dockerUserPassword":"",
         # "studyName":""
         "jobsCount":5,
-        "workerCount":5
+        "workerCount":5,
+        "loggingLevel":log.INFO
         })
     bench.deploy() 
     bench.setup()
