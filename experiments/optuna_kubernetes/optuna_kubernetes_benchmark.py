@@ -1,5 +1,6 @@
 import random
 from os import path
+from time import sleep
 
 import optuna
 from kubernetes import client, config, watch
@@ -108,6 +109,7 @@ class OptunaKubernetesBenchmark(Benchmark):
                     client.ApiClient(), yaml_objects=job_yml_objects, namespace=self.namespace, verbose=True)
             else:
                 raise e
+        self._watch_trials()
 
     def _getDBURL(self):
         postgres_sepc = client.CoreV1Api().read_namespaced_service(namespace=self.namespace, name="postgres")
@@ -122,7 +124,6 @@ class OptunaKubernetesBenchmark(Benchmark):
     def collect_run_results(self):
         """Collect results form container or on master?
         """
-        self._watch_trials()
         study = optuna.load_study(study_name=self.study_name, storage=self._getDBURL())
         self.best_trial = study.best_trial
 
@@ -163,7 +164,15 @@ class OptunaKubernetesBenchmark(Benchmark):
         """
         if self.delete_after_run:
             client.CoreV1Api().delete_namespace(self.namespace)
+            self._watch_namespace()
             self.image_builder.cleanup(self.trial_tag)
+
+    def _watch_namespace(self):
+        try:
+            client.CoreV1Api().read_namespace_status(self.namespace).to_dict()
+            sleep(2)
+        except client.exceptions.ApiException:
+            return
 
     def _watch_db(self):
         w = watch.Watch()

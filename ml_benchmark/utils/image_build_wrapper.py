@@ -40,7 +40,7 @@ class MinikubeImageBuilder(ImageBuilder):
         return call.stdout.decode("utf-8").strip("\n")
 
     def cleanup(self, tag):
-        call = subprocess.run(["minikube", "image", "rm", tag], shell=True, check=True)
+        call = subprocess.run(["minikube", "image", "rm", tag], check=True)
         if call.returncode != 0:
             raise Exception("Failed to cleanup")
 
