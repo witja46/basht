@@ -7,6 +7,7 @@ spec:
   parallelism: $worker_num
   template:
     spec:
+      selector: optuna
       containers:
       - name: optuna-trial
         image: $worker_image
