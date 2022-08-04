@@ -26,12 +26,16 @@ Note: If you run your benchmark on GPU make sure to install [Cuda](https://docs.
 6. To install the benchmark and use it locally , clone the repository and switch to the root_folder of the repository and type in `pip install -e .`. Otherwise you can also install the package via PyPi with `pip install ml-benchmark`
 
 
+### RayTune Example
 For running the raytune example experiment add the following after the process above:
 
 1. `pip install ray[tune]`
 2. `pip install pandas`
 
-For all opther experiments, install the requirements.txt if present.
+
+### Optuna Minikube Example
+For minikube, install the `requirements.txt` in `experiments/optuna_minikube` if present. Also make sure you installed [minikube](https://kubernetes.io/de/docs/tasks/tools/install-minikube/).
+Before starting the minikube example you need to start your minikube vm with `minikube start`. Then execute `experiments/optuna_minikube/optuna_minikube_benchmark.py`.
 ## Class Explanation
 
 |Class|Description|
