@@ -1,14 +1,13 @@
 from polyaxon import tracking
 import argparse
 import logging
-import os
 import numpy as np
 import time
-import sys
-PROJECT_ROOT = os.path.abspath(os.path.join(__file__ ,"../../../.."))
-sys.path.append(PROJECT_ROOT)
-from ml_benchmark.benchmark_runner import Benchmark
-from ml_benchmark.workload.mnist.mnist_task import MnistTask
+# import os
+# PROJECT_ROOT = os.path.abspath(os.path.join(__file__ ,"../../../.."))
+# sys.path.append(PROJECT_ROOT)
+# from ml_benchmark.benchmark_runner import Benchmark
+# from ml_benchmark.workload.mnist.mnist_task import MnistTask
 
 
 def train(times ,epoch):
@@ -60,7 +59,7 @@ def main():
         train(batch_size,epoch)
         test() 
 
-    #TODO swicht to the real task 
+    # #TODO swicht to the real task 
     # task = MnistTask(config_init={"epochs": 1})
     # objective = task.create_objective()
     

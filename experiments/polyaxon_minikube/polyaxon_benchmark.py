@@ -5,16 +5,14 @@ from itertools import count
 import json
 from os import path 
 import os
+from socket import timeout
 import sys
 from time import sleep
 import random
 from kubernetes import client, config,watch
 from kubernetes.client.rest import ApiException
 from string import Template
-import yaml
 import docker
-PROJECT_ROOT = path.abspath(path.join(__file__ ,"../../.."))
-sys.path.append(PROJECT_ROOT)
 from ml_benchmark.benchmark_runner import Benchmark
 import requests
 import subprocess
@@ -25,9 +23,9 @@ import logging as log
 
 class PolyaxonBenchmark(Benchmark):
 
-    def __init__(self, objective, grid, resources) -> None:
-        self.objective = objective
-        self.grid = grid
+    def __init__(self, resources) -> None:
+        # self.objective = objective
+        # self.grid = grid
         self.resources = resources
         self.group="kubeflow.org"
         self.version="v1beta1"
@@ -36,12 +34,13 @@ class PolyaxonBenchmark(Benchmark):
         self.experiment_file_name = "grid.yaml"
         self.project_description = "Somer random description"
         self.polyaxon_addr="http://localhost:31833/"
+        self.post_forward_process=False
         
         config.load_kube_config()
 
         self.logging_level= self.resources.get("loggingLevel",log.CRITICAL)
 
-        log.basicConfig(format='%(asctime)s %(levelname)s: %(message)s',level=self.logging_level)
+        log.basicConfig(format='%(asctime)s Polyaxon Benchmark %(levelname)s: %(message)s',level=self.logging_level)
 
     
         if "dockerImageTag" in self.resources:
@@ -190,11 +189,14 @@ class PolyaxonBenchmark(Benchmark):
             for line in logs  :
                 log.info(line) 
             
+
+            #TODO check if the image is runing properly and there is no  problems with it
+
             #pushing to repo
             self.client.login(username=self.docker_user, password=self.docker_pasword)
             for line in self.client.images.push(self.trial_tag, stream=True, decode=True):
                 log.info(line) 
-        
+            
         
 
     def run(self):
@@ -217,6 +219,8 @@ class PolyaxonBenchmark(Benchmark):
         res = os.popen(f'polyaxon run -f ./{self.experiment_file_name} --project {self.study_name} --eager').read()
         log.info(res)
 
+        
+        #TODO check if there is no problem with the image
         
         #TODO switch to kubernetes api for monitoring runing trials  
         log.info("Waiting for the run to finish:")
@@ -259,11 +263,12 @@ class PolyaxonBenchmark(Benchmark):
 
     def undeploy(self):
         
-        log.info("Terminating post  forwarding process:")
-        process = psutil.Process(self.post_forward_process.pid)
-        for proc in process.children(recursive=True):
-            proc.kill()
-        process.kill()
+        if(self.post_forward_process):
+            log.info("Terminating post  forwarding process:")
+            process = psutil.Process(self.post_forward_process.pid)
+            for proc in process.children(recursive=True):
+                proc.kill()
+            process.kill()
       
 
 
@@ -308,11 +313,14 @@ class PolyaxonBenchmark(Benchmark):
             ob = e["object"]
             # if the status of our namespace was changed we check if it the namespace was really removed from the cluster by requesting and expecting it to be not found
             #TODO do this in other way
+
+            
             if ob.metadata.name == self.namespace:
                 try:
                     log.debug(c.read_namespace_status_with_http_info(name=self.namespace))
                 except ApiException as err:
                     log.info(err)
+                    log.info("Namespace sucessfully deleted")
                     w.stop()
                     break
 
@@ -321,16 +329,30 @@ class PolyaxonBenchmark(Benchmark):
 
 if __name__ == "__main__":
     #main()
-    bench = PolyaxonBenchmark(1,1,resources={
+    # bench = PolyaxonBenchmark(resources={
+    #         "dockerUserLogin":"",
+    #         "dockerUserPassword":"",
+    #     # "studyName":""
+    #     "jobsCount":5,
+    #     "workerCount":5,
+    #     "loggingLevel":log.INFO
+    #     })
+    # bench.deploy() 
+    # bench.setup()
+    # bench.run()
+    # bench.collect_run_results()
+    # bench.undeploy()
+
+    resources={
         #    "dockerUserLogin":"",
         #    "dockerUserPassword":"",
         # "studyName":""
         "jobsCount":5,
         "workerCount":5,
         "loggingLevel":log.INFO
-        })
-    bench.deploy() 
-    bench.setup()
-    bench.run()
-    bench.collect_run_results()
-    bench.undeploy()
+    }
+    from ml_benchmark.benchmark_runner import BenchmarkRunner
+    runner = BenchmarkRunner(
+        benchmark_cls=PolyaxonBenchmark, resources=resources)
+    runner.run()
+
