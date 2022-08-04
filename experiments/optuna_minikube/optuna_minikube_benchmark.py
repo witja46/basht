@@ -108,6 +108,8 @@ class OptunaMinikubeBenchmark(Benchmark):
                     client.ApiClient(), yaml_objects=job_yml_objects, namespace=self.namespace, verbose=True)
             else:
                 raise e
+            # TODO: seems to cause issues
+            self._watch_trials()
 
     def _getDBURL(self):
         postgres_sepc = client.CoreV1Api().read_namespaced_service(namespace=self.namespace, name="postgres")
@@ -122,7 +124,6 @@ class OptunaMinikubeBenchmark(Benchmark):
     def collect_run_results(self):
         """Collect results form container or on master?
         """
-        self._watch_trials()
         study = optuna.load_study(study_name=self.study_name, storage=self._getDBURL())
         self.best_trial = study.best_trial
 
