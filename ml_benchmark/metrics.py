@@ -10,15 +10,40 @@ class Metric:
     """
     Metric Parentclass. Creates a unique identifier for every metric and gathers basic information.
     """
-    process_id = os.getpid()
-    hostname = socket.gethostname()
-    metric_id = f"id_{uuid4()}__pid_{process_id}__hostname_{hostname}"
+    metric_id = ""
 
     def add_to_id(self, id_addition):
         self.metric_id = self.metric_id + f"__{id_addition}"
 
     def to_dict(self):
         return asdict(self)
+
+
+class NodeUsage(Metric):
+    def __init__(self, node_id):
+        super().__init__()
+        self.node_id = node_id
+
+        self.add_to_id(f"{self.node_id}")
+
+        self.timestamp = None
+        self.cpu_usage = None
+        self.memory_usage = None
+        self.network_usage = None
+        self.accelerator_usage = None
+
+    def to_dict(self):
+        node_dict = dict(
+            metric_id=self.metric_id,
+            timestamp=self.timestamp,
+            cpu_usage=self.cpu_usage,
+            memory_usage=self.memory_usage,
+            network_usage=self.network_usage,
+        )
+        if self.accelerator_usage:
+            node_dict["accelerator_usage"] = self.accelerator_usage
+
+        return {key: _convert_datetime_to_unix(value) for key, value in node_dict.items()}
 
 
 class Latency(Metric):
@@ -41,6 +66,10 @@ class Latency(Metric):
             AttributeError: _description_
         """
         super().__init__()
+        process_id = os.getpid()
+        hostname = socket.gethostname()
+        self.add_to_id(f"id_{uuid4()}__pid_{process_id}__hostname_{hostname}")
+
         self.function_name: str = func.__name__
         try:
             self.obj_hash = hash(func.__self__)
@@ -61,7 +90,7 @@ class Latency(Metric):
             duration_sec=self.duration_sec
         )
         # latency_dict.update(super().to_dict())
-        latency_dict = {key: self._convert_times_to_float(value) for key, value in latency_dict.items()}
+        latency_dict = {key: _convert_times_to_float(value) for key, value in latency_dict.items()}
 
         return latency_dict
 
@@ -84,8 +113,15 @@ class Latency(Metric):
     def _calculate_duration(self):
         self.duration_sec = self.end_time - self.start_time
 
-    def _convert_times_to_float(self, value):
-        if isinstance(value, timedelta):
-            return value.total_seconds()
-        else:
-            return str(value)
+
+def _convert_times_to_float(value):
+    if isinstance(value, timedelta):
+        return value.total_seconds()
+    else:
+        return str(value)
+
+def _convert_datetime_to_unix(value):
+    if isinstance(value, datetime):
+        return value.ctime()
+    else:
+        return str(value)

@@ -1,3 +1,4 @@
+import logging
 import time
 import docker
 from sqlalchemy import create_engine, MetaData, Table, Column, String, Float, select
@@ -15,6 +16,7 @@ class MetricsStorage:
     connection_string = MetricsStorageConfig.connection_string
 
     def __init__(self, connection_string: str = None) -> None:
+
         """
         The MetricsStorage serves as the representation of the databse.
         It sets up a postgres database in a docker container and creates tables for every recorded metric.
@@ -25,15 +27,21 @@ class MetricsStorage:
         Args:
             connection_string (str, optional): _description_. Defaults to None.
         """
+        logging.basicConfig()
+        logging.getLogger('sqlalchemy').setLevel(logging.ERROR)
+
+        self.meta = None
+        self.client = None
+        self.engine = None
         if connection_string:
             self.connection_string = connection_string
         self.latency = None
+        self.resources = None
 
     def start_db(self):
         self.setup_db()
         self.engine = create_engine(self.connection_string)
         self.create_metrics_table()
-        self.create_resource_table()
         return self
 
     def setup_db(self):
@@ -76,7 +84,15 @@ class MetricsStorage:
         )
 
     def create_resource_table(self):
-        pass
+        self.resources = Table(
+            "resources", self.meta,
+            Column("metric_id", String, primary_key=True),
+            Column("timestamp", String, primary_key=True),
+            Column("cpu_usage", Float),
+            Column("memory_usage", Float),
+            Column("network_usage", Float),
+            Column("accelerator_usage", Float)
+        )
 
     def create_classification_metrics_table(self):
         pass
@@ -98,7 +114,14 @@ class MetricsStorage:
         return result_list
 
     def get_resource_results(self):
-        pass
+        result_list = []
+        with self.engine.connect() as conn:
+            stmt = select(self.resources)
+            cursor = conn.execute(stmt)
+        cursor = cursor.mappings().all()
+        for row in cursor:
+            result_list.append(dict(row))
+        return result_list
 
     def get_classification_results(self):
         pass
