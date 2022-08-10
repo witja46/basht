@@ -1,6 +1,6 @@
 version: 1.1
 kind: operation
-name: polyaxon-study-29
+name: polyaxon-study-3
 matrix:
   kind: grid
   numRuns: 5
@@ -16,6 +16,13 @@ component:
   run:
     kind: job
     container:
-      image: witja46/mnist_polyaxon:latest
-      command: [python3, /opt/mnist_task/task.py]
+      image: witja46/mnist_test
+      command: [python3, experiments/polyaxon_minikube/mnist_task/task.py]
       args: ["--batch-size=64", "--lr={{ lr }}"]
+      env:
+        - name: STUDY_NAME
+          value: "polyaxon-study-3"
+        - name: DB_CONN
+          value: "postgresql://postgresadmin:admin123@postgres:5432/postgresdb"
+        - name: "METRICS_STORAGE_HOST"
+          value: "134.101.4.161"

@@ -1,15 +1,16 @@
-FROM python:3.9-slim
+#TODO change to some slimer base image
+FROM pytorch/pytorch:1.12.0-cuda11.3-cudnn8-runtime
+#FROM python:3.9-slim
 
-ADD . /opt/mnist_task
-WORKDIR /opt/mnist_task
+RUN pip install pip --upgrade
+RUN pip install polyaxon
 
-# Add folder for the logs.
-RUN mkdir /katib
-RUN pip install --no-cache-dir -r requirements.txt
+COPY experiments experiments
+COPY data data
+COPY setup.py setup.py
+COPY ml_benchmark ml_benchmark
 
-RUN chgrp -R 0 /opt/mnist_task \
-  && chmod -R g+rwX /opt/mnist_task \
-  && chgrp -R 0 /katib \
-  && chmod -R g+rwX /katib
 
-ENTRYPOINT ["python3", "/opt/mnist_task/task.py"]
+RUN pip install -e .
+
+CMD ["python", "experiments/polyaxon_minikube/mnist_task/task.py"]

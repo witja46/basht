@@ -1,5 +1,6 @@
 
 from asyncio import subprocess
+from base64 import decode
 from concurrent.futures import process
 from itertools import count
 import json
@@ -9,6 +10,7 @@ from socket import timeout
 import sys
 from time import sleep
 import random
+from urllib.request import urlopen
 from kubernetes import client, config,watch
 from kubernetes.client.rest import ApiException
 from string import Template
@@ -42,18 +44,20 @@ class PolyaxonBenchmark(Benchmark):
 
         log.basicConfig(format='%(asctime)s Polyaxon Benchmark %(levelname)s: %(message)s',level=self.logging_level)
 
+
+        self.metrics_ip = resources.get("metricsIP")
     
         if "dockerImageTag" in self.resources:
             self.trial_tag = self.resources["dockerImageTag"]
         else:
-            self.trial_tag = "mnist_polyaxon:latest"
+            self.trial_tag = "mnist_test"
 
         if "dockerUserLogin" in self.resources:
             self.docker_user = self.resources["dockerUserLogin"]
-            self.trial_tag =  f'{self.docker_user}/{self.trial_tag}'
         else:
-            self.docker_user = ""
-            self.trial_tag = "witja46/mnist_polyaxon:latest"
+            self.docker_user = "witja46"
+    
+        self.trial_tag =  f'{self.docker_user}/{self.trial_tag}'
         
         if "dockerUserPassword" in self.resources:
             self.docker_pasword = self.resources["dockerUserPassword"]
@@ -164,7 +168,8 @@ class PolyaxonBenchmark(Benchmark):
             "worker_mem": f"{self.workerMemory}Gi",
             "worker_image": self.trial_tag,
             "study_name": self.study_name,
-            "trialParameters":"${trialParameters.learningRate}"
+            "trialParameters":"${trialParameters.learningRate}",
+            "metrics_ip": self.metrics_ip,
         }
 
         #loading and filling the template
@@ -182,9 +187,11 @@ class PolyaxonBenchmark(Benchmark):
         if "dockerUserLogin" in self.resources:
            
             #creating task docker image  
-            log.info("Creating task docker image")  
+            log.info("Creating task docker image")            
+            #TODO do all this inside of minikube instead of on the client?  
             self.client = docker.client.from_env()
-            image, logs = self.client.images.build(path="./mnist_task",tag=self.trial_tag)
+            PROJECT_ROOT = os.path.abspath(os.path.join(__file__ ,"../../../"))
+            image, logs = self.client.images.build(path=PROJECT_ROOT, dockerfile="experiments/polyaxon_minikube/mnist_task/Dockerfile" ,tag=self.trial_tag)
             log.info(f"Image: {self.trial_tag}")
             for line in logs  :
                 log.info(line) 
@@ -194,7 +201,10 @@ class PolyaxonBenchmark(Benchmark):
 
             #pushing to repo
             self.client.login(username=self.docker_user, password=self.docker_pasword)
-            for line in self.client.images.push(self.trial_tag, stream=True, decode=True):
+            
+            log.info("Pushing image to the Dockerhub")
+            
+            for line in self.client.api.push(self.trial_tag,stream=True,decode=True): 
                 log.info(line) 
             
         
@@ -282,6 +292,7 @@ class PolyaxonBenchmark(Benchmark):
 
 
         # Waiting untill all polyaxon pods get terminated 
+        #TODO add logic in case of no existent polyaxon deployment 
         config.load_kube_config()
         w = watch.Watch()
         c = client.CoreV1Api()
@@ -337,22 +348,25 @@ if __name__ == "__main__":
     #     "workerCount":5,
     #     "loggingLevel":log.INFO
     #     })
-    # bench.deploy() 
+    #bench.deploy() 
     # bench.setup()
     # bench.run()
     # bench.collect_run_results()
-    # bench.undeploy()
+   # bench.undeploy()
 
     resources={
-        #    "dockerUserLogin":"",
-        #    "dockerUserPassword":"",
+        # "dockerUserLogin":"",
+        # "dockerUserPassword":"",
         # "studyName":""
+        "dockerImageTag":"mnist_test",
         "jobsCount":5,
         "workerCount":5,
-        "loggingLevel":log.INFO
+        "loggingLevel":log.INFO,
+        "metricsIP": urlopen("https://checkip.amazonaws.com").read().decode("utf-8").strip()
     }
     from ml_benchmark.benchmark_runner import BenchmarkRunner
     runner = BenchmarkRunner(
         benchmark_cls=PolyaxonBenchmark, resources=resources)
     runner.run()
+
 

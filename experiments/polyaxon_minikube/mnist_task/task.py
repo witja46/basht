@@ -3,11 +3,11 @@ import argparse
 import logging
 import numpy as np
 import time
-# import os
-# PROJECT_ROOT = os.path.abspath(os.path.join(__file__ ,"../../../.."))
-# sys.path.append(PROJECT_ROOT)
-# from ml_benchmark.benchmark_runner import Benchmark
-# from ml_benchmark.workload.mnist.mnist_task import MnistTask
+import os
+import sys
+PROJECT_ROOT = os.path.abspath(os.path.join(__file__ ,"../../../../../"))
+sys.path.append(PROJECT_ROOT)
+from ml_benchmark.workload.mnist.mnist_task import MnistTask
 
 
 def train(times ,epoch):
@@ -30,9 +30,7 @@ def test():
 
 
 def main():
-    
-    #Polyaxon
-    tracking.init()
+   
     
     #parsing arguments 
     parser = argparse.ArgumentParser(description="MNIST Example")
@@ -43,34 +41,47 @@ def main():
     parser.add_argument("--lr", type=float, default=0.01, metavar="LR",
                         help="learning rate (default: 0.01)")
     args = parser.parse_args()
-  
-    #timestamps format
-    logging.basicConfig(
-            format="%(asctime)s %(levelname)-8s %(message)s",
-            datefmt="%Y-%m-%dT%H:%M:%SZ",
-            level=logging.DEBUG)
-
-   
-    #model taining and testing
     epochs = args.epochs
     batch_size = args.batch_size
     lr = args.lr
-    for epoch in np.arange(1,epochs+1):
-        train(batch_size,epoch)
-        test() 
 
-    # #TODO swicht to the real task 
-    # task = MnistTask(config_init={"epochs": 1})
-    # objective = task.create_objective()
+
+
+    #TODO delete logging?
+    #Some logging
+    # timestamps format
+    # logging.basicConfig(
+    #         format="%(asctime)s %(levelname)-8s %(message)s",
+    #         datefmt="%Y-%m-%dT%H:%M:%SZ",
+    #         level=logging.DEBUG)
+    # for epoch in np.arange(1,epochs+1):
+    #     train(batch_size,epoch)
+    #     test() 
+
+
+
+    #MnistTask
+    task = MnistTask(config_init={"epochs": 1})
+    objective = task.create_objective()
+    #TODO add the weight decay to the definition of the template
+    objective.set_hyperparameters({"learning_rate": lr, "weight_decay": 0.01})
+    objective.train()
+    validation_scores = objective.validate()
     
-    # objective.set_hyperparameters({"learning_rate": lr, "weight_decay": 0.01})
-    # objective.train()
-    # validation_scores = objective.validate()
-    # print(validation_scores)
+  
+    #Geting results
+    avg = validation_scores["weighted avg"]
+    print("precision",avg["precision"])
+    print("f1-score",avg["f1-score"])
 
-    #polyaxon 
-    tracking.log_metrics(met1=0.8, met2= 0.9)
-    tracking.log_outputs(loss=0.9,accuracy=0.6)
+
+    # Polyaxon
+    #initiating polyaxon tracking
+    tracking.init()    
+    #loging metrics 
+    tracking.log_metrics(recall=avg["recall"], )
+    #logging the results 
+    tracking.log_outputs(f1score=avg["f1-score"],precision=avg["precision"])
 
 
 if __name__ == "__main__":
