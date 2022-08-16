@@ -14,7 +14,7 @@ def train(times ,epoch):
     loss = 1
     for x in np.arange(1,times + 1): 
         loss = 1 - (x -1 ) / times
-        time.sleep(0.01)
+        time.sleep(0.1)
         msg = "Train Epoch: {} [{}/{} ({:.0f}%)]\tloss={:.4f}".format(
                 epoch, x , times,
                 100. * x / times, loss)
@@ -47,21 +47,11 @@ def main():
 
 
 
-    #TODO delete logging?
-    #Some logging
-    # timestamps format
-    # logging.basicConfig(
-    #         format="%(asctime)s %(levelname)-8s %(message)s",
-    #         datefmt="%Y-%m-%dT%H:%M:%SZ",
-    #         level=logging.DEBUG)
-    # for epoch in np.arange(1,epochs+1):
-    #     train(batch_size,epoch)
-    #     test() 
 
 
 
     #MnistTask
-    task = MnistTask(config_init={"epochs": 1})
+    task = MnistTask(config_init={"epochs": epochs})
     objective = task.create_objective()
     #TODO add the weight decay to the definition of the template
     objective.set_hyperparameters({"learning_rate": lr, "weight_decay": 0.01})
@@ -74,6 +64,13 @@ def main():
     print("precision",avg["precision"])
     print("f1-score",avg["f1-score"])
 
+    # logging.basicConfig(
+    #         format="%(asctime)s %(levelname)-8s %(message)s",
+    #         datefmt="%Y-%m-%dT%H:%M:%SZ",
+    #         level=logging.DEBUG)
+    # for epoch in np.arange(1,epochs+1):
+    #     train(batch_size,epoch)
+    #     test() 
 
     # Polyaxon
     #initiating polyaxon tracking

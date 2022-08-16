@@ -1,6 +1,8 @@
 
+from __future__ import print_function
 from asyncio import subprocess
 from base64 import decode
+from cmath import pi
 from concurrent.futures import process
 from itertools import count
 import json
@@ -11,15 +13,22 @@ import sys
 from time import sleep
 import random
 from urllib.request import urlopen
+from venv import create
 from kubernetes import client, config,watch
 from kubernetes.client.rest import ApiException
 from string import Template
 import docker
 from ml_benchmark.benchmark_runner import Benchmark
+from ml_benchmark.utils.image_build_wrapper import builder_from_string
 import requests
 import subprocess
 import psutil
 import logging as log
+from polyaxon.cli.projects import create
+from polyaxon.cli.run import run
+from polyaxon.cli.admin import deploy,teardown
+from click.testing import CliRunner
+
 
 
 
@@ -37,7 +46,8 @@ class PolyaxonBenchmark(Benchmark):
         self.project_description = "Somer random description"
         self.polyaxon_addr="http://localhost:31833/"
         self.post_forward_process=False
-        
+        self.cli_runner=CliRunner()
+
         config.load_kube_config()
 
         self.logging_level= self.resources.get("loggingLevel",log.CRITICAL)
@@ -57,7 +67,7 @@ class PolyaxonBenchmark(Benchmark):
         else:
             self.docker_user = "witja46"
     
-        self.trial_tag =  f'{self.docker_user}/{self.trial_tag}'
+        
         
         if "dockerUserPassword" in self.resources:
             self.docker_pasword = self.resources["dockerUserPassword"]
@@ -101,10 +111,10 @@ class PolyaxonBenchmark(Benchmark):
         res = os.popen('helm repo add polyaxon https://charts.polyaxon.com').read()
         log.info(res)
 
-        #TODO deploy via helm for better error handling and easier configuration?
         log.info("Deploying polyaxon to minikube:")
-        res = os.popen('polyaxon admin deploy -t minikube').read()
-        log.info(res)
+        #invoking polyaxon cli deploy comand
+        res = self.cli_runner.invoke(deploy)
+        log.info(res.output)
 
       
       
@@ -113,11 +123,10 @@ class PolyaxonBenchmark(Benchmark):
         config.load_kube_config()
         w = watch.Watch()
         c = client.CoreV1Api()
-        # c = client.AppsV1Api()
         deployed = 0
 
 
-        log.info("Waiting for polyaxon pods to be read:")
+        log.info("Waiting for all polyaxon pods to be ready:")
         # From all pods that polyaxon starts we are onlly really intrested for following 4 that are crucial for runnig of the experiments 
         monitored_pods = ["polyaxon-polyaxon-streams","polyaxon-polyaxon-operator","polyaxon-polyaxon-gateway","polyaxon-polyaxon-api"]
         # TODO changing to list_namespaced_deployments?
@@ -183,54 +192,44 @@ class PolyaxonBenchmark(Benchmark):
         log.info("Experiment yaml created")
       
       
-        # Creating new docker image if credentials were passed
-        if "dockerUserLogin" in self.resources:
-           
-            #creating task docker image  
-            log.info("Creating task docker image")            
-            #TODO do all this inside of minikube instead of on the client?  
-            self.client = docker.client.from_env()
-            PROJECT_ROOT = os.path.abspath(os.path.join(__file__ ,"../../../"))
-            image, logs = self.client.images.build(path=PROJECT_ROOT, dockerfile="experiments/polyaxon_minikube/mnist_task/Dockerfile" ,tag=self.trial_tag)
-            log.info(f"Image: {self.trial_tag}")
-            for line in logs  :
-                log.info(line) 
-            
+        log.info("Creating task docker image")   
+        #creating docker image inside of the minikube   
+        self.image_builder = builder_from_string("minikube")()
+        PROJECT_ROOT = os.path.abspath(os.path.join(__file__ ,"../../../"))
+        self.image_builder.deploy_image(
+        "experiments/polyaxon_minikube/mnist_task/Dockerfile", self.trial_tag,PROJECT_ROOT)
+        print(f"Image: {self.trial_tag}")
 
-            #TODO check if the image is runing properly and there is no  problems with it
 
-            #pushing to repo
-            self.client.login(username=self.docker_user, password=self.docker_pasword)
-            
-            log.info("Pushing image to the Dockerhub")
-            
-            for line in self.client.api.push(self.trial_tag,stream=True,decode=True): 
-                log.info(line) 
+        
             
         
 
     def run(self):
 
-        #TODO add error handling 
+        #TODO add error handling.
+        #TODO change to invocking procject comand instead of sending the http request to the polaxon api? 
         log.info("Creating new project:")
-        project = requests.post(f'{self.polyaxon_addr}/api/v1/default/projects/create', json={"name": self.study_name, "description": self.project_description})
-        log.info(project.text)
+        # project = requests.post(f'{self.polyaxon_addr}/api/v1/default/projects/create', json={"name": self.study_name, })
+
+         
+        options = f'--name {self.study_name} --description '.split()
+        # adding the project description as the last argument  
+        options.append(f'{self.project_description}')
+        #invoking polyaxon project create comand
+        res = self.cli_runner.invoke(create,options)
+        log.info(res.output)
 
 
-        #TODO find out where to pass the --eager flag so that the run can be created with help of api
-        # with open(path.join(path.dirname(__file__), self.experiment_file_name), "r") as f:
-        #     body = f.read()
-        #     log.info(body)
-        #     run = requests.post(f'{self.polyaxon_addr}/api/v1/default/{self.study_name}/runs',json={"content":body,"eager":True ,"tags":["--eager"],"meta_info":{"eager":True,"--eager":True,"flags":"--eager"}})
-        #     log.info(run.text)
       
       
         log.info("Starting polyaxon experiment:")
-        res = os.popen(f'polyaxon run -f ./{self.experiment_file_name} --project {self.study_name} --eager').read()
-        log.info(res)
+        #invoking polyaxon run comand with following options
+        options = f'-f ./{self.experiment_file_name} --project {self.study_name} --eager'.split()
+        res = self.cli_runner.invoke(run,options)
+        log.info(res.output)
 
         
-        #TODO check if there is no problem with the image
         
         #TODO switch to kubernetes api for monitoring runing trials  
         log.info("Waiting for the run to finish:")
@@ -242,12 +241,19 @@ class PolyaxonBenchmark(Benchmark):
             #checking if all runs were finished
             finished = runs["count"] == self.jobsCount
             sleep(1)
-        return 
+    
+        return
+
+
 
 
     def collect_benchmark_metrics(self):
-        pass
 
+        log.info("Collecting run results:")
+        result = self.get_succeeded_runs()
+        log.info(json.dumps(result,indent=4))               
+               
+        return result["results"]
 
 
     def get_succeeded_runs(self, sort_by="duration"):
@@ -279,14 +285,20 @@ class PolyaxonBenchmark(Benchmark):
             for proc in process.children(recursive=True):
                 proc.kill()
             process.kill()
-      
 
 
-        #TODO changing to undeploying with helm?
+
         log.info("Undeploying polyaxon:")
-        p = subprocess.Popen(["polyaxon", "admin" ,"teardown"],shell=True,stdin=subprocess.PIPE,stdout=subprocess.PIPE)
-        out,err = p.communicate(input=b"y") 
-        p.terminate()
+        res = self.cli_runner.invoke(teardown,["--yes"])
+        #by teardown comand the polyaxon cli doesnt set exit_code if there are some problems
+        if("Polyaxon could not teardown the deployment" in res.output):
+            raise Exception(f'Exit code: {res.exit_code}  Error message: \n{res.output}')
+        elif(res.exit_code == 0):
+            print(res.exit_code)
+            log.info(res.output)
+        else:
+            raise Exception(f'Exit code: {res.exit_code}  Error message: \n{res.output}')
+   
              
     
 
@@ -341,23 +353,28 @@ class PolyaxonBenchmark(Benchmark):
 if __name__ == "__main__":
     #main()
     # bench = PolyaxonBenchmark(resources={
-    #         "dockerUserLogin":"",
-    #         "dockerUserPassword":"",
+    #         # "dockerUserLogin":"",
+    #         # "dockerUserPassword":"",
     #     # "studyName":""
     #     "jobsCount":5,
     #     "workerCount":5,
-    #     "loggingLevel":log.INFO
+    #     "loggingLevel":log.INFO,
+    #     "dockerImageTag":"nowe",
+
+    #     "metricsIP": urlopen("https://checkip.amazonaws.com").read().decode("utf-8").strip()
     #     })
-    #bench.deploy() 
+    
+    # bench.deploy() 
     # bench.setup()
     # bench.run()
-    # bench.collect_run_results()
-   # bench.undeploy()
+    # # bench.collect_run_results()
 
+    # bench.undeploy()
+    # polyaxon config set --host=http://localhost:8000
+
+    
     resources={
-        # "dockerUserLogin":"",
-        # "dockerUserPassword":"",
-        # "studyName":""
+        # "studyName":"",
         "dockerImageTag":"mnist_test",
         "jobsCount":5,
         "workerCount":5,
@@ -368,5 +385,24 @@ if __name__ == "__main__":
     runner = BenchmarkRunner(
         benchmark_cls=PolyaxonBenchmark, resources=resources)
     runner.run()
+
+    
+    # print(f'polyaxon run -f ./ --project  --eager')
+    # print(f'polyaxon run -f ./grid --project --eager'.split())
+    # runner = CliRunner()
+    # print("start")
+    # res = runner.invoke(run,["-f ./grid.yaml --eager -o json"])
+    # print("fin")
+    # print(res.output,res.exit_code)
+
+    # res = runner.invoke(teardown,["--yes"])    
+    # if("Polyaxon could not teardown the deployment" in res.output):
+    #     print("Ja pierdole")
+    # print(res.output,res.exit_code,res.exception)
+    # print("stop")
+    # res = runner.invoke(deploy)    
+    # print(res.output,res.exit_code)
+
+   # print(res)
 
 

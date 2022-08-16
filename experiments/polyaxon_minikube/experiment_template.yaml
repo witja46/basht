@@ -16,6 +16,7 @@ component:
   run:
     kind: job
     container:
+      imagePullPolicy: IfNotPresent
       image: $worker_image
       command: [python3, experiments/polyaxon_minikube/mnist_task/task.py]
       args: ["--batch-size=64", "--lr={{ lr }}"]

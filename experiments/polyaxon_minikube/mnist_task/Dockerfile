@@ -11,6 +11,7 @@ COPY setup.py setup.py
 COPY ml_benchmark ml_benchmark
 
 
+
 RUN pip install -e .
 
 CMD ["python", "experiments/polyaxon_minikube/mnist_task/task.py"]
