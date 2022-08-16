@@ -2,15 +2,18 @@ from os import path
 import os
 import sys
 from time import sleep
+from urllib.request import urlopen
 from kubernetes.client.rest import ApiException
 import random
-from kubernetes import client, config
+from kubernetes import client, config, watch
+from kubernetes.client.rest import ApiException
 from string import Template
 import yaml
 import docker
-PROJECT_ROOT = path.abspath(path.join(__file__ ,"../../.."))
-sys.path.append(PROJECT_ROOT)
+import logging as log
+
 from ml_benchmark.benchmark_runner import Benchmark
+from ml_benchmark.utils.image_build_wrapper import builder_from_string
 
 
 
@@ -26,8 +29,12 @@ class KatibBenchmark(Benchmark):
         self.namespace='kubeflow'
         self.plural="experiments"
         self.experiment_file_name = "grid.yaml"
-     
+        self.metrics_ip = resources.get("metricsIP")     
         config.load_kube_config()
+
+        self.logging_level= self.resources.get("loggingLevel",log.INFO)
+
+        log.basicConfig(format='%(asctime)s Katib Benchmark %(levelname)s: %(message)s',level=self.logging_level)
 
         
 
@@ -35,19 +42,10 @@ class KatibBenchmark(Benchmark):
         if "dockerImageTag" in self.resources:
             self.trial_tag = self.resources["dockerImageTag"]
         else:
-            self.trial_tag = "mnist_katib:latest"
+            self.trial_tag = "mnist_katib"
 
-        if "dockerUserLogin" in self.resources:
-            self.docker_user = self.resources["dockerUserLogin"]
-            self.trial_tag =  f'{self.docker_user}/{self.trial_tag}'
-        else:
-            self.docker_user = ""
-            self.trial_tag = "witja46/mnist_katib:latest"
+
         
-        if "dockerUserPassword" in self.resources:
-            self.docker_pasword = self.resources["dockerUserPassword"]
-        else:
-            self.docker_pasword = ""        
 
 
         if "studyName" in self.resources:
@@ -85,6 +83,38 @@ class KatibBenchmark(Benchmark):
         print(res)
 
 
+
+        config.load_kube_config()
+        w = watch.Watch()
+        c = client.CoreV1Api()
+        deployed = 0
+        log.info("Waiting for all Katib pods to be ready:")
+        # From all pods that polyaxon starts we are onlly really intrested for following 4 that are crucial for runnig of the experiments 
+        monitored_pods = ["katib-cert-generator","katib-db-manager","katib-mysql","katib-ui","katib-controller"]
+        # TODO changing to list_namespaced_deployments?
+        for e in w.stream(c.list_namespaced_pod, namespace=self.namespace):
+            ob = e["object"]          
+
+            for name in monitored_pods:
+
+                #checking if it is one of the pods that we want to monitor 
+                if name in ob.metadata.name:
+
+                    # Checking if the pod already is runnig and its underlying containers are ready
+                    if ob.status.phase == "Running" and ob.status.container_statuses[0].ready: 
+                        log.info(f'{ob.metadata.name} is ready')
+                        monitored_pods.remove(name)
+                        deployed = deployed + 1
+
+                        #if all monitored pods are running the deployment process was ended
+                        if(deployed == 4 ):
+                            w.stop()
+                            log.info("Finished deploying crucial pods")
+
+
+
+
+
         #TODO waiit untill all pods are running
 
 
@@ -106,7 +136,8 @@ class KatibBenchmark(Benchmark):
             "worker_mem": f"{self.workerMemory}Gi",
             "worker_image": self.trial_tag,
             "study_name": self.study_name,
-            "trialParameters":"${trialParameters.learningRate}"
+            "trialParameters":"${trialParameters.learningRate}",
+            "metrics_ip":self.metrics_ip
         }
 
         #loading and fulling the template
@@ -120,21 +151,15 @@ class KatibBenchmark(Benchmark):
         print("Experiment yaml created")
       
       
-        # Creating new docker image if credentials were passed
-        if "dockerUserLogin" in self.resources:
-           
-            #creating task docker image  
-            print("Creating task docker image")  
-            self.client = docker.client.from_env()
-            image, logs = self.client.images.build(path="./mnist_task",tag=self.trial_tag)
-            print(f"Image: {self.trial_tag}")
-            for line in logs  :
-                print(line) 
-            
-            #pushing to repo
-            self.client.login(username=self.docker_user, password=self.docker_pasword)
-            for line in self.client.images.push(self.trial_tag, stream=True, decode=True):
-                print(line) 
+       # Creating new docker image if credentials were passed
+        log.info("Creating task docker image")   
+        #creating docker image inside of the minikube   
+        self.image_builder = builder_from_string("minikube")()
+        PROJECT_ROOT = os.path.abspath(os.path.join(__file__ ,"../../../"))
+        res = self.image_builder.deploy_image(
+        "experiments/katib_minikube/mnist_task/Dockerfile", self.trial_tag,PROJECT_ROOT)
+        print(res)
+        print(f"Image: {self.trial_tag}")  
         
         
 
@@ -233,8 +258,9 @@ if __name__ == "__main__":
         # "dockerUserLogin":"",
         # "dockerUserPassword":"",
         # "studyName":""
-        "jobs_Count":20,
-        "workerCount":20
+        "jobs_Count":4,
+        "workerCount":4,
+        "metricsIP": urlopen("https://checkip.amazonaws.com").read().decode("utf-8").strip()
         })
     # bench.deploy()
     bench.setup()

@@ -3,24 +3,24 @@ apiVersion: kubeflow.org/v1beta1
 kind: Experiment
 metadata:
   namespace: kubeflow
-  name: katib-study-79
+  name: $study_name
 spec:
   objective:
     type: maximize
-    goal: 0.99
-    objectiveMetricName: Validation-accuracy
+    goal: 0.8
+    objectiveMetricName: precision
   algorithm:
     algorithmName: grid
-  parallelTrialCount: 20
-  maxTrialCount: 20
-  maxFailedTrialCount: 20
+  parallelTrialCount: $worker_num
+  maxTrialCount: $jobs_num
+  maxFailedTrialCount: $worker_num
   parameters:
     - name: lr
       parameterType: double
       feasibleSpace:
         min: "0.001"
         max: "0.02"
-        step: "0.0001"
+        step: "0.001"
   trialTemplate:
     primaryContainerName: training-container
     trialParameters:
@@ -35,10 +35,18 @@ spec:
           spec:
             containers:
               - name: training-container
-                image: witja46/mnist_katib:latest
+                image: $worker_image
+                imagePullPolicy: IfNotPresent
                 command:
                   - "python3"
-                  - "/opt/mnist_task/task.py"
+                  - "experiments/katib_minikube/mnist_task/task.py"
                   - "--batch-size=64"
-                  - "--lr=${trialParameters.learningRate}"
+                  - "--lr=$trialParameters"
+                env:
+                  - name: STUDY_NAME
+                    value: "$study_name"
+                  - name: DB_CONN
+                    value: "postgresql://postgresadmin:admin123@postgres:5432/postgresdb"
+                  - name: "METRICS_STORAGE_HOST"
+                    value: "$metrics_ip"
             restartPolicy: Never
