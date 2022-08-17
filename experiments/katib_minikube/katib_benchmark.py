@@ -275,14 +275,14 @@ class KatibBenchmark(Benchmark):
 
     def undeploy(self):
         log.info("Undeploying katib:")
-        res = os.popen('kubectl delete -k "github.com/kubeflow/katib.git/manifests/v1beta1/installs/katib-standalone?ref=master"')
-       
+        res = os.popen('kubectl delete -k "github.com/kubeflow/katib.git/manifests/v1beta1/installs/katib-standalone?ref=master"').read()
+        log.info(res)
         
         
         w = watch.Watch()
         c = client.CoreV1Api()
-        log.info("Deleteing the namespace:")
-        res = c.delete_namespace_with_http_info(name=self.namespace)    
+        # log.info("Deleteing the namespace:")
+        # res = c.delete_namespace_with_http_info(name=self.namespace)    
 
 
         log.info("Checking status of the  namespace:")
@@ -326,10 +326,10 @@ if __name__ == "__main__":
         "metricsIP": urlopen("https://checkip.amazonaws.com").read().decode("utf-8").strip(),
         "generateNewDockerImage": True
         })
-    bench.deploy()
-    bench.setup()
-    bench.run()
-    bench.collect_run_results()
+    # bench.deploy()
+    # bench.setup()
+    # bench.run()
+    # bench.collect_run_results()
     bench.undeploy()
 
 
