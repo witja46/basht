@@ -79,9 +79,9 @@ class KatibBenchmark(Benchmark):
             on a platform, e.g,. in the case of Kubernetes it referes to the steps nassary to deploy all pods
             and services in kubernetes.
         """
-        print("Deploying katib:")
+        log.info("Deploying katib:")
         res = os.popen('kubectl apply -k "github.com/kubeflow/katib.git/manifests/v1beta1/installs/katib-standalone?ref=master"').read()
-        print(res)
+        log.info(res)
 
 
 
@@ -149,7 +149,7 @@ class KatibBenchmark(Benchmark):
         #writing the experiment definition into the file        
         with open(path.join(path.dirname(__file__), self.experiment_file_name), "w") as f:
             f.write(job_yml_objects)
-        print("Experiment yaml created")
+        log.info("Experiment yaml created")
       
       
        #only generating the docker image if specified so.
@@ -160,14 +160,14 @@ class KatibBenchmark(Benchmark):
             PROJECT_ROOT = os.path.abspath(os.path.join(__file__ ,"../../../"))
             res = self.image_builder.deploy_image(
             "experiments/katib_minikube/mnist_task/Dockerfile", self.trial_tag,PROJECT_ROOT)
-            print(res)
-            print(f"Image: {self.trial_tag}")  
+            log.info(res)
+            log.info(f"Image: {self.trial_tag}")  
         
         
 
     def run(self):
         
-        print("Starting Katib experiment:")
+        log.info("Starting Katib experiment:")
         api_instance=  client.CustomObjectsApi()
 
         #Loading experiment definition 
@@ -183,10 +183,10 @@ class KatibBenchmark(Benchmark):
                     body=body,
                     plural=self.plural,
                 )
-                print("Succses: Experiment started")
-                print(api_response)  
+                log.info("Succses: Experiment started")
+                log.info(api_response)  
             except ApiException as e:
-                print("Exception when calling CustomObjectsApi->create_cluster_custom_object: %s\n" % e)
+                log.info("Exception when calling CustomObjectsApi->create_cluster_custom_object: %s\n" % e)
             
  
     def collect_benchmark_metrics(self):
@@ -207,16 +207,16 @@ class KatibBenchmark(Benchmark):
                     plural=self.plural,
                 )
        
-            # print(resource)
-            # print(resource["status"])
+            # log.info(resource)
+            # log.info(resource["status"])
         except ApiException as e:
-            print("Exception when calling CustomObjectsApi->get_namespaced_custom_object_status: %s\n" % e)
+            log.info("Exception when calling CustomObjectsApi->get_namespaced_custom_object_status: %s\n" % e)
         return resource
 
 
     def collect_run_results(self):
         
-        print("Collecting run results:")
+        log.info("Collecting run results:")
         config.load_kube_config()
         w = watch.Watch()
         c = client.CustomObjectsApi()
@@ -231,17 +231,17 @@ class KatibBenchmark(Benchmark):
         #                     plural=self.plural):
         #     experiment = e["object"]
         #     if "status" not in experiment:
-        #         print("Waitinng for the status")
+        #         log.info("Waitinng for the status")
         #         sleep(5)
         #     elif experiment["status"]["conditions"][-1]["type"]!="Succeeded":
-        #          print("chuja")
+        #          log.info("chuja")
         #          if "trialsSucceeded" in experiment["status"]:
-        #             print(f'{experiment["status"]["trialsSucceeded"]} trials of {self.jobsCount} succeeded')
-        #             print(experiment["status"]["conditions"][-1])
+        #             log.info(f'{experiment["status"]["trialsSucceeded"]} trials of {self.jobsCount} succeeded')
+        #             log.info(experiment["status"]["conditions"][-1])
         #             sleep(2)
         #     else:
-        #         print("\n Experiment finished with following optimal trial:")
-        #         print(experiment["status"]["currentOptimalTrial"])  
+        #         log.info("\n Experiment finished with following optimal trial:")
+        #         log.info(experiment["status"]["currentOptimalTrial"])  
                 
                 
            
@@ -249,24 +249,24 @@ class KatibBenchmark(Benchmark):
         
         experiment = self.get_experiment()
         while "status" not in experiment:
-            print("Waitinng for the status")
+            log.info("Waitinng for the status")
             sleep(5)
             experiment = self.get_experiment()
-            # print(experiment)
+            # log.info(experiment)
         
     
         while experiment["status"]["conditions"][-1]["type"]!="Succeeded":
             experiment = self.get_experiment()
-            print("\nWaiting for the experiment to finish:")
+            log.info("\nWaiting for the experiment to finish:")
             if "trialsSucceeded" in experiment["status"]:
-                print(f'{experiment["status"]["trialsSucceeded"]} trials of {self.jobsCount} succeeded')
-            print(experiment["status"]["conditions"][-1])
+                log.info(f'{experiment["status"]["trialsSucceeded"]} trials of {self.jobsCount} succeeded')
+            log.info(experiment["status"]["conditions"][-1])
             sleep(2)
            
        
         
-        print("\n Experiment finished with following optimal trial:")
-        print(experiment["status"]["currentOptimalTrial"])
+        log.info("\n Experiment finished with following optimal trial:")
+        log.info(experiment["status"]["currentOptimalTrial"])
          
         
     
@@ -274,8 +274,8 @@ class KatibBenchmark(Benchmark):
         return super().test()
 
     def undeploy(self):
-        print("Undeploying katib:")
-        # res = os.popen('kubectl delete -k "github.com/kubeflow/katib.git/manifests/v1beta1/installs/katib-standalone?ref=master"')
+        log.info("Undeploying katib:")
+        res = os.popen('kubectl delete -k "github.com/kubeflow/katib.git/manifests/v1beta1/installs/katib-standalone?ref=master"')
        
         
         
@@ -311,8 +311,6 @@ class KatibBenchmark(Benchmark):
 
         log.info("Finished undeploying")
 
-    def main():
-        print("jeb")
       
 
 
