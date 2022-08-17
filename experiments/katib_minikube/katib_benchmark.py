@@ -29,7 +29,8 @@ class KatibBenchmark(Benchmark):
         self.namespace='kubeflow'
         self.plural="experiments"
         self.experiment_file_name = "grid.yaml"
-        self.metrics_ip = resources.get("metricsIP")     
+        self.metrics_ip = resources.get("metricsIP")
+        self.generate_new_docker_image = resources.get("generateNewDockerImage",True)     
         config.load_kube_config()
 
         self.logging_level= self.resources.get("loggingLevel",log.INFO)
@@ -79,7 +80,7 @@ class KatibBenchmark(Benchmark):
             and services in kubernetes.
         """
         print("Deploying katib:")
-        res = os.popen('kubectl apply -k "github.com/kubeflow/katib.git/manifests/v1beta1/installs/katib-standalone?ref=master').read()
+        res = os.popen('kubectl apply -k "github.com/kubeflow/katib.git/manifests/v1beta1/installs/katib-standalone?ref=master"').read()
         print(res)
 
 
@@ -151,15 +152,16 @@ class KatibBenchmark(Benchmark):
         print("Experiment yaml created")
       
       
-       # Creating new docker image if credentials were passed
-        log.info("Creating task docker image")   
-        #creating docker image inside of the minikube   
-        self.image_builder = builder_from_string("minikube")()
-        PROJECT_ROOT = os.path.abspath(os.path.join(__file__ ,"../../../"))
-        res = self.image_builder.deploy_image(
-        "experiments/katib_minikube/mnist_task/Dockerfile", self.trial_tag,PROJECT_ROOT)
-        print(res)
-        print(f"Image: {self.trial_tag}")  
+       #only generating the docker image if specified so.
+        if self.generate_new_docker_image:
+            log.info("Creating task docker image")   
+            #creating docker image inside of the minikube   
+            self.image_builder = builder_from_string("minikube")()
+            PROJECT_ROOT = os.path.abspath(os.path.join(__file__ ,"../../../"))
+            res = self.image_builder.deploy_image(
+            "experiments/katib_minikube/mnist_task/Dockerfile", self.trial_tag,PROJECT_ROOT)
+            print(res)
+            print(f"Image: {self.trial_tag}")  
         
         
 
@@ -182,7 +184,7 @@ class KatibBenchmark(Benchmark):
                     plural=self.plural,
                 )
                 print("Succses: Experiment started")
-            #    print(api_response)  
+                print(api_response)  
             except ApiException as e:
                 print("Exception when calling CustomObjectsApi->create_cluster_custom_object: %s\n" % e)
             
@@ -215,14 +217,42 @@ class KatibBenchmark(Benchmark):
     def collect_run_results(self):
         
         print("Collecting run results:")
+        config.load_kube_config()
+        w = watch.Watch()
+        c = client.CustomObjectsApi()
+        deployed = 0
         
-        sleep(5)
+        #TODO is there a way to run watch on namespaced custome object?
+        # for e in w.stream(c.get_namespaced_custom_object_with_http_info,
+        #                     group=self.group,
+        #                     version=self.version,
+        #                     namespace=self.namespace,
+        #                     name=self.study_name,
+        #                     plural=self.plural):
+        #     experiment = e["object"]
+        #     if "status" not in experiment:
+        #         print("Waitinng for the status")
+        #         sleep(5)
+        #     elif experiment["status"]["conditions"][-1]["type"]!="Succeeded":
+        #          print("chuja")
+        #          if "trialsSucceeded" in experiment["status"]:
+        #             print(f'{experiment["status"]["trialsSucceeded"]} trials of {self.jobsCount} succeeded')
+        #             print(experiment["status"]["conditions"][-1])
+        #             sleep(2)
+        #     else:
+        #         print("\n Experiment finished with following optimal trial:")
+        #         print(experiment["status"]["currentOptimalTrial"])  
+                
+                
+           
+
+        
         experiment = self.get_experiment()
         while "status" not in experiment:
             print("Waitinng for the status")
             sleep(5)
             experiment = self.get_experiment()
-            print(experiment)
+            # print(experiment)
         
     
         while experiment["status"]["conditions"][-1]["type"]!="Succeeded":
@@ -244,7 +274,42 @@ class KatibBenchmark(Benchmark):
         return super().test()
 
     def undeploy(self):
-        return super().undeploy()
+        print("Undeploying katib:")
+        # res = os.popen('kubectl delete -k "github.com/kubeflow/katib.git/manifests/v1beta1/installs/katib-standalone?ref=master"')
+       
+        
+        
+        w = watch.Watch()
+        c = client.CoreV1Api()
+        log.info("Deleteing the namespace:")
+        res = c.delete_namespace_with_http_info(name=self.namespace)    
+
+
+        log.info("Checking status of the  namespace:")
+        try:
+            log.debug(c.read_namespace_status_with_http_info(name=self.namespace))
+        except ApiException as err:
+            log.info(err)
+            log.info("Namespace sucessfully deleted")
+            log.info("Finished undeploying")
+            return
+        
+      
+        #if the namespace was still existent we must wait till it is really terminated
+        for e in w.stream(c.list_namespace):
+            ob = e["object"]
+            # if the status of our namespace was changed we check if it the namespace was really removed from the cluster by requesting and expecting it to be not found
+            #TODO do this in other way            
+            if ob.metadata.name == self.namespace:
+                try:
+                    log.debug(c.read_namespace_status_with_http_info(name=self.namespace))
+                except ApiException as err:
+                    log.info(err)
+                    log.info("Namespace sucessfully deleted")
+                    w.stop()
+                    break
+
+        log.info("Finished undeploying")
 
     def main():
         print("jeb")
@@ -258,14 +323,16 @@ if __name__ == "__main__":
         # "dockerUserLogin":"",
         # "dockerUserPassword":"",
         # "studyName":""
-        "jobs_Count":4,
-        "workerCount":4,
-        "metricsIP": urlopen("https://checkip.amazonaws.com").read().decode("utf-8").strip()
+        "jobs_Count":10,
+        "workerCount":10,
+        "metricsIP": urlopen("https://checkip.amazonaws.com").read().decode("utf-8").strip(),
+        "generateNewDockerImage": True
         })
-    # bench.deploy()
+    bench.deploy()
     bench.setup()
     bench.run()
     bench.collect_run_results()
+    bench.undeploy()
 
 
 
