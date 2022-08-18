@@ -10,6 +10,7 @@ from ml_benchmark.config import Path
 from ml_benchmark.utils.image_build_wrapper import builder_from_string
 from ml_benchmark.workload.mnist.mnist_task import MnistTask
 from ml_benchmark.utils.yaml_template_filler import YamlTemplateFiller
+from ml_benchmark.utils.yml_parser import YMLParser
 
 
 class OptunaMinikubeBenchmark(Benchmark):
@@ -198,18 +199,23 @@ if __name__ == "__main__":
     # The basic config for the workload. For testing purposes set epochs to one.
     # For benchmarking take the default value of 100
     # your ressources the optimization should run on
-    resources = {
-        "workerCpu": 2,
-        "workerMemory": 2,
-        "workerCount": 4,
+    resources = YMLParser.parse("experiments/optuna_minikube/resource_definition.yml")
+    to_automate = {
         "metricsIP": urlopen("https://checkip.amazonaws.com").read().decode("utf-8").strip(),
-        "kubernetesMasterIP": subprocess.check_output("minikube ip", shell=True).decode("utf-8").strip("\n"),
-        "dockerImageTag": "tawalaya/optuna-trial:latest",
-        "dockerImageBuilder": "minikube",
-        "kubernetesNamespace": "optuna-study",
-        "kubernetesContext": "minikube",
-        "deleteAfterRun": True,
-    }
+        "kubernetesMasterIP": subprocess.check_output("minikube ip", shell=True).decode("utf-8").strip("\n")}
+    resources.update(to_automate)
+    # resources = {
+    #     "workerCpu": 2,
+    #     "workerMemory": 2,
+    #     "workerCount": 4,
+    #     "metricsIP": urlopen("https://checkip.amazonaws.com").read().decode("utf-8").strip(),
+    #     "kubernetesMasterIP": subprocess.check_output("minikube ip", shell=True).decode("utf-8").strip("\n"),
+    #     "dockerImageTag": "tawalaya/optuna-trial:latest",
+    #     "dockerImageBuilder": "minikube",
+    #     "kubernetesNamespace": "optuna-study",
+    #     "kubernetesContext": "minikube",
+    #     "deleteAfterRun": True,
+    # }
 
     # TODO: hyperparams.
 
