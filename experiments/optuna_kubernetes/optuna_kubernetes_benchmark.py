@@ -208,11 +208,12 @@ if __name__ == "__main__":
         "kubernetesContext": "admin@smile",
         "kubernetesMasterIP": "130.149.158.143",
         "deleteAfterRun": False,
+        "prometheus_url": "http://130.149.158.143:30041",
     }
 
     # TODO: hyperparams.
 
     # import an use the runner
     runner = BenchmarkRunner(
-        benchmark_cls=OptunaKubernetesBenchmark, resource_definition=resource_definition)
+        benchmark_cls=OptunaKubernetesBenchmark, resources=resource_definition)
     runner.run()

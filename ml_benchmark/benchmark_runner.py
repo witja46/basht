@@ -9,9 +9,11 @@ from time import sleep
 import docker
 import numpy as np
 import torch
+import logging
 
 from ml_benchmark.latency_tracker import Latency, LatencyTracker
 from ml_benchmark.metrics_storage import MetricsStorage
+from ml_benchmark.resource_tracker import ResourceTracker
 
 
 class Benchmark(ABC):
@@ -130,6 +132,11 @@ class BenchmarkRunner():
         # prepare tracker
         self.metrics_storage = MetricsStorage()
         self.latency_tracker = LatencyTracker(MetricsStorage.connection_string)
+        if "prometheus_url" in resources:
+            self.resource_tracker = ResourceTracker(resources["prometheus_url"])
+        else:
+            logging.warning("No Prometheus URL provided. Resource Tracker will not be used.")
+            self.resource_tracker = None
 
     def run(self):
         """
@@ -147,6 +154,8 @@ class BenchmarkRunner():
 
         try:
             self.metrics_storage.start_db()
+            if self.resource_tracker is not None:
+                self.resource_tracker.start()
             for benchmark_fun in run_process:
                 with Latency(benchmark_fun) as latency:
                     benchmark_fun()
@@ -155,6 +164,8 @@ class BenchmarkRunner():
 
             # just to be save we wait a bit before killing shit.
             sleep(5)
+            if self.resource_tracker is not None:
+                self.resource_tracker.stop()
 
             self.metrics_storage.stop_db()
         except (docker.errors.APIError, AttributeError, ValueError, RuntimeError) as e:
