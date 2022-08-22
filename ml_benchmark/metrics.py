@@ -31,6 +31,7 @@ class NodeUsage(Metric):
         self.memory_usage = None
         self.network_usage = None
         self.accelerator_usage = None
+        self.wattage = None
 
     def to_dict(self):
         node_dict = dict(
@@ -39,6 +40,7 @@ class NodeUsage(Metric):
             cpu_usage=self.cpu_usage,
             memory_usage=self.memory_usage,
             network_usage=self.network_usage,
+            wattage=self.wattage,
         )
         if self.accelerator_usage:
             node_dict["accelerator_usage"] = self.accelerator_usage

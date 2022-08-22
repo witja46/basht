@@ -91,7 +91,8 @@ class MetricsStorage:
             Column("cpu_usage", Float),
             Column("memory_usage", Float),
             Column("network_usage", Float),
-            Column("accelerator_usage", Float)
+            Column("accelerator_usage", Float),
+            Column("wattage", Float),
         )
 
     def create_classification_metrics_table(self):
