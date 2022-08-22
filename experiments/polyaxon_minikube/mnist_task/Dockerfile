@@ -6,7 +6,7 @@ RUN pip install pip --upgrade
 RUN pip install polyaxon
 
 COPY experiments experiments
-COPY data data
+#COPY data data
 COPY setup.py setup.py
 COPY ml_benchmark ml_benchmark
 

@@ -52,6 +52,7 @@ class PolyaxonBenchmark(Benchmark):
 
         self.logging_level= self.resources.get("loggingLevel",log.CRITICAL)
 
+        self.create_clean_image = self.resources.get("createCleanImage",True) 
         log.basicConfig(format='%(asctime)s Polyaxon Benchmark %(levelname)s: %(message)s',level=self.logging_level)
 
 
@@ -60,7 +61,7 @@ class PolyaxonBenchmark(Benchmark):
         if "dockerImageTag" in self.resources:
             self.trial_tag = self.resources["dockerImageTag"]
         else:
-            self.trial_tag = "mnist_test"
+            self.trial_tag = "mnist_task"
 
         if "dockerUserLogin" in self.resources:
             self.docker_user = self.resources["dockerUserLogin"]
@@ -191,14 +192,16 @@ class PolyaxonBenchmark(Benchmark):
             f.write(job_yml_objects)
         log.info("Experiment yaml created")
       
-      
-        log.info("Creating task docker image")   
-        #creating docker image inside of the minikube   
-        self.image_builder = builder_from_string("minikube")()
-        PROJECT_ROOT = os.path.abspath(os.path.join(__file__ ,"../../../"))
-        self.image_builder.deploy_image(
-        "experiments/polyaxon_minikube/mnist_task/Dockerfile", self.trial_tag,PROJECT_ROOT)
-        print(f"Image: {self.trial_tag}")
+        
+        if self.create_clean_image:
+            log.info("Creating task docker image")   
+            #creating docker image inside of the minikube   
+            self.image_builder = builder_from_string("minikube")()
+            PROJECT_ROOT = os.path.abspath(os.path.join(__file__ ,"../../../"))
+            log.info(PROJECT_ROOT)
+            self.image_builder.deploy_image(
+            f'experiments/polyaxon_minikube/{self.trial_tag}/Dockerfile', self.trial_tag,PROJECT_ROOT)
+            print(f"Image: {self.trial_tag}")
 
 
         
@@ -347,6 +350,9 @@ class PolyaxonBenchmark(Benchmark):
                     w.stop()
                     break
 
+
+        log.info("Deleting image from minikube")
+        self.image_builder.cleanup(self.trial_tag)
         log.info("Finished undeploying")
 
 
@@ -375,11 +381,13 @@ if __name__ == "__main__":
     
     resources={
         # "studyName":"",
-        "dockerImageTag":"mnist_test",
+        "dockerImageTag":"task_light",
         "jobsCount":5,
+        
         "workerCount":5,
         "loggingLevel":log.INFO,
-        "metricsIP": urlopen("https://checkip.amazonaws.com").read().decode("utf-8").strip()
+        "metricsIP": urlopen("https://checkip.amazonaws.com").read().decode("utf-8").strip(),
+        "createCleanImage":True
     }
     from ml_benchmark.benchmark_runner import BenchmarkRunner
     runner = BenchmarkRunner(
