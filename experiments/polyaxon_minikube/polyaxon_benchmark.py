@@ -199,8 +199,11 @@ class PolyaxonBenchmark(Benchmark):
             self.image_builder = builder_from_string("minikube")()
             PROJECT_ROOT = os.path.abspath(os.path.join(__file__ ,"../../../"))
             log.info(PROJECT_ROOT)
-            self.image_builder.deploy_image(
+            res = self.image_builder.deploy_image(
             f'experiments/polyaxon_minikube/{self.trial_tag}/Dockerfile', self.trial_tag,PROJECT_ROOT)
+            print(res)
+            if f'Successfully tagged {self.trial_tag}' not in res:
+                raise Exception("Image was not created:",res)
             print(f"Image: {self.trial_tag}")
 
 
@@ -352,7 +355,7 @@ class PolyaxonBenchmark(Benchmark):
 
 
         log.info("Deleting image from minikube")
-        self.image_builder.cleanup(self.trial_tag)
+        #self.image_builder.cleanup(self.trial_tag)
         log.info("Finished undeploying")
 
 
@@ -370,12 +373,6 @@ if __name__ == "__main__":
     #     "metricsIP": urlopen("https://checkip.amazonaws.com").read().decode("utf-8").strip()
     #     })
     
-    # bench.deploy() 
-    # bench.setup()
-    # bench.run()
-    # # bench.collect_run_results()
-
-    # bench.undeploy()
     # polyaxon config set --host=http://localhost:8000
 
     
@@ -390,10 +387,17 @@ if __name__ == "__main__":
         "createCleanImage":True
     }
     from ml_benchmark.benchmark_runner import BenchmarkRunner
-    runner = BenchmarkRunner(
-        benchmark_cls=PolyaxonBenchmark, resources=resources)
-    runner.run()
+    #runner = BenchmarkRunner(
+    #    benchmark_cls=PolyaxonBenchmark, resources=resources)
+    #runner.run()
 
+    bench= PolyaxonBenchmark(resources=resources)
+    #bench.deploy() 
+    bench.setup()
+    # bench.run()
+    # # bench.collect_run_results()
+
+    # bench.undeploy()
     
     # print(f'polyaxon run -f ./ --project  --eager')
     # print(f'polyaxon run -f ./grid --project --eager'.split())
