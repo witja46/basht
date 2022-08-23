@@ -159,7 +159,7 @@ class KatibBenchmark(Benchmark):
             self.image_builder = builder_from_string("minikube")()
             PROJECT_ROOT = os.path.abspath(os.path.join(__file__ ,"../../../"))
             res = self.image_builder.deploy_image(
-            "experiments/katib_minikube/mnist_task/Dockerfile", self.trial_tag,PROJECT_ROOT)
+            f'experiments/katib_minikube/{self.trial_tag}/Dockerfile', self.trial_tag,PROJECT_ROOT)
             log.info(res)
             log.info(f"Image: {self.trial_tag}")  
         
@@ -223,7 +223,7 @@ class KatibBenchmark(Benchmark):
         deployed = 0
         
         #TODO is there a way to run watch on namespaced custome object?
-        # for e in w.stream(c.get_namespaced_custom_object_with_http_info,
+        # for e in w.stream(c.get_namespaced_custom_object,
         #                     group=self.group,
         #                     version=self.version,
         #                     namespace=self.namespace,
@@ -274,15 +274,36 @@ class KatibBenchmark(Benchmark):
         return super().test()
 
     def undeploy(self):
-        log.info("Undeploying katib:")
-        res = os.popen('kubectl delete -k "github.com/kubeflow/katib.git/manifests/v1beta1/installs/katib-standalone?ref=master"').read()
-        log.info(res)
+        log.info("Deleteing the experiment crd from the cluster")
+        # res = os.popen('kubectl delete -f grid.yaml').read()
+        # log.info(res)
+        config.load_kube_config()
+        api = client.CustomObjectsApi()
+        try:
+            resource = api.delete_collection_namespaced_custom_object(
+                    group=self.group,
+                    version=self.version,
+                    namespace=self.namespace,
+                    plural=self.plural,
+                )
+            log.info(resource)
+            # log.info(resource)
+            # log.info(resource["status"])
+        except ApiException as e:
+            log.info("Exception when calling CustomObjectsApi->get_namespaced_custom_object_status: %s\n" % e)
+
+
         
         
+        # log.info("Undeploying katib:")
+        # res = os.popen('kubectl delete -k "github.com/kubeflow/katib.git/manifests/v1beta1/installs/katib-standalone?ref=master"').read()
+        # log.info(res)
+
+
         w = watch.Watch()
         c = client.CoreV1Api()
-        # log.info("Deleteing the namespace:")
-        # res = c.delete_namespace_with_http_info(name=self.namespace)    
+        log.info("Deleteing the namespace:")
+        res = c.delete_namespace_with_http_info(name=self.namespace)    
 
 
         log.info("Checking status of the  namespace:")
@@ -291,10 +312,15 @@ class KatibBenchmark(Benchmark):
         except ApiException as err:
             log.info(err)
             log.info("Namespace sucessfully deleted")
+            
+            log.info("Deleteing task docker image from minikube")
+            sleep(1)
+            self.image_builder.cleanup(self.trial_tag)
             log.info("Finished undeploying")
             return
         
       
+        log.info("Namespace still not termintated")
         #if the namespace was still existent we must wait till it is really terminated
         for e in w.stream(c.list_namespace):
             ob = e["object"]
@@ -306,6 +332,10 @@ class KatibBenchmark(Benchmark):
                 except ApiException as err:
                     log.info(err)
                     log.info("Namespace sucessfully deleted")
+                    
+                    log.info("Deleteing task docker image from minikube")
+                    sleep(1)
+                    self.image_builder.cleanup(self.trial_tag)
                     w.stop()
                     break
 
@@ -322,14 +352,15 @@ if __name__ == "__main__":
         # "dockerUserPassword":"",
         # "studyName":""
         "jobs_Count":10,
+        "dockerImageTag":"light_task",
         "workerCount":10,
         "metricsIP": urlopen("https://checkip.amazonaws.com").read().decode("utf-8").strip(),
         "generateNewDockerImage": True
         })
-    # bench.deploy()
-    # bench.setup()
-    # bench.run()
-    # bench.collect_run_results()
+    bench.deploy()
+    bench.setup()
+    bench.run()
+    bench.collect_run_results()
     bench.undeploy()
 
 

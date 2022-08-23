@@ -1,26 +1,30 @@
 from __future__ import print_function
 
 import argparse
+import imp
 import logging
 import os
 import numpy as np
 import time
+from ml_benchmark.latency_tracker import latency_decorator
 
-def train(times ,epoch):
+@latency_decorator
+def train(times ,epochs):
     loss = 1
-    for x in np.arange(1,times + 1): 
-        loss = 1 - (x -1 ) / times
-        time.sleep(0.01)
-        msg = "Train Epoch: {} [{}/{} ({:.0f}%)]\tloss={:.4f}".format(
-                epoch, x , times,
-                100. * x / times, loss)
-        logging.info(msg)
+    for epoch in range(epochs):
+        for x in np.arange(1,times + 1): 
+            loss = 1 - (x -1 ) / times
+            time.sleep(0.01)
+            msg = "Train Epoch: {} [{}/{} ({:.0f}%)]\tloss={:.4f}".format(
+                    epoch, x , times,
+                    100. * x / times, loss)
+            logging.info(msg)
 
 
 def test():
 
-    test_accuracy =0.8 
-    logging.info("Validation-accuracy={:.4f}\n".format(
+    test_accuracy =0.7 
+    logging.info("precision={:.4f}\n".format(
         test_accuracy))
 
 
@@ -48,9 +52,9 @@ def main():
     epochs = args.epochs
     batch_size = args.batch_size
     lr = args.lr
-    for epoch in np.arange(1,epochs+1):
-        train(batch_size,epoch)
-        test() 
+    
+    train(batch_size,epochs)
+    test() 
 
 
 
