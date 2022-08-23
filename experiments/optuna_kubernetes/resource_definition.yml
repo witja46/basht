@@ -1,12 +1,11 @@
 
-workerCpu: 2
-workerMemory: 2
-workerCount: 2
+workerCpu: 1
+workerMemory: 1
+workerCount: 1
 metricsIP:  auto ##urlopen("https://checkip.amazonaws.com").read().decode("utf-8").strip(),
 kubernetesMasterIP: minikube ##subprocess.check_output("minikube ip", shell=True).decode("utf-8").strip("\n")
 dockerImageTag: tawalaya/optuna-trial:latest
 dockerImageBuilder: docker
-kubernetesNamespace: optuna-study
 kubernetesContext: "minikube"
 deleteAfterRun: True
 hyperparameter:

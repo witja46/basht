@@ -117,6 +117,7 @@ class BenchmarkRunner():
         self.rundate = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
         benchmark_path = os.path.abspath(os.path.dirname(inspect.getabsfile(benchmark_cls)))
         self.bench_name = f"{benchmark_cls.__name__}"
+        self.bench_goal = resources.get("goal", "debug")
         self.benchmark_folder = os.path.join(benchmark_path, f"benchmark__{self.bench_name}")
         self.create_benchmark_folder(self.benchmark_folder)
 
@@ -223,7 +224,7 @@ class BenchmarkRunner():
         with open(
             os.path.join(
                 self.benchmark_folder,
-                f"benchmark_results__{self.rundate}__id.json"), "w"
+                f"benchmark_results__{self.rundate}__{self.bench_goal}.json"), "w"
                 ) as f:
             json.dump(benchmark_result_dict, f)
         print("Results saved!")
