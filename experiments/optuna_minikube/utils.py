@@ -3,7 +3,7 @@ from ml_benchmark.utils.yml_parser import YMLParser
 import itertools
 
 def generate_search_space(yaml_file_path):
-    search_space = YMLParser.parse("experiments/optuna_minikube/hyp_space_definition.yml")
+    search_space = YMLParser.parse(yaml_file_path)
     modified_search_space = {}
     hidden_layer_config = []
     for key, value in search_space.items():

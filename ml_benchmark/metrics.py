@@ -32,6 +32,7 @@ class NodeUsage(Metric):
         self.network_usage = None
         self.accelerator_usage = None
         self.wattage = None
+        self.processes = None
 
     def to_dict(self):
         node_dict = dict(
@@ -41,11 +42,15 @@ class NodeUsage(Metric):
             memory_usage=self.memory_usage,
             network_usage=self.network_usage,
             wattage=self.wattage,
+            processes=int(self.processes),
         )
         if self.accelerator_usage:
             node_dict["accelerator_usage"] = self.accelerator_usage
 
         return {key: _convert_datetime_to_unix(value) for key, value in node_dict.items()}
+    
+    def __repr__(self):
+        return str(self.to_dict())
 
 
 class Latency(Metric):
@@ -68,9 +73,15 @@ class Latency(Metric):
             AttributeError: _description_
         """
         super().__init__()
+        #TODO: make each id filed also availible as a column
         process_id = os.getpid()
-        hostname = socket.gethostname()
+        # inject the NODE_NAME (from the environment) - should be availble in containerized environments
+        if os.getenv("NODE_NAME"):
+            hostname = f'{os.getenv("NODE_NAME")}_{socket.gethostname()}'
+        else:
+            hostname = f'BARE_{socket.gethostname()}'
         self.add_to_id(f"id_{uuid4()}__pid_{process_id}__hostname_{hostname}")
+        
 
         self.function_name: str = func.__name__
         try:

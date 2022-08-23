@@ -40,7 +40,7 @@ class LatencyTracker(Tracker):
 
     def _create_engine(self, connection_string):
         try:
-            engine = create_engine(connection_string, echo=True)
+            engine = create_engine(connection_string, echo=False)
         except psycopg2.Error:
             raise ConnectionError("Could not create an Engine for the Postgres DB.")
         return engine

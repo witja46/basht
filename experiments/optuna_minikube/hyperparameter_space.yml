@@ -1,12 +1,9 @@
+# generated file - do not edit
 learning_rate:
-  start: 1e-4
-  end: 1e-2
-  step_size: 1e-5
+  end: 0.01
+  start: 0.0001
+  step_size: 1.0e-05
 weight_decay:
-  start: 1e-6
-  end: 1e-4
-  step_size: 1e-5
-hidden_layer_config:
-  start: [10]
-  end: [100, 100, 100]
-  step_size: [10, 1]
+  end: 0.0001
+  start: 1.0e-06
+  step_size: 1.0e-05

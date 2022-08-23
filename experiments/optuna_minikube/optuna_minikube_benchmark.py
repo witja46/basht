@@ -36,12 +36,21 @@ class OptunaMinikubeBenchmark(Benchmark):
         self.workerCount = resources.get("workerCount", 4)
         self.delete_after_run = resources.get("deleteAfterRun", True)
         self.metrics_ip = resources.get("metricsIP")
+        self.hyperparameter = resources.get("hyperparameter")
 
     def deploy(self) -> None:
         """
         Deploy DB
         """
+        
         # TODO: deal with exsiting resources...
+
+        #generate hyperparameter file from resouces def.
+        
+        if self.hyperparameter:
+            f = path.join(path.dirname(__file__),"hyperparameter_space.yml")
+            YamlTemplateFiller.as_yaml(f, self.hyperparameter)
+                
         try:
             resp = client.CoreV1Api().create_namespace(
                 client.V1Namespace(metadata=client.V1ObjectMeta(name=self.namespace)))
@@ -204,18 +213,6 @@ if __name__ == "__main__":
         "metricsIP": urlopen("https://checkip.amazonaws.com").read().decode("utf-8").strip(),
         "kubernetesMasterIP": subprocess.check_output("minikube ip", shell=True).decode("utf-8").strip("\n")}
     resources.update(to_automate)
-    # resources = {
-    #     "workerCpu": 2,
-    #     "workerMemory": 2,
-    #     "workerCount": 4,
-    #     "metricsIP": urlopen("https://checkip.amazonaws.com").read().decode("utf-8").strip(),
-    #     "kubernetesMasterIP": subprocess.check_output("minikube ip", shell=True).decode("utf-8").strip("\n"),
-    #     "dockerImageTag": "tawalaya/optuna-trial:latest",
-    #     "dockerImageBuilder": "minikube",
-    #     "kubernetesNamespace": "optuna-study",
-    #     "kubernetesContext": "minikube",
-    #     "deleteAfterRun": True,
-    # }
 
     # TODO: hyperparams.
 

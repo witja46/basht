@@ -1,7 +1,8 @@
 import logging
 import time
 import docker
-from sqlalchemy import create_engine, MetaData, Table, Column, String, Float, select
+from docker.errors import APIError
+from sqlalchemy import create_engine, MetaData, Table, Column, String, Float, select, Integer
 
 from ml_benchmark.config import MetricsStorageConfig
 
@@ -29,6 +30,7 @@ class MetricsStorage:
         """
         logging.basicConfig()
         logging.getLogger('sqlalchemy').setLevel(logging.ERROR)
+        logging.getLogger('sqlalchemy.engine').setLevel(logging.ERROR)
 
         self.meta = None
         self.client = None
@@ -46,13 +48,21 @@ class MetricsStorage:
 
     def setup_db(self):
         self.client = docker.from_env()
-        self.client.containers.run(
-            "postgres:14.1", detach=True,
-            environment=[
-                f"POSTGRES_PASSWORD={self.password}", f"POSTGRES_DB={self.db}", f"POSTGRES_USER={self.user}"],
-            ports={f'{self.port}/tcp': self.port},
-            name="postgres",
-            remove=True)
+        try:
+            self.client.containers.run(
+                "postgres:14.1", detach=True,
+                environment=[
+                    f"POSTGRES_PASSWORD={self.password}", f"POSTGRES_DB={self.db}", f"POSTGRES_USER={self.user}"],
+                ports={f'{self.port}/tcp': self.port},
+                name="postgres",
+                remove=True)
+        except APIError as e:
+            if e.status_code == 409:
+                #TODO: we maybe want to drop the database in these cases
+                logging.info("Postgres is already running")
+            else:
+                raise e
+
         container = self.client.containers.get("postgres")
         # checks if db is up
         while "accepting connections" not in container.exec_run("pg_isready").output.decode():
@@ -71,7 +81,8 @@ class MetricsStorage:
         self.create_latency_table()
         self.create_resource_table()
         self.create_classification_metrics_table()
-        self.meta.create_all(self.engine)
+        self.meta.create_all(self.engine,checkfirst=True)
+        
 
     def create_latency_table(self):
         self.latency = Table(
@@ -93,6 +104,7 @@ class MetricsStorage:
             Column("network_usage", Float),
             Column("accelerator_usage", Float),
             Column("wattage", Float),
+            Column("processes", Integer),
         )
 
     def create_classification_metrics_table(self):

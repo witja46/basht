@@ -135,3 +135,7 @@ data/
 
 #idea
 .idea/
+
+#
+.envs
+test/test_ml_benchmark/hyperparameter_space.yml

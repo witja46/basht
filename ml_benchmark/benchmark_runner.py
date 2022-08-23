@@ -21,9 +21,6 @@ class Benchmark(ABC):
     This class serves as an Interface for a benchmark. All neccessary methods have to be implemented in the
     subclass that is using the interface. Make sure to use the predefined static variables. Your benchmark
     will most likely not run properly if the variables value remains to be "None".
-
-    Args:
-        ABC (_type_): Abstract Base Class
     """
 
     # TODO: objective and grid are not allowed to be in the benchmark
@@ -124,7 +121,7 @@ class BenchmarkRunner():
         self.create_benchmark_folder(self.benchmark_folder)
 
         # add input and output size to the benchmark.
-        self.benchmark = benchmark_cls(resources)
+        self.benchmark = benchmark_cls(resources, self)
 
         # set seeds
         self._set_all_seeds()
@@ -146,32 +143,45 @@ class BenchmarkRunner():
         Raises:
             ValueError: _description_
         """
-        run_process = [
-            self.benchmark.deploy, self.benchmark.setup, self.benchmark.run,
-            self.benchmark.collect_run_results,
-            self.benchmark.test, self.benchmark.collect_benchmark_metrics]
         benchmark_results = None
 
         try:
-            self.metrics_storage.start_db()
+            self.metrics_storage.start_db()  
+            
+            # Deploy the SUT
+            with Latency(self.benchmark.deploy) as latency:
+                self.benchmark.deploy()
+            self.latency_tracker.track(latency)
+            
+            # RUN the benchmark
+            run_process = [
+                self.benchmark.setup, self.benchmark.run,
+                self.benchmark.collect_run_results,
+                self.benchmark.test, self.benchmark.collect_benchmark_metrics]
+
             if self.resource_tracker is not None:
                 self.resource_tracker.start()
+            
             for benchmark_fun in run_process:
                 with Latency(benchmark_fun) as latency:
                     benchmark_fun()
                 self.latency_tracker.track(latency)
+            
+            # Get the results of the benchmark
             benchmark_results = self.metrics_storage.get_benchmark_results()
 
             # just to be save we wait a bit before killing shit.
+            
+        except (docker.errors.APIError, AttributeError, ValueError, RuntimeError) as e:
+            print(e)
+            raise ValueError("No Results obtained, Benchmark failed.")
+        finally:
             sleep(5)
             if self.resource_tracker is not None:
                 self.resource_tracker.stop()
 
             self.metrics_storage.stop_db()
-        except (docker.errors.APIError, AttributeError, ValueError, RuntimeError) as e:
-            print(e)
-            raise ValueError("No Results obtained, Benchmark failed.")
-        finally:
+            # Undeploy the SUT
             try:
                 self.benchmark.undeploy()
             except Exception:
@@ -181,7 +191,9 @@ class BenchmarkRunner():
                 self.metrics_storage.stop_db()
             except Exception:
                 pass
-
+        
+        # TODO: move to finally block to ensure that results are always caputres if possible?
+        # persist the results
         self.save_benchmark_results(benchmark_results)
 
     def _set_all_seeds(self):
