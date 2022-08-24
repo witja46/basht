@@ -34,6 +34,7 @@ class KatibBenchmark(Benchmark):
         config.load_kube_config()
 
         self.logging_level= self.resources.get("loggingLevel",log.INFO)
+        self.clean_up = self.resources.get("cleanUp",True)
 
         log.basicConfig(format='%(asctime)s Katib Benchmark %(levelname)s: %(message)s',level=self.logging_level)
 
@@ -79,6 +80,8 @@ class KatibBenchmark(Benchmark):
             on a platform, e.g,. in the case of Kubernetes it referes to the steps nassary to deploy all pods
             and services in kubernetes.
         """
+
+
         log.info("Deploying katib:")
         res = os.popen('kubectl apply -k "github.com/kubeflow/katib.git/manifests/v1beta1/installs/katib-standalone?ref=master"').read()
         log.info(res)
@@ -106,17 +109,23 @@ class KatibBenchmark(Benchmark):
                         log.info(f'{ob.metadata.name} is ready')
                         monitored_pods.remove(name)
                         deployed = deployed + 1
+                        log.info(monitored_pods)
 
-                        #if all monitored pods are running the deployment process was ended
-                        if(deployed == 4 ):
-                            w.stop()
-                            log.info("Finished deploying crucial pods")
+                    # Checking for status of cert generator  
+                    elif name == "katib-cert-generator" and ob.status.phase == "Succeeded": 
+                        log.info(f'{ob.metadata.name} is Succeeded')
+                        monitored_pods.remove(name)
+                        log.info(monitored_pods)
 
 
+                    #if all monitored pods are running the deployment process was ended
+                    if not monitored_pods:
+
+                        w.stop()
+                        log.info("Finished deploying crucial pods")
 
 
-
-        #TODO waiit untill all pods are running
+        
 
 
 
@@ -188,7 +197,28 @@ class KatibBenchmark(Benchmark):
             except ApiException as e:
                 log.info("Exception when calling CustomObjectsApi->create_cluster_custom_object: %s\n" % e)
             
- 
+        
+        #Blocking untill the run is finished
+        #The GET /apis/{group}/{version}/namespaces/{namespace}/{plural}/{name} endpoint doesnt support watch argument.
+
+        experiment = self.get_experiment()
+        while "status" not in experiment:
+            log.info("Waitinng for the status")
+            sleep(5)
+            experiment = self.get_experiment()
+            # log.info(experiment)
+        
+    
+        while experiment["status"]["conditions"][-1]["type"]!="Succeeded":
+            experiment = self.get_experiment()
+            succeeded =  experiment["status"].get("trialsSucceeded",0)
+            
+            log.info(f'Status: {experiment["status"]["conditions"][-1]["reason"]} {succeeded} trials of {self.jobsCount} succeeded')
+            log.debug(experiment["status"])
+            
+            sleep(2)
+            
+    
     def collect_benchmark_metrics(self):
         return super().collect_benchmark_metrics()
 
@@ -209,65 +239,21 @@ class KatibBenchmark(Benchmark):
        
             # log.info(resource)
             # log.info(resource["status"])
+            return resource
         except ApiException as e:
             log.info("Exception when calling CustomObjectsApi->get_namespaced_custom_object_status: %s\n" % e)
-        return resource
+            return ""
 
 
     def collect_run_results(self):
         
         log.info("Collecting run results:")
-        config.load_kube_config()
-        w = watch.Watch()
-        c = client.CustomObjectsApi()
-        deployed = 0
-        
-        #TODO is there a way to run watch on namespaced custome object?
-        # for e in w.stream(c.get_namespaced_custom_object,
-        #                     group=self.group,
-        #                     version=self.version,
-        #                     namespace=self.namespace,
-        #                     name=self.study_name,
-        #                     plural=self.plural):
-        #     experiment = e["object"]
-        #     if "status" not in experiment:
-        #         log.info("Waitinng for the status")
-        #         sleep(5)
-        #     elif experiment["status"]["conditions"][-1]["type"]!="Succeeded":
-        #          log.info("chuja")
-        #          if "trialsSucceeded" in experiment["status"]:
-        #             log.info(f'{experiment["status"]["trialsSucceeded"]} trials of {self.jobsCount} succeeded')
-        #             log.info(experiment["status"]["conditions"][-1])
-        #             sleep(2)
-        #     else:
-        #         log.info("\n Experiment finished with following optimal trial:")
-        #         log.info(experiment["status"]["currentOptimalTrial"])  
-                
-                
            
-
+        experiment = self.get_experiment() 
         
-        experiment = self.get_experiment()
-        while "status" not in experiment:
-            log.info("Waitinng for the status")
-            sleep(5)
-            experiment = self.get_experiment()
-            # log.info(experiment)
-        
-    
-        while experiment["status"]["conditions"][-1]["type"]!="Succeeded":
-            experiment = self.get_experiment()
-            log.info("\nWaiting for the experiment to finish:")
-            if "trialsSucceeded" in experiment["status"]:
-                log.info(f'{experiment["status"]["trialsSucceeded"]} trials of {self.jobsCount} succeeded')
-            log.info(experiment["status"]["conditions"][-1])
-            sleep(2)
-           
-       
-        
-        log.info("\n Experiment finished with following optimal trial:")
-        log.info(experiment["status"]["currentOptimalTrial"])
-         
+        log.debug("\n Experiment finished with following optimal trial:")
+        log.debug(experiment["status"]["currentOptimalTrial"])
+        return experiment["status"]["currentOptimalTrial"] 
         
     
     def test(self):
@@ -313,9 +299,10 @@ class KatibBenchmark(Benchmark):
             log.info(err)
             log.info("Namespace sucessfully deleted")
             
-            log.info("Deleteing task docker image from minikube")
-            sleep(1)
-            self.image_builder.cleanup(self.trial_tag)
+            if self.clean_up:
+                log.info("Deleteing task docker image from minikube")
+                sleep(2)
+                self.image_builder.cleanup(self.trial_tag)
             log.info("Finished undeploying")
             return
         
@@ -333,9 +320,10 @@ class KatibBenchmark(Benchmark):
                     log.info(err)
                     log.info("Namespace sucessfully deleted")
                     
-                    log.info("Deleteing task docker image from minikube")
-                    sleep(1)
-                    self.image_builder.cleanup(self.trial_tag)
+                    if self.clean_up:
+                        log.info("Deleteing task docker image from minikube")
+                        sleep(2)
+                        self.image_builder.cleanup(self.trial_tag)
                     w.stop()
                     break
 
@@ -355,7 +343,8 @@ if __name__ == "__main__":
         "dockerImageTag":"light_task",
         "workerCount":10,
         "metricsIP": urlopen("https://checkip.amazonaws.com").read().decode("utf-8").strip(),
-        "generateNewDockerImage": True
+        "generateNewDockerImage": True,
+        "cleanUp": True,
         })
     bench.deploy()
     bench.setup()
