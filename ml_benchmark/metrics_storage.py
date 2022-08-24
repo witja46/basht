@@ -1,11 +1,21 @@
+from abc import abstractmethod
 import logging
 import time
 import docker
 from docker.errors import APIError
-from sqlalchemy import create_engine, MetaData, Table, Column, String, Float, select, Integer
+from sqlalchemy import create_engine, MetaData, Table, Column, String, Float, select, Integer, insert
+import psycopg2
+import os 
 
 from ml_benchmark.config import MetricsStorageConfig
+from ml_benchmark.metrics import Metric
 
+# see metrics._fingerprint for more information 
+fingerprint_columns = [
+    Column("process_id", Integer),
+    Column("hostname", String),
+    Column("obj_hash", Integer),
+]
 
 class MetricsStorage:
 
@@ -67,6 +77,7 @@ class MetricsStorage:
         # checks if db is up
         while "accepting connections" not in container.exec_run("pg_isready").output.decode():
             time.sleep(2)
+            #TODO: should have a timeout condition
         print("DB-Container Running")
 
     def stop_db(self):
@@ -92,6 +103,7 @@ class MetricsStorage:
             Column("start_time", String),
             Column("end_time", String),
             Column("duration_sec", Float)
+            #TODO add fingerprint
         )
 
     def create_resource_table(self):
@@ -108,33 +120,118 @@ class MetricsStorage:
         )
 
     def create_classification_metrics_table(self):
-        pass
+        self.classification_metrics = Table(
+            "classification_metrics", self.meta,
+            Column("metric_id", String, primary_key=True),
+            Column("timestamp", String, primary_key=True),
+            Column("value", Float),
+            Column("measure", String),
+            *fingerprint_columns
+        )
 
     def get_benchmark_results(self):
         latency = self.get_latency_results()
         resources = self.get_resource_results()
         classification = self.get_classification_results()
         return dict(latency=latency, resources=resources, classification=classification)
+    
+    def _get_table_results(self,table):
+        result_list = []
+        with self.engine.connect() as conn:
+            stmt = select(table)
+            cursor = conn.execute(stmt)
+        cursor = cursor.mappings().all()
+        for row in cursor:
+            result_list.append(dict(row))
+        return result_list
 
     def get_latency_results(self):
-        result_list = []
-        with self.engine.connect() as conn:
-            stmt = select(self.latency)
-            cursor = conn.execute(stmt)
-        cursor = cursor.mappings().all()
-        for row in cursor:
-            result_list.append(dict(row))
-        return result_list
+        return self._get_table_results(self.latency)
 
     def get_resource_results(self):
-        result_list = []
-        with self.engine.connect() as conn:
-            stmt = select(self.resources)
-            cursor = conn.execute(stmt)
-        cursor = cursor.mappings().all()
-        for row in cursor:
-            result_list.append(dict(row))
-        return result_list
+        return self._get_table_results(self.resources)
 
     def get_classification_results(self):
+        return self._get_table_results(self.classification_metrics)
+
+
+class StoreStrategy(object):
+    """
+        Interface for swapping out different implementations of the resource store, e.g., a database, a file, etc.
+    """
+    @abstractmethod
+    def setup(self, **kwargs):
+        """
+            Setup the resource store, e.g., create a database connection.
+        """
         pass
+    
+    @abstractmethod
+    def store(self, node_usage:Metric, **kwargs):
+        """
+            Store the node usage in the resource store.
+        """
+        pass
+
+#global store engine used as a singleton to safe 
+engine=None
+
+class MetricsStorageStrategy(StoreStrategy):
+
+    def __init__(self):
+        self.engine = None
+
+    def setup(self, **kwargs):
+        if self.engine:
+            return 
+
+        #resue the global engine if it exists
+        # global engine
+        # if engine:
+        #     self.engine = engine
+            
+        self.engine = self._create_engine(**kwargs)
+        # engine = self.engine
+
+    def _get_connection_string(self, **kwargs):
+        # XXX: list order is implicitly a priority
+        connection_string_actions_registry = [
+            ("env", os.environ.get("METRICS_STORAGE_HOST", None)),
+            ("args",kwargs.get("connection_string",None))
+        ]
+        for method, value in connection_string_actions_registry:
+            if value:
+                logging.debug(f"Tracker Connection String retrieved from: {method} using {value}")
+                return self.shape_connection_string(value)
+        logging.warn("No Method was succsessful. Setting Tracker URL to current Host.")
+        return MetricsStorageConfig.connection_string
+
+    def _create_engine(self, **kwargs):
+        connection_string = self._get_connection_string(**kwargs)
+        try:
+            engine = create_engine(connection_string, echo=False)
+        except psycopg2.Error:
+            raise ConnectionError("Could not create an Engine for the Postgres DB.")
+        return engine
+
+    def store(self, data:Metric, **kwargs):
+        try:
+            metadata = MetaData(bind=self.engine)
+            node_usage = Table(kwargs.get("table_name","metrics"), metadata, autoload_with=self.engine)
+            with self.engine.connect() as conn:
+                stmt = insert(node_usage).values(data.to_dict())
+                conn.execute(stmt)
+        except Exception as e:
+            logging.warn(f"Could not store the data in the Metrics DB {data} - {e}")
+
+class LoggingStoreStrategy(StoreStrategy):
+
+    def __init__(self):
+        self.log = []
+
+    def setup(self, **kwargs):
+        pass
+
+    def store(self, data):
+        logging.info("Storing data: {}".format(data.to_dict()))
+        self.log.append(data)

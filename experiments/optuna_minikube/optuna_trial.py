@@ -3,6 +3,7 @@ import sys
 from time import sleep
 import optuna
 from ml_benchmark.workload.mnist.mnist_task import MnistTask
+from ml_benchmark.results_tracker import ResultsTracker
 from utils import generate_search_space
 
 

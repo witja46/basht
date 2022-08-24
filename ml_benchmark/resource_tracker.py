@@ -1,15 +1,11 @@
-from abc import abstractmethod
 import datetime
+import logging
+from threading import Timer
 
 from prometheus_api_client import PrometheusConnect
 
-from ml_benchmark.config import MetricsStorageConfig
-import psycopg2
-from sqlalchemy import MetaData, Table, create_engine, insert
-from threading import Timer
-
-from ml_benchmark.metrics import Metric, NodeUsage
-import logging
+from ml_benchmark.metrics import NodeUsage
+from ml_benchmark.metrics_storage import MetricsStorageStrategy
 
 
 class RepeatTimer(Timer):
@@ -19,67 +15,12 @@ class RepeatTimer(Timer):
             self.function(*self.args, **self.kwargs)
 
 
-class ResourceStore(object):
-    """
-        Interface for swapping out different implementations of the resource store, e.g., a database, a file, etc.
-    """
-    @abstractmethod
-    def setup(self, **kwargs):
-        """
-            Setup the resource store, e.g., create a database connection.
-        """
-        pass
-    
-    @abstractmethod
-    def store(self, node_usage:Metric, **kwargs):
-        """
-            Store the node usage in the resource store.
-        """
-        pass
-
-class MetricsResouceStore(ResourceStore):
-
-    def __init__(self):
-        self.engine = None
-
-    def setup(self, **kwargs):
-        self.engine = self._create_engine(kwargs.get("connection_string",MetricsStorageConfig.connection_string))
-
-    def _create_engine(self, connection_string):
-        try:
-            engine = create_engine(connection_string, echo=False)
-        except psycopg2.Error:
-            raise ConnectionError("Could not create an Engine for the Postgres DB.")
-        return engine
-
-    def store(self, data:Metric, **kwargs):
-        try:
-            metadata = MetaData(bind=self.engine)
-            node_usage = Table(kwargs.get("table_name","resources"), metadata, autoload_with=self.engine)
-            with self.engine.connect() as conn:
-                stmt = insert(node_usage).values(data.to_dict())
-                conn.execute(stmt)
-        except Exception as e:
-            logging.warn(f"Could not store the data in the Metrics DB {data} - {e}")
-
-class LoggingResouceStore(ResourceStore):
-
-    def __init__(self):
-        self.log = []
-
-    def setup(self, **kwargs):
-        pass
-
-    def store(self, data):
-        logging.info("Storing data: {}".format(data.to_dict()))
-        self.log.append(data)
-
 class ResourceTracker:
 
     # update every 2 seconds ... maybe make this tuneable
     UPDATE_INTERVAL = 2
 
-    def __init__(self, prometheus_url, resouce_store=MetricsResouceStore ):
+    def __init__(self, prometheus_url, resouce_store=MetricsStorageStrategy ):
         if prometheus_url is None:
             raise ValueError("Prometheus URL is required.")
         self.prometheus_url = prometheus_url
@@ -191,7 +132,7 @@ class ResourceTracker:
 
         #insert the data
         for n in data:
-            self.store.store(n)
+            self.store.store(n,table_name="resources")
 
     def _try_norm(self, instance: str):
         if instance in self.node_map:

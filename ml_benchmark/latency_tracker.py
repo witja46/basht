@@ -6,7 +6,6 @@ from sqlalchemy import MetaData, Table, create_engine, insert
 
 
 from ml_benchmark.config import MetricsStorageConfig
-from ml_benchmark.metrics import Latency
 
 
 class Tracker(ABC):
@@ -83,25 +82,6 @@ class LatencyTracker(Tracker):
         db = MetricsStorageConfig.db
         return f"postgresql://{user}:{password}@{host}:{port}/{db}"
 
-
-def latency_decorator(func):
-    """A Decorator to record the latency of the decorated function. Once it is recorded the LatencyTracker
-    writes the result into the postgres databse.
-
-    Decorators overwrite a decorated function once the code is passed to the compier
-
-    Args:
-        func (_type_): _description_
-    """
-    def latency_func(*args, **kwargs):
-        func.__self__ = args[0]
-        with Latency(func) as latency:
-            result = func(*args, **kwargs)
-        latency_tracker = LatencyTracker()
-        latency_tracker.track(latency)
-        func.__self__ = None
-        return result
-    return latency_func
 
 
 if __name__ == "__main__":

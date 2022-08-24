@@ -1,3 +1,4 @@
+import logging
 import os
 from datetime import datetime, timedelta
 from uuid import uuid4
@@ -53,6 +54,45 @@ class NodeUsage(Metric):
         return str(self.to_dict())
 
 
+class Result(Metric):
+    def __init__(self, objective):
+        super().__init__()
+
+        # add fingerprinting data to self
+        fp = _fingerprint(self,objective)
+        self.__dict__.update(fp)
+        self.timestamp = datetime.now().ctime()
+        self.value = None
+        self.measure = None
+
+    def to_dict(self):
+        return self.__dict__
+        
+
+
+def _fingerprint(metric,func):
+    process_id = os.getpid()
+    # inject the NODE_NAME (from the environment) - should be availble in containerized environments
+    if os.getenv("NODE_NAME"):
+        hostname = f'{os.getenv("NODE_NAME")}_{socket.gethostname()}'
+    else:
+        hostname = f'BARE_{socket.gethostname()}'
+    metric.add_to_id(f"id_{uuid4()}__pid_{process_id}__hostname_{hostname}")
+
+    
+    try:
+        obj_hash = hash(func.__self__)
+    except AttributeError as e:
+        logging.warn(f"fingerprinting error {e}")
+        raise AttributeError("Functions need to be part of a class in order to measure their latency. {e}")
+
+    return {
+        "process_id": process_id,
+        "hostname": hostname,
+        "obj_hash": obj_hash,
+    }
+
+
 class Latency(Metric):
 
     def __init__(self, func) -> None:
@@ -74,22 +114,12 @@ class Latency(Metric):
         """
         super().__init__()
         #TODO: make each id filed also availible as a column
-        process_id = os.getpid()
-        # inject the NODE_NAME (from the environment) - should be availble in containerized environments
-        if os.getenv("NODE_NAME"):
-            hostname = f'{os.getenv("NODE_NAME")}_{socket.gethostname()}'
-        else:
-            hostname = f'BARE_{socket.gethostname()}'
-        self.add_to_id(f"id_{uuid4()}__pid_{process_id}__hostname_{hostname}")
-        
+        fp = _fingerprint(self,func)
+        obj_hash = fp["obj_hash"]
+        function_name: str = func.__name__
+        self.function_name = function_name
+        self.add_to_id(f"function-name_{function_name}__objHash_{obj_hash}")
 
-        self.function_name: str = func.__name__
-        try:
-            self.obj_hash = hash(func.__self__)
-        except AttributeError as e:
-            print(e)
-            raise AttributeError("Functions need to be part of a class in order to measure their latency.")
-        self.add_to_id(f"function-name_{self.function_name}__objHash_{self.obj_hash}")
         self.start_time: float = None
         self.end_time: float = None
         self.duration_sec: float = None
