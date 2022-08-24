@@ -3,19 +3,12 @@ import logging
 import time
 import docker
 from docker.errors import APIError
-from sqlalchemy import create_engine, MetaData, Table, Column, String, Float, select, Integer, insert
+from sqlalchemy import create_engine, MetaData, Table, Column, String, Float, select, Integer, insert, BigInteger
 import psycopg2
 import os 
 
 from ml_benchmark.config import MetricsStorageConfig
 from ml_benchmark.metrics import Metric
-
-# see metrics._fingerprint for more information 
-fingerprint_columns = [
-    Column("process_id", Integer),
-    Column("hostname", String),
-    Column("obj_hash", Integer),
-]
 
 class MetricsStorage:
 
@@ -126,7 +119,9 @@ class MetricsStorage:
             Column("timestamp", String, primary_key=True),
             Column("value", Float),
             Column("measure", String),
-            *fingerprint_columns
+            Column("process_id", Integer, nullable=True),
+            Column("hostname", String),
+            Column("obj_hash", BigInteger, nullable=True),
         )
 
     def get_benchmark_results(self):
@@ -205,7 +200,14 @@ class MetricsStorageStrategy(StoreStrategy):
                 return self.shape_connection_string(value)
         logging.warn("No Method was succsessful. Setting Tracker URL to current Host.")
         return MetricsStorageConfig.connection_string
-
+    
+    def shape_connection_string(self, host):
+        user = MetricsStorageConfig.user
+        password = MetricsStorageConfig.password
+        port = MetricsStorageConfig.port
+        db = MetricsStorageConfig.db
+        return f"postgresql://{user}:{password}@{host}:{port}/{db}"
+        
     def _create_engine(self, **kwargs):
         connection_string = self._get_connection_string(**kwargs)
         try:

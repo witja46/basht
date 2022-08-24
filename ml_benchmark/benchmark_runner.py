@@ -11,10 +11,10 @@ import numpy as np
 import torch
 import logging
 
-from ml_benchmark.latency_tracker import Latency, LatencyTracker
+from ml_benchmark.latency_tracker import LatencyTracker
 from ml_benchmark.metrics_storage import MetricsStorage
 from ml_benchmark.resource_tracker import ResourceTracker
-
+from ml_benchmark.metrics import Latency
 
 class Benchmark(ABC):
     """

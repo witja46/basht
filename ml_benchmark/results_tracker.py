@@ -4,8 +4,8 @@ from ml_benchmark.metrics import Result
 from ml_benchmark.metrics_storage import MetricsStorageStrategy
 
 class ResultTracker(Tracker):
-    def __init__(self,resouce_store=MetricsStorageStrategy):
-        self.store = resouce_store()
+    def __init__(self,store=MetricsStorageStrategy):
+        self.store = store()
         self.store.setup()
 
     def track(self, objective, value, measure):
@@ -14,5 +14,6 @@ class ResultTracker(Tracker):
         r.measure = measure
         try:
             self.store.store(r,table_name="classification_metrics")
+            logging.info("Stored result")
         except Exception as e:
-            logging.warn(f"failed to store result {e}")
+            logging.error(f"failed to store result {e}")

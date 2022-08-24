@@ -1,9 +1,7 @@
 import os
 from abc import ABC, abstractmethod
-
 import psycopg2
 from sqlalchemy import MetaData, Table, create_engine, insert
-
 
 from ml_benchmark.config import MetricsStorageConfig
 
@@ -94,7 +92,7 @@ if __name__ == "__main__":
 
     storage = MetricsStorage()
     result = []
-
+    from ml_benchmark.decorators import latency_decorator
     class Test:
         metrics_storage_address = MetricsStorage.connection_string
 

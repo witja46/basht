@@ -59,14 +59,19 @@ class Result(Metric):
         super().__init__()
 
         # add fingerprinting data to self
-        fp = _fingerprint(self,objective)
-        self.__dict__.update(fp)
+        self.fp = _fingerprint(self,objective)
         self.timestamp = datetime.now().ctime()
         self.value = None
         self.measure = None
 
     def to_dict(self):
-        return self.__dict__
+        return dict(
+            metric_id=self.metric_id,
+            timestamp=self.timestamp,
+            value=self.value,
+            measure=self.measure,
+            **self.fp
+        )
         
 
 
@@ -79,7 +84,7 @@ def _fingerprint(metric,func):
         hostname = f'BARE_{socket.gethostname()}'
     metric.add_to_id(f"id_{uuid4()}__pid_{process_id}__hostname_{hostname}")
 
-    
+    obj_hash = 0
     try:
         obj_hash = hash(func.__self__)
     except AttributeError as e:

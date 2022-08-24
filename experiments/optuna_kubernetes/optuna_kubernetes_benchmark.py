@@ -175,8 +175,8 @@ class OptunaKubernetesBenchmark(Benchmark):
     def test(self):
 
         def optuna_trial(trial):
-            objective = MnistTask(config_init={"epochs": 1}).create_objective()
-            lr = trial.suggest_float("learning_rate", 1e-3, 0.1, log=True)
+            objective = MnistTask(config_init={"epochs": 5}).create_objective()
+            lr = trial.suggest_float("learning_rate", 1e-4, 0.1, log=True)
             decay = trial.suggest_float("weight_decay", 1e-6, 1e-4, log=True)
             objective.set_hyperparameters({"learning_rate": lr, "weight_decay": decay})
             # these are the results, that can be used for the hyperparameter search
