@@ -26,9 +26,9 @@ if __name__ == "__main__":
     resources.update(to_automate)
 
     repetions = 3
-    nodes = [1,2,3,4,5,6,7,8,9,10]
-    for i in range(repetions):
-        for n in nodes:
+   
+    for n in range(1,10):
+        for i in range(1,repetions):
             sleep(3)
             logging.info(f"Starting Run {i} with {n} nodes")
             try:
@@ -38,6 +38,7 @@ if __name__ == "__main__":
                     benchmark_cls=OptunaKubernetesBenchmark, resources=resources)
                 runner.run()
                 sleep(7)
+                runner = None
             except Exception as e:
                 logging.warn(f'Failed Run {i} with {n} nodes - {e}')
         

@@ -180,6 +180,7 @@ class BenchmarkRunner():
             sleep(5)
             if self.resource_tracker is not None:
                 self.resource_tracker.stop()
+                self.resource_tracker = None
 
             self.metrics_storage.stop_db()
             # Undeploy the SUT
