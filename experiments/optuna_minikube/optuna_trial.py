@@ -5,9 +5,9 @@ import optuna
 from ml_benchmark.workload.mnist.mnist_task import MnistTask
 from utils import generate_search_space
 
-
 def optuna_trial(trial):
-    task = MnistTask(config_init={"epochs": 5})
+    epochs = int(os.environ.get("EPOCHS",5))
+    task = MnistTask(config_init={"epochs": epochs})
     objective = task.create_objective()
     # optuna doesnt care, these lines of code just get hyperparameters from the search space in grid search
     lr = trial.suggest_float("learning_rate", 1e-3, 0.1, log=True)
@@ -24,12 +24,13 @@ if __name__ == "__main__":
     try:
         study_name = os.environ.get("STUDY_NAME")
         database_conn = os.environ.get("DB_CONN")
+        n_trails = int(os.environ.get("N_TRAILS",6))
         search_space = generate_search_space(os.path.join(os.path.dirname(__file__),"hyperparameter_space.yml"))
         print(search_space)
         study = optuna.create_study(
             study_name=study_name, storage=database_conn, direction="maximize", load_if_exists=True,
             sampler=optuna.samplers.GridSampler(search_space))
-        study.optimize(optuna_trial, n_trials=6)
+        study.optimize(optuna_trial, n_trials=n_trails,n_jobs=-1) ##TODO:XXX We need to make this a configurable parameter!!!
         # TODO: add small wait to avoid missing metrics
         sleep(5)
         sys.exit(0)

@@ -37,6 +37,8 @@ class OptunaKubernetesBenchmark(Benchmark):
         self.delete_after_run = resources.get("deleteAfterRun", True)
         self.metrics_ip = resources.get("metricsIP")
         self.runner = runner
+        self.trails = resources.get("trails", 6)
+        self.epochs = resources.get("epochs", 5)
         self.hyperparameter = resources.get("hyperparameter")
 
     def deploy(self) -> None:
@@ -107,6 +109,8 @@ class OptunaKubernetesBenchmark(Benchmark):
             "worker_image": self.trial_tag,
             "study_name": self.study_name,
             "metrics_ip": self.metrics_ip,
+            "trails": self.trails,
+            "epochs": self.epochs,
         }
         job_yml_objects = YamlTemplateFiller.load_and_fill_yaml_template(
             path.join(path.dirname(__file__), "ops/manifests/trial/job.yml"), job_definition)
@@ -175,7 +179,7 @@ class OptunaKubernetesBenchmark(Benchmark):
     def test(self):
 
         def optuna_trial(trial):
-            objective = MnistTask(config_init={"epochs": 5}).create_objective()
+            objective = MnistTask(config_init={"epochs": self.epochs}).create_objective()
             lr = trial.suggest_float("learning_rate", 1e-4, 0.1, log=True)
             decay = trial.suggest_float("weight_decay", 1e-6, 1e-4, log=True)
             objective.set_hyperparameters({"learning_rate": lr, "weight_decay": decay})
