@@ -19,8 +19,7 @@ def optuna_trial(trial):
     validation_scores = objective.validate()
     return validation_scores["macro avg"]["f1-score"]
 
-
-if __name__ == "__main__":
+def main():
     try:
         study_name = os.environ.get("STUDY_NAME")
         database_conn = os.environ.get("DB_CONN")
@@ -33,7 +32,13 @@ if __name__ == "__main__":
         study.optimize(optuna_trial, n_trials=n_trails,n_jobs=-1) ##TODO:XXX We need to make this a configurable parameter!!!
         # TODO: add small wait to avoid missing metrics
         sleep(5)
-        sys.exit(0)
+        return True
     except Exception as e:
         print(e)
+        return False
+
+if __name__ == "__main__":
+    if main():
+        sys.exit(0)
+    else:
         sys.exit(1)

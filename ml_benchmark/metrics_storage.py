@@ -234,6 +234,6 @@ class LoggingStoreStrategy(StoreStrategy):
     def setup(self, **kwargs):
         pass
 
-    def store(self, data):
+    def store(self, data,**kwargs):
         logging.info("Storing data: {}".format(data.to_dict()))
         self.log.append(data)

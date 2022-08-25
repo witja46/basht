@@ -25,7 +25,7 @@ def test_latency_decorator_using_env(objective):
 
     try:
         metrics_storage.start_db()
-        os.environ["METRICS_STORAGE_HOST"] = MetricsStorage.connection_string
+        os.environ["METRICS_STORAGE_HOST"] = MetricsStorage.host
         objective.train()
         objective.validate()
         objective.test()
@@ -34,4 +34,4 @@ def test_latency_decorator_using_env(objective):
     except docker.errors.APIError:
             metrics_storage.stop_db()
 
-    assert isinstance(json.dumps(result), str)ð
+    assert isinstance(json.dumps(result), str)
