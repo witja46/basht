@@ -4,7 +4,8 @@ from time import sleep
 import optuna
 from ml_benchmark.workload.mnist.mnist_task import MnistTask
 from utils import generate_search_space
-
+from optuna.study import MaxTrialsCallback
+from optuna.trial import TrialState
 def optuna_trial(trial):
     epochs = int(os.environ.get("EPOCHS",5))
     task = MnistTask(config_init={"epochs": epochs})
@@ -29,7 +30,9 @@ def main():
         study = optuna.create_study(
             study_name=study_name, storage=database_conn, direction="maximize", load_if_exists=True,
             sampler=optuna.samplers.GridSampler(search_space))
-        study.optimize(optuna_trial, n_trials=n_trials) ##TODO:XXX We need to make this a configurable parameter!!!
+        study.optimize(optuna_trial,
+            callbacks=[MaxTrialsCallback(n_trials, states=(TrialState.COMPLETE,))],
+        ) ##TODO:XXX We need to make this a configurable parameter!!!
         # TODO: add small wait to avoid missing metrics
         sleep(5)
         return True

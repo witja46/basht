@@ -37,7 +37,7 @@ class OptunaKubernetesBenchmark(Benchmark):
         self.workerCount = resources.get("workerCount", 4)
         self.delete_after_run = resources.get("deleteAfterRun", True)
         self.metrics_ip = resources.get("metricsIP")
-        self.trials = self._calculate_trial_number(resources.get("trials", 6))
+        self.trials = resources.get("trials", 10) #self._calculate_trial_number(resources.get("trials", 6))
         self.epochs = resources.get("epochs", 5)
         self.hyperparameter = resources.get("hyperparameter")
 
