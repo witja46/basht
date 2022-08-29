@@ -33,7 +33,7 @@ if __name__ == "__main__":
                     sleep(3)
                     logging.info(f"Starting Run {i} with {n} nodes with n_trails {t}")
                     try:
-                        resources["trails"] = t
+                        resources["trials"] = t
                         resources["workerCount"] = n
                         resources["goal"] = f"rnode{n}-{t}-{i}"
                         runner = BenchmarkRunner(benchmark_cls=OptunaKubernetesBenchmark, resources=resources)

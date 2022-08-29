@@ -24,8 +24,8 @@ spec:
             value: "postgresql://postgresadmin:admin123@postgres:5432/postgresdb"
           - name: "METRICS_STORAGE_HOST"
             value: "$metrics_ip"
-          - name: "N_TRAILS"
-            value: "$trails"
+          - name: "N_TRIALS"
+            value: "$trials"
           - name: "EPOCHS"
             value: "$epochs"
           # injects the kuberntes node name into eacah pod 

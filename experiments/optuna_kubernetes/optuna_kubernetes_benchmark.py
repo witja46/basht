@@ -37,7 +37,7 @@ class OptunaKubernetesBenchmark(Benchmark):
         self.workerCount = resources.get("workerCount", 4)
         self.delete_after_run = resources.get("deleteAfterRun", True)
         self.metrics_ip = resources.get("metricsIP")
-        self.trails = self._calculate_trial_number(resources.get("trials", 6))
+        self.trials = self._calculate_trial_number(resources.get("trials", 6))
         self.epochs = resources.get("epochs", 5)
         self.hyperparameter = resources.get("hyperparameter")
 
@@ -113,7 +113,7 @@ class OptunaKubernetesBenchmark(Benchmark):
             "worker_image": self.trial_tag,
             "study_name": self.study_name,
             "metrics_ip": self.metrics_ip,
-            "trails": self.trails,
+            "trials": self.trials,
             "epochs": self.epochs,
         }
         job_yml_objects = YamlTemplateFiller.load_and_fill_yaml_template(

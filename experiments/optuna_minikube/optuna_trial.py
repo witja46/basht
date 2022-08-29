@@ -23,13 +23,13 @@ def main():
     try:
         study_name = os.environ.get("STUDY_NAME")
         database_conn = os.environ.get("DB_CONN")
-        n_trails = int(os.environ.get("N_TRAILS",6))
+        n_trials = int(os.environ.get("N_TRIALS",6))
         search_space = generate_search_space(os.path.join(os.path.dirname(__file__),"hyperparameter_space.yml"))
         print(search_space)
         study = optuna.create_study(
             study_name=study_name, storage=database_conn, direction="maximize", load_if_exists=True,
             sampler=optuna.samplers.GridSampler(search_space))
-        study.optimize(optuna_trial, n_trials=n_trails) ##TODO:XXX We need to make this a configurable parameter!!!
+        study.optimize(optuna_trial, n_trials=n_trials) ##TODO:XXX We need to make this a configurable parameter!!!
         # TODO: add small wait to avoid missing metrics
         sleep(5)
         return True
