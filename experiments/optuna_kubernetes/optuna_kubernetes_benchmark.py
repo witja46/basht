@@ -16,7 +16,7 @@ from ml_benchmark.utils.yaml_template_filler import YamlTemplateFiller
 
 class OptunaKubernetesBenchmark(Benchmark):
 
-    def __init__(self, resources: dict, runner=None) -> None:
+    def __init__(self, resources: dict) -> None:
         """
         Processes the given resources dictionary and creates class variables from it which are used
         in the benchmark.
@@ -37,7 +37,6 @@ class OptunaKubernetesBenchmark(Benchmark):
         self.workerCount = resources.get("workerCount", 4)
         self.delete_after_run = resources.get("deleteAfterRun", True)
         self.metrics_ip = resources.get("metricsIP")
-        self.runner = runner
         self.trails = self._calculate_trial_number(resources.get("trials", 6))
         self.epochs = resources.get("epochs", 5)
         self.hyperparameter = resources.get("hyperparameter")
@@ -82,10 +81,6 @@ class OptunaKubernetesBenchmark(Benchmark):
                 raise e
 
         self._watch_db()
-
-        # update the resoruce collector with the namespace used during the run
-        if self.runner and self.runner.resource_tracker:
-            self.runner.resource_tracker.namespace = self.namespace
 
     @staticmethod
     def _is_create_conflict(e):

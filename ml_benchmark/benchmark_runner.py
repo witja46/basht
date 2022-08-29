@@ -122,7 +122,7 @@ class BenchmarkRunner():
         self.create_benchmark_folder(self.benchmark_folder)
 
         # add input and output size to the benchmark.
-        self.benchmark = benchmark_cls(resources, self)
+        self.benchmark = benchmark_cls(resources)
 
         # set seeds
         self._set_all_seeds()
