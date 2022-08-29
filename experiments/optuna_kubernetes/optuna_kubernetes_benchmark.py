@@ -167,7 +167,7 @@ class OptunaKubernetesBenchmark(Benchmark):
                 w.stop()
                 print("Trials completed! Collecting Results")
                 return True
-        print("Watch_Trails timed out")
+        print("Watch_Trials timed out")
         try:
             job = client.BatchV1Api().read_namespaced_job(name="optuna-trial", namespace=self.namespace)
             if job.status.failed != None and job.status.failed > 0:

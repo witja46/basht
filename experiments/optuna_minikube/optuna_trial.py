@@ -11,7 +11,7 @@ def optuna_trial(trial):
     task = MnistTask(config_init={"epochs": epochs})
     objective = task.create_objective()
     # optuna doesnt care, these lines of code just get hyperparameters from the search space in grid search
-    lr = trial.suggest_float("learning_rate", 1e-3, 0.1, log=True)
+    lr = trial.suggest_float("learning_rate", 1e-4, 0.1, log=True)
     decay = trial.suggest_float("weight_decay", 1e-6, 1e-4, log=True)
     # hidden_layer_config = trial.suggest_int("hidden_layer_config", 1, 4)
     objective.set_hyperparameters(
