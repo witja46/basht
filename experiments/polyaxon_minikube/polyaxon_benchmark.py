@@ -4,10 +4,12 @@ from asyncio import subprocess
 from base64 import decode
 from cmath import pi
 from concurrent.futures import process
+from importlib.abc import ResourceReader
 from itertools import count
 import json
 from os import path 
 import os
+import re
 from socket import timeout
 import sys
 from time import sleep
@@ -50,56 +52,18 @@ class PolyaxonBenchmark(Benchmark):
 
         config.load_kube_config()
 
-        self.logging_level= self.resources.get("loggingLevel",log.CRITICAL)
-
+        self.clean_up  = self.resources.get("cleanUp",True)
         self.create_clean_image = self.resources.get("createCleanImage",True) 
-        log.basicConfig(format='%(asctime)s Polyaxon Benchmark %(levelname)s: %(message)s',level=self.logging_level)
-
-
         self.metrics_ip = resources.get("metricsIP")
-    
-        if "dockerImageTag" in self.resources:
-            self.trial_tag = self.resources["dockerImageTag"]
-        else:
-            self.trial_tag = "mnist_task"
-
-        if "dockerUserLogin" in self.resources:
-            self.docker_user = self.resources["dockerUserLogin"]
-        else:
-            self.docker_user = "witja46"
-    
+        self.trial_tag = resources.get("dockerImageTag", "mnist_task")
+        self.study_name = resources.get("studyName",f'polyaxon-study-{random.randint(0, 100)}')
+        self.workerCpu=resources.get("workerCpu",2)
+        self.workerMemory=resources.get("workerMemory",2)
+        self.workerCount=resources.get("workerCount",5)
+        self.jobsCount=resources.get("jobsCount",6) 
         
-        
-        if "dockerUserPassword" in self.resources:
-            self.docker_pasword = self.resources["dockerUserPassword"]
-        else:
-            self.docker_pasword = ""        
-
-
-        if "studyName" in self.resources:
-            self.study_name = self.resources["studyName"]
-        else:
-            self.study_name = f"polyaxon-study-{random.randint(0, 100)}"
-
-        if "workerCpu" in self.resources:
-            self.workerCpu = self.resources["workerCpu"]
-        else:
-            self.workerCpu = 2
-
-        if "workerMemory" in resources:
-            self.workerMemory = self.resources["workerMemory"]
-        else:
-            self.workerMemory = 2
-
-        if "workerCount" in resources:
-            self.workerCount = self.resources["workerCount"]
-        else:
-            self.workerCount = 5
-
-        if "jobsCount" in resources:
-            self.jobsCount = self.resources["jobsCount"]
-        else:
-            self.jobsCount = 6
+        self.logging_level= self.resources.get("loggingLevel",log.CRITICAL)
+        log.basicConfig(format='%(asctime)s Polyaxon Benchmark %(levelname)s: %(message)s',level=self.logging_level)
         
     def deploy(self):
         """
@@ -121,32 +85,30 @@ class PolyaxonBenchmark(Benchmark):
       
         
 
-        config.load_kube_config()
-        w = watch.Watch()
-        c = client.CoreV1Api()
-        deployed = 0
 
 
         log.info("Waiting for all polyaxon pods to be ready:")
+        config.load_kube_config()
+        w = watch.Watch()
+        c = client.CoreV1Api()
+        
         # From all pods that polyaxon starts we are onlly really intrested for following 4 that are crucial for runnig of the experiments 
-        monitored_pods = ["polyaxon-polyaxon-streams","polyaxon-polyaxon-operator","polyaxon-polyaxon-gateway","polyaxon-polyaxon-api"]
-        # TODO changing to list_namespaced_deployments?
+        unready_pods = ["polyaxon-polyaxon-streams","polyaxon-polyaxon-operator","polyaxon-polyaxon-gateway","polyaxon-polyaxon-api"]
         for e in w.stream(c.list_namespaced_pod, namespace="polyaxon"):
             ob = e["object"]          
             
-            for name in monitored_pods:
+            for name in unready_pods:
 
                 #checking if it is one of the pods that we want to monitor 
                 if name in ob.metadata.name:
                     
-                    # Checking if the pod already is runnig and its underlying containers are ready
+                    # Checking if the pod already is runnig and its underlying containers are ready, if yes we do not need to monitor it anymore
                     if ob.status.phase == "Running" and ob.status.container_statuses[0].ready: 
                         log.info(f'{ob.metadata.name} is ready')
-                        monitored_pods.remove(name)
-                        deployed = deployed + 1
+                        unready_pods.remove(name)
 
-                        #if all monitored pods are running the deployment process was ended
-                        if(deployed == 4 ):
+                        #if all monitored pods are ready  the deployment process was ended
+                        if not unready_pods:
                             w.stop()
                             log.info("Finished deploying crucial pods")
                             
@@ -195,16 +157,18 @@ class PolyaxonBenchmark(Benchmark):
         
         if self.create_clean_image:
             log.info("Creating task docker image")   
-            #creating docker image inside of the minikube   
             self.image_builder = builder_from_string("minikube")()
             PROJECT_ROOT = os.path.abspath(os.path.join(__file__ ,"../../../"))
-            log.info(PROJECT_ROOT)
+
+            #creating docker image inside of the minikube   
             res = self.image_builder.deploy_image(
             f'experiments/polyaxon_minikube/{self.trial_tag}/Dockerfile', self.trial_tag,PROJECT_ROOT)
-            print(res)
+            
+            log.info(res)
+            #if something went wrong by creation of the image benchmark schould be stoped
             if f'Successfully tagged {self.trial_tag}' not in res:
                 raise Exception("Image was not created:",res)
-            print(f"Image: {self.trial_tag}")
+            log.info(f"Image: {self.trial_tag}")
 
 
         
@@ -213,16 +177,16 @@ class PolyaxonBenchmark(Benchmark):
 
     def run(self):
 
-        #TODO add error handling.
-        #TODO change to invocking procject comand instead of sending the http request to the polaxon api? 
-        log.info("Creating new project:")
-        # project = requests.post(f'{self.polyaxon_addr}/api/v1/default/projects/create', json={"name": self.study_name, })
+        # project = requests.post(f'{self.polyaxon_addr}/api/v1/default/projects/create', json={"name": self.study_name, }) # Alternative way of creating the project crd with http request to the polyaxon api
 
          
+        log.info("Creating new project:")
         options = f'--name {self.study_name} --description '.split()
         # adding the project description as the last argument  
         options.append(f'{self.project_description}')
+    
         #invoking polyaxon project create comand
+        #TODO add error handling.
         res = self.cli_runner.invoke(create,options)
         log.info(res.output)
 
@@ -231,7 +195,8 @@ class PolyaxonBenchmark(Benchmark):
       
         log.info("Starting polyaxon experiment:")
         #invoking polyaxon run comand with following options
-        options = f'-f ./{self.experiment_file_name} --project {self.study_name} --eager'.split()
+        options = f'-f {self.experiment_file_name} --project {self.study_name} --eager'.split()
+        #TODO add error handling.
         res = self.cli_runner.invoke(run,options)
         log.info(res.output)
 
@@ -240,13 +205,29 @@ class PolyaxonBenchmark(Benchmark):
         #TODO switch to kubernetes api for monitoring runing trials  
         log.info("Waiting for the run to finish:")
         finished = False
-        while not finished:
-            runs = self.get_succeeded_runs()
-            log.info(f'{runs["count"]} jobs out of {self.jobsCount} succeded')
+        
+        w = watch.Watch()
+        c = client.BatchV1Api()
+        done = 0
+        for e in w.stream(c.list_namespaced_job, namespace=self.namespace):
+            if "object" in e and e["object"].status.completion_time is not None:
+                done = done + 1 
+                log.info(f'{done} jobs out of {self.jobsCount} succeded')
+                if(done == self.jobsCount):
+                    log.info("Finished all runs")
+                    w.stop()
+
+
+
+                
+                
+        # while not finished:
+        #     runs = self.get_succeeded_runs()
+        #     log.info(f'{runs["count"]} jobs out of {self.jobsCount} succeded')
             
-            #checking if all runs were finished
-            finished = runs["count"] == self.jobsCount
-            sleep(1)
+        #     #checking if all runs were finished
+        #     finished = runs["count"] == self.jobsCount
+        #     sleep(1)
     
         return
 
@@ -315,6 +296,7 @@ class PolyaxonBenchmark(Benchmark):
         w = watch.Watch()
         c = client.CoreV1Api()
         deployed = 0
+        to_undeploy= ["polyaxon-polyaxon-streams","polyaxon-polyaxon-operator","polyaxon-polyaxon-gateway","polyaxon-polyaxon-api"]
         log.info("Waiting for polyaxon pods to be terminated:")
         for e in w.stream(c.list_namespaced_pod, namespace=self.namespace):
             ob = e["object"]
@@ -322,14 +304,17 @@ class PolyaxonBenchmark(Benchmark):
             log.debug(f'{deployed} pods out of 4 were killed')
             log.debug("\n new in stream:\n")
             log.debug(ob.metadata.name,ob.status.phase)
+            for name in to_undeploy:
+                if name in ob.metadata.name:
 
-            if not ob.status.container_statuses[0].ready:
-                log.info(f'Containers of {ob.metadata.name} are terminated')
-                deployed = deployed + 1
-                if(deployed == 4 ):
-                    w.stop()
-                    # log.info("Finished ")
-                    break
+                    if not ob.status.container_statuses[0].ready:
+                        log.info(f'Containers of {ob.metadata.name} are terminated')
+                        to_undeploy.remove(name)
+                        
+                        if not to_undeploy:
+                            w.stop()
+                            # log.info("Finished ")
+                            break
         
       
         log.info("Killed all pods deleteing the namespace:")
@@ -350,6 +335,10 @@ class PolyaxonBenchmark(Benchmark):
                 except ApiException as err:
                     log.info(err)
                     log.info("Namespace sucessfully deleted")
+                    if self.clean_up:
+                        log.info("Deleteing task docker image from minikube")
+                        sleep(2)
+                        self.image_builder.cleanup(self.trial_tag)
                     w.stop()
                     break
 
@@ -379,21 +368,22 @@ if __name__ == "__main__":
     resources={
         # "studyName":"",
         "dockerImageTag":"task_light",
-        "jobsCount":5,
-        
+        "jobsCount":15,
+       "cleanUp":False,
+"createCleanImage":False,
         "workerCount":5,
         "loggingLevel":log.INFO,
         "metricsIP": urlopen("https://checkip.amazonaws.com").read().decode("utf-8").strip(),
         "createCleanImage":True
     }
     from ml_benchmark.benchmark_runner import BenchmarkRunner
-    #runner = BenchmarkRunner(
-    #    benchmark_cls=PolyaxonBenchmark, resources=resources)
-    #runner.run()
+    runner = BenchmarkRunner(
+        benchmark_cls=PolyaxonBenchmark, resources=resources)
+    runner.run()
 
-    bench= PolyaxonBenchmark(resources=resources)
+    #bench= PolyaxonBenchmark(resources=resources)
     #bench.deploy() 
-    bench.setup()
+    #bench.setup()
     # bench.run()
     # # bench.collect_run_results()
 
@@ -416,5 +406,6 @@ if __name__ == "__main__":
     # print(res.output,res.exit_code)
 
    # print(res)
+
 
 
