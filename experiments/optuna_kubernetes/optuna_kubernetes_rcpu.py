@@ -27,18 +27,18 @@ if __name__ == "__main__":
     resources.update(to_automate)
 
     repetions = 2
-    for t in [6,12,18]:
-        for n in range(1,11):
+    for trails in [6,12,18]:
+        for cpu in range(2,8):
             for i in range(1,repetions+1):
                     sleep(3)
-                    logging.info(f"Starting Run {i} with {n} nodes with n_trails {t}")
+                    logging.info(f"Starting Run {i} with 3x{cpu} vCPUs with n_trails {trails}")
                     try:
-                        resources["trails"] = t
-                        resources["workerCount"] = n
-                        resources["goal"] = f"rnode{n}-{t}-{i}"
+                        resources["trails"] = trails
+                        resources["workerCpu"] = (cpu/2.0)
+                        resources["goal"] = f"rcpu{cpu}-{trails}-{i}"
                         runner = BenchmarkRunner(benchmark_cls=OptunaKubernetesBenchmark, resources=resources)
                         runner.run()
                         sleep(7)
                         runner = None
                     except Exception as e:
-                        logging.warning(f'Failed Run {i} with {n} nodes and n_trails {t} - {e}')
+                        logging.warning(f'Failed Run {i} with 3x{cpu} vCPUs with n_trails {trails} - {e}')

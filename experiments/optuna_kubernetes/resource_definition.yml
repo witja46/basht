@@ -1,7 +1,7 @@
 
-workerCpu: 1
-workerMemory: 1.5
-workerCount: 4
+workerCpu: 2
+workerMemory: 2
+workerCount: 1
 trails: 6
 epochs: 5
 metricsIP:  auto ##urlopen("https://checkip.amazonaws.com").read().decode("utf-8").strip(),

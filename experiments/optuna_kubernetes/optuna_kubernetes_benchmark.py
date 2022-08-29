@@ -129,7 +129,7 @@ class OptunaKubernetesBenchmark(Benchmark):
             else:
                 raise e
         try:
-            for t in range(1,5):
+            for t in range(1,14):
                 self._watch_trials(timeout=120*t)
         except Exception as e:
             #TODO deal with mitigatable errors
@@ -202,7 +202,7 @@ class OptunaKubernetesBenchmark(Benchmark):
         if self.delete_after_run:
             client.CoreV1Api().delete_namespace(self.namespace)
             self._watch_namespace()
-            self.image_builder.cleanup(self.trial_tag)
+            # self.image_builder.cleanup(self.trial_tag)
 
     def _watch_namespace(self):
         try:

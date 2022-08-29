@@ -29,7 +29,7 @@ def main():
         study = optuna.create_study(
             study_name=study_name, storage=database_conn, direction="maximize", load_if_exists=True,
             sampler=optuna.samplers.GridSampler(search_space))
-        study.optimize(optuna_trial, n_trials=n_trails,n_jobs=-1) ##TODO:XXX We need to make this a configurable parameter!!!
+        study.optimize(optuna_trial, n_trials=n_trails) ##TODO:XXX We need to make this a configurable parameter!!!
         # TODO: add small wait to avoid missing metrics
         sleep(5)
         return True
