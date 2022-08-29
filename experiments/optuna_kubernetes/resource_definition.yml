@@ -2,7 +2,7 @@
 workerCpu: 2
 workerMemory: 2
 workerCount: 1
-trails: 6
+trials: 6
 epochs: 5
 metricsIP:  auto ##urlopen("https://checkip.amazonaws.com").read().decode("utf-8").strip(),
 kubernetesMasterIP: minikube ##subprocess.check_output("minikube ip", shell=True).decode("utf-8").strip("\n")
@@ -14,7 +14,7 @@ hyperparameter:
   learning_rate:
     start: 1e-4
     end: 1e-2
-    step_size: 1e-5
+    step_size: 1e-3
   weight_decay:
     start: 1e-6
     end: 1e-4
