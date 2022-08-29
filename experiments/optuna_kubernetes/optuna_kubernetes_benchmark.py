@@ -1,6 +1,7 @@
 import random
 from os import path
 from time import sleep
+from math import ceil
 
 import optuna
 from kubernetes import client, config, watch
@@ -37,9 +38,17 @@ class OptunaKubernetesBenchmark(Benchmark):
         self.delete_after_run = resources.get("deleteAfterRun", True)
         self.metrics_ip = resources.get("metricsIP")
         self.runner = runner
-        self.trails = resources.get("trails", 6)
+        self.trails = self._calculate_trial_number(resources.get("trials", 6))
         self.epochs = resources.get("epochs", 5)
         self.hyperparameter = resources.get("hyperparameter")
+
+    def _calculate_trial_number(self, n_trials):
+        new_n_trials = None
+        if n_trials < self.workerCount:
+            new_n_trials = self.workerCount
+        else:
+            new_n_trials = ceil(n_trials/self.workerCount)
+        return new_n_trials
 
     def deploy(self) -> None:
         """
@@ -173,8 +182,8 @@ class OptunaKubernetesBenchmark(Benchmark):
                 raise Exception("Job not created...")
             raise e
         return False
-        
-        
+
+
 
     def test(self):
 
@@ -233,7 +242,7 @@ if __name__ == "__main__":
     from urllib.request import urlopen
     from ml_benchmark.utils.yml_parser import YMLParser
     resources = YMLParser.parse(path.join(path.dirname(__file__),"resource_definition.yml"))
-    
+
     # TODO: XXX remove this hardcoded values
     to_automate = {
         "metricsIP": urlopen("https://checkip.amazonaws.com").read().decode("utf-8").strip(),
@@ -250,4 +259,4 @@ if __name__ == "__main__":
     runner = BenchmarkRunner(
         benchmark_cls=OptunaKubernetesBenchmark, resources=resources)
     runner.run()
-        
+
