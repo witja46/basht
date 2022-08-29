@@ -42,15 +42,15 @@ class OptunaMinikubeBenchmark(Benchmark):
         """
         Deploy DB
         """
-        
+
         # TODO: deal with exsiting resources...
 
         #generate hyperparameter file from resouces def.
-        
+
         if self.hyperparameter:
             f = path.join(path.dirname(__file__),"hyperparameter_space.yml")
             YamlTemplateFiller.as_yaml(f, self.hyperparameter)
-                
+
         try:
             resp = client.CoreV1Api().create_namespace(
                 client.V1Namespace(metadata=client.V1ObjectMeta(name=self.namespace)))
@@ -142,7 +142,7 @@ class OptunaMinikubeBenchmark(Benchmark):
         """
         w = watch.Watch()
         c = client.BatchV1Api()
-        for e in w.stream(c.list_namespaced_job, namespace=self.namespace, timeout_seconds=10):
+        for e in w.stream(c.list_namespaced_job, namespace=self.namespace, timeout_seconds=100):
             if "object" in e and e["object"].status.completion_time is not None:
                 w.stop()
                 return
