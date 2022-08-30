@@ -11,4 +11,4 @@ COPY ml_benchmark ml_benchmark
 
 RUN pip install -e .
 
-CMD ["python", "experiments/katib_minikube/task_light/task.py"]
+CMD ["python", "experiments/katib_minikube/light_task/task.py"]

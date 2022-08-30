@@ -1,5 +1,6 @@
 from os import path
 import os
+from shutil import ExecError
 import sys
 from time import sleep
 from urllib.request import urlopen
@@ -20,60 +21,30 @@ from ml_benchmark.utils.image_build_wrapper import builder_from_string
 
 class KatibBenchmark(Benchmark):
 
-    def __init__(self, objective, grid, resources) -> None:
-        self.objective = objective
-        self.grid = grid
+    def __init__(self, resources) -> None:
         self.resources = resources
         self.group="kubeflow.org"
         self.version="v1beta1"
-        self.namespace='kubeflow'
+        self.namespace="kubeflow"
         self.plural="experiments"
         self.experiment_file_name = "grid.yaml"
         self.metrics_ip = resources.get("metricsIP")
         self.generate_new_docker_image = resources.get("generateNewDockerImage",True)     
-        config.load_kube_config()
+        self.clean_up = self.resources.get("cleanUp",True)
+        self.trial_tag = resources.get("dockerImageTag","mnist_katib")
+        self.study_name= resources.get("studyName",f'katib-study-{random.randint(0, 100)}')
+        self.workerCpu = resources.get("workerCpu",2)
+        self.workerMemory= resources.get("workerMemory",2)
+        self.workerCount = resources.get("workerCount",5)
+        self.jobsCount = resources.get("jobsCount",6)
 
         self.logging_level= self.resources.get("loggingLevel",log.INFO)
-        self.clean_up = self.resources.get("cleanUp",True)
-
         log.basicConfig(format='%(asctime)s Katib Benchmark %(levelname)s: %(message)s',level=self.logging_level)
 
         
 
+
     
-        if "dockerImageTag" in self.resources:
-            self.trial_tag = self.resources["dockerImageTag"]
-        else:
-            self.trial_tag = "mnist_katib"
-
-
-        
-
-
-        if "studyName" in self.resources:
-            self.study_name = self.resources["studyName"]
-        else:
-            self.study_name = f"katib-study-{random.randint(0, 100)}"
-
-        if "workerCpu" in self.resources:
-            self.workerCpu = self.resources["workerCpu"]
-        else:
-            self.workerCpu = 2
-
-        if "workerMemory" in resources:
-            self.workerMemory = self.resources["workerMemory"]
-        else:
-            self.workerMemory = 2
-
-        if "workerCount" in resources:
-            self.workerCount = self.resources["workerCount"]
-        else:
-            self.workerCount = 5
-
-        if "jobs_Count" in resources:
-            self.jobsCount = self.resources["jobs_Count"]
-        else:
-            self.jobsCount = 6
     def deploy(self):
         """
             With the completion of this step the desired architecture of the HPO Framework should be running
@@ -109,13 +80,11 @@ class KatibBenchmark(Benchmark):
                         log.info(f'{ob.metadata.name} is ready')
                         monitored_pods.remove(name)
                         deployed = deployed + 1
-                        log.info(monitored_pods)
 
                     # Checking for status of cert generator  
                     elif name == "katib-cert-generator" and ob.status.phase == "Succeeded": 
                         log.info(f'{ob.metadata.name} is Succeeded')
                         monitored_pods.remove(name)
-                        log.info(monitored_pods)
 
 
                     #if all monitored pods are running the deployment process was ended
@@ -200,7 +169,8 @@ class KatibBenchmark(Benchmark):
         
         #Blocking untill the run is finished
         #The GET /apis/{group}/{version}/namespaces/{namespace}/{plural}/{name} endpoint doesnt support watch argument.
-
+       
+        #TODO changing to watching of the jobs instead of the experiment crd?
         experiment = self.get_experiment()
         while "status" not in experiment:
             log.info("Waitinng for the status")
@@ -237,8 +207,6 @@ class KatibBenchmark(Benchmark):
                     plural=self.plural,
                 )
        
-            # log.info(resource)
-            # log.info(resource["status"])
             return resource
         except ApiException as e:
             log.info("Exception when calling CustomObjectsApi->get_namespaced_custom_object_status: %s\n" % e)
@@ -260,12 +228,12 @@ class KatibBenchmark(Benchmark):
         return super().test()
 
     def undeploy(self):
+              
         log.info("Deleteing the experiment crd from the cluster")
-        # res = os.popen('kubectl delete -f grid.yaml').read()
-        # log.info(res)
         config.load_kube_config()
         api = client.CustomObjectsApi()
         try:
+            #deleting all experiment crds 
             resource = api.delete_collection_namespaced_custom_object(
                     group=self.group,
                     version=self.version,
@@ -273,59 +241,40 @@ class KatibBenchmark(Benchmark):
                     plural=self.plural,
                 )
             log.info(resource)
-            # log.info(resource)
-            # log.info(resource["status"])
+       
         except ApiException as e:
             log.info("Exception when calling CustomObjectsApi->get_namespaced_custom_object_status: %s\n" % e)
 
-
-        
-        
-        # log.info("Undeploying katib:")
-        # res = os.popen('kubectl delete -k "github.com/kubeflow/katib.git/manifests/v1beta1/installs/katib-standalone?ref=master"').read()
-        # log.info(res)
 
 
         w = watch.Watch()
         c = client.CoreV1Api()
         log.info("Deleteing the namespace:")
         res = c.delete_namespace_with_http_info(name=self.namespace)    
-
+        
 
         log.info("Checking status of the  namespace:")
-        try:
-            log.debug(c.read_namespace_status_with_http_info(name=self.namespace))
-        except ApiException as err:
-            log.info(err)
-            log.info("Namespace sucessfully deleted")
-            
-            if self.clean_up:
-                log.info("Deleteing task docker image from minikube")
-                sleep(2)
-                self.image_builder.cleanup(self.trial_tag)
-            log.info("Finished undeploying")
-            return
-        
-      
-        log.info("Namespace still not termintated")
         #if the namespace was still existent we must wait till it is really terminated
         for e in w.stream(c.list_namespace):
             ob = e["object"]
             # if the status of our namespace was changed we check if it the namespace was really removed from the cluster by requesting and expecting it to be not found
-            #TODO do this in other way            
             if ob.metadata.name == self.namespace:
                 try:
                     log.debug(c.read_namespace_status_with_http_info(name=self.namespace))
                 except ApiException as err:
-                    log.info(err)
-                    log.info("Namespace sucessfully deleted")
                     
                     if self.clean_up:
                         log.info("Deleteing task docker image from minikube")
                         sleep(2)
                         self.image_builder.cleanup(self.trial_tag)
-                    w.stop()
-                    break
+                    
+                    
+                    if(err.status != 404):
+                        raise Exception("Something went wrong",err)
+                    else: 
+                        log.info("Namespace sucessfully deleted")
+                        w.stop()
+
 
         log.info("Finished undeploying")
 
@@ -335,22 +284,28 @@ class KatibBenchmark(Benchmark):
 
 if __name__ == "__main__":
     #main()
-    bench = KatibBenchmark(1,1,resources={
-        # "dockerUserLogin":"",
-        # "dockerUserPassword":"",
-        # "studyName":""
-        "jobs_Count":10,
-        "dockerImageTag":"light_task",
-        "workerCount":10,
-        "metricsIP": urlopen("https://checkip.amazonaws.com").read().decode("utf-8").strip(),
-        "generateNewDockerImage": True,
-        "cleanUp": True,
-        })
-    bench.deploy()
-    bench.setup()
-    bench.run()
-    bench.collect_run_results()
-    bench.undeploy()
+
+    resources={
+            # "dockerUserLogin":"",
+            # "dockerUserPassword":"",
+            # "studyName":""
+            "jobsCount":5,
+            "dockerImageTag":"light_task",
+            "workerCount":5,
+            "metricsIP": urlopen("https://checkip.amazonaws.com").read().decode("utf-8").strip(),
+            "generateNewDockerImage": True,
+            "cleanUp": True ,
+            }
+    # bench = KatibBenchmark(resources=resources)
+    # bench.deploy()
+    # bench.setup()
+    # bench.run()
+    # bench.collect_run_results()
+    # bench.undeploy()
 
 
 
+    from ml_benchmark.benchmark_runner import BenchmarkRunner
+    runner = BenchmarkRunner(
+        benchmark_cls=KatibBenchmark, resources=resources)
+    runner.run()
