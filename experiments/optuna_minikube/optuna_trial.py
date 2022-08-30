@@ -22,7 +22,7 @@ def optuna_trial(trial):
 
 def main():
     try:
-        study_name = os.environ.get("STUDY_NAME")
+        study_name = os.environ.get("STUDY_NAME", "Test-Study")
         database_conn = os.environ.get("DB_CONN")
         n_trials = int(os.environ.get("N_TRIALS",6))
         search_space = generate_search_space(os.path.join(os.path.dirname(__file__),"hyperparameter_space.yml"))
