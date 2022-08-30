@@ -1,6 +1,6 @@
 
-workerCpu: 2
-workerMemory: 2
+workerCpu: 3.25
+workerMemory: 6
 workerCount: 1
 trials: 6
 epochs: 5

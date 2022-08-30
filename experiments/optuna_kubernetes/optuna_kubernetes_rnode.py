@@ -22,13 +22,13 @@ if __name__ == "__main__":
         "kubernetesMasterIP": "130.149.158.143",
         "prometheus_url": "http://130.149.158.143:30041",
         "deleteAfterRun":True,
-    	"epochs":5,
+    	"epochs":100,
     }
     resources.update(to_automate)
 
     repetions = 2
-    for n in range(1,11):
-        for i in range(1,repetions+1):
+    for i in range(1,repetions+1):
+        for n in range(1,7):
                 sleep(3)
                 logging.info(f"Starting Run {i} with {n} nodes with n_trails 100")
                 try:
