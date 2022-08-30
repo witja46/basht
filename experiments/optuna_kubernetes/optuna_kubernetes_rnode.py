@@ -22,7 +22,7 @@ if __name__ == "__main__":
         "kubernetesMasterIP": "130.149.158.143",
         "prometheus_url": "http://130.149.158.143:30041",
         "deleteAfterRun":True,
-    	"epochs":100,
+    	"epochs": 50,
     }
     resources.update(to_automate)
 
