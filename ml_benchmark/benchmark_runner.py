@@ -120,6 +120,7 @@ class BenchmarkRunner():
         self.bench_goal = resources.get("goal", "debug")
         self.benchmark_folder = os.path.join(benchmark_path, f"benchmark__{self.bench_name}")
         self.create_benchmark_folder(self.benchmark_folder)
+        self.resources = resources
 
         # add input and output size to the benchmark.
         self.benchmark = benchmark_cls(resources)
@@ -147,13 +148,13 @@ class BenchmarkRunner():
         benchmark_results = None
 
         try:
-            self.metrics_storage.start_db()  
-            
+            self.metrics_storage.start_db()
+
             # Deploy the SUT
             with Latency(self.benchmark.deploy) as latency:
                 self.benchmark.deploy()
             self.latency_tracker.track(latency)
-            
+
             # RUN the benchmark
             run_process = [
                 self.benchmark.setup, self.benchmark.run,
@@ -162,17 +163,17 @@ class BenchmarkRunner():
 
             if self.resource_tracker is not None:
                 self.resource_tracker.start()
-            
+
             for benchmark_fun in run_process:
                 with Latency(benchmark_fun) as latency:
                     benchmark_fun()
                 self.latency_tracker.track(latency)
-            
+
             # Get the results of the benchmark
             benchmark_results = self.metrics_storage.get_benchmark_results()
 
             # just to be save we wait a bit before killing shit.
-            
+
         except (docker.errors.APIError, AttributeError, ValueError, RuntimeError) as e:
             print(e)
             raise ValueError("No Results obtained, Benchmark failed.")
@@ -193,7 +194,7 @@ class BenchmarkRunner():
                 self.metrics_storage.stop_db()
             except Exception:
                 pass
-        
+
         # TODO: move to finally block to ensure that results are always caputres if possible?
         # persist the results
         self.save_benchmark_results(benchmark_results)
@@ -216,7 +217,7 @@ class BenchmarkRunner():
             benchmark_results (_type_): _description_
         """
         benchmark_config_dict = dict(
-            resources=self.benchmark.resources,
+            resources=self.resources,
         )
         benchmark_result_dict = dict(
             benchmark_metrics=benchmark_results,

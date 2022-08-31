@@ -37,7 +37,7 @@ class OptunaKubernetesBenchmark(Benchmark):
         self.workerCount = resources.get("workerCount", 4)
         self.delete_after_run = resources.get("deleteAfterRun", True)
         self.metrics_ip = resources.get("metricsIP")
-        self.trials = self._calculate_trial_number(resources.get("trials", 6))
+        self.trials = resources.get("trials", 10) #self._calculate_trial_number(resources.get("trials", 6))
         self.epochs = resources.get("epochs", 5)
         self.hyperparameter = resources.get("hyperparameter")
 
@@ -167,7 +167,7 @@ class OptunaKubernetesBenchmark(Benchmark):
                 w.stop()
                 print("Trials completed! Collecting Results")
                 return True
-        print("Watch_Trails timed out")
+        print("Watch_Trials timed out")
         try:
             job = client.BatchV1Api().read_namespaced_job(name="optuna-trial", namespace=self.namespace)
             if job.status.failed != None and job.status.failed > 0:
