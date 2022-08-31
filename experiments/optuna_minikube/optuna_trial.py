@@ -20,7 +20,7 @@ def optuna_trial(trial):
 
 if __name__ == "__main__":
     try:
-        study_name = os.environ.get("STUDY_NAME")
+        study_name = os.environ.get("STUDY_NAME", "Test-Study")
         database_conn = os.environ.get("DB_CONN")
         study = optuna.create_study(
             study_name=study_name, storage=database_conn, direction="maximize", load_if_exists=True)
