@@ -31,7 +31,7 @@ class KatibBenchmark(Benchmark):
         self.metrics_ip = resources.get("metricsIP")
         self.generate_new_docker_image = resources.get("generateNewDockerImage",True)     
         self.clean_up = self.resources.get("cleanUp",True)
-        self.trial_tag = resources.get("dockerImageTag","mnist_katib")
+        self.trial_tag = resources.get("dockerImageTag","mnist_task")
         self.study_name= resources.get("studyName",f'katib-study-{random.randint(0, 100)}')
         self.workerCpu = resources.get("workerCpu",2)
         self.workerMemory= resources.get("workerMemory",2)
@@ -66,7 +66,6 @@ class KatibBenchmark(Benchmark):
         log.info("Waiting for all Katib pods to be ready:")
         # From all pods that polyaxon starts we are onlly really intrested for following 4 that are crucial for runnig of the experiments 
         monitored_pods = ["katib-cert-generator","katib-db-manager","katib-mysql","katib-ui","katib-controller"]
-        # TODO changing to list_namespaced_deployments?
         for e in w.stream(c.list_namespaced_pod, namespace=self.namespace):
             ob = e["object"]          
 
@@ -289,9 +288,9 @@ if __name__ == "__main__":
             # "dockerUserLogin":"",
             # "dockerUserPassword":"",
             # "studyName":""
-            "jobsCount":5,
-            "dockerImageTag":"light_task",
-            "workerCount":5,
+            "jobsCount":2,
+            # "dockerImageTag":"light_task",
+            "workerCount":2,
             "metricsIP": urlopen("https://checkip.amazonaws.com").read().decode("utf-8").strip(),
             "generateNewDockerImage": True,
             "cleanUp": True ,

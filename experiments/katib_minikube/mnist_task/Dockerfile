@@ -1,11 +1,10 @@
-#TODO change to some slimer base image
-FROM pytorch/pytorch:1.12.0-cuda11.3-cudnn8-runtime
-#FROM python:3.9-slim
+FROM python:3.9.6-slim
 
 RUN pip install pip --upgrade
+RUN pip install torch==1.10.2 torchvision==0.11.3
+RUN pip install optuna==2.10.1
 
-COPY experiments experiments
-# COPY data data
+COPY experiments/katib_minikube experiments/katib_minikube
 COPY setup.py setup.py
 COPY ml_benchmark ml_benchmark
 
