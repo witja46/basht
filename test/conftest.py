@@ -16,6 +16,12 @@ def objective():
         def train(self):
             pass
 
+        def get_hyperparameters(self) -> dict:
+            return {"test":True}
+        
+        def set_hyperparameters(self, hyperparameters: dict):
+            pass
+
         @validation_latency_decorator
         def validate(self):
             return {"macro avg":{"f1-score":0.5}}

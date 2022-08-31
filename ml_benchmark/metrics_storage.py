@@ -119,6 +119,8 @@ class MetricsStorage:
             Column("timestamp", String, primary_key=True),
             Column("value", Float),
             Column("measure", String),
+            Column("hyperparameters", String),
+            Column("classification_metrics", String),
             Column("process_id", Integer, nullable=True),
             Column("hostname", String),
             Column("obj_hash", BigInteger, nullable=True),

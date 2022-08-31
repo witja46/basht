@@ -23,7 +23,7 @@ def validation_latency_decorator(func):
         
         latency_tracker.track(latency)
         #XXX this locks us into the f1-score, we probably want to track all callification metrics not just f1-score. MG please help :)
-        tracker.track(func, result["macro avg"]["f1-score"], "f1-score")
+        tracker.track(func, result)
         func.__self__ = None
         return result
         

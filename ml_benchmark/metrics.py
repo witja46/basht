@@ -1,3 +1,4 @@
+import json
 import logging
 import os
 from datetime import datetime, timedelta
@@ -64,11 +65,16 @@ class Result(Metric):
         self.value = None
         self.measure = None
 
+        self.hyperparameters = None
+        self.classification_metrics = None
+
     def to_dict(self):
         return dict(
             metric_id=self.metric_id,
             timestamp=self.timestamp,
             value=self.value,
+            hyperparameters=json.dumps(self.hyperparameters, indent=None),
+            classification_metrics=json.dumps(self.classification_metrics,indent=None),
             measure=self.measure,
             **self.fp
         )

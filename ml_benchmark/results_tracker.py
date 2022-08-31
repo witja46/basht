@@ -8,10 +8,15 @@ class ResultTracker(Tracker):
         self.store = store()
         self.store.setup()
 
-    def track(self, objective, value, measure):
-        r = Result(objective=objective)
-        r.value = value
-        r.measure = measure
+    def track(self, objective_function, result):
+        r = Result(objective=objective_function)
+    
+        r.value = result["macro avg"]["f1-score"]
+        r.measure = "f1-score"
+
+        r.hyperparameters = objective_function.__self__.get_hyperparameters()
+        r.classification_metrics = result
+
         try:
             self.store.store(r,table_name="classification_metrics")
             logging.info("Stored result")

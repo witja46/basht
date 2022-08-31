@@ -11,6 +11,7 @@ from sklearn.metrics import classification_report
 class MLPObjective(Objective):
 
     def __init__(self, epochs, train_loader, val_loader, test_loader, input_size, output_size) -> None:
+        super().__init__()
         self.train_loader = train_loader
         self.val_laoder = val_loader
         self.test_loader = test_loader
@@ -26,6 +27,9 @@ class MLPObjective(Objective):
         print(self.hyperparameters)
         self.hyperparameters.update(hyperparameters)
         print(self.hyperparameters)
+    
+    def get_hyperparameters(self) -> dict:
+        return self.hyperparameters
 
     def set_device(self, device_str: str = None):
         if device_str:

@@ -13,14 +13,14 @@ def test_trail():
         sleep(5)
         os.environ["METRICS_STORAGE_HOST"] = MetricsStorage.host
         os.environ["DB_CONN"] = MetricsStorage.connection_string
-        os.environ["N_TRAILS"] = "10"
-        os.environ["EPOCHS"] = "2"
+        os.environ["N_TRIALS"] = "10"
+        os.environ["EPOCHS"] = "1"
 
         f = main()
         assert f
 
         lats = metrics_storage.get_latency_results()
-        assert len(lats) >= int(os.environ["N_TRAILS"])*2 #(validate+train)
+        assert len(lats) >= int(os.environ["N_TRIALS"])*2 #(validate+train)
     finally:
         metrics_storage.stop_db()
 
