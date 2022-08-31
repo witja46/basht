@@ -1,0 +1,10 @@
+{
+    "python.testing.pytestArgs": [
+        ".",
+        "-s"
+    ],
+    "python.globalModuleInstallation": true,
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true,
+    "python.envFile":   "${workspaceFolder}/.envs"
+}
