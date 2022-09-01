@@ -349,28 +349,15 @@ class PolyaxonBenchmark(Benchmark):
 
 
 if __name__ == "__main__":
-    #main()
-    # bench = PolyaxonBenchmark(resources={
-    #         # "dockerUserLogin":"",
-    #         # "dockerUserPassword":"",
-    #     # "studyName":""
-    #     "jobsCount":5,
-    #     "workerCount":5,
-    #     "loggingLevel":log.INFO,
-    #     "dockerImageTag":"nowe",
 
-    #     "metricsIP": urlopen("https://checkip.amazonaws.com").read().decode("utf-8").strip()
-    #     })
-    
-    # polyaxon config set --host=http://localhost:8000
 
     
     resources={
         # "studyName":"",
         "dockerImageTag":"task_light",
         "jobsCount":15,
-       "cleanUp":False,
-"createCleanImage":False,
+        "cleanUp":False,
+        "createCleanImage":False,
         "workerCount":5,
         "loggingLevel":log.INFO,
         "metricsIP": urlopen("https://checkip.amazonaws.com").read().decode("utf-8").strip(),
@@ -389,23 +376,7 @@ if __name__ == "__main__":
 
     # bench.undeploy()
     
-    # print(f'polyaxon run -f ./ --project  --eager')
-    # print(f'polyaxon run -f ./grid --project --eager'.split())
-    # runner = CliRunner()
-    # print("start")
-    # res = runner.invoke(run,["-f ./grid.yaml --eager -o json"])
-    # print("fin")
-    # print(res.output,res.exit_code)
 
-    # res = runner.invoke(teardown,["--yes"])    
-    # if("Polyaxon could not teardown the deployment" in res.output):
-    #     print("Ja pierdole")
-    # print(res.output,res.exit_code,res.exception)
-    # print("stop")
-    # res = runner.invoke(deploy)    
-    # print(res.output,res.exit_code)
-
-   # print(res)
 
 
 
