@@ -1,4 +1,4 @@
-# from pathlib import Path
+from pathlib import Path
 
 __version__ = "develop"
 install_requires = [
@@ -9,6 +9,6 @@ install_requires = [
         "ruamel.yaml==0.17.21"],
 test_install_requires = ["pytest==7.1.2", "pytest-cov==3.0.0"]
 URL = "https://github.com/gebauerm/ml_benchmark"
-# this_directory = Path(__file__).parent.parent
-# long_description = (this_directory / "README.md").read_text()
-long_description = "FIXME"
+this_directory = Path(__file__).parent.parent
+long_description = (this_directory / "README.md").read_text()
+# long_description = "FIXME"
