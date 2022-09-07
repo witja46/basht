@@ -18,7 +18,7 @@ def objective():
 
         def get_hyperparameters(self) -> dict:
             return {"test":True}
-        
+
         def set_hyperparameters(self, hyperparameters: dict):
             pass
 
@@ -40,5 +40,4 @@ def prometeus_url():
             pytest.skip("Prometheus is availible")
     except Exception:
         pytest.skip("Could not connect to Prometheus.")
-    
     return url
