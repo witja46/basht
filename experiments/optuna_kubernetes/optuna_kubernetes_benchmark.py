@@ -11,7 +11,7 @@ from ml_benchmark.benchmark_runner import Benchmark
 from ml_benchmark.config import Path
 from ml_benchmark.utils.image_build_wrapper import builder_from_string
 from ml_benchmark.workload.mnist.mnist_task import MnistTask
-from ml_benchmark.utils.yaml_template_filler import YamlTemplateFiller
+from ml_benchmark.utils.yaml import YamlTemplateFiller, YMLHandler
 
 
 class OptunaKubernetesBenchmark(Benchmark):
@@ -58,7 +58,7 @@ class OptunaKubernetesBenchmark(Benchmark):
         if self.hyperparameter:
             #TODO: XXX we got to fix this dependency thing. eitehr merge minikube/kubernetes or use the same baseclass or something...
             f = path.join(path.dirname(__file__),"..","optuna_minikube","hyperparameter_space.yml")
-            YamlTemplateFiller.as_yaml(f, self.hyperparameter)
+            YMLHandler.as_yaml(f, self.hyperparameter)
 
         try:
             resp = client.CoreV1Api().create_namespace(
@@ -235,8 +235,7 @@ class OptunaKubernetesBenchmark(Benchmark):
 if __name__ == "__main__":
     from ml_benchmark.benchmark_runner import BenchmarkRunner
     from urllib.request import urlopen
-    from ml_benchmark.utils.yml_parser import YMLParser
-    resources = YMLParser.parse(path.join(path.dirname(__file__),"resource_definition.yml"))
+    resources = YMLHandler.load_yaml(path.join(path.dirname(__file__),"resource_definition.yml"))
 
     # TODO: XXX remove this hardcoded values
     to_automate = {
@@ -254,4 +253,3 @@ if __name__ == "__main__":
     runner = BenchmarkRunner(
         benchmark_cls=OptunaKubernetesBenchmark, resources=resources)
     runner.run()
-

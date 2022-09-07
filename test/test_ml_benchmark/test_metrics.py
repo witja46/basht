@@ -7,6 +7,7 @@ from ml_benchmark.results_tracker import ResultTracker
 from ml_benchmark.workload.mnist.mnist_task import MnistTask
 from time import sleep
 
+
 def test_metrics(prometeus_url):
     task = MnistTask({"epochs": 1})
     objective = task.create_objective()
@@ -16,7 +17,7 @@ def test_metrics(prometeus_url):
         metrics_storage.start_db()
         sleep(2)
         resourceTracker.start()
-        objective.set_hyperparameters({"learning_rate":1e-3})
+        objective.set_hyperparameters({"learning_rate": 1e-3})
         objective.train()
         score = objective.validate()
         objective.test()
@@ -25,7 +26,7 @@ def test_metrics(prometeus_url):
 
         result = metrics_storage.get_benchmark_results()
         logging.info(result)
-        
+
         assert len(result["latency"]) > 0
         assert len(result["classification"]) > 0
         assert len(result["resources"]) > 0
