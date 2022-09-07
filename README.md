@@ -1,6 +1,7 @@
 ![main branch status](https://github.com/gebauerm/ml_benchmark/actions/workflows/package-pipeline.yml/badge.svg?branch=main)
 
-# ml_benchmark
+# Basht - A **B**enchmarking **A**pproach for **S**ustainabile **H**yperparameter **T**uning
+Tuning
 This repository supplies a job to benchmark hyperparameter tuning.
 
 
