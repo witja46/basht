@@ -1,5 +1,5 @@
 from pathlib import Path
-import os
+from os.path import exists
 
 __version__ = "develop"
 install_requires = [
@@ -12,6 +12,9 @@ test_install_requires = ["pytest==7.1.2", "pytest-cov==3.0.0"]
 URL = "https://github.com/gebauerm/ml_benchmark"
 
 long_description = ""
-if not os.environ.get("DOCKER"):
-    this_directory = Path(__file__).parent.parent
+
+this_directory = Path(__file__).parent.parent
+if exists(this_directory/"README.md"):
     long_description = (this_directory / "README.md").read_text()
+else:
+    long_description = ""
