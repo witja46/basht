@@ -1,4 +1,4 @@
-![main branch status](https://github.com/ISE-Sustainable-AI/basht/actions/workflows/release.yml/badge.svg?branch=main)
+![main branch status](https://github.com/ISE-Sustainable-AI/basht/actions/workflows/release.yml/badge.svg)
 
 # Basht - A **B**enchmarking **A**pproach for **S**ustainabile **H**yperparameter **T**uning
 Tuning
