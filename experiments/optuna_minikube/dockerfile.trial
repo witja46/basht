@@ -4,8 +4,6 @@ RUN pip install pip --upgrade
 RUN pip install torch==1.10.2 torchvision==0.11.3
 RUN pip install optuna==2.10.1
 
-ENV DOCKER=true
-
 COPY experiments/optuna_minikube experiments/optuna_minikube
 COPY data data
 COPY setup.py setup.py
