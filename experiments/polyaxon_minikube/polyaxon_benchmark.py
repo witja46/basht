@@ -1,4 +1,3 @@
-
 from __future__ import print_function
 from asyncio import subprocess
 from base64 import decode
@@ -29,6 +28,8 @@ import logging as log
 from polyaxon.cli.projects import create
 from polyaxon.cli.run import run
 from polyaxon.cli.admin import deploy,teardown
+from polyaxon.cli.port_forward import port_forward
+from polyaxon.cli.config import set
 from click.testing import CliRunner
 
 
@@ -46,7 +47,7 @@ class PolyaxonBenchmark(Benchmark):
         self.plural="experiments"
         self.experiment_file_name = "grid.yaml"
         self.project_description = "Somer random description"
-        self.polyaxon_addr="http://localhost:31833/"
+        self.polyaxon_addr="http://localhost:8000/"
         self.post_forward_process=False
         self.cli_runner=CliRunner()
 
@@ -79,12 +80,16 @@ class PolyaxonBenchmark(Benchmark):
         log.info("Deploying polyaxon to minikube:")
         #invoking polyaxon cli deploy comand
         res = self.cli_runner.invoke(deploy)
-        log.info(res.output)
 
-      
-      
-        
-
+        if res.exit_code == 0:
+            log.info(res.output)
+            log.info("Polyaxon deployed")
+        elif res.exit_code == 1:
+            log.info(res.output)
+            log.info("Polyaxon was already deployed")
+        else:
+            log.info("Failed to deploy Polyaxon")
+            raise Exception(f'Exit code: {res.exit_code}  Error message: \n{res.output}')
 
 
         log.info("Waiting for all polyaxon pods to be ready:")
@@ -94,6 +99,7 @@ class PolyaxonBenchmark(Benchmark):
         
         # From all pods that polyaxon starts we are onlly really intrested for following 4 that are crucial for runnig of the experiments 
         unready_pods = ["polyaxon-polyaxon-streams","polyaxon-polyaxon-operator","polyaxon-polyaxon-gateway","polyaxon-polyaxon-api"]
+        #TODO add timeout 
         for e in w.stream(c.list_namespaced_pod, namespace="polyaxon"):
             ob = e["object"]          
             
@@ -115,15 +121,14 @@ class PolyaxonBenchmark(Benchmark):
 
         
   
-
         # Starting post forwarding to the polyaxon api in the background
         log.info("Starting post-forward to polyaxon api:")
-        self.post_forward_process = subprocess.Popen("kubectl port-forward  svc/polyaxon-polyaxon-api 31833:80  -n polyaxon",shell=True,stdout=subprocess.PIPE)
-
-
-
-
+        self.post_forward_process = subprocess.Popen("polyaxon port-forward --namespace=polyaxon",shell=True,stdout=subprocess.PIPE)
+        sleep(2)  #subprocess needs about 2 seconds to start runing the port-forward #TODO check somehow if the post-forward really works
+        
+        return
       
+       
         
     def setup(self):
         """
@@ -189,6 +194,9 @@ class PolyaxonBenchmark(Benchmark):
         #TODO add error handling.
         res = self.cli_runner.invoke(create,options)
         log.info(res.output)
+        if res.exit_code != 0:
+            log.info("Failed to create projectcd ")
+            raise Exception(f'Exit code: {res.exit_code}  Error message: \n{res.output}')
 
 
       
@@ -196,13 +204,17 @@ class PolyaxonBenchmark(Benchmark):
         log.info("Starting polyaxon experiment:")
         #invoking polyaxon run comand with following options
         options = f'-f {self.experiment_file_name} --project {self.study_name} --eager'.split()
-        #TODO add error handling.
+        
         res = self.cli_runner.invoke(run,options)
         log.info(res.output)
+        
+        if res.exit_code != 0:
+            log.info("Failed to start the trials")
+            raise Exception(f'Exit code: {res.exit_code}  Error message: \n{res.output}')
+            
 
         
         
-        #TODO switch to kubernetes api for monitoring runing trials  
         log.info("Waiting for the run to finish:")
         finished = False
         
@@ -210,6 +222,7 @@ class PolyaxonBenchmark(Benchmark):
         c = client.BatchV1Api()
         done = 0
         for e in w.stream(c.list_namespaced_job, namespace=self.namespace):
+            #TODO Handel failed jobs and errors or add timeout
             if "object" in e and e["object"].status.completion_time is not None:
                 done = done + 1 
                 log.info(f'{done} jobs out of {self.jobsCount} succeded')
@@ -272,7 +285,6 @@ class PolyaxonBenchmark(Benchmark):
             for proc in process.children(recursive=True):
                 proc.kill()
             process.kill()
-
 
 
         log.info("Undeploying polyaxon:")
@@ -354,14 +366,13 @@ if __name__ == "__main__":
     
     resources={
         # "studyName":"",
-        "dockerImageTag":"task_light",
-        "jobsCount":15,
-        "cleanUp":False,
-        "createCleanImage":False,
+        "dockerImageTag":"mnist_task",
+        "jobsCount":5,
+        "cleanUp":True,
+        "createCleanImage":True,
         "workerCount":5,
         "loggingLevel":log.INFO,
         "metricsIP": urlopen("https://checkip.amazonaws.com").read().decode("utf-8").strip(),
-        "createCleanImage":True
     }
     from ml_benchmark.benchmark_runner import BenchmarkRunner
     runner = BenchmarkRunner(

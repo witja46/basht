@@ -1,14 +1,14 @@
 version: 1.1
 kind: operation
-name: polyaxon-study-57
+name: polyaxon-study-4
 matrix:
   kind: grid
-  numRuns: 15
+  numRuns: 5
   concurrency: 5
   params:
     lr:
       kind: logspace
-      value: 0.01:0.1:15
+      value: 0.01:0.1:5
 component:
   inputs:
     - name: lr
@@ -17,12 +17,12 @@ component:
     kind: job
     container:
       imagePullPolicy: IfNotPresent
-      image: task_light
-      command: [python3, experiments/polyaxon_minikube/task_light/task.py]
+      image: mnist_task
+      command: [python3, experiments/polyaxon_minikube/mnist_task/task.py]
       args: ["--batch-size=64", "--lr={{ lr }}"]
       env:
         - name: STUDY_NAME
-          value: "polyaxon-study-57"
+          value: "polyaxon-study-4"
         - name: DB_CONN
           value: "postgresql://postgresadmin:admin123@postgres:5432/postgresdb"
         - name: "METRICS_STORAGE_HOST"
