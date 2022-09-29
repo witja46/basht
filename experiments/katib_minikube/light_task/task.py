@@ -6,7 +6,7 @@ import logging
 import os
 import numpy as np
 import time
-from ml_benchmark.latency_tracker import latency_decorator
+from ml_benchmark.decorators import latency_decorator
 
 @latency_decorator
 def train(times ,epochs):
