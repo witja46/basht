@@ -1,5 +1,7 @@
 import subprocess
 from abc import ABC, abstractmethod
+import docker
+from docker.tls import TLSConfig
 
 
 def builder_from_string(builder_string):
@@ -69,3 +71,13 @@ class DockerImageBuilder(ImageBuilder):
             ["docker", "image", "rm", tag], check=True)  # doesnt seem to work
         if call.returncode != 0:
             raise Exception("Failed to cleanup")
+
+
+if __name__ == "__main__":
+    # TODO: docker alternative testing
+    minikube_ip = subprocess.run(
+            ["minikube", "ip"],
+            capture_output=True).stdout.decode("utf-8")
+    tls_config = TLSConfig(ca_cert="/home/gebauer/.minikube/certs/ca.pem")
+    client = docker.DockerClient(f"https://{minikube_ip}:2376", tls=tls_config)
+    client.run("hello-world")

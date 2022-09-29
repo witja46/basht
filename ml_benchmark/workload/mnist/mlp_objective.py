@@ -24,10 +24,9 @@ class MLPObjective(Objective):
     def set_hyperparameters(self, hyperparameters: dict):
         hyperparameters["input_size"] = self.input_size
         hyperparameters["output_size"] = self.output_size
-        print(self.hyperparameters)
         self.hyperparameters.update(hyperparameters)
-        print(self.hyperparameters)
-    
+        print(f"The following Hyperparameters have been passed to the Trial Obective: {hyperparameters}")
+
     def get_hyperparameters(self) -> dict:
         return self.hyperparameters
 
