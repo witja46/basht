@@ -1,9 +1,9 @@
 import numpy as np
-from ml_benchmark.utils.yml_parser import YMLParser
+from ml_benchmark.utils.yaml import YMLHandler
 import itertools
 
 def generate_search_space(yaml_file_path):
-    search_space = YMLParser.parse(yaml_file_path)
+    search_space = YMLHandler.load_yaml(yaml_file_path)
     modified_search_space = {}
     hidden_layer_config = []
     for key, value in search_space.items():
@@ -14,8 +14,6 @@ def generate_search_space(yaml_file_path):
                 r = r + 1
                 for combination in itertools.combinations(set(numbers), r):
                     combinations.append(list(combination))
-
-
             modified_search_space[key] = combinations
         else:
             modified_search_space[key] = np.arange(value["start"], value["end"], value["step_size"])
