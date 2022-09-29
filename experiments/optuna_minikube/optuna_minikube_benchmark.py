@@ -36,6 +36,8 @@ class OptunaMinikubeBenchmark(Benchmark):
         self.workerCount = resources.get("workerCount", 4)
         self.delete_after_run = resources.get("deleteAfterRun", True)
         self.metrics_ip = resources.get("metricsIP")
+        self.trials = resources.get("trials", 10)
+        self.epochs = resources.get("epochs", 5)
         self.hyperparameter = resources.get("hyperparameter")
 
     def deploy(self) -> None:
@@ -44,9 +46,6 @@ class OptunaMinikubeBenchmark(Benchmark):
         """
 
         # TODO: deal with exsiting resources...
-
-        #generate hyperparameter file from resouces def.
-
         if self.hyperparameter:
             f = path.join(path.dirname(__file__),"hyperparameter_space.yml")
             YMLHandler.as_yaml(f, self.hyperparameter)
@@ -104,6 +103,8 @@ class OptunaMinikubeBenchmark(Benchmark):
             "worker_image": self.trial_tag,
             "study_name": self.study_name,
             "metrics_ip": self.metrics_ip,
+            "trials": self.trials,
+            "epochs": self.epochs
         }
         job_yml_objects = YamlTemplateFiller.load_and_fill_yaml_template(
             path.join(path.dirname(__file__), "ops/manifests/trial/job.yml"), job_definition)
@@ -142,7 +143,7 @@ class OptunaMinikubeBenchmark(Benchmark):
         """
         w = watch.Watch()
         c = client.BatchV1Api()
-        for e in w.stream(c.list_namespaced_job, namespace=self.namespace, timeout_seconds=100):
+        for e in w.stream(c.list_namespaced_job, namespace=self.namespace, timeout_seconds=10000):
             if "object" in e and e["object"].status.completion_time is not None:
                 w.stop()
                 return
@@ -178,11 +179,14 @@ class OptunaMinikubeBenchmark(Benchmark):
             self.image_builder.cleanup(self.trial_tag)
 
     def _watch_namespace(self):
-        try:
-            client.CoreV1Api().read_namespace_status(self.namespace).to_dict()
-            sleep(2)
-        except client.exceptions.ApiException:
-            return
+        c = client.CoreV1Api()
+        no_exception = True
+        while no_exception:
+            try:
+                c.read_namespace_status(self.namespace)
+                sleep(2)
+            except ApiException:
+                no_exception = False
 
     def _watch_db(self):
         w = watch.Watch()
