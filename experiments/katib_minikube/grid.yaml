@@ -3,7 +3,7 @@ apiVersion: kubeflow.org/v1beta1
 kind: Experiment
 metadata:
   namespace: kubeflow
-  name: katib-study-3
+  name: katib-study-68
 spec:
   objective:
     type: maximize
@@ -35,18 +35,18 @@ spec:
           spec:
             containers:
               - name: training-container
-                image: light_task
+                image: scaleme100/mnist_task
                 imagePullPolicy: IfNotPresent
                 command:
                   - "python3"
-                  - "experiments/katib_minikube/light_task/task.py"
+                  - "experiments/katib_minikube/mnist_task/task.py"
                   - "--batch-size=64"
                   - "--lr=${trialParameters.learningRate}"
                 env:
                   - name: STUDY_NAME
-                    value: "katib-study-3"
+                    value: "katib-study-68"
                   - name: DB_CONN
                     value: "postgresql://postgresadmin:admin123@postgres:5432/postgresdb"
                   - name: "METRICS_STORAGE_HOST"
-                    value: "134.101.4.161"
+                    value: "130.149.158.216"
             restartPolicy: Never

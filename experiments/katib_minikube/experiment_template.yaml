@@ -39,7 +39,7 @@ spec:
                 imagePullPolicy: IfNotPresent
                 command:
                   - "python3"
-                  - "experiments/katib_minikube/$worker_image/task.py"
+                  - "experiments/katib_minikube/$folder/task.py"
                   - "--batch-size=64"
                   - "--lr=$trialParameters"
                 env:

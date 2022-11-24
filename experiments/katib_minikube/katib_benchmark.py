@@ -65,7 +65,7 @@ class KatibBenchmark(Benchmark):
         deployed = 0
         log.info("Waiting for all Katib pods to be ready:")
         # From all pods that polyaxon starts we are onlly really intrested for following 4 that are crucial for runnig of the experiments 
-        monitored_pods = ["katib-cert-generator","katib-db-manager","katib-mysql","katib-ui","katib-controller"]
+        monitored_pods = ["katib-cert-generator","katib-db-manager","katib-ui","katib-controller"]
         for e in w.stream(c.list_namespaced_pod, namespace=self.namespace):
             ob = e["object"]          
 
@@ -112,9 +112,10 @@ class KatibBenchmark(Benchmark):
             "jobs_num":self.jobsCount,
             "worker_cpu": self.workerCpu,
             "worker_mem": f"{self.workerMemory}Gi",
-            "worker_image": self.trial_tag,
+            "worker_image": f"scaleme100/{self.trial_tag}",
             "study_name": self.study_name,
             "trialParameters":"${trialParameters.learningRate}",
+            "folder":self.trial_tag,
             "metrics_ip":self.metrics_ip
         }
 
@@ -133,10 +134,10 @@ class KatibBenchmark(Benchmark):
         if self.generate_new_docker_image:
             log.info("Creating task docker image")   
             #creating docker image inside of the minikube   
-            self.image_builder = builder_from_string("minikube")()
+            self.image_builder = builder_from_string("docker")()
             PROJECT_ROOT = os.path.abspath(os.path.join(__file__ ,"../../../"))
             res = self.image_builder.deploy_image(
-            f'experiments/katib_minikube/{self.trial_tag}/Dockerfile', self.trial_tag,PROJECT_ROOT)
+            f'experiments/katib_minikube/{self.trial_tag}/Dockerfile',f"scaleme100/{self.trial_tag}",PROJECT_ROOT)
             log.info(res)
             log.info(f"Image: {self.trial_tag}")  
         
@@ -292,7 +293,8 @@ if __name__ == "__main__":
             # "dockerImageTag":"light_task",
             "workerCount":2,
             "metricsIP": urlopen("https://checkip.amazonaws.com").read().decode("utf-8").strip(),
-            "generateNewDockerImage": True,
+            "generateNewDockerImage": False,
+            "prometheus_url": "http://130.149.158.143:30041",
             "cleanUp": True ,
             }
     # bench = KatibBenchmark(resources=resources)
