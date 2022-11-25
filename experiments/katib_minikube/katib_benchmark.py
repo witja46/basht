@@ -51,7 +51,7 @@ class KatibBenchmark(Benchmark):
             on a platform, e.g,. in the case of Kubernetes it referes to the steps nassary to deploy all pods
             and services in kubernetes.
         """
-
+        
 
         log.info("Deploying katib:")
         res = os.popen('kubectl apply -k "github.com/kubeflow/katib.git/manifests/v1beta1/installs/katib-standalone?ref=master"').read()
@@ -65,7 +65,7 @@ class KatibBenchmark(Benchmark):
         deployed = 0
         log.info("Waiting for all Katib pods to be ready:")
         # From all pods that polyaxon starts we are onlly really intrested for following 4 that are crucial for runnig of the experiments 
-        monitored_pods = ["katib-cert-generator","katib-db-manager","katib-ui","katib-controller"]
+        monitored_pods = ["katib-cert-generator","katib-db-manager","katib-ui","katib-controller","katib-mysql"]
         for e in w.stream(c.list_namespaced_pod, namespace=self.namespace):
             ob = e["object"]          
 
@@ -137,7 +137,7 @@ class KatibBenchmark(Benchmark):
             self.image_builder = builder_from_string("docker")()
             PROJECT_ROOT = os.path.abspath(os.path.join(__file__ ,"../../../"))
             res = self.image_builder.deploy_image(
-            f'experiments/katib_minikube/{self.trial_tag}/Dockerfile',f"scaleme100/{self.trial_tag}",PROJECT_ROOT)
+            f'experiments/katib_k8s/{self.trial_tag}/Dockerfile',f"scaleme100/{self.trial_tag}",PROJECT_ROOT)
             log.info(res)
             log.info(f"Image: {self.trial_tag}")  
         
@@ -264,7 +264,7 @@ class KatibBenchmark(Benchmark):
                 except ApiException as err:
                     
                     if self.clean_up:
-                        log.info("Deleteing task docker image from minikube")
+                        log.info("Deleteing task docker image from k8s")
                         sleep(2)
                         self.image_builder.cleanup(self.trial_tag)
                     
@@ -289,11 +289,11 @@ if __name__ == "__main__":
             # "dockerUserLogin":"",
             # "dockerUserPassword":"",
             # "studyName":""
-            "jobsCount":2,
+            "jobsCount":10,
             # "dockerImageTag":"light_task",
-            "workerCount":2,
+            "workerCount":10,
             "metricsIP": urlopen("https://checkip.amazonaws.com").read().decode("utf-8").strip(),
-            "generateNewDockerImage": False,
+            "generateNewDockerImage": True,
             "prometheus_url": "http://130.149.158.143:30041",
             "cleanUp": True ,
             }
