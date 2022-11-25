@@ -31,7 +31,7 @@ class KatibBenchmark(Benchmark):
         self.metrics_ip = resources.get("metricsIP")
         self.generate_new_docker_image = resources.get("generateNewDockerImage",True)     
         self.clean_up = self.resources.get("cleanUp",True)
-        self.trial_tag = resources.get("dockerImageTag","mnist_task")
+        self.trial_tag = resources.get("dockerImageTag","mnist_task_katib")
         self.study_name= resources.get("studyName",f'katib-study-{random.randint(0, 100)}')
         self.workerCpu = resources.get("workerCpu",2)
         self.workerMemory= resources.get("workerMemory",2)
@@ -54,7 +54,7 @@ class KatibBenchmark(Benchmark):
         
 
         log.info("Deploying katib:")
-        res = os.popen('kubectl apply -k "github.com/kubeflow/katib.git/manifests/v1beta1/installs/katib-standalone?ref=master"').read()
+        res = os.popen('kubectl apply -k "github.com/kubeflow/katib.git/manifests/v1beta1/installs/katib-standalone-postgres?ref=master"').read()
         log.info(res)
 
 
@@ -65,7 +65,7 @@ class KatibBenchmark(Benchmark):
         deployed = 0
         log.info("Waiting for all Katib pods to be ready:")
         # From all pods that polyaxon starts we are onlly really intrested for following 4 that are crucial for runnig of the experiments 
-        monitored_pods = ["katib-cert-generator","katib-db-manager","katib-ui","katib-controller","katib-mysql"]
+        monitored_pods = ["katib-cert-generator","katib-db-manager","katib-ui","katib-controller","katib-postgres"]
         for e in w.stream(c.list_namespaced_pod, namespace=self.namespace):
             ob = e["object"]          
 
@@ -266,7 +266,7 @@ class KatibBenchmark(Benchmark):
                     if self.clean_up:
                         log.info("Deleteing task docker image from k8s")
                         sleep(2)
-                        self.image_builder.cleanup(self.trial_tag)
+                        self.image_builder.cleanup(f"scaleme100/{self.trial_tag}")
                     
                     
                     if(err.status != 404):
@@ -289,9 +289,9 @@ if __name__ == "__main__":
             # "dockerUserLogin":"",
             # "dockerUserPassword":"",
             # "studyName":""
-            "jobsCount":10,
+            "jobsCount":4,
             # "dockerImageTag":"light_task",
-            "workerCount":10,
+            "workerCount":4,
             "metricsIP": urlopen("https://checkip.amazonaws.com").read().decode("utf-8").strip(),
             "generateNewDockerImage": True,
             "prometheus_url": "http://130.149.158.143:30041",

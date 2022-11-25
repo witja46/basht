@@ -12,4 +12,4 @@ COPY ml_benchmark ml_benchmark
 
 RUN pip install -e .
 
-CMD ["python", "experiments/katib_k8s/mnist_task/task.py"]
+CMD ["python", "experiments/katib_k8s/mnist_task_katib/task.py"]
