@@ -11,9 +11,9 @@ spec:
     objectiveMetricName: precision
   algorithm:
     algorithmName: grid
-  parallelTrialCount: 3
-  maxTrialCount: 3
-  maxFailedTrialCount: 3
+  parallelTrialCount: 5
+  maxTrialCount: 5
+  maxFailedTrialCount: 5
   parameters:
     - name: lr
       parameterType: double
@@ -36,7 +36,7 @@ spec:
             containers:
               - name: training-container
                 image: scaleme100/mnist_task_katib
-                imagePullPolicy: IfNotPresent 
+                imagePullPolicy: IfNotPresent
                 command:
                   - "python3"
                   - "experiments/katib_k8s/mnist_task_katib/task.py"

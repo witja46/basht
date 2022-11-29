@@ -17,7 +17,7 @@ if __name__ == "__main__":
         # "studyName":""
  
         "metricsIP": urlopen("https://checkip.amazonaws.com").read().decode("utf-8").strip(),
-        "generateNewDockerImage": False,
+        "generateNewDockerImage": True,
         # "prometheus_url": "http://130.149.158.143:30041",
         "cleanUp": True ,
         "limitResources":False,
@@ -26,18 +26,17 @@ if __name__ == "__main__":
         }
 
     repetions = 2
-    for trials in [4,5]:
-            for imagePullPolicy in ["Always","IfNotPresent"]:
-            
-                logging.info(f"Starting Run with n_trails {trials}, and ImagePullPolicy {imagePullPolicy}")
-                try:
-                    resources["workerCount"] = trials
-                    resources["jobsCount"] = trials
-                    resources["imagePullPolicy"] = imagePullPolicy
-                    runner = BenchmarkRunner(benchmark_cls=KatibBenchmark, resources=resources)
-                    runner.run()
-                    resources["generateNewDockerImage"] = False
-                    sleep(7)
-                    runner = None
-                except Exception as e:
-                    logging.warning(f'Failed Run  n_trails {trials} - {e}')
+    for trials in [1,1,2,3,4,5]:
+        
+            sleep(3)
+            logging.info(f"Starting Run with n_trails {trials}")
+            try:
+                resources["workerCount"] = trials
+                resources["jobsCount"] = trials
+                runner = BenchmarkRunner(benchmark_cls=KatibBenchmark, resources=resources)
+                runner.run()
+                resources["generateNewDockerImage"] = False
+                sleep(7)
+                runner = None
+            except Exception as e:
+                logging.warning(f'Failed Run  n_trails {trials} - {e}')

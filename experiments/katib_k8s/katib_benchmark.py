@@ -42,6 +42,7 @@ class KatibBenchmark(Benchmark):
         self.limitCpu = resources.get("limitCpu") 
         self.limitMem = resources.get("limitMemory",20)
         self.limitResources = resources.get("limitResources",False)
+        self.imagePullPolicy=resources.get("imagePullPolicy","IfNotPresent")
 
         self.logging_level= self.resources.get("loggingLevel",log.INFO)
         log.basicConfig(format='%(asctime)s Katib Benchmark %(levelname)s: %(message)s',level=self.logging_level)
@@ -141,7 +142,8 @@ class KatibBenchmark(Benchmark):
             "study_name": self.study_name,
             "trialParameters":"${trialParameters.learningRate}",
             "folder":self.trial_tag,
-            "metrics_ip":self.metrics_ip
+            "metrics_ip":self.metrics_ip,
+            "image_pull_policy":self.imagePullPolicy
         }
 
         #loading and fulling the template
@@ -165,7 +167,10 @@ class KatibBenchmark(Benchmark):
             f'experiments/katib_k8s/{self.trial_tag}/Dockerfile',f"scaleme100/{self.trial_tag}",PROJECT_ROOT)
             log.info(res)
             log.info(f"Image: {self.trial_tag}")  
-        
+        with open(path.join(path.dirname(__file__), self.experiment_file_name), "r") as f:
+            self.body = yaml.safe_load(f)
+          
+        sleep(2)
         
 
     def run(self):
@@ -174,23 +179,26 @@ class KatibBenchmark(Benchmark):
         api_instance=  client.CustomObjectsApi()
 
         #Loading experiment definition 
-        with open(path.join(path.dirname(__file__), self.experiment_file_name), "r") as f:
-            body = yaml.safe_load(f)
-
-            #Starting experiment by creating experiment crd with help of kubernetes API
+        trys = 0
+        while(trys < 3):
+        #Starting experiment by creating experiment crd with help of kubernetes API
             try:
                 api_response = api_instance.create_namespaced_custom_object(
                     group=self.group,
                     version=self.version,
                     namespace=self.namespace,
-                    body=body,
+                    body=self.body,
                     plural=self.plural,
                 )
+                
                 log.info("Succses: Experiment started")
                 log.info(api_response)  
+                trys = 4
             except ApiException as e:
+                trys+=1
+                log.info(trys)
                 log.info("Exception when calling CustomObjectsApi->create_cluster_custom_object: %s\n" % e)
-            
+
         
         #Blocking untill the run is finished
         #The GET /apis/{group}/{version}/namespaces/{namespace}/{plural}/{name} endpoint doesnt support watch argument.
