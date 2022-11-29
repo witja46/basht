@@ -37,6 +37,11 @@ class KatibBenchmark(Benchmark):
         self.workerMemory= resources.get("workerMemory",2)
         self.workerCount = resources.get("workerCount",5)
         self.jobsCount = resources.get("jobsCount",6)
+        self.reqCpu = resources.get("requestCpu",10)
+        self.reqMem =  resources.get("requestMemory",10)
+        self.limitCpu = resources.get("limitCpu") 
+        self.limitMem = resources.get("limitMemory",20)
+        self.limitResources = resources.get("limitResources",False)
 
         self.logging_level= self.resources.get("loggingLevel",log.INFO)
         log.basicConfig(format='%(asctime)s Katib Benchmark %(levelname)s: %(message)s',level=self.logging_level)
@@ -104,7 +109,27 @@ class KatibBenchmark(Benchmark):
         Every Operation that is needed before the actual optimization (trial) starts and that is not relevant
         for starting up workers or the necessary architecture.
         """
-       
+        
+        if self.limitResources:
+        
+            resources_restrictions = {
+                "req_cpu":self.reqCpu,
+                "req_mem":f"{self.reqMem}Gi",
+                "limit_cpu":self.limitCpu,
+                "limit_mem":f"{self.limitMem}Gi",
+                "quota_name":f"{self.namespace}-quota"
+            }     
+            with open(path.join(path.dirname(__file__), "ResourceQuota_template.yaml"), "r") as f:
+                job_template = Template(f.read())
+                job_yml_objects = job_template.substitute(resources_restrictions) 
+            with open(path.join(path.dirname(__file__), "ResourceQuota.yaml"), "w") as f:
+                f.write(job_yml_objects)
+            log.info("Resource Quota yaml created")
+            res = os.popen("kubectl apply -f ResourceQuota.yaml  -n kubeflow").read()
+            log.info(res)          
+
+        
+
         #creating experiment yaml          
              
         experiment_definition = {
@@ -250,8 +275,15 @@ class KatibBenchmark(Benchmark):
         w = watch.Watch()
         c = client.CoreV1Api()
         log.info("Deleteing the namespace:")
-        res = c.delete_namespace_with_http_info(name=self.namespace)    
-        
+        #res = c.delete_namespace_with_http_info(name=self.namespace)    
+        res = os.popen('kubectl delete  -k "github.com/kubeflow/katib.git/manifests/v1beta1/installs/katib-standalone-postgres?ref=master"').read()
+        log.info(res)
+        try:
+            log.debug(c.read_namespace_status_with_http_info(name=self.namespace))
+        except ApiException as err:
+            log.info("Finished undeploying")
+
+            return
 
         log.info("Checking status of the  namespace:")
         #if the namespace was still existent we must wait till it is really terminated
@@ -294,8 +326,11 @@ if __name__ == "__main__":
             "workerCount":4,
             "metricsIP": urlopen("https://checkip.amazonaws.com").read().decode("utf-8").strip(),
             "generateNewDockerImage": True,
-            "prometheus_url": "http://130.149.158.143:30041",
+            # "prometheus_url": "http://130.149.158.143:30041",
             "cleanUp": True ,
+            "limitResources":False,
+            "limitCpu":10,
+            "limitMemory":10
             }
     # bench = KatibBenchmark(resources=resources)
     # bench.deploy()
