@@ -18,7 +18,7 @@ if __name__ == "__main__":
  
         "metricsIP": urlopen("https://checkip.amazonaws.com").read().decode("utf-8").strip(),
         "generateNewDockerImage": True,
-        # "prometheus_url": "http://130.149.158.143:30041",
+        "prometheus_url": "http://130.149.158.143:30041",
         "cleanUp": True ,
         "limitResources":False,
         "loggingLevel": logging.INFO,
@@ -26,7 +26,7 @@ if __name__ == "__main__":
         }
 
     repetions = 2
-    for trials in [1,1,2,3,4,5]:
+    for trials in [1,2,3,4,5]:
         
             sleep(3)
             logging.info(f"Starting Run with n_trails {trials}")

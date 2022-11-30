@@ -60,7 +60,7 @@ class KatibBenchmark(Benchmark):
         
 
         log.info("Deploying katib:")
-        res = os.popen('kubectl apply -k "github.com/kubeflow/katib.git/manifests/v1beta1/installs/katib-standalone-postgres?ref=master"').read()
+        res = os.popen('kubectl apply -k "github.com/kubeflow/katib.git/manifests/v1beta1/installs/katib-standalone?ref=master"').read()
         log.info(res)
 
 
@@ -71,7 +71,7 @@ class KatibBenchmark(Benchmark):
         deployed = 0
         log.info("Waiting for all Katib pods to be ready:")
         # From all pods that polyaxon starts we are onlly really intrested for following 4 that are crucial for runnig of the experiments 
-        monitored_pods = ["katib-cert-generator","katib-db-manager","katib-ui","katib-controller","katib-postgres"]
+        monitored_pods = ["katib-cert-generator","katib-db-manager","katib-ui","katib-controller","katib-mysql"]
         for e in w.stream(c.list_namespaced_pod, namespace=self.namespace):
             ob = e["object"]          
 
@@ -284,7 +284,7 @@ class KatibBenchmark(Benchmark):
         c = client.CoreV1Api()
         log.info("Deleteing the namespace:")
         #res = c.delete_namespace_with_http_info(name=self.namespace)    
-        res = os.popen('kubectl delete  -k "github.com/kubeflow/katib.git/manifests/v1beta1/installs/katib-standalone-postgres?ref=master"').read()
+        res = os.popen('kubectl delete -k "github.com/kubeflow/katib.git/manifests/v1beta1/installs/katib-standalone?ref=master"').read()
         log.info(res)
         try:
             log.debug(c.read_namespace_status_with_http_info(name=self.namespace))
@@ -333,8 +333,8 @@ if __name__ == "__main__":
             # "dockerImageTag":"light_task",
             "workerCount":4,
             "metricsIP": urlopen("https://checkip.amazonaws.com").read().decode("utf-8").strip(),
-            "generateNewDockerImage": True,
-            # "prometheus_url": "http://130.149.158.143:30041",
+            "generateNewDockerImage":False,
+            "prometheus_url": "http://130.149.158.143:30041",
             "cleanUp": True ,
             "limitResources":False,
             "limitCpu":10,
