@@ -60,7 +60,7 @@ class KatibBenchmark(Benchmark):
         
 
         log.info("Deploying katib:")
-        res = os.popen('kubectl apply -k "github.com/kubeflow/katib.git/manifests/v1beta1/installs/katib-standalone?ref=master"').read()
+        res = os.popen('kubectl apply -k "manifests/v1beta1/installs/katib-standalone"').read()
         log.info(res)
 
 
@@ -284,7 +284,7 @@ class KatibBenchmark(Benchmark):
         c = client.CoreV1Api()
         log.info("Deleteing the namespace:")
         #res = c.delete_namespace_with_http_info(name=self.namespace)    
-        res = os.popen('kubectl delete -k "github.com/kubeflow/katib.git/manifests/v1beta1/installs/katib-standalone?ref=master"').read()
+        res = os.popen('kubectl delete -k "manifests/v1beta1/installs/katib-standalone"').read()
         log.info(res)
         try:
             log.debug(c.read_namespace_status_with_http_info(name=self.namespace))
@@ -334,7 +334,7 @@ if __name__ == "__main__":
             "workerCount":4,
             "metricsIP": urlopen("https://checkip.amazonaws.com").read().decode("utf-8").strip(),
             "generateNewDockerImage":False,
-            "prometheus_url": "http://130.149.158.143:30041",
+            # "prometheus_url": "http://130.149.158.143:30041",
             "cleanUp": True ,
             "limitResources":False,
             "limitCpu":10,
