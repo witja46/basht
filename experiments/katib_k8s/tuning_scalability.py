@@ -26,7 +26,7 @@ if __name__ == "__main__":
         }
 
     repetions = 2
-    for trials in [1,2,4,5]:
+    for trials in [12,16,20]:
             for imagePullPolicy in ["IfNotPresent"]:
             
                 logging.info(f"Starting Run with n_trails {trials}, and ImagePullPolicy {imagePullPolicy}")

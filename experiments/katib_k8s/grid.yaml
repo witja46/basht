@@ -11,9 +11,9 @@ spec:
     objectiveMetricName: precision
   algorithm:
     algorithmName: grid
-  parallelTrialCount: 5
-  maxTrialCount: 5
-  maxFailedTrialCount: 5
+  parallelTrialCount: 16
+  maxTrialCount: 16
+  maxFailedTrialCount: 16
   parameters:
     - name: lr
       parameterType: double
