@@ -52,17 +52,27 @@ class PolyaxonBenchmark(Benchmark):
         self.cli_runner=CliRunner()
 
         config.load_kube_config()
+        self.generate_new_docker_image = resources.get("generateNewDockerImage",True)     
 
         self.clean_up  = self.resources.get("cleanUp",True)
         self.create_clean_image = self.resources.get("createCleanImage",True) 
         self.metrics_ip = resources.get("metricsIP")
-        self.trial_tag = resources.get("dockerImageTag", "mnist_task")
+        self.trial_tag = resources.get("dockerImageTag", "mnist_task_polyaxon")
         self.study_name = resources.get("studyName",f'polyaxon-study-{random.randint(0, 100)}')
         self.workerCpu=resources.get("workerCpu",2)
         self.workerMemory=resources.get("workerMemory",2)
         self.workerCount=resources.get("workerCount",5)
         self.jobsCount=resources.get("jobsCount",6) 
-        
+        self.reqCpu = resources.get("requestCpu",10)
+        self.reqMem =  resources.get("requestMemory",10)
+        self.limitCpu = resources.get("limitCpu") 
+        self.limitMem = resources.get("limitMemory",20)
+        self.limitResources = resources.get("limitResources",False)
+        self.imagePullPolicy=resources.get("imagePullPolicy","IfNotPresent")
+         
+                
+
+
         self.logging_level= self.resources.get("loggingLevel",log.CRITICAL)
         log.basicConfig(format='%(asctime)s Polyaxon Benchmark %(levelname)s: %(message)s',level=self.logging_level)
         
@@ -143,8 +153,10 @@ class PolyaxonBenchmark(Benchmark):
             "jobs_num":self.jobsCount,
             "worker_cpu": self.workerCpu,
             "worker_mem": f"{self.workerMemory}Gi",
-            "worker_image": self.trial_tag,
             "study_name": self.study_name,
+            "worker_image": f"scaleme100/{self.trial_tag}",
+            "image_pull_policy":self.imagePullPolicy,
+            "folder":self.trial_tag,
             "trialParameters":"${trialParameters.learningRate}",
             "metrics_ip": self.metrics_ip,
         }
@@ -160,20 +172,19 @@ class PolyaxonBenchmark(Benchmark):
         log.info("Experiment yaml created")
       
         
-        if self.create_clean_image:
+        #only generating the docker image if specified so.
+        if self.generate_new_docker_image:
             log.info("Creating task docker image")   
-            self.image_builder = builder_from_string("minikube")()
-            PROJECT_ROOT = os.path.abspath(os.path.join(__file__ ,"../../../"))
-
             #creating docker image inside of the minikube   
+            self.image_builder = builder_from_string("docker")()
+            PROJECT_ROOT = os.path.abspath(os.path.join(__file__ ,"../../../"))
             res = self.image_builder.deploy_image(
-            f'experiments/polyaxon_minikube/{self.trial_tag}/Dockerfile', self.trial_tag,PROJECT_ROOT)
-            
+            f'experiments/polyaxon_k8s/{self.trial_tag}/Dockerfile',f"scaleme100/{self.trial_tag}",PROJECT_ROOT)
             log.info(res)
-            #if something went wrong by creation of the image benchmark schould be stoped
-            if f'Successfully tagged {self.trial_tag}' not in res:
-                raise Exception("Image was not created:",res)
-            log.info(f"Image: {self.trial_tag}")
+            log.info(f"Image: {self.trial_tag}")  
+
+          
+        sleep(2)
 
 
         
@@ -366,22 +377,29 @@ if __name__ == "__main__":
     
     resources={
         # "studyName":"",
-        "dockerImageTag":"mnist_task",
+        # "dockerImageTag":"mnist_task",
         "jobsCount":5,
         "cleanUp":True,
-        "createCleanImage":True,
         "workerCount":5,
         "loggingLevel":log.INFO,
         "metricsIP": urlopen("https://checkip.amazonaws.com").read().decode("utf-8").strip(),
+        "generateNewDockerImage":False,
+        #"prometheus_url": "http://130.149.158.143:30041",
+           "cleanUp": True ,
+            "limitResources":False,
+            "limitCpu":10,
+            "limitMemory":10
+
+
     }
     from ml_benchmark.benchmark_runner import BenchmarkRunner
     runner = BenchmarkRunner(
         benchmark_cls=PolyaxonBenchmark, resources=resources)
     runner.run()
 
-    #bench= PolyaxonBenchmark(resources=resources)
+    # bench= PolyaxonBenchmark(resources=resources)
     #bench.deploy() 
-    #bench.setup()
+    # bench.setup()
     # bench.run()
     # # bench.collect_run_results()
 
