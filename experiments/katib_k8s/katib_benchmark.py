@@ -284,19 +284,36 @@ class KatibBenchmark(Benchmark):
         c = client.CoreV1Api()
         log.info("Deleteing the namespace:")
         #res = c.delete_namespace_with_http_info(name=self.namespace)    
-        res = os.popen('kubectl delete -k "manifests/v1beta1/installs/katib-standalone"').read()
+       # res = os.popen('kubectl delete --wait=false  -k "manifests/v1beta1/installs/katib-standalone-postgres"').read()
+        res = os.popen('kubectl delete --wait=false -k "manifests/v1beta1/installs/katib-standalone"').read()
         log.info(res)
+        sleep(5)
         try:
             log.debug(c.read_namespace_status_with_http_info(name=self.namespace))
         except ApiException as err:
             log.info("Finished undeploying")
 
             return
+        sleep(3)
+        res = os.popen('kubectl delete --wait=false crd  trials.kubeflow.org').read()
+        log.info(res)
+
+        
+        res = os.popen('kubectl patch  crd/trials.kubeflow.org -p  \'{"metadata":{"finalizers":null}}\'').read()
+
+
+        log.info(res)
 
         log.info("Checking status of the  namespace:")
+
         #if the namespace was still existent we must wait till it is really terminated
         for e in w.stream(c.list_namespace):
             ob = e["object"]
+            try:
+                log.debug(c.read_namespace_status_with_http_info(name=self.namespace))
+            except ApiException as err:
+                log.info("Finished undeploying")
+                return
             # if the status of our namespace was changed we check if it the namespace was really removed from the cluster by requesting and expecting it to be not found
             if ob.metadata.name == self.namespace:
                 try:
