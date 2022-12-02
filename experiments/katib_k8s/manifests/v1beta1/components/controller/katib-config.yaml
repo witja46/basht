@@ -8,13 +8,13 @@ data:
   metrics-collector-sidecar: |-
     {
       "StdOut": {
-        "image": "docker.io/kubeflowkatib/file-metrics-collector:latest"
+        "image": "docker.io/kubeflowkatib/file-metrics-collector:v1beta1-0d0e77f"
       },
       "File": {
-        "image": "docker.io/kubeflowkatib/file-metrics-collector:latest"
+        "image": "docker.io/kubeflowkatib/file-metrics-collector:v1beta1-0d0e77f"
       },
       "TensorFlowEvent": {
-        "image": "docker.io/kubeflowkatib/tfevent-metrics-collector:latest",
+        "image": "docker.io/kubeflowkatib/tfevent-metrics-collector:v1beta1-0d0e77f",
         "resources": {
           "limits": {
             "memory": "1Gi"
@@ -31,7 +31,21 @@ data:
         "image": "docker.io/kubeflowkatib/suggestion-hyperopt:latest"
       },
       "grid": {
-        "image": "docker.io/kubeflowkatib/suggestion-chocolate:latest"
+        "image": "docker.io/kubeflowkatib/suggestion-chocolate:v1beta1-0d0e77f",
+        "imagePullPolicy": "IfNotPresent",
+        "resources": {
+          "limits":{
+            "cpu":"1500m",
+            "ephemeral-storage": "6Gi",
+            "memory": "1000Mi"
+          },
+          "requests": {
+            "cpu": "150m",
+            "ephemeral-storage": "1500Mi",
+            "memory": "30Mi"
+          }
+        }
+
       },
       "hyperband": {
         "image": "docker.io/kubeflowkatib/suggestion-hyperband:latest"

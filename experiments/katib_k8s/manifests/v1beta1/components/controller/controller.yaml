@@ -23,7 +23,7 @@ spec:
       serviceAccountName: katib-controller
       containers:
         - name: katib-controller
-          image: docker.io/kubeflowkatib/katib-controller
+          image: docker.io/kubeflowkatib/katib-controller:v0.14.0
           command: ["./katib-controller"]
           args:
             - "--webhook-port=8443"

@@ -61,6 +61,7 @@ class KatibBenchmark(Benchmark):
 
         log.info("Deploying katib:")
         res = os.popen('kubectl apply -k "manifests/v1beta1/installs/katib-standalone"').read()
+        #res = os.popen('kubectl apply -k "manifests/v1beta1/installs/katib-standalone-postgres"').read()
         log.info(res)
 
 
@@ -72,6 +73,7 @@ class KatibBenchmark(Benchmark):
         log.info("Waiting for all Katib pods to be ready:")
         # From all pods that polyaxon starts we are onlly really intrested for following 4 that are crucial for runnig of the experiments 
         monitored_pods = ["katib-cert-generator","katib-db-manager","katib-ui","katib-controller","katib-mysql"]
+#        monitored_pods = ["katib-cert-generator","katib-db-manager","katib-ui","katib-controller","katib-postgres"]
         for e in w.stream(c.list_namespaced_pod, namespace=self.namespace):
             ob = e["object"]          
 
@@ -284,7 +286,7 @@ class KatibBenchmark(Benchmark):
         c = client.CoreV1Api()
         log.info("Deleteing the namespace:")
         #res = c.delete_namespace_with_http_info(name=self.namespace)    
-       # res = os.popen('kubectl delete --wait=false  -k "manifests/v1beta1/installs/katib-standalone-postgres"').read()
+        #res = os.popen('kubectl delete --wait=false  -k "manifests/v1beta1/installs/katib-standalone-postgres"').read()
         res = os.popen('kubectl delete --wait=false -k "manifests/v1beta1/installs/katib-standalone"').read()
         log.info(res)
         sleep(5)
@@ -346,12 +348,12 @@ if __name__ == "__main__":
             # "dockerUserLogin":"",
             # "dockerUserPassword":"",
             # "studyName":""
-            "jobsCount":4,
+            "jobsCount":20,
             # "dockerImageTag":"light_task",
-            "workerCount":4,
+            "workerCount":20,
             "metricsIP": urlopen("https://checkip.amazonaws.com").read().decode("utf-8").strip(),
             "generateNewDockerImage":False,
-            # "prometheus_url": "http://130.149.158.143:30041",
+            "prometheus_url": "http://130.149.158.143:30041",
             "cleanUp": True ,
             "limitResources":False,
             "limitCpu":10,

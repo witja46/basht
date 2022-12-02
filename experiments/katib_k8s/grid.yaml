@@ -3,7 +3,7 @@ apiVersion: kubeflow.org/v1beta1
 kind: Experiment
 metadata:
   namespace: kubeflow
-  name: study-2-18
+  name: katib-study-52
 spec:
   objective:
     type: maximize
@@ -11,15 +11,15 @@ spec:
     objectiveMetricName: precision
   algorithm:
     algorithmName: grid
-  parallelTrialCount: 18
-  maxTrialCount: 18
-  maxFailedTrialCount: 18
+  parallelTrialCount: 20
+  maxTrialCount: 20
+  maxFailedTrialCount: 20
   parameters:
     - name: lr
       parameterType: double
       feasibleSpace:
         min: "0.001"
-        max: "0.02"
+        max: "0.9"
         step: "0.001"
   trialTemplate:
     primaryContainerName: training-container
@@ -44,7 +44,7 @@ spec:
                   - "--lr=${trialParameters.learningRate}"
                 env:
                   - name: STUDY_NAME
-                    value: "study-2-18"
+                    value: "katib-study-52"
                   - name: DB_CONN
                     value: "postgresql://postgresadmin:admin123@postgres:5432/postgresdb"
                   - name: "METRICS_STORAGE_HOST"
