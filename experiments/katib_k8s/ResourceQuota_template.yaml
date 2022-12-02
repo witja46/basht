@@ -4,7 +4,4 @@ metadata:
   name: $quota_name
 spec:
   hard:
-    requests.cpu: "$req_cpu"
-    requests.memory: $req_mem 
     limits.cpu: "$limit_cpu"
-    limits.memory: $limit_mem 

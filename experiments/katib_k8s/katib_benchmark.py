@@ -39,8 +39,10 @@ class KatibBenchmark(Benchmark):
         self.jobsCount = resources.get("jobsCount",6)
         self.reqCpu = resources.get("requestCpu",10)
         self.reqMem =  resources.get("requestMemory",10)
-        self.limitCpu = resources.get("limitCpu") 
-        self.limitMem = resources.get("limitMemory",20)
+        self.limitCpu_total = resources.get("limitCpuTotal") 
+        self.limitCpu_worker = resources.get("limitCpuWorker") 
+        self.limitMem_total = resources.get("limitMemoryTotal",20)
+        self.limitMem_worker = resources.get("limitMemoryWorker",20)
         self.limitResources = resources.get("limitResources",False)
         self.imagePullPolicy=resources.get("imagePullPolicy","IfNotPresent")
 
@@ -112,14 +114,38 @@ class KatibBenchmark(Benchmark):
         Every Operation that is needed before the actual optimization (trial) starts and that is not relevant
         for starting up workers or the necessary architecture.
         """
+           #creating experiment yaml          
+             
+        experiment_definition = {
+            "worker_num": self.workerCount,
+            "jobs_num":self.jobsCount,
+            "worker_cpu_limit": f"{self.limitCpu_worker}",
+            "worker_mem_limit": f"{self.limitMem_worker}",
+            "worker_image": f"scaleme100/{self.trial_tag}",
+            "study_name": self.study_name,
+            "trialParameters":"${trialParameters.learningRate}",
+            "folder":self.trial_tag,
+            "metrics_ip":self.metrics_ip,
+            "image_pull_policy":self.imagePullPolicy
+        }
         
-        if self.limitResources:
+
+        if not self.limitResources:
+
+            #loading template without resources limits and fulling the template
+            with open(path.join(path.dirname(__file__), "experiment_template.yaml"), "r") as f:
+                job_template = Template(f.read())
+                job_yml_objects = job_template.substitute(experiment_definition)
+                
+                   
+           
+
+        else:
         
             resources_restrictions = {
-                "req_cpu":self.reqCpu,
-                "req_mem":f"{self.reqMem}Gi",
-                "limit_cpu":self.limitCpu,
-                "limit_mem":f"{self.limitMem}Gi",
+           
+                "limit_cpu":f"{self.limitCpu_total}",
+                "limit_mem":f"{self.limitMem_total}",
                 "quota_name":f"{self.namespace}-quota"
             }     
             with open(path.join(path.dirname(__file__), "ResourceQuota_template.yaml"), "r") as f:
@@ -128,38 +154,32 @@ class KatibBenchmark(Benchmark):
             with open(path.join(path.dirname(__file__), "ResourceQuota.yaml"), "w") as f:
                 f.write(job_yml_objects)
             log.info("Resource Quota yaml created")
+            
             res = os.popen("kubectl apply -f ResourceQuota.yaml  -n kubeflow").read()
-            log.info(res)          
+            log.info(res)
+
+              #loading template without resources limits and fulling the template
+            with open(path.join(path.dirname(__file__), "expriment_template_resources.yaml"), "r") as f:
+                job_template = Template(f.read())
+                job_yml_objects = job_template.substitute(experiment_definition)
+                
+
+
+
+
+        
+        
+        #writing the experiment definition into the file
+        with open(path.join(path.dirname(__file__), self.experiment_file_name), "w") as f:
+            f.write(job_yml_objects)
+            log.info("Experiment yaml created")
+
 
         
 
-        #creating experiment yaml          
-             
-        experiment_definition = {
-            "worker_num": self.workerCount,
-            "jobs_num":self.jobsCount,
-            "worker_cpu": self.workerCpu,
-            "worker_mem": f"{self.workerMemory}Gi",
-            "worker_image": f"scaleme100/{self.trial_tag}",
-            "study_name": self.study_name,
-            "trialParameters":"${trialParameters.learningRate}",
-            "folder":self.trial_tag,
-            "metrics_ip":self.metrics_ip,
-            "image_pull_policy":self.imagePullPolicy
-        }
 
-        #loading and fulling the template
-        with open(path.join(path.dirname(__file__), "experiment_template.yaml"), "r") as f:
-            job_template = Template(f.read())
-            job_yml_objects = job_template.substitute(experiment_definition)
-            
-        #writing the experiment definition into the file        
-        with open(path.join(path.dirname(__file__), self.experiment_file_name), "w") as f:
-            f.write(job_yml_objects)
-        log.info("Experiment yaml created")
-      
-      
-       #only generating the docker image if specified so.
+        
+    #only generating the docker image if specified so.
         if self.generate_new_docker_image:
             log.info("Creating task docker image")   
             #creating docker image inside of the minikube   
@@ -171,9 +191,9 @@ class KatibBenchmark(Benchmark):
             log.info(f"Image: {self.trial_tag}")  
         with open(path.join(path.dirname(__file__), self.experiment_file_name), "r") as f:
             self.body = yaml.safe_load(f)
-          
-        sleep(10)
         
+        sleep(10)
+    
 
     def run(self):
         
@@ -256,11 +276,20 @@ class KatibBenchmark(Benchmark):
         
         log.debug("\n Experiment finished with following optimal trial:")
         log.debug(experiment["status"]["currentOptimalTrial"])
-        return experiment["status"]["currentOptimalTrial"] 
+        self.resources["experiment"] = experiment["status"]
+        return experiment
         
     
     def test(self):
-        return super().test()
+        
+        log.info("Collecting run results:")
+           
+        experiment = self.get_experiment() 
+        
+        log.debug("\n Experiment finished with following optimal trial:")
+        log.debug(experiment["status"]["currentOptimalTrial"])
+        return experiment["status"]["currentOptimalTrial"] 
+
 
     def undeploy(self):
               
@@ -348,22 +377,18 @@ if __name__ == "__main__":
             # "dockerUserLogin":"",
             # "dockerUserPassword":"",
             # "studyName":""
-<<<<<<< HEAD
-            "jobsCount":20,
+            "jobsCount":3,
             # "dockerImageTag":"light_task",
-            "workerCount":20,
-=======
-            "jobsCount":25,
-            # "dockerImageTag":"light_task",
-            "workerCount":25,
->>>>>>> baf16d765f3cee29db66d1ca20dff6a071597484
+            "workerCount":3,
             "metricsIP": urlopen("https://checkip.amazonaws.com").read().decode("utf-8").strip(),
             "generateNewDockerImage":False,
-            "prometheus_url": "http://130.149.158.143:30041",
+           # "prometheus_url": "http://130.149.158.143:30041",
             "cleanUp": True ,
-            "limitResources":False,
-            "limitCpu":10,
-            "limitMemory":10
+            "limitResources":True,
+            "limitCpuTotal":"7000m",
+            "limitMemoryTotal":"400Gi",
+            "limitCpuWorker":"1000m",
+            "limitMemoryWorker":"4000Mi"
             }
     # bench = KatibBenchmark(resources=resources)
     # bench.deploy()

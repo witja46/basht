@@ -32,18 +32,16 @@ if __name__ == "__main__":
 
 
 
-    for cores_pro_worker in ["500m", "1000m","2000m"]:
-        for trials in [10,20]:
-            for cores_total in [4,6,8,10,12,14,16,18,20,24]:
-                
-            
+    for cores_total in [12,24]:
+        for trials in [2,4]:
+            for cores_pro_worker in range(2,20,2):
                 sleep(3)
-                logging.info(f"Cpu Worker limit {cores_pro_worker} Total limit of cores {cores_total} Starting Run with n_trails {trials} ")
+                logging.info(f"Cpu Worker limit {cores_pro_worker}00m Total limit of cores {cores_total} Starting Run with n_trails {trials} ")
                 try:
                     resources["workerCount"] = trials
                     resources["jobsCount"] = trials
-                    resources["limitCpuTotal"] = cores_total       
-                    resources["limitCpuWorker"] = cores_pro_worker
+                    resources["limitCpuTotal"] = cores_total
+                    resources["limitCpuWorker"] = f"{cores_pro_worker}00m" #range from 200m to 2000m
                     runner = BenchmarkRunner(benchmark_cls=KatibBenchmark, resources=resources)
                     runner.run()
                     resources["generateNewDockerImage"] = False

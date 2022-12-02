@@ -37,6 +37,9 @@ spec:
               - name: training-container
                 image: $worker_image
                 imagePullPolicy: $image_pull_policy
+                resources:
+                  limits:
+                    cpu: $worker_cpu_limit
                 command:
                   - "python3"
                   - "experiments/katib_k8s/$folder/task.py"

@@ -50,10 +50,10 @@ def main():
 
 
     #MnistTask
-    task = MnistTask(config_init={"epochs": epochs})
+    task = MnistTask(config_init={"epochs": 10})
     objective = task.create_objective()
     #TODO add the weight decay to the definition of the template
-    objective.set_hyperparameters({"learning_rate": lr, "weight_decay": 0.01})
+    objective.set_hyperparameters({"learning_rate": 0.01, "weight_decay": 0.01})
     objective.train()
     validation_scores = objective.validate()
     
