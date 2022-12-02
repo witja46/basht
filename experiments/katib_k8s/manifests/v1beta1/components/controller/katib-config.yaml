@@ -8,6 +8,7 @@ data:
   metrics-collector-sidecar: |-
     {
       "StdOut": {
+<<<<<<< HEAD
         "image": "docker.io/kubeflowkatib/file-metrics-collector:v1beta1-0d0e77f"
       },
       "File": {
@@ -15,6 +16,15 @@ data:
       },
       "TensorFlowEvent": {
         "image": "docker.io/kubeflowkatib/tfevent-metrics-collector:v1beta1-0d0e77f",
+=======
+        "image": "docker.io/kubeflowkatib/file-metrics-collector:v0.14.0"
+      },
+      "File": {
+        "image": "docker.io/kubeflowkatib/file-metrics-collector:v0.14.0"
+      },
+      "TensorFlowEvent": {
+        "image": "docker.io/kubeflowkatib/tfevent-metrics-collector:v0.14.0",
+>>>>>>> baf16d765f3cee29db66d1ca20dff6a071597484
         "resources": {
           "limits": {
             "memory": "1Gi"
@@ -25,12 +35,13 @@ data:
   suggestion: |-
     {
       "random": {
-        "image": "docker.io/kubeflowkatib/suggestion-hyperopt:latest"
+        "image": "docker.io/kubeflowkatib/suggestion-hyperopt:v0.14.0"
       },
       "tpe": {
-        "image": "docker.io/kubeflowkatib/suggestion-hyperopt:latest"
+        "image": "docker.io/kubeflowkatib/suggestion-hyperopt:v0.14.0"
       },
       "grid": {
+<<<<<<< HEAD
         "image": "docker.io/kubeflowkatib/suggestion-chocolate:v1beta1-0d0e77f",
         "imagePullPolicy": "IfNotPresent",
         "resources": {
@@ -46,24 +57,27 @@ data:
           }
         }
 
+=======
+        "image": "docker.io/kubeflowkatib/suggestion-chocolate:v0.14.0"
+>>>>>>> baf16d765f3cee29db66d1ca20dff6a071597484
       },
       "hyperband": {
-        "image": "docker.io/kubeflowkatib/suggestion-hyperband:latest"
+        "image": "docker.io/kubeflowkatib/suggestion-hyperband:v0.14.0"
       },
       "bayesianoptimization": {
-        "image": "docker.io/kubeflowkatib/suggestion-skopt:latest"
+        "image": "docker.io/kubeflowkatib/suggestion-skopt:v0.14.0"
       },
       "cmaes": {
-        "image": "docker.io/kubeflowkatib/suggestion-goptuna:latest"
+        "image": "docker.io/kubeflowkatib/suggestion-goptuna:v0.14.0"
       },
       "sobol": {
-        "image": "docker.io/kubeflowkatib/suggestion-goptuna:latest"
+        "image": "docker.io/kubeflowkatib/suggestion-goptuna:v0.14.0"
       },
       "multivariate-tpe": {
-        "image": "docker.io/kubeflowkatib/suggestion-optuna:latest"
+        "image": "docker.io/kubeflowkatib/suggestion-optuna:v0.14.0"
       },
       "enas": {
-        "image": "docker.io/kubeflowkatib/suggestion-enas:latest",
+        "image": "docker.io/kubeflowkatib/suggestion-enas:v0.14.0",
         "resources": {
           "limits": {
             "memory": "200Mi"
@@ -71,10 +85,10 @@ data:
         }
       },
       "darts": {
-        "image": "docker.io/kubeflowkatib/suggestion-darts:latest"
+        "image": "docker.io/kubeflowkatib/suggestion-darts:v0.14.0"
       },
       "pbt": {
-        "image": "docker.io/kubeflowkatib/suggestion-pbt:latest",
+        "image": "docker.io/kubeflowkatib/suggestion-pbt:v0.14.0",
         "persistentVolumeClaimSpec": {
           "accessModes": [
             "ReadWriteMany"
@@ -90,6 +104,6 @@ data:
   early-stopping: |-
     {
       "medianstop": {
-        "image": "docker.io/kubeflowkatib/earlystopping-medianstop:latest"
+        "image": "docker.io/kubeflowkatib/earlystopping-medianstop:v0.14.0"
       }
     }

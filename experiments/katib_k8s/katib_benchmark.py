@@ -172,7 +172,7 @@ class KatibBenchmark(Benchmark):
         with open(path.join(path.dirname(__file__), self.experiment_file_name), "r") as f:
             self.body = yaml.safe_load(f)
           
-        sleep(2)
+        sleep(10)
         
 
     def run(self):
@@ -348,9 +348,15 @@ if __name__ == "__main__":
             # "dockerUserLogin":"",
             # "dockerUserPassword":"",
             # "studyName":""
+<<<<<<< HEAD
             "jobsCount":20,
             # "dockerImageTag":"light_task",
             "workerCount":20,
+=======
+            "jobsCount":25,
+            # "dockerImageTag":"light_task",
+            "workerCount":25,
+>>>>>>> baf16d765f3cee29db66d1ca20dff6a071597484
             "metricsIP": urlopen("https://checkip.amazonaws.com").read().decode("utf-8").strip(),
             "generateNewDockerImage":False,
             "prometheus_url": "http://130.149.158.143:30041",
