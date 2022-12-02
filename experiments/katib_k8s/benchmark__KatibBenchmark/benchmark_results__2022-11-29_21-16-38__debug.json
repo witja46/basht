@@ -1,0 +1,62 @@
+{
+  "benchmark_metrics": {
+    "latency": [
+      {
+        "metric_id": "__id_6597cf34-1723-4b2a-880f-7e94f0b585a2__pid_1024172__hostname_BARE_witek-desktop__function-name_deploy__objHash_8779511709892",
+        "function_name": "deploy",
+        "start_time": "2022-11-29 21:16:40.804578",
+        "end_time": "2022-11-29 21:17:02.781513",
+        "duration_sec": 21.976935
+      },
+      {
+        "metric_id": "__id_c746ce12-d366-4073-9ef2-321f8e6b2cdf__pid_1024172__hostname_BARE_witek-desktop__function-name_setup__objHash_8779511709892",
+        "function_name": "setup",
+        "start_time": "2022-11-29 21:17:02.799873",
+        "end_time": "2022-11-29 21:17:04.806169",
+        "duration_sec": 2.006296
+      },
+      {
+        "metric_id": "__id_843f756b-2262-475e-a7c2-f909416e9c58__pid_1024172__hostname_BARE_witek-desktop__function-name_run__objHash_8779511709892",
+        "function_name": "run",
+        "start_time": "2022-11-29 21:17:04.816137",
+        "end_time": "2022-11-29 21:17:33.328658",
+        "duration_sec": 28.512521
+      },
+      {
+        "metric_id": "__id_70bf38ee-34c6-471d-b6fc-f5a76acf0a43__pid_1024172__hostname_BARE_witek-desktop__function-name_collect_run_results__objHash_8779511709892",
+        "function_name": "collect_run_results",
+        "start_time": "2022-11-29 21:17:33.338839",
+        "end_time": "2022-11-29 21:17:33.357763",
+        "duration_sec": 0.018924
+      },
+      {
+        "metric_id": "__id_1160edee-2352-4f26-a166-147939a1dd92__pid_1024172__hostname_BARE_witek-desktop__function-name_test__objHash_8779511709892",
+        "function_name": "test",
+        "start_time": "2022-11-29 21:17:33.367853",
+        "end_time": "2022-11-29 21:17:33.367861",
+        "duration_sec": 8e-6
+      },
+      {
+        "metric_id": "__id_9b1d9d1f-60bf-48dc-8e52-532a928796fc__pid_1024172__hostname_BARE_witek-desktop__function-name_collect_benchmark_metrics__objHash_8779511709892",
+        "function_name": "collect_benchmark_metrics",
+        "start_time": "2022-11-29 21:17:33.378049",
+        "end_time": "2022-11-29 21:17:33.378057",
+        "duration_sec": 8e-6
+      }
+    ],
+    "resources": [],
+    "classification": []
+  },
+  "benchmark_configuration": {
+    "resources": {
+      "metricsIP": "134.101.4.161",
+      "generateNewDockerImage": false,
+      "cleanUp": true,
+      "limitResources": false,
+      "loggingLevel": 20,
+      "workerCount": 1,
+      "jobsCount": 1,
+      "imagePullPolicy": "Always"
+    }
+  }
+}

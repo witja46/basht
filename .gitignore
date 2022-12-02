@@ -130,8 +130,9 @@ dmypy.json
 .pyre/
 exp__*
 **/benchmark__**
-
+#!experiments/katib_k8s/benchmark__KatibBenchmark
 data/
+
 
 #idea
 .idea/

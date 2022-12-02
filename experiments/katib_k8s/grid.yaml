@@ -44,9 +44,9 @@ spec:
                   - "--lr=${trialParameters.learningRate}"
                 env:
                   - name: STUDY_NAME
-                    value: "katib-study-91"
+                    value: "study-2-18"
                   - name: DB_CONN
                     value: "postgresql://postgresadmin:admin123@postgres:5432/postgresdb"
                   - name: "METRICS_STORAGE_HOST"
-                    value: "134.101.4.161"
+                    value: "130.149.158.216"
             restartPolicy: Never
