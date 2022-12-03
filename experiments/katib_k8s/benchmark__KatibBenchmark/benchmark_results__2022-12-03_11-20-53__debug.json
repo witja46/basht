@@ -1,0 +1,3638 @@
+{
+    "benchmark_metrics": {
+        "latency": [
+            {
+                "metric_id": "__id_fbbd4047-0118-487e-bf3a-fd5fa2b511c3__pid_1164469__hostname_BARE_ise-students__function-name_deploy__objHash_8761324830835",
+                "function_name": "deploy",
+                "start_time": "2022-12-03 11:20:55.727693",
+                "end_time": "2022-12-03 11:23:20.509731",
+                "duration_sec": 144.782038
+            },
+            {
+                "metric_id": "__id_59255f7b-de63-421d-a912-aae8ba111d47__pid_1164469__hostname_BARE_ise-students__function-name_setup__objHash_8761324830835",
+                "function_name": "setup",
+                "start_time": "2022-12-03 11:23:20.545691",
+                "end_time": "2022-12-03 11:23:30.980808",
+                "duration_sec": 10.435117
+            },
+            {
+                "metric_id": "__id_89165314-7d1c-4d76-8594-22ff8b5046b1__pid_11__hostname_BARE_katib-study-78-c67z4xst--1-7l69x__function-name_train__objHash_8753427643664",
+                "function_name": "train",
+                "start_time": "2022-12-03 10:24:19.510946",
+                "end_time": "2022-12-03 10:25:33.823157",
+                "duration_sec": 74.312211
+            },
+            {
+                "metric_id": "__id_b68ed115-4304-4471-84ae-6863a0ce3d4b__pid_11__hostname_BARE_katib-study-78-c67z4xst--1-7l69x__function-name_validate__objHash_8753427643664",
+                "function_name": "validate",
+                "start_time": "2022-12-03 10:25:33.969135",
+                "end_time": "2022-12-03 10:25:35.432631",
+                "duration_sec": 1.463496
+            },
+            {
+                "metric_id": "__id_c0e7a1a6-affc-47da-9582-ee0185a66274__pid_11__hostname_BARE_katib-study-78-92l99czg--1-6j762__function-name_train__objHash_8788312792592",
+                "function_name": "train",
+                "start_time": "2022-12-03 10:24:19.456705",
+                "end_time": "2022-12-03 10:26:09.549182",
+                "duration_sec": 110.092477
+            },
+            {
+                "metric_id": "__id_4538c49c-b78d-4725-b56e-e4f9f0eb1769__pid_11__hostname_BARE_katib-study-78-pg57spvr--1-nlfs5__function-name_train__objHash_8791838087696",
+                "function_name": "train",
+                "start_time": "2022-12-03 10:24:19.656686",
+                "end_time": "2022-12-03 10:26:10.758680",
+                "duration_sec": 111.101994
+            },
+            {
+                "metric_id": "__id_4ccb357f-8602-4514-83f7-8983ab29ec11__pid_11__hostname_BARE_katib-study-78-92l99czg--1-6j762__function-name_validate__objHash_8788312792592",
+                "function_name": "validate",
+                "start_time": "2022-12-03 10:26:09.678850",
+                "end_time": "2022-12-03 10:26:11.956701",
+                "duration_sec": 2.277851
+            },
+            {
+                "metric_id": "__id_1f95033b-0c22-4f4f-b115-9c9a9baae2b1__pid_11__hostname_BARE_katib-study-78-pg57spvr--1-nlfs5__function-name_validate__objHash_8791838087696",
+                "function_name": "validate",
+                "start_time": "2022-12-03 10:26:10.882066",
+                "end_time": "2022-12-03 10:26:12.758951",
+                "duration_sec": 1.876885
+            },
+            {
+                "metric_id": "__id_d649e80c-b1f3-4d1a-a8ef-aff1031cc8f7__pid_1164469__hostname_BARE_ise-students__function-name_run__objHash_8761324830835",
+                "function_name": "run",
+                "start_time": "2022-12-03 11:23:30.993013",
+                "end_time": "2022-12-03 11:26:19.923038",
+                "duration_sec": 168.930025
+            },
+            {
+                "metric_id": "__id_9095c96e-d07f-41df-b8c9-58eaf3c2d621__pid_1164469__hostname_BARE_ise-students__function-name_collect_run_results__objHash_8761324830835",
+                "function_name": "collect_run_results",
+                "start_time": "2022-12-03 11:26:19.934238",
+                "end_time": "2022-12-03 11:26:19.949937",
+                "duration_sec": 0.015699
+            },
+            {
+                "metric_id": "__id_050c2d65-3ea3-4b3f-bd56-62e9400ecf70__pid_1164469__hostname_BARE_ise-students__function-name_test__objHash_8761324830835",
+                "function_name": "test",
+                "start_time": "2022-12-03 11:26:19.960827",
+                "end_time": "2022-12-03 11:26:19.975507",
+                "duration_sec": 0.01468
+            },
+            {
+                "metric_id": "__id_a7a93aee-f3ea-4955-bb07-a7ba79609c33__pid_1164469__hostname_BARE_ise-students__function-name_collect_benchmark_metrics__objHash_8761324830835",
+                "function_name": "collect_benchmark_metrics",
+                "start_time": "2022-12-03 11:26:19.986284",
+                "end_time": "2022-12-03 11:26:19.986297",
+                "duration_sec": 1.3e-05
+            }
+        ],
+        "resources": [
+            {
+                "metric_id": "__knode4",
+                "timestamp": "Sat Dec  3 11:23:22 2022",
+                "cpu_usage": 2.3791666670392004,
+                "memory_usage": 0.37328431915749133,
+                "network_usage": 32121.011374001744,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode5",
+                "timestamp": "Sat Dec  3 11:23:22 2022",
+                "cpu_usage": 22.22083333258827,
+                "memory_usage": 0.12737191194496475,
+                "network_usage": 8270604.869500018,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode1",
+                "timestamp": "Sat Dec  3 11:23:22 2022",
+                "cpu_usage": 9.970833333330418,
+                "memory_usage": 0.5140028235294117,
+                "network_usage": 331766.2420465815,
+                "accelerator_usage": null,
+                "wattage": 36352903.0,
+                "processes": 277
+            },
+            {
+                "metric_id": "__knode2",
+                "timestamp": "Sat Dec  3 11:23:22 2022",
+                "cpu_usage": 3.555000000167638,
+                "memory_usage": 0.1809180988594985,
+                "network_usage": 1513944.2902978177,
+                "accelerator_usage": null,
+                "wattage": 39785753.0,
+                "processes": 360
+            },
+            {
+                "metric_id": "__knode4",
+                "timestamp": "Sat Dec  3 11:23:24 2022",
+                "cpu_usage": 2.3791666670392004,
+                "memory_usage": 0.37328431915749133,
+                "network_usage": 32122.60185224955,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode5",
+                "timestamp": "Sat Dec  3 11:23:24 2022",
+                "cpu_usage": 22.22083333258827,
+                "memory_usage": 0.12737191194496475,
+                "network_usage": 8401694.86819384,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode1",
+                "timestamp": "Sat Dec  3 11:23:24 2022",
+                "cpu_usage": 9.970833333330418,
+                "memory_usage": 0.5140028235294117,
+                "network_usage": 331766.2420465815,
+                "accelerator_usage": null,
+                "wattage": 36352903.0,
+                "processes": 277
+            },
+            {
+                "metric_id": "__knode2",
+                "timestamp": "Sat Dec  3 11:23:24 2022",
+                "cpu_usage": 3.555000000167638,
+                "memory_usage": 0.1809180988594985,
+                "network_usage": 1513944.2902978172,
+                "accelerator_usage": null,
+                "wattage": 39785753.0,
+                "processes": 360
+            },
+            {
+                "metric_id": "__knode4",
+                "timestamp": "Sat Dec  3 11:23:26 2022",
+                "cpu_usage": 2.3791666670392004,
+                "memory_usage": 0.37328431915749133,
+                "network_usage": 32122.60185224955,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode5",
+                "timestamp": "Sat Dec  3 11:23:26 2022",
+                "cpu_usage": 22.22083333258827,
+                "memory_usage": 0.12737191194496475,
+                "network_usage": 8364334.75929742,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode1",
+                "timestamp": "Sat Dec  3 11:23:26 2022",
+                "cpu_usage": 10.014583333340852,
+                "memory_usage": 0.5140830967741935,
+                "network_usage": 328422.14159695164,
+                "accelerator_usage": null,
+                "wattage": 36352903.0,
+                "processes": 277
+            },
+            {
+                "metric_id": "__knode2",
+                "timestamp": "Sat Dec  3 11:23:26 2022",
+                "cpu_usage": 3.555000000167638,
+                "memory_usage": 0.1809180988594985,
+                "network_usage": 1513944.2902978172,
+                "accelerator_usage": null,
+                "wattage": 39785753.0,
+                "processes": 360
+            },
+            {
+                "metric_id": "__knode4",
+                "timestamp": "Sat Dec  3 11:23:28 2022",
+                "cpu_usage": 2.3791666670392004,
+                "memory_usage": 0.37328431915749133,
+                "network_usage": 32122.60185224955,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode5",
+                "timestamp": "Sat Dec  3 11:23:28 2022",
+                "cpu_usage": 22.22083333258827,
+                "memory_usage": 0.12737191194496475,
+                "network_usage": 8326974.650401001,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode1",
+                "timestamp": "Sat Dec  3 11:23:28 2022",
+                "cpu_usage": 10.014583333340852,
+                "memory_usage": 0.5140830967741935,
+                "network_usage": 328317.34067601064,
+                "accelerator_usage": null,
+                "wattage": 36352903.0,
+                "processes": 277
+            },
+            {
+                "metric_id": "__knode2",
+                "timestamp": "Sat Dec  3 11:23:28 2022",
+                "cpu_usage": 3.555000000167638,
+                "memory_usage": 0.1809180988594985,
+                "network_usage": 1513944.2902978177,
+                "accelerator_usage": null,
+                "wattage": 39785753.0,
+                "processes": 360
+            },
+            {
+                "metric_id": "__knode4",
+                "timestamp": "Sat Dec  3 11:23:30 2022",
+                "cpu_usage": 2.3791666670392004,
+                "memory_usage": 0.37328431915749133,
+                "network_usage": 32122.601852249547,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode5",
+                "timestamp": "Sat Dec  3 11:23:30 2022",
+                "cpu_usage": 22.22083333258827,
+                "memory_usage": 0.12737191194496475,
+                "network_usage": 7967042.296088109,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode1",
+                "timestamp": "Sat Dec  3 11:23:30 2022",
+                "cpu_usage": 10.014583333340852,
+                "memory_usage": 0.5140830967741935,
+                "network_usage": 328212.4893215177,
+                "accelerator_usage": null,
+                "wattage": 36352903.0,
+                "processes": 277
+            },
+            {
+                "metric_id": "__knode2",
+                "timestamp": "Sat Dec  3 11:23:30 2022",
+                "cpu_usage": 3.555000000167638,
+                "memory_usage": 0.1809180988594985,
+                "network_usage": 1506437.5363444055,
+                "accelerator_usage": null,
+                "wattage": 39785753.0,
+                "processes": 360
+            },
+            {
+                "metric_id": "__knode4",
+                "timestamp": "Sat Dec  3 11:23:33 2022",
+                "cpu_usage": 2.983333332619324,
+                "memory_usage": 0.37220151957258885,
+                "network_usage": 32122.60185224955,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode5",
+                "timestamp": "Sat Dec  3 11:23:33 2022",
+                "cpu_usage": 22.22083333258827,
+                "memory_usage": 0.12737191194496475,
+                "network_usage": 8125295.179311004,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode1",
+                "timestamp": "Sat Dec  3 11:23:33 2022",
+                "cpu_usage": 10.014583333340852,
+                "memory_usage": 0.5140830967741935,
+                "network_usage": 328107.5875334728,
+                "accelerator_usage": null,
+                "wattage": 36352903.0,
+                "processes": 277
+            },
+            {
+                "metric_id": "__knode2",
+                "timestamp": "Sat Dec  3 11:23:33 2022",
+                "cpu_usage": 3.555000000167638,
+                "memory_usage": 0.1809180988594985,
+                "network_usage": 1502943.373559527,
+                "accelerator_usage": null,
+                "wattage": 39785753.0,
+                "processes": 360
+            },
+            {
+                "metric_id": "__knode4",
+                "timestamp": "Sat Dec  3 11:23:35 2022",
+                "cpu_usage": 2.983333332619324,
+                "memory_usage": 0.37220151957258885,
+                "network_usage": 32122.60185224955,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode5",
+                "timestamp": "Sat Dec  3 11:23:35 2022",
+                "cpu_usage": 22.22083333258827,
+                "memory_usage": 0.12737191194496475,
+                "network_usage": 8525813.045511307,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode1",
+                "timestamp": "Sat Dec  3 11:23:35 2022",
+                "cpu_usage": 10.014583333340852,
+                "memory_usage": 0.5140830967741935,
+                "network_usage": 325883.9927011455,
+                "accelerator_usage": null,
+                "wattage": 36352903.0,
+                "processes": 277
+            },
+            {
+                "metric_id": "__knode2",
+                "timestamp": "Sat Dec  3 11:23:35 2022",
+                "cpu_usage": 3.555000000167638,
+                "memory_usage": 0.1809180988594985,
+                "network_usage": 1498992.2322133107,
+                "accelerator_usage": null,
+                "wattage": 39785753.0,
+                "processes": 360
+            },
+            {
+                "metric_id": "__knode4",
+                "timestamp": "Sat Dec  3 11:23:37 2022",
+                "cpu_usage": 2.983333332619324,
+                "memory_usage": 0.37220151957258885,
+                "network_usage": 32176.231187617836,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode5",
+                "timestamp": "Sat Dec  3 11:23:37 2022",
+                "cpu_usage": 22.22083333258827,
+                "memory_usage": 0.12737191194496475,
+                "network_usage": 8068984.795197785,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode1",
+                "timestamp": "Sat Dec  3 11:23:37 2022",
+                "cpu_usage": 10.014583333340852,
+                "memory_usage": 0.5140830967741935,
+                "network_usage": 326030.6632347015,
+                "accelerator_usage": null,
+                "wattage": 36352903.0,
+                "processes": 277
+            },
+            {
+                "metric_id": "__knode2",
+                "timestamp": "Sat Dec  3 11:23:37 2022",
+                "cpu_usage": 3.555000000167638,
+                "memory_usage": 0.1809180988594985,
+                "network_usage": 1488432.3160758554,
+                "accelerator_usage": null,
+                "wattage": 39785753.0,
+                "processes": 360
+            },
+            {
+                "metric_id": "__knode4",
+                "timestamp": "Sat Dec  3 11:23:39 2022",
+                "cpu_usage": 2.983333332619324,
+                "memory_usage": 0.37220151957258885,
+                "network_usage": 32176.231187617836,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode5",
+                "timestamp": "Sat Dec  3 11:23:39 2022",
+                "cpu_usage": 22.22083333258827,
+                "memory_usage": 0.12737191194496475,
+                "network_usage": 7943547.256689363,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode1",
+                "timestamp": "Sat Dec  3 11:23:39 2022",
+                "cpu_usage": 10.014583333340852,
+                "memory_usage": 0.5140830967741935,
+                "network_usage": 338306.515583915,
+                "accelerator_usage": null,
+                "wattage": 36352903.0,
+                "processes": 277
+            },
+            {
+                "metric_id": "__knode2",
+                "timestamp": "Sat Dec  3 11:23:39 2022",
+                "cpu_usage": 3.555000000167638,
+                "memory_usage": 0.1809180988594985,
+                "network_usage": 1438208.641785081,
+                "accelerator_usage": null,
+                "wattage": 39785753.0,
+                "processes": 360
+            },
+            {
+                "metric_id": "__knode4",
+                "timestamp": "Sat Dec  3 11:23:41 2022",
+                "cpu_usage": 2.983333332619324,
+                "memory_usage": 0.37220151957258885,
+                "network_usage": 32174.617486363044,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode5",
+                "timestamp": "Sat Dec  3 11:23:41 2022",
+                "cpu_usage": 22.22083333258827,
+                "memory_usage": 0.12737191194496475,
+                "network_usage": 10314441.720531419,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode1",
+                "timestamp": "Sat Dec  3 11:23:41 2022",
+                "cpu_usage": 10.014583333340852,
+                "memory_usage": 0.5140830967741935,
+                "network_usage": 338306.515583915,
+                "accelerator_usage": null,
+                "wattage": 39827209.0,
+                "processes": 277
+            },
+            {
+                "metric_id": "__knode2",
+                "timestamp": "Sat Dec  3 11:23:41 2022",
+                "cpu_usage": 3.555000000167638,
+                "memory_usage": 0.1809180988594985,
+                "network_usage": 1469755.7921095125,
+                "accelerator_usage": null,
+                "wattage": 40263943.0,
+                "processes": 373
+            },
+            {
+                "metric_id": "__knode4",
+                "timestamp": "Sat Dec  3 11:23:43 2022",
+                "cpu_usage": 2.983333332619324,
+                "memory_usage": 0.37220151957258885,
+                "network_usage": 32174.410861147022,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode5",
+                "timestamp": "Sat Dec  3 11:23:43 2022",
+                "cpu_usage": 22.22083333258827,
+                "memory_usage": 0.12737191194496475,
+                "network_usage": 10314441.919679774,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode1",
+                "timestamp": "Sat Dec  3 11:23:43 2022",
+                "cpu_usage": 10.014583333340852,
+                "memory_usage": 0.5140830967741935,
+                "network_usage": 338306.515583915,
+                "accelerator_usage": null,
+                "wattage": 39827209.0,
+                "processes": 277
+            },
+            {
+                "metric_id": "__knode2",
+                "timestamp": "Sat Dec  3 11:23:43 2022",
+                "cpu_usage": 3.555000000167638,
+                "memory_usage": 0.1809180988594985,
+                "network_usage": 1405142.5961985078,
+                "accelerator_usage": null,
+                "wattage": 40263943.0,
+                "processes": 373
+            },
+            {
+                "metric_id": "__knode4",
+                "timestamp": "Sat Dec  3 11:23:45 2022",
+                "cpu_usage": 2.983333332619324,
+                "memory_usage": 0.37220151957258885,
+                "network_usage": 29560.952358704428,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode5",
+                "timestamp": "Sat Dec  3 11:23:45 2022",
+                "cpu_usage": 9.695833332370967,
+                "memory_usage": 0.11940361756375939,
+                "network_usage": 10314442.11854117,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode1",
+                "timestamp": "Sat Dec  3 11:23:45 2022",
+                "cpu_usage": 10.014583333340852,
+                "memory_usage": 0.5140830967741935,
+                "network_usage": 338306.515583915,
+                "accelerator_usage": null,
+                "wattage": 39827209.0,
+                "processes": 277
+            },
+            {
+                "metric_id": "__knode2",
+                "timestamp": "Sat Dec  3 11:23:45 2022",
+                "cpu_usage": 3.196666666306541,
+                "memory_usage": 0.1810528001178266,
+                "network_usage": 1399221.6750997745,
+                "accelerator_usage": null,
+                "wattage": 40263943.0,
+                "processes": 373
+            },
+            {
+                "metric_id": "__knode4",
+                "timestamp": "Sat Dec  3 11:23:47 2022",
+                "cpu_usage": 2.983333332619324,
+                "memory_usage": 0.37220151957258885,
+                "network_usage": 28112.93978658574,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode5",
+                "timestamp": "Sat Dec  3 11:23:47 2022",
+                "cpu_usage": 9.695833332370967,
+                "memory_usage": 0.11940361756375939,
+                "network_usage": 10314442.317498218,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode1",
+                "timestamp": "Sat Dec  3 11:23:47 2022",
+                "cpu_usage": 10.014583333340852,
+                "memory_usage": 0.5140830967741935,
+                "network_usage": 338306.515583915,
+                "accelerator_usage": null,
+                "wattage": 39827209.0,
+                "processes": 277
+            },
+            {
+                "metric_id": "__knode2",
+                "timestamp": "Sat Dec  3 11:23:47 2022",
+                "cpu_usage": 3.196666666306541,
+                "memory_usage": 0.1810528001178266,
+                "network_usage": 1388148.0000204258,
+                "accelerator_usage": null,
+                "wattage": 40263943.0,
+                "processes": 373
+            },
+            {
+                "metric_id": "__knode4",
+                "timestamp": "Sat Dec  3 11:23:49 2022",
+                "cpu_usage": 2.983333332619324,
+                "memory_usage": 0.37220151957258885,
+                "network_usage": 27646.526003150102,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode5",
+                "timestamp": "Sat Dec  3 11:23:49 2022",
+                "cpu_usage": 9.695833332370967,
+                "memory_usage": 0.11940361756375939,
+                "network_usage": 10314442.516263962,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode1",
+                "timestamp": "Sat Dec  3 11:23:49 2022",
+                "cpu_usage": 10.014583333340852,
+                "memory_usage": 0.5140830967741935,
+                "network_usage": 338306.515583915,
+                "accelerator_usage": null,
+                "wattage": 39827209.0,
+                "processes": 277
+            },
+            {
+                "metric_id": "__knode2",
+                "timestamp": "Sat Dec  3 11:23:49 2022",
+                "cpu_usage": 3.196666666306541,
+                "memory_usage": 0.1810528001178266,
+                "network_usage": 1729479.2469025326,
+                "accelerator_usage": null,
+                "wattage": 40263943.0,
+                "processes": 373
+            },
+            {
+                "metric_id": "__knode4",
+                "timestamp": "Sat Dec  3 11:23:51 2022",
+                "cpu_usage": 2.983333332619324,
+                "memory_usage": 0.37220151957258885,
+                "network_usage": 25882.64719182915,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode5",
+                "timestamp": "Sat Dec  3 11:23:51 2022",
+                "cpu_usage": 9.695833332370967,
+                "memory_usage": 0.11940361756375939,
+                "network_usage": 10314442.71522101,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode1",
+                "timestamp": "Sat Dec  3 11:23:51 2022",
+                "cpu_usage": 10.014583333340852,
+                "memory_usage": 0.5140830967741935,
+                "network_usage": 311845.6162694064,
+                "accelerator_usage": null,
+                "wattage": 39827209.0,
+                "processes": 277
+            },
+            {
+                "metric_id": "__knode2",
+                "timestamp": "Sat Dec  3 11:23:51 2022",
+                "cpu_usage": 3.196666666306541,
+                "memory_usage": 0.1810528001178266,
+                "network_usage": 1729479.2469025326,
+                "accelerator_usage": null,
+                "wattage": 40263943.0,
+                "processes": 373
+            },
+            {
+                "metric_id": "__knode4",
+                "timestamp": "Sat Dec  3 11:23:53 2022",
+                "cpu_usage": 2.983333332619324,
+                "memory_usage": 0.37220151957258885,
+                "network_usage": 57418.83648284085,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode5",
+                "timestamp": "Sat Dec  3 11:23:53 2022",
+                "cpu_usage": 9.695833332370967,
+                "memory_usage": 0.11940361756375939,
+                "network_usage": 10314442.913986754,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode1",
+                "timestamp": "Sat Dec  3 11:23:53 2022",
+                "cpu_usage": 10.014583333340852,
+                "memory_usage": 0.5140830967741935,
+                "network_usage": 311771.31807424844,
+                "accelerator_usage": null,
+                "wattage": 39827209.0,
+                "processes": 277
+            },
+            {
+                "metric_id": "__knode2",
+                "timestamp": "Sat Dec  3 11:23:53 2022",
+                "cpu_usage": 3.196666666306541,
+                "memory_usage": 0.1810528001178266,
+                "network_usage": 1729479.2469025326,
+                "accelerator_usage": null,
+                "wattage": 40263943.0,
+                "processes": 373
+            },
+            {
+                "metric_id": "__knode4",
+                "timestamp": "Sat Dec  3 11:23:55 2022",
+                "cpu_usage": 2.983333332619324,
+                "memory_usage": 0.37220151957258885,
+                "network_usage": 57418.83648284087,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode5",
+                "timestamp": "Sat Dec  3 11:23:55 2022",
+                "cpu_usage": 9.695833332370967,
+                "memory_usage": 0.11940361756375939,
+                "network_usage": 10314443.112943804,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode1",
+                "timestamp": "Sat Dec  3 11:23:55 2022",
+                "cpu_usage": 10.014583333340852,
+                "memory_usage": 0.5140830967741935,
+                "network_usage": 311696.94836975913,
+                "accelerator_usage": null,
+                "wattage": 39827209.0,
+                "processes": 277
+            },
+            {
+                "metric_id": "__knode2",
+                "timestamp": "Sat Dec  3 11:23:55 2022",
+                "cpu_usage": 3.196666666306541,
+                "memory_usage": 0.1810528001178266,
+                "network_usage": 1729479.2469025326,
+                "accelerator_usage": null,
+                "wattage": 40263943.0,
+                "processes": 373
+            },
+            {
+                "metric_id": "__knode4",
+                "timestamp": "Sat Dec  3 11:23:57 2022",
+                "cpu_usage": 2.983333332619324,
+                "memory_usage": 0.37220151957258885,
+                "network_usage": 57418.83648284087,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode5",
+                "timestamp": "Sat Dec  3 11:23:57 2022",
+                "cpu_usage": 9.695833332370967,
+                "memory_usage": 0.11940361756375939,
+                "network_usage": 10806152.262175675,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode1",
+                "timestamp": "Sat Dec  3 11:23:57 2022",
+                "cpu_usage": 10.05208333332422,
+                "memory_usage": 0.5140283263757116,
+                "network_usage": 321629.2568307038,
+                "accelerator_usage": null,
+                "wattage": 39827209.0,
+                "processes": 277
+            },
+            {
+                "metric_id": "__knode2",
+                "timestamp": "Sat Dec  3 11:23:57 2022",
+                "cpu_usage": 3.196666666306541,
+                "memory_usage": 0.1810528001178266,
+                "network_usage": 1729479.2469025326,
+                "accelerator_usage": null,
+                "wattage": 40263943.0,
+                "processes": 373
+            },
+            {
+                "metric_id": "__knode4",
+                "timestamp": "Sat Dec  3 11:24:00 2022",
+                "cpu_usage": 2.983333332619324,
+                "memory_usage": 0.37220151957258885,
+                "network_usage": 57418.83648284085,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode5",
+                "timestamp": "Sat Dec  3 11:24:00 2022",
+                "cpu_usage": 9.695833332370967,
+                "memory_usage": 0.11940361756375939,
+                "network_usage": 10657135.63058621,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode1",
+                "timestamp": "Sat Dec  3 11:24:00 2022",
+                "cpu_usage": 10.05208333332422,
+                "memory_usage": 0.5140283263757116,
+                "network_usage": 320056.3856063903,
+                "accelerator_usage": null,
+                "wattage": 39827209.0,
+                "processes": 277
+            },
+            {
+                "metric_id": "__knode2",
+                "timestamp": "Sat Dec  3 11:24:00 2022",
+                "cpu_usage": 3.196666666306541,
+                "memory_usage": 0.1810528001178266,
+                "network_usage": 1729479.2469025326,
+                "accelerator_usage": null,
+                "wattage": 40263943.0,
+                "processes": 373
+            },
+            {
+                "metric_id": "__knode4",
+                "timestamp": "Sat Dec  3 11:24:02 2022",
+                "cpu_usage": 2.983333332619324,
+                "memory_usage": 0.37220151957258885,
+                "network_usage": 57418.83648284085,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode5",
+                "timestamp": "Sat Dec  3 11:24:02 2022",
+                "cpu_usage": 9.695833332370967,
+                "memory_usage": 0.11940361756375939,
+                "network_usage": 11738601.170927055,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode1",
+                "timestamp": "Sat Dec  3 11:24:02 2022",
+                "cpu_usage": 10.05208333332422,
+                "memory_usage": 0.5140283263757116,
+                "network_usage": 318384.2802595364,
+                "accelerator_usage": null,
+                "wattage": 39827209.0,
+                "processes": 277
+            },
+            {
+                "metric_id": "__knode2",
+                "timestamp": "Sat Dec  3 11:24:02 2022",
+                "cpu_usage": 3.196666666306541,
+                "memory_usage": 0.1810528001178266,
+                "network_usage": 1729479.2469025326,
+                "accelerator_usage": null,
+                "wattage": 40263943.0,
+                "processes": 373
+            },
+            {
+                "metric_id": "__knode4",
+                "timestamp": "Sat Dec  3 11:24:04 2022",
+                "cpu_usage": 3.416666666356221,
+                "memory_usage": 0.3671031555351736,
+                "network_usage": 57418.83648284085,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode5",
+                "timestamp": "Sat Dec  3 11:24:04 2022",
+                "cpu_usage": 9.695833332370967,
+                "memory_usage": 0.11940361756375939,
+                "network_usage": 12958114.579630893,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode1",
+                "timestamp": "Sat Dec  3 11:24:04 2022",
+                "cpu_usage": 10.05208333332422,
+                "memory_usage": 0.5140283263757116,
+                "network_usage": 303819.46328643634,
+                "accelerator_usage": null,
+                "wattage": 39827209.0,
+                "processes": 277
+            },
+            {
+                "metric_id": "__knode2",
+                "timestamp": "Sat Dec  3 11:24:04 2022",
+                "cpu_usage": 3.196666666306541,
+                "memory_usage": 0.1810528001178266,
+                "network_usage": 1753023.028838092,
+                "accelerator_usage": null,
+                "wattage": 40263943.0,
+                "processes": 373
+            },
+            {
+                "metric_id": "__knode4",
+                "timestamp": "Sat Dec  3 11:24:06 2022",
+                "cpu_usage": 3.416666666356221,
+                "memory_usage": 0.3671031555351736,
+                "network_usage": 57418.83648284085,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode5",
+                "timestamp": "Sat Dec  3 11:24:06 2022",
+                "cpu_usage": 9.695833332370967,
+                "memory_usage": 0.11940361756375939,
+                "network_usage": 12901974.25383997,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode1",
+                "timestamp": "Sat Dec  3 11:24:06 2022",
+                "cpu_usage": 10.05208333332422,
+                "memory_usage": 0.5140283263757116,
+                "network_usage": 298343.47786243336,
+                "accelerator_usage": null,
+                "wattage": 39827209.0,
+                "processes": 277
+            },
+            {
+                "metric_id": "__knode2",
+                "timestamp": "Sat Dec  3 11:24:06 2022",
+                "cpu_usage": 3.196666666306541,
+                "memory_usage": 0.1810528001178266,
+                "network_usage": 1682440.6580086986,
+                "accelerator_usage": null,
+                "wattage": 40263943.0,
+                "processes": 373
+            },
+            {
+                "metric_id": "__knode4",
+                "timestamp": "Sat Dec  3 11:24:08 2022",
+                "cpu_usage": 3.416666666356221,
+                "memory_usage": 0.3671031555351736,
+                "network_usage": 57118.41933816469,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode5",
+                "timestamp": "Sat Dec  3 11:24:08 2022",
+                "cpu_usage": 9.695833332370967,
+                "memory_usage": 0.11940361756375939,
+                "network_usage": 12289119.373697432,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode1",
+                "timestamp": "Sat Dec  3 11:24:08 2022",
+                "cpu_usage": 10.05208333332422,
+                "memory_usage": 0.5140283263757116,
+                "network_usage": 293740.012406344,
+                "accelerator_usage": null,
+                "wattage": 39827209.0,
+                "processes": 277
+            },
+            {
+                "metric_id": "__knode2",
+                "timestamp": "Sat Dec  3 11:24:08 2022",
+                "cpu_usage": 3.196666666306541,
+                "memory_usage": 0.1810528001178266,
+                "network_usage": 1699098.7224954728,
+                "accelerator_usage": null,
+                "wattage": 40263943.0,
+                "processes": 373
+            },
+            {
+                "metric_id": "__knode4",
+                "timestamp": "Sat Dec  3 11:24:10 2022",
+                "cpu_usage": 3.416666666356221,
+                "memory_usage": 0.3671031555351736,
+                "network_usage": 57080.39800699064,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode5",
+                "timestamp": "Sat Dec  3 11:24:10 2022",
+                "cpu_usage": 9.695833332370967,
+                "memory_usage": 0.11940361756375939,
+                "network_usage": 11631129.636803262,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode1",
+                "timestamp": "Sat Dec  3 11:24:10 2022",
+                "cpu_usage": 10.05208333332422,
+                "memory_usage": 0.5140283263757116,
+                "network_usage": 325784.2633644724,
+                "accelerator_usage": null,
+                "wattage": 39827209.0,
+                "processes": 277
+            },
+            {
+                "metric_id": "__knode2",
+                "timestamp": "Sat Dec  3 11:24:10 2022",
+                "cpu_usage": 3.196666666306541,
+                "memory_usage": 0.1810528001178266,
+                "network_usage": 1701496.8905718667,
+                "accelerator_usage": null,
+                "wattage": 40263943.0,
+                "processes": 373
+            },
+            {
+                "metric_id": "__knode4",
+                "timestamp": "Sat Dec  3 11:24:12 2022",
+                "cpu_usage": 3.416666666356221,
+                "memory_usage": 0.3671031555351736,
+                "network_usage": 58638.35897241191,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode5",
+                "timestamp": "Sat Dec  3 11:24:12 2022",
+                "cpu_usage": 9.695833332370967,
+                "memory_usage": 0.11940361756375939,
+                "network_usage": 9976483.136919789,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode1",
+                "timestamp": "Sat Dec  3 11:24:12 2022",
+                "cpu_usage": 10.05208333332422,
+                "memory_usage": 0.5140283263757116,
+                "network_usage": 325784.2633644724,
+                "accelerator_usage": null,
+                "wattage": 36643897.0,
+                "processes": 278
+            },
+            {
+                "metric_id": "__knode2",
+                "timestamp": "Sat Dec  3 11:24:12 2022",
+                "cpu_usage": 3.196666666306541,
+                "memory_usage": 0.1810528001178266,
+                "network_usage": 1625554.5088992617,
+                "accelerator_usage": null,
+                "wattage": 36590511.0,
+                "processes": 373
+            },
+            {
+                "metric_id": "__knode4",
+                "timestamp": "Sat Dec  3 11:24:14 2022",
+                "cpu_usage": 3.416666666356221,
+                "memory_usage": 0.3671031555351736,
+                "network_usage": 63025.63861423531,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode5",
+                "timestamp": "Sat Dec  3 11:24:14 2022",
+                "cpu_usage": 9.695833332370967,
+                "memory_usage": 0.11940361756375939,
+                "network_usage": 9976484.705222972,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode1",
+                "timestamp": "Sat Dec  3 11:24:14 2022",
+                "cpu_usage": 10.05208333332422,
+                "memory_usage": 0.5140283263757116,
+                "network_usage": 325784.2633644723,
+                "accelerator_usage": null,
+                "wattage": 36643897.0,
+                "processes": 278
+            },
+            {
+                "metric_id": "__knode2",
+                "timestamp": "Sat Dec  3 11:24:14 2022",
+                "cpu_usage": 3.223333333463728,
+                "memory_usage": 0.1811254549174193,
+                "network_usage": 1607216.7681864775,
+                "accelerator_usage": null,
+                "wattage": 36590511.0,
+                "processes": 373
+            },
+            {
+                "metric_id": "__knode4",
+                "timestamp": "Sat Dec  3 11:24:16 2022",
+                "cpu_usage": 3.416666666356221,
+                "memory_usage": 0.3671031555351736,
+                "network_usage": 59984.42223915213,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode5",
+                "timestamp": "Sat Dec  3 11:24:16 2022",
+                "cpu_usage": 8.391666667691126,
+                "memory_usage": 0.11645526583752697,
+                "network_usage": 9976486.266029486,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode1",
+                "timestamp": "Sat Dec  3 11:24:16 2022",
+                "cpu_usage": 10.05208333332422,
+                "memory_usage": 0.5140283263757116,
+                "network_usage": 325784.2633644723,
+                "accelerator_usage": null,
+                "wattage": 36643897.0,
+                "processes": 278
+            },
+            {
+                "metric_id": "__knode2",
+                "timestamp": "Sat Dec  3 11:24:16 2022",
+                "cpu_usage": 3.223333333463728,
+                "memory_usage": 0.1811254549174193,
+                "network_usage": 1591178.8991994723,
+                "accelerator_usage": null,
+                "wattage": 36590511.0,
+                "processes": 373
+            },
+            {
+                "metric_id": "__knode4",
+                "timestamp": "Sat Dec  3 11:24:18 2022",
+                "cpu_usage": 3.416666666356221,
+                "memory_usage": 0.3671031555351736,
+                "network_usage": 61969.87806842404,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode5",
+                "timestamp": "Sat Dec  3 11:24:18 2022",
+                "cpu_usage": 8.391666667691126,
+                "memory_usage": 0.11645526583752697,
+                "network_usage": 9976487.829834668,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode1",
+                "timestamp": "Sat Dec  3 11:24:18 2022",
+                "cpu_usage": 10.05208333332422,
+                "memory_usage": 0.5140283263757116,
+                "network_usage": 325784.2633644723,
+                "accelerator_usage": null,
+                "wattage": 36643897.0,
+                "processes": 278
+            },
+            {
+                "metric_id": "__knode2",
+                "timestamp": "Sat Dec  3 11:24:18 2022",
+                "cpu_usage": 3.223333333463728,
+                "memory_usage": 0.1811254549174193,
+                "network_usage": 1864192.1372519862,
+                "accelerator_usage": null,
+                "wattage": 36590511.0,
+                "processes": 373
+            },
+            {
+                "metric_id": "__knode4",
+                "timestamp": "Sat Dec  3 11:24:20 2022",
+                "cpu_usage": 3.416666666356221,
+                "memory_usage": 0.3671031555351736,
+                "network_usage": 61871.72229991237,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode5",
+                "timestamp": "Sat Dec  3 11:24:20 2022",
+                "cpu_usage": 8.391666667691126,
+                "memory_usage": 0.11645526583752697,
+                "network_usage": 9976489.394389518,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode1",
+                "timestamp": "Sat Dec  3 11:24:20 2022",
+                "cpu_usage": 10.05208333332422,
+                "memory_usage": 0.5140283263757116,
+                "network_usage": 325784.2633644723,
+                "accelerator_usage": null,
+                "wattage": 36643897.0,
+                "processes": 278
+            },
+            {
+                "metric_id": "__knode2",
+                "timestamp": "Sat Dec  3 11:24:20 2022",
+                "cpu_usage": 3.223333333463728,
+                "memory_usage": 0.1811254549174193,
+                "network_usage": 1864192.1372519862,
+                "accelerator_usage": null,
+                "wattage": 36590511.0,
+                "processes": 373
+            },
+            {
+                "metric_id": "__knode4",
+                "timestamp": "Sat Dec  3 11:24:22 2022",
+                "cpu_usage": 3.416666666356221,
+                "memory_usage": 0.3671031555351736,
+                "network_usage": 95895.9407540241,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode5",
+                "timestamp": "Sat Dec  3 11:24:22 2022",
+                "cpu_usage": 8.391666667691126,
+                "memory_usage": 0.11645526583752697,
+                "network_usage": 9976490.960443702,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode1",
+                "timestamp": "Sat Dec  3 11:24:22 2022",
+                "cpu_usage": 10.05208333332422,
+                "memory_usage": 0.5140283263757116,
+                "network_usage": 298750.2039500682,
+                "accelerator_usage": null,
+                "wattage": 36643897.0,
+                "processes": 278
+            },
+            {
+                "metric_id": "__knode2",
+                "timestamp": "Sat Dec  3 11:24:22 2022",
+                "cpu_usage": 3.223333333463728,
+                "memory_usage": 0.1811254549174193,
+                "network_usage": 1864192.1372519862,
+                "accelerator_usage": null,
+                "wattage": 36590511.0,
+                "processes": 373
+            },
+            {
+                "metric_id": "__knode4",
+                "timestamp": "Sat Dec  3 11:24:25 2022",
+                "cpu_usage": 3.416666666356221,
+                "memory_usage": 0.3671031555351736,
+                "network_usage": 95903.92999930526,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode5",
+                "timestamp": "Sat Dec  3 11:24:25 2022",
+                "cpu_usage": 8.391666667691126,
+                "memory_usage": 0.11645526583752697,
+                "network_usage": 9976492.521250214,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode1",
+                "timestamp": "Sat Dec  3 11:24:25 2022",
+                "cpu_usage": 10.05208333332422,
+                "memory_usage": 0.5140283263757116,
+                "network_usage": 297477.55299512163,
+                "accelerator_usage": null,
+                "wattage": 36643897.0,
+                "processes": 278
+            },
+            {
+                "metric_id": "__knode2",
+                "timestamp": "Sat Dec  3 11:24:25 2022",
+                "cpu_usage": 3.223333333463728,
+                "memory_usage": 0.1811254549174193,
+                "network_usage": 1864192.1372519864,
+                "accelerator_usage": null,
+                "wattage": 36590511.0,
+                "processes": 373
+            },
+            {
+                "metric_id": "__knode4",
+                "timestamp": "Sat Dec  3 11:24:27 2022",
+                "cpu_usage": 3.416666666356221,
+                "memory_usage": 0.3671031555351736,
+                "network_usage": 95911.9192445864,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode5",
+                "timestamp": "Sat Dec  3 11:24:27 2022",
+                "cpu_usage": 8.391666667691126,
+                "memory_usage": 0.11645526583752697,
+                "network_usage": 9617189.422364453,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode1",
+                "timestamp": "Sat Dec  3 11:24:27 2022",
+                "cpu_usage": 10.035416666684483,
+                "memory_usage": 0.513993229601518,
+                "network_usage": 297459.8516253544,
+                "accelerator_usage": null,
+                "wattage": 36643897.0,
+                "processes": 278
+            },
+            {
+                "metric_id": "__knode2",
+                "timestamp": "Sat Dec  3 11:24:27 2022",
+                "cpu_usage": 3.223333333463728,
+                "memory_usage": 0.1811254549174193,
+                "network_usage": 1864192.1372519862,
+                "accelerator_usage": null,
+                "wattage": 36590511.0,
+                "processes": 373
+            },
+            {
+                "metric_id": "__knode4",
+                "timestamp": "Sat Dec  3 11:24:29 2022",
+                "cpu_usage": 3.416666666356221,
+                "memory_usage": 0.3671031555351736,
+                "network_usage": 95919.90848986756,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode5",
+                "timestamp": "Sat Dec  3 11:24:29 2022",
+                "cpu_usage": 8.391666667691126,
+                "memory_usage": 0.11645526583752697,
+                "network_usage": 9187166.777919928,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode1",
+                "timestamp": "Sat Dec  3 11:24:29 2022",
+                "cpu_usage": 10.035416666684483,
+                "memory_usage": 0.513993229601518,
+                "network_usage": 297562.16702673107,
+                "accelerator_usage": null,
+                "wattage": 36643897.0,
+                "processes": 278
+            },
+            {
+                "metric_id": "__knode2",
+                "timestamp": "Sat Dec  3 11:24:29 2022",
+                "cpu_usage": 3.223333333463728,
+                "memory_usage": 0.1811254549174193,
+                "network_usage": 1790035.2108668082,
+                "accelerator_usage": null,
+                "wattage": 36590511.0,
+                "processes": 373
+            },
+            {
+                "metric_id": "__knode4",
+                "timestamp": "Sat Dec  3 11:24:31 2022",
+                "cpu_usage": 3.416666666356221,
+                "memory_usage": 0.3671031555351736,
+                "network_usage": 95927.90157244232,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode5",
+                "timestamp": "Sat Dec  3 11:24:31 2022",
+                "cpu_usage": 8.391666667691126,
+                "memory_usage": 0.11645526583752697,
+                "network_usage": 9096022.205003858,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode1",
+                "timestamp": "Sat Dec  3 11:24:31 2022",
+                "cpu_usage": 10.035416666684483,
+                "memory_usage": 0.513993229601518,
+                "network_usage": 283781.8608447501,
+                "accelerator_usage": null,
+                "wattage": 36643897.0,
+                "processes": 278
+            },
+            {
+                "metric_id": "__knode2",
+                "timestamp": "Sat Dec  3 11:24:31 2022",
+                "cpu_usage": 3.223333333463728,
+                "memory_usage": 0.1811254549174193,
+                "network_usage": 1797972.0685933908,
+                "accelerator_usage": null,
+                "wattage": 36590511.0,
+                "processes": 373
+            },
+            {
+                "metric_id": "__knode4",
+                "timestamp": "Sat Dec  3 11:24:33 2022",
+                "cpu_usage": 17.699999999798223,
+                "memory_usage": 0.2887526445906416,
+                "network_usage": 95935.90616689788,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode5",
+                "timestamp": "Sat Dec  3 11:24:33 2022",
+                "cpu_usage": 8.391666667691126,
+                "memory_usage": 0.11645526583752697,
+                "network_usage": 9005975.534432523,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode1",
+                "timestamp": "Sat Dec  3 11:24:33 2022",
+                "cpu_usage": 10.035416666684483,
+                "memory_usage": 0.513993229601518,
+                "network_usage": 270701.7297649373,
+                "accelerator_usage": null,
+                "wattage": 36643897.0,
+                "processes": 278
+            },
+            {
+                "metric_id": "__knode2",
+                "timestamp": "Sat Dec  3 11:24:33 2022",
+                "cpu_usage": 3.223333333463728,
+                "memory_usage": 0.1811254549174193,
+                "network_usage": 1866372.3678852743,
+                "accelerator_usage": null,
+                "wattage": 36590511.0,
+                "processes": 373
+            },
+            {
+                "metric_id": "__knode4",
+                "timestamp": "Sat Dec  3 11:24:35 2022",
+                "cpu_usage": 17.699999999798223,
+                "memory_usage": 0.2887526445906416,
+                "network_usage": 95943.89541217904,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode5",
+                "timestamp": "Sat Dec  3 11:24:35 2022",
+                "cpu_usage": 8.391666667691126,
+                "memory_usage": 0.11645526583752697,
+                "network_usage": 7119911.3252080325,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode1",
+                "timestamp": "Sat Dec  3 11:24:35 2022",
+                "cpu_usage": 10.035416666684483,
+                "memory_usage": 0.513993229601518,
+                "network_usage": 268159.04270419566,
+                "accelerator_usage": null,
+                "wattage": 36643897.0,
+                "processes": 278
+            },
+            {
+                "metric_id": "__knode2",
+                "timestamp": "Sat Dec  3 11:24:35 2022",
+                "cpu_usage": 3.223333333463728,
+                "memory_usage": 0.1811254549174193,
+                "network_usage": 1872765.5587288737,
+                "accelerator_usage": null,
+                "wattage": 36590511.0,
+                "processes": 373
+            },
+            {
+                "metric_id": "__knode4",
+                "timestamp": "Sat Dec  3 11:24:37 2022",
+                "cpu_usage": 17.699999999798223,
+                "memory_usage": 0.2887526445906416,
+                "network_usage": 95951.93454227703,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode5",
+                "timestamp": "Sat Dec  3 11:24:37 2022",
+                "cpu_usage": 8.391666667691126,
+                "memory_usage": 0.11645526583752697,
+                "network_usage": 6238765.791142742,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode1",
+                "timestamp": "Sat Dec  3 11:24:37 2022",
+                "cpu_usage": 10.035416666684483,
+                "memory_usage": 0.513993229601518,
+                "network_usage": 265291.8159088515,
+                "accelerator_usage": null,
+                "wattage": 36643897.0,
+                "processes": 278
+            },
+            {
+                "metric_id": "__knode2",
+                "timestamp": "Sat Dec  3 11:24:37 2022",
+                "cpu_usage": 3.223333333463728,
+                "memory_usage": 0.1811254549174193,
+                "network_usage": 1811268.032966121,
+                "accelerator_usage": null,
+                "wattage": 36590511.0,
+                "processes": 373
+            },
+            {
+                "metric_id": "__knode4",
+                "timestamp": "Sat Dec  3 11:24:39 2022",
+                "cpu_usage": 17.699999999798223,
+                "memory_usage": 0.2887526445906416,
+                "network_usage": 96650.84925839903,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode5",
+                "timestamp": "Sat Dec  3 11:24:39 2022",
+                "cpu_usage": 8.391666667691126,
+                "memory_usage": 0.11645526583752697,
+                "network_usage": 5853026.697523476,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode1",
+                "timestamp": "Sat Dec  3 11:24:39 2022",
+                "cpu_usage": 10.035416666684483,
+                "memory_usage": 0.513993229601518,
+                "network_usage": 326864.1327339327,
+                "accelerator_usage": null,
+                "wattage": 36643897.0,
+                "processes": 278
+            },
+            {
+                "metric_id": "__knode2",
+                "timestamp": "Sat Dec  3 11:24:39 2022",
+                "cpu_usage": 3.223333333463728,
+                "memory_usage": 0.1811254549174193,
+                "network_usage": 1825711.3056301405,
+                "accelerator_usage": null,
+                "wattage": 36590511.0,
+                "processes": 373
+            },
+            {
+                "metric_id": "__knode4",
+                "timestamp": "Sat Dec  3 11:24:41 2022",
+                "cpu_usage": 17.699999999798223,
+                "memory_usage": 0.2887526445906416,
+                "network_usage": 99403.0626115063,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode5",
+                "timestamp": "Sat Dec  3 11:24:41 2022",
+                "cpu_usage": 8.391666667691126,
+                "memory_usage": 0.11645526583752697,
+                "network_usage": 5339145.732972047,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode1",
+                "timestamp": "Sat Dec  3 11:24:41 2022",
+                "cpu_usage": 10.035416666684483,
+                "memory_usage": 0.513993229601518,
+                "network_usage": 326864.1327339327,
+                "accelerator_usage": null,
+                "wattage": 39793565.0,
+                "processes": 278
+            },
+            {
+                "metric_id": "__knode2",
+                "timestamp": "Sat Dec  3 11:24:41 2022",
+                "cpu_usage": 3.223333333463728,
+                "memory_usage": 0.1811254549174193,
+                "network_usage": 1842421.5140788632,
+                "accelerator_usage": null,
+                "wattage": 39807095.0,
+                "processes": 373
+            },
+            {
+                "metric_id": "__knode4",
+                "timestamp": "Sat Dec  3 11:24:43 2022",
+                "cpu_usage": 17.699999999798223,
+                "memory_usage": 0.2887526445906416,
+                "network_usage": 99387.90181606468,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode5",
+                "timestamp": "Sat Dec  3 11:24:43 2022",
+                "cpu_usage": 8.391666667691126,
+                "memory_usage": 0.11645526583752697,
+                "network_usage": 5339148.07000192,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode1",
+                "timestamp": "Sat Dec  3 11:24:43 2022",
+                "cpu_usage": 10.035416666684483,
+                "memory_usage": 0.513993229601518,
+                "network_usage": 326864.1327339327,
+                "accelerator_usage": null,
+                "wattage": 39793565.0,
+                "processes": 278
+            },
+            {
+                "metric_id": "__knode2",
+                "timestamp": "Sat Dec  3 11:24:43 2022",
+                "cpu_usage": 3.223333333463728,
+                "memory_usage": 0.1811254549174193,
+                "network_usage": 1788969.6639920056,
+                "accelerator_usage": null,
+                "wattage": 39807095.0,
+                "processes": 373
+            },
+            {
+                "metric_id": "__knode4",
+                "timestamp": "Sat Dec  3 11:24:45 2022",
+                "cpu_usage": 17.699999999798223,
+                "memory_usage": 0.2887526445906416,
+                "network_usage": 112693.33834935978,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode5",
+                "timestamp": "Sat Dec  3 11:24:45 2022",
+                "cpu_usage": 19.312499999068677,
+                "memory_usage": 0.07933954583303601,
+                "network_usage": 5339149.826811139,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode1",
+                "timestamp": "Sat Dec  3 11:24:45 2022",
+                "cpu_usage": 10.035416666684483,
+                "memory_usage": 0.513993229601518,
+                "network_usage": 326864.13273393275,
+                "accelerator_usage": null,
+                "wattage": 39793565.0,
+                "processes": 278
+            },
+            {
+                "metric_id": "__knode2",
+                "timestamp": "Sat Dec  3 11:24:45 2022",
+                "cpu_usage": 3.1783333336934447,
+                "memory_usage": 0.18104268518817193,
+                "network_usage": 1852917.9536705974,
+                "accelerator_usage": null,
+                "wattage": 39807095.0,
+                "processes": 373
+            },
+            {
+                "metric_id": "__knode4",
+                "timestamp": "Sat Dec  3 11:24:48 2022",
+                "cpu_usage": 17.699999999798223,
+                "memory_usage": 0.2887526445906416,
+                "network_usage": 115694.65236344702,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode5",
+                "timestamp": "Sat Dec  3 11:24:48 2022",
+                "cpu_usage": 19.312499999068677,
+                "memory_usage": 0.07933954583303601,
+                "network_usage": 5339151.589529854,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode1",
+                "timestamp": "Sat Dec  3 11:24:48 2022",
+                "cpu_usage": 10.035416666684483,
+                "memory_usage": 0.513993229601518,
+                "network_usage": 326864.1327339327,
+                "accelerator_usage": null,
+                "wattage": 39793565.0,
+                "processes": 278
+            },
+            {
+                "metric_id": "__knode2",
+                "timestamp": "Sat Dec  3 11:24:48 2022",
+                "cpu_usage": 3.1783333336934447,
+                "memory_usage": 0.18104268518817193,
+                "network_usage": 1877936.7869572588,
+                "accelerator_usage": null,
+                "wattage": 39807095.0,
+                "processes": 373
+            },
+            {
+                "metric_id": "__knode4",
+                "timestamp": "Sat Dec  3 11:24:50 2022",
+                "cpu_usage": 17.699999999798223,
+                "memory_usage": 0.2887526445906416,
+                "network_usage": 105457.09367016151,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode5",
+                "timestamp": "Sat Dec  3 11:24:50 2022",
+                "cpu_usage": 19.312499999068677,
+                "memory_usage": 0.07933954583303601,
+                "network_usage": 5339153.348871714,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode1",
+                "timestamp": "Sat Dec  3 11:24:50 2022",
+                "cpu_usage": 10.035416666684483,
+                "memory_usage": 0.513993229601518,
+                "network_usage": 326864.1327339327,
+                "accelerator_usage": null,
+                "wattage": 39793565.0,
+                "processes": 278
+            },
+            {
+                "metric_id": "__knode2",
+                "timestamp": "Sat Dec  3 11:24:50 2022",
+                "cpu_usage": 3.1783333336934447,
+                "memory_usage": 0.18104268518817193,
+                "network_usage": 1906795.3972473596,
+                "accelerator_usage": null,
+                "wattage": 39807095.0,
+                "processes": 373
+            },
+            {
+                "metric_id": "__knode4",
+                "timestamp": "Sat Dec  3 11:24:52 2022",
+                "cpu_usage": 17.699999999798223,
+                "memory_usage": 0.2887526445906416,
+                "network_usage": 103419.96118659595,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode5",
+                "timestamp": "Sat Dec  3 11:24:52 2022",
+                "cpu_usage": 19.312499999068677,
+                "memory_usage": 0.07933954583303601,
+                "network_usage": 4169532.382079861,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode1",
+                "timestamp": "Sat Dec  3 11:24:52 2022",
+                "cpu_usage": 10.035416666684483,
+                "memory_usage": 0.513993229601518,
+                "network_usage": 326864.1327339327,
+                "accelerator_usage": null,
+                "wattage": 39793565.0,
+                "processes": 278
+            },
+            {
+                "metric_id": "__knode2",
+                "timestamp": "Sat Dec  3 11:24:52 2022",
+                "cpu_usage": 3.1783333336934447,
+                "memory_usage": 0.18104268518817193,
+                "network_usage": 1906795.3972473596,
+                "accelerator_usage": null,
+                "wattage": 39807095.0,
+                "processes": 373
+            },
+            {
+                "metric_id": "__knode4",
+                "timestamp": "Sat Dec  3 11:24:54 2022",
+                "cpu_usage": 17.699999999798223,
+                "memory_usage": 0.2887526445906416,
+                "network_usage": 2020659.9938393089,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode5",
+                "timestamp": "Sat Dec  3 11:24:54 2022",
+                "cpu_usage": 19.312499999068677,
+                "memory_usage": 0.07933954583303601,
+                "network_usage": 4116711.780062134,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode1",
+                "timestamp": "Sat Dec  3 11:24:54 2022",
+                "cpu_usage": 10.035416666684483,
+                "memory_usage": 0.513993229601518,
+                "network_usage": 326864.1327339327,
+                "accelerator_usage": null,
+                "wattage": 39793565.0,
+                "processes": 278
+            },
+            {
+                "metric_id": "__knode2",
+                "timestamp": "Sat Dec  3 11:24:54 2022",
+                "cpu_usage": 3.1783333336934447,
+                "memory_usage": 0.18104268518817193,
+                "network_usage": 1906795.3972473596,
+                "accelerator_usage": null,
+                "wattage": 39807095.0,
+                "processes": 373
+            },
+            {
+                "metric_id": "__knode4",
+                "timestamp": "Sat Dec  3 11:24:56 2022",
+                "cpu_usage": 17.699999999798223,
+                "memory_usage": 0.2887526445906416,
+                "network_usage": 2065689.3369682867,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode5",
+                "timestamp": "Sat Dec  3 11:24:56 2022",
+                "cpu_usage": 19.312499999068677,
+                "memory_usage": 0.07933954583303601,
+                "network_usage": 4116713.212636583,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode1",
+                "timestamp": "Sat Dec  3 11:24:56 2022",
+                "cpu_usage": 10.035416666684483,
+                "memory_usage": 0.513993229601518,
+                "network_usage": 326698.6879445835,
+                "accelerator_usage": null,
+                "wattage": 39793565.0,
+                "processes": 278
+            },
+            {
+                "metric_id": "__knode2",
+                "timestamp": "Sat Dec  3 11:24:56 2022",
+                "cpu_usage": 3.1783333336934447,
+                "memory_usage": 0.18104268518817193,
+                "network_usage": 1906795.3972473596,
+                "accelerator_usage": null,
+                "wattage": 39807095.0,
+                "processes": 373
+            },
+            {
+                "metric_id": "__knode4",
+                "timestamp": "Sat Dec  3 11:24:58 2022",
+                "cpu_usage": 17.699999999798223,
+                "memory_usage": 0.2887526445906416,
+                "network_usage": 2110247.840958083,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode5",
+                "timestamp": "Sat Dec  3 11:24:58 2022",
+                "cpu_usage": 19.312499999068677,
+                "memory_usage": 0.07933954583303601,
+                "network_usage": 4111312.915744974,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode1",
+                "timestamp": "Sat Dec  3 11:24:58 2022",
+                "cpu_usage": 10.033333333334042,
+                "memory_usage": 0.5028827324478178,
+                "network_usage": 326698.6879445835,
+                "accelerator_usage": null,
+                "wattage": 39793565.0,
+                "processes": 278
+            },
+            {
+                "metric_id": "__knode2",
+                "timestamp": "Sat Dec  3 11:24:58 2022",
+                "cpu_usage": 3.1783333336934447,
+                "memory_usage": 0.18104268518817193,
+                "network_usage": 1906795.3972473596,
+                "accelerator_usage": null,
+                "wattage": 39807095.0,
+                "processes": 373
+            },
+            {
+                "metric_id": "__knode4",
+                "timestamp": "Sat Dec  3 11:25:00 2022",
+                "cpu_usage": 17.699999999798223,
+                "memory_usage": 0.2887526445906416,
+                "network_usage": 2154870.5502850413,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode5",
+                "timestamp": "Sat Dec  3 11:25:00 2022",
+                "cpu_usage": 19.312499999068677,
+                "memory_usage": 0.07933954583303601,
+                "network_usage": 3262989.1430689045,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode1",
+                "timestamp": "Sat Dec  3 11:25:00 2022",
+                "cpu_usage": 10.033333333334042,
+                "memory_usage": 0.5028827324478178,
+                "network_usage": 323412.20384526975,
+                "accelerator_usage": null,
+                "wattage": 39793565.0,
+                "processes": 278
+            },
+            {
+                "metric_id": "__knode2",
+                "timestamp": "Sat Dec  3 11:25:00 2022",
+                "cpu_usage": 3.1783333336934447,
+                "memory_usage": 0.18104268518817193,
+                "network_usage": 1906795.3972473596,
+                "accelerator_usage": null,
+                "wattage": 39807095.0,
+                "processes": 373
+            },
+            {
+                "metric_id": "__knode4",
+                "timestamp": "Sat Dec  3 11:25:02 2022",
+                "cpu_usage": 17.699999999798223,
+                "memory_usage": 0.2887526445906416,
+                "network_usage": 2199407.652495784,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode5",
+                "timestamp": "Sat Dec  3 11:25:02 2022",
+                "cpu_usage": 19.312499999068677,
+                "memory_usage": 0.07933954583303601,
+                "network_usage": 3262754.787361476,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode1",
+                "timestamp": "Sat Dec  3 11:25:02 2022",
+                "cpu_usage": 10.033333333334042,
+                "memory_usage": 0.5028827324478178,
+                "network_usage": 323403.4417669823,
+                "accelerator_usage": null,
+                "wattage": 39793565.0,
+                "processes": 278
+            },
+            {
+                "metric_id": "__knode2",
+                "timestamp": "Sat Dec  3 11:25:02 2022",
+                "cpu_usage": 3.1783333336934447,
+                "memory_usage": 0.18104268518817193,
+                "network_usage": 1906160.2161310348,
+                "accelerator_usage": null,
+                "wattage": 39807095.0,
+                "processes": 373
+            },
+            {
+                "metric_id": "__knode4",
+                "timestamp": "Sat Dec  3 11:25:04 2022",
+                "cpu_usage": 27.529166667178885,
+                "memory_usage": 0.2885268786852874,
+                "network_usage": 2244030.361822741,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode5",
+                "timestamp": "Sat Dec  3 11:25:04 2022",
+                "cpu_usage": 19.312499999068677,
+                "memory_usage": 0.07933954583303601,
+                "network_usage": 1417967.3989471744,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode1",
+                "timestamp": "Sat Dec  3 11:25:04 2022",
+                "cpu_usage": 10.033333333334042,
+                "memory_usage": 0.5028827324478178,
+                "network_usage": 323753.0394929905,
+                "accelerator_usage": null,
+                "wattage": 39793565.0,
+                "processes": 278
+            },
+            {
+                "metric_id": "__knode2",
+                "timestamp": "Sat Dec  3 11:25:04 2022",
+                "cpu_usage": 3.1783333336934447,
+                "memory_usage": 0.18104268518817193,
+                "network_usage": 1849509.9405727107,
+                "accelerator_usage": null,
+                "wattage": 39807095.0,
+                "processes": 373
+            },
+            {
+                "metric_id": "__knode4",
+                "timestamp": "Sat Dec  3 11:25:06 2022",
+                "cpu_usage": 27.529166667178885,
+                "memory_usage": 0.2885268786852874,
+                "network_usage": 2288631.669370646,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode5",
+                "timestamp": "Sat Dec  3 11:25:06 2022",
+                "cpu_usage": 19.312499999068677,
+                "memory_usage": 0.07933954583303601,
+                "network_usage": 1424770.1213405547,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode1",
+                "timestamp": "Sat Dec  3 11:25:06 2022",
+                "cpu_usage": 10.033333333334042,
+                "memory_usage": 0.5028827324478178,
+                "network_usage": 307094.0156615278,
+                "accelerator_usage": null,
+                "wattage": 39793565.0,
+                "processes": 278
+            },
+            {
+                "metric_id": "__knode2",
+                "timestamp": "Sat Dec  3 11:25:06 2022",
+                "cpu_usage": 3.1783333336934447,
+                "memory_usage": 0.18104268518817193,
+                "network_usage": 1841811.3585320213,
+                "accelerator_usage": null,
+                "wattage": 39807095.0,
+                "processes": 373
+            },
+            {
+                "metric_id": "__knode4",
+                "timestamp": "Sat Dec  3 11:25:08 2022",
+                "cpu_usage": 27.529166667178885,
+                "memory_usage": 0.2885268786852874,
+                "network_usage": 2211935.3975718827,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode5",
+                "timestamp": "Sat Dec  3 11:25:08 2022",
+                "cpu_usage": 19.312499999068677,
+                "memory_usage": 0.07933954583303601,
+                "network_usage": 1477729.0956523058,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode1",
+                "timestamp": "Sat Dec  3 11:25:08 2022",
+                "cpu_usage": 10.033333333334042,
+                "memory_usage": 0.5028827324478178,
+                "network_usage": 298040.97149097174,
+                "accelerator_usage": null,
+                "wattage": 39793565.0,
+                "processes": 278
+            },
+            {
+                "metric_id": "__knode2",
+                "timestamp": "Sat Dec  3 11:25:08 2022",
+                "cpu_usage": 3.1783333336934447,
+                "memory_usage": 0.18104268518817193,
+                "network_usage": 1734306.2949719883,
+                "accelerator_usage": null,
+                "wattage": 39807095.0,
+                "processes": 373
+            },
+            {
+                "metric_id": "__knode4",
+                "timestamp": "Sat Dec  3 11:25:10 2022",
+                "cpu_usage": 27.529166667178885,
+                "memory_usage": 0.2885268786852874,
+                "network_usage": 2240283.0419004033,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode5",
+                "timestamp": "Sat Dec  3 11:25:10 2022",
+                "cpu_usage": 19.312499999068677,
+                "memory_usage": 0.07933954583303601,
+                "network_usage": 1239006.2909827065,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode1",
+                "timestamp": "Sat Dec  3 11:25:10 2022",
+                "cpu_usage": 10.033333333334042,
+                "memory_usage": 0.5028827324478178,
+                "network_usage": 318163.4654598033,
+                "accelerator_usage": null,
+                "wattage": 36634693.0,
+                "processes": 278
+            },
+            {
+                "metric_id": "__knode2",
+                "timestamp": "Sat Dec  3 11:25:10 2022",
+                "cpu_usage": 3.1783333336934447,
+                "memory_usage": 0.18104268518817193,
+                "network_usage": 1716526.4602557968,
+                "accelerator_usage": null,
+                "wattage": 39807095.0,
+                "processes": 373
+            },
+            {
+                "metric_id": "__knode4",
+                "timestamp": "Sat Dec  3 11:25:13 2022",
+                "cpu_usage": 27.529166667178885,
+                "memory_usage": 0.2885268786852874,
+                "network_usage": 2223053.7816070085,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode5",
+                "timestamp": "Sat Dec  3 11:25:13 2022",
+                "cpu_usage": 19.312499999068677,
+                "memory_usage": 0.07933954583303601,
+                "network_usage": 1239009.1290355858,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode1",
+                "timestamp": "Sat Dec  3 11:25:13 2022",
+                "cpu_usage": 10.033333333334042,
+                "memory_usage": 0.5028827324478178,
+                "network_usage": 318163.4654598033,
+                "accelerator_usage": null,
+                "wattage": 36634693.0,
+                "processes": 278
+            },
+            {
+                "metric_id": "__knode2",
+                "timestamp": "Sat Dec  3 11:25:13 2022",
+                "cpu_usage": 3.1783333336934447,
+                "memory_usage": 0.18104268518817193,
+                "network_usage": 1699723.7821265075,
+                "accelerator_usage": null,
+                "wattage": 40026986.0,
+                "processes": 373
+            },
+            {
+                "metric_id": "__knode4",
+                "timestamp": "Sat Dec  3 11:25:15 2022",
+                "cpu_usage": 27.529166667178885,
+                "memory_usage": 0.2885268786852874,
+                "network_usage": 2514991.2425725698,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode5",
+                "timestamp": "Sat Dec  3 11:25:15 2022",
+                "cpu_usage": 18.891666667380704,
+                "memory_usage": 0.07910915257902842,
+                "network_usage": 1239011.7995885247,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode1",
+                "timestamp": "Sat Dec  3 11:25:15 2022",
+                "cpu_usage": 10.033333333334042,
+                "memory_usage": 0.5028827324478178,
+                "network_usage": 318163.4654598033,
+                "accelerator_usage": null,
+                "wattage": 36634693.0,
+                "processes": 278
+            },
+            {
+                "metric_id": "__knode2",
+                "timestamp": "Sat Dec  3 11:25:15 2022",
+                "cpu_usage": 3.113333333438888,
+                "memory_usage": 0.18100105361794688,
+                "network_usage": 1683201.0038195385,
+                "accelerator_usage": null,
+                "wattage": 40026986.0,
+                "processes": 373
+            },
+            {
+                "metric_id": "__knode4",
+                "timestamp": "Sat Dec  3 11:25:17 2022",
+                "cpu_usage": 27.529166667178885,
+                "memory_usage": 0.2885268786852874,
+                "network_usage": 2525012.422984425,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode5",
+                "timestamp": "Sat Dec  3 11:25:17 2022",
+                "cpu_usage": 18.891666667380704,
+                "memory_usage": 0.07910915257902842,
+                "network_usage": 1239014.2311600293,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode1",
+                "timestamp": "Sat Dec  3 11:25:17 2022",
+                "cpu_usage": 10.033333333334042,
+                "memory_usage": 0.5028827324478178,
+                "network_usage": 318163.4654598033,
+                "accelerator_usage": null,
+                "wattage": 36634693.0,
+                "processes": 278
+            },
+            {
+                "metric_id": "__knode2",
+                "timestamp": "Sat Dec  3 11:25:17 2022",
+                "cpu_usage": 3.113333333438888,
+                "memory_usage": 0.18100105361794688,
+                "network_usage": 1621398.2364951652,
+                "accelerator_usage": null,
+                "wattage": 40026986.0,
+                "processes": 373
+            },
+            {
+                "metric_id": "__knode4",
+                "timestamp": "Sat Dec  3 11:25:19 2022",
+                "cpu_usage": 27.529166667178885,
+                "memory_usage": 0.2885268786852874,
+                "network_usage": 2266807.891668667,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode5",
+                "timestamp": "Sat Dec  3 11:25:19 2022",
+                "cpu_usage": 18.891666667380704,
+                "memory_usage": 0.07910915257902842,
+                "network_usage": 1239016.47023404,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode1",
+                "timestamp": "Sat Dec  3 11:25:19 2022",
+                "cpu_usage": 10.033333333334042,
+                "memory_usage": 0.5028827324478178,
+                "network_usage": 318163.4654598033,
+                "accelerator_usage": null,
+                "wattage": 36634693.0,
+                "processes": 278
+            },
+            {
+                "metric_id": "__knode2",
+                "timestamp": "Sat Dec  3 11:25:19 2022",
+                "cpu_usage": 3.113333333438888,
+                "memory_usage": 0.18100105361794688,
+                "network_usage": 1656009.4124863166,
+                "accelerator_usage": null,
+                "wattage": 40026986.0,
+                "processes": 373
+            },
+            {
+                "metric_id": "__knode4",
+                "timestamp": "Sat Dec  3 11:25:21 2022",
+                "cpu_usage": 27.529166667178885,
+                "memory_usage": 0.2885268786852874,
+                "network_usage": 2305226.0097713387,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode5",
+                "timestamp": "Sat Dec  3 11:25:21 2022",
+                "cpu_usage": 18.891666667380704,
+                "memory_usage": 0.07910915257902842,
+                "network_usage": 1239018.3970540958,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode1",
+                "timestamp": "Sat Dec  3 11:25:21 2022",
+                "cpu_usage": 10.033333333334042,
+                "memory_usage": 0.5028827324478178,
+                "network_usage": 318163.4654598033,
+                "accelerator_usage": null,
+                "wattage": 36634693.0,
+                "processes": 278
+            },
+            {
+                "metric_id": "__knode2",
+                "timestamp": "Sat Dec  3 11:25:21 2022",
+                "cpu_usage": 3.113333333438888,
+                "memory_usage": 0.18100105361794688,
+                "network_usage": 1656009.4124863166,
+                "accelerator_usage": null,
+                "wattage": 40026986.0,
+                "processes": 373
+            },
+            {
+                "metric_id": "__knode4",
+                "timestamp": "Sat Dec  3 11:25:23 2022",
+                "cpu_usage": 27.529166667178885,
+                "memory_usage": 0.2885268786852874,
+                "network_usage": 1768048.139721963,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode5",
+                "timestamp": "Sat Dec  3 11:25:23 2022",
+                "cpu_usage": 18.891666667380704,
+                "memory_usage": 0.07910915257902842,
+                "network_usage": 1239020.1549656927,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode1",
+                "timestamp": "Sat Dec  3 11:25:23 2022",
+                "cpu_usage": 10.033333333334042,
+                "memory_usage": 0.5028827324478178,
+                "network_usage": 316993.9874461339,
+                "accelerator_usage": null,
+                "wattage": 36634693.0,
+                "processes": 278
+            },
+            {
+                "metric_id": "__knode2",
+                "timestamp": "Sat Dec  3 11:25:23 2022",
+                "cpu_usage": 3.113333333438888,
+                "memory_usage": 0.18100105361794688,
+                "network_usage": 1656009.4124863166,
+                "accelerator_usage": null,
+                "wattage": 40026986.0,
+                "processes": 373
+            },
+            {
+                "metric_id": "__knode4",
+                "timestamp": "Sat Dec  3 11:25:25 2022",
+                "cpu_usage": 27.529166667178885,
+                "memory_usage": 0.2885268786852874,
+                "network_usage": 1788154.2213263167,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode5",
+                "timestamp": "Sat Dec  3 11:25:25 2022",
+                "cpu_usage": 18.891666667380704,
+                "memory_usage": 0.07910915257902842,
+                "network_usage": 1236896.2853930658,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode1",
+                "timestamp": "Sat Dec  3 11:25:25 2022",
+                "cpu_usage": 10.033333333334042,
+                "memory_usage": 0.5028827324478178,
+                "network_usage": 316993.9874461339,
+                "accelerator_usage": null,
+                "wattage": 36634693.0,
+                "processes": 278
+            },
+            {
+                "metric_id": "__knode2",
+                "timestamp": "Sat Dec  3 11:25:25 2022",
+                "cpu_usage": 3.113333333438888,
+                "memory_usage": 0.18100105361794688,
+                "network_usage": 1656009.4124863166,
+                "accelerator_usage": null,
+                "wattage": 40026986.0,
+                "processes": 373
+            },
+            {
+                "metric_id": "__knode4",
+                "timestamp": "Sat Dec  3 11:25:27 2022",
+                "cpu_usage": 27.529166667178885,
+                "memory_usage": 0.2885268786852874,
+                "network_usage": 1808317.9278232965,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode5",
+                "timestamp": "Sat Dec  3 11:25:27 2022",
+                "cpu_usage": 18.891666667380704,
+                "memory_usage": 0.07910915257902842,
+                "network_usage": 1191880.365260006,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode1",
+                "timestamp": "Sat Dec  3 11:25:27 2022",
+                "cpu_usage": 9.983333333323856,
+                "memory_usage": 0.5028563795066414,
+                "network_usage": 317166.7217258629,
+                "accelerator_usage": null,
+                "wattage": 36634693.0,
+                "processes": 278
+            },
+            {
+                "metric_id": "__knode2",
+                "timestamp": "Sat Dec  3 11:25:27 2022",
+                "cpu_usage": 3.113333333438888,
+                "memory_usage": 0.18100105361794688,
+                "network_usage": 1656009.4124863166,
+                "accelerator_usage": null,
+                "wattage": 40026986.0,
+                "processes": 373
+            },
+            {
+                "metric_id": "__knode4",
+                "timestamp": "Sat Dec  3 11:25:29 2022",
+                "cpu_usage": 27.529166667178885,
+                "memory_usage": 0.2885268786852874,
+                "network_usage": 1828462.0834675615,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode5",
+                "timestamp": "Sat Dec  3 11:25:29 2022",
+                "cpu_usage": 18.891666667380704,
+                "memory_usage": 0.07910915257902842,
+                "network_usage": 1114059.9712579763,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode1",
+                "timestamp": "Sat Dec  3 11:25:29 2022",
+                "cpu_usage": 9.983333333323856,
+                "memory_usage": 0.5028563795066414,
+                "network_usage": 317166.7217258629,
+                "accelerator_usage": null,
+                "wattage": 36634693.0,
+                "processes": 278
+            },
+            {
+                "metric_id": "__knode2",
+                "timestamp": "Sat Dec  3 11:25:29 2022",
+                "cpu_usage": 3.113333333438888,
+                "memory_usage": 0.18100105361794688,
+                "network_usage": 1656009.4124863166,
+                "accelerator_usage": null,
+                "wattage": 40026986.0,
+                "processes": 373
+            },
+            {
+                "metric_id": "__knode4",
+                "timestamp": "Sat Dec  3 11:25:31 2022",
+                "cpu_usage": 27.529166667178885,
+                "memory_usage": 0.2885268786852874,
+                "network_usage": 1848586.8697313985,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode5",
+                "timestamp": "Sat Dec  3 11:25:31 2022",
+                "cpu_usage": 18.891666667380704,
+                "memory_usage": 0.07910915257902842,
+                "network_usage": 1107130.5809478012,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode1",
+                "timestamp": "Sat Dec  3 11:25:31 2022",
+                "cpu_usage": 9.983333333323856,
+                "memory_usage": 0.5028563795066414,
+                "network_usage": 319274.9528115259,
+                "accelerator_usage": null,
+                "wattage": 36634693.0,
+                "processes": 278
+            },
+            {
+                "metric_id": "__knode2",
+                "timestamp": "Sat Dec  3 11:25:31 2022",
+                "cpu_usage": 3.113333333438888,
+                "memory_usage": 0.18100105361794688,
+                "network_usage": 1605816.0719048593,
+                "accelerator_usage": null,
+                "wattage": 40026986.0,
+                "processes": 373
+            },
+            {
+                "metric_id": "__knode4",
+                "timestamp": "Sat Dec  3 11:25:33 2022",
+                "cpu_usage": 27.316666666107878,
+                "memory_usage": 0.28837709871571593,
+                "network_usage": 1868672.4172883977,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode5",
+                "timestamp": "Sat Dec  3 11:25:33 2022",
+                "cpu_usage": 18.891666667380704,
+                "memory_usage": 0.07910915257902842,
+                "network_usage": 1051791.2951782166,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode1",
+                "timestamp": "Sat Dec  3 11:25:33 2022",
+                "cpu_usage": 9.983333333323856,
+                "memory_usage": 0.5028563795066414,
+                "network_usage": 319274.95281152596,
+                "accelerator_usage": null,
+                "wattage": 36634693.0,
+                "processes": 278
+            },
+            {
+                "metric_id": "__knode2",
+                "timestamp": "Sat Dec  3 11:25:33 2022",
+                "cpu_usage": 3.113333333438888,
+                "memory_usage": 0.18100105361794688,
+                "network_usage": 1438386.162784058,
+                "accelerator_usage": null,
+                "wattage": 40026986.0,
+                "processes": 373
+            },
+            {
+                "metric_id": "__knode4",
+                "timestamp": "Sat Dec  3 11:25:35 2022",
+                "cpu_usage": 27.316666666107878,
+                "memory_usage": 0.28837709871571593,
+                "network_usage": 1888815.6352738217,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode5",
+                "timestamp": "Sat Dec  3 11:25:35 2022",
+                "cpu_usage": 18.891666667380704,
+                "memory_usage": 0.07910915257902842,
+                "network_usage": 1026825.3102666219,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode1",
+                "timestamp": "Sat Dec  3 11:25:35 2022",
+                "cpu_usage": 9.983333333323856,
+                "memory_usage": 0.5028563795066414,
+                "network_usage": 318333.6780512425,
+                "accelerator_usage": null,
+                "wattage": 36634693.0,
+                "processes": 278
+            },
+            {
+                "metric_id": "__knode2",
+                "timestamp": "Sat Dec  3 11:25:35 2022",
+                "cpu_usage": 3.113333333438888,
+                "memory_usage": 0.18100105361794688,
+                "network_usage": 1438742.0386979799,
+                "accelerator_usage": null,
+                "wattage": 40026986.0,
+                "processes": 373
+            },
+            {
+                "metric_id": "__knode4",
+                "timestamp": "Sat Dec  3 11:25:38 2022",
+                "cpu_usage": 27.316666666107878,
+                "memory_usage": 0.28837709871571593,
+                "network_usage": 1908997.5902169098,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode5",
+                "timestamp": "Sat Dec  3 11:25:38 2022",
+                "cpu_usage": 18.891666667380704,
+                "memory_usage": 0.07910915257902842,
+                "network_usage": 939400.2301757527,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode1",
+                "timestamp": "Sat Dec  3 11:25:38 2022",
+                "cpu_usage": 9.983333333323856,
+                "memory_usage": 0.5028563795066414,
+                "network_usage": 318043.856109451,
+                "accelerator_usage": null,
+                "wattage": 36634693.0,
+                "processes": 278
+            },
+            {
+                "metric_id": "__knode2",
+                "timestamp": "Sat Dec  3 11:25:38 2022",
+                "cpu_usage": 3.113333333438888,
+                "memory_usage": 0.18100105361794688,
+                "network_usage": 1327124.3818920087,
+                "accelerator_usage": null,
+                "wattage": 40026986.0,
+                "processes": 373
+            },
+            {
+                "metric_id": "__knode4",
+                "timestamp": "Sat Dec  3 11:25:40 2022",
+                "cpu_usage": 27.316666666107878,
+                "memory_usage": 0.28837709871571593,
+                "network_usage": 1925077.0263925346,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode5",
+                "timestamp": "Sat Dec  3 11:25:40 2022",
+                "cpu_usage": 18.891666667380704,
+                "memory_usage": 0.07910915257902842,
+                "network_usage": 896922.0616611737,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode1",
+                "timestamp": "Sat Dec  3 11:25:40 2022",
+                "cpu_usage": 9.983333333323856,
+                "memory_usage": 0.5028563795066414,
+                "network_usage": 328442.608607234,
+                "accelerator_usage": null,
+                "wattage": 36634693.0,
+                "processes": 278
+            },
+            {
+                "metric_id": "__knode2",
+                "timestamp": "Sat Dec  3 11:25:40 2022",
+                "cpu_usage": 3.113333333438888,
+                "memory_usage": 0.18100105361794688,
+                "network_usage": 1312379.2970013258,
+                "accelerator_usage": null,
+                "wattage": 40026986.0,
+                "processes": 373
+            },
+            {
+                "metric_id": "__knode4",
+                "timestamp": "Sat Dec  3 11:25:42 2022",
+                "cpu_usage": 27.316666666107878,
+                "memory_usage": 0.28837709871571593,
+                "network_usage": 1945231.4495281607,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode5",
+                "timestamp": "Sat Dec  3 11:25:42 2022",
+                "cpu_usage": 18.891666667380704,
+                "memory_usage": 0.07910915257902842,
+                "network_usage": 833083.770191998,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode1",
+                "timestamp": "Sat Dec  3 11:25:42 2022",
+                "cpu_usage": 9.983333333323856,
+                "memory_usage": 0.5028563795066414,
+                "network_usage": 328442.60860723397,
+                "accelerator_usage": null,
+                "wattage": 39633122.0,
+                "processes": 278
+            },
+            {
+                "metric_id": "__knode2",
+                "timestamp": "Sat Dec  3 11:25:42 2022",
+                "cpu_usage": 3.113333333438888,
+                "memory_usage": 0.18100105361794688,
+                "network_usage": 1313957.7820672847,
+                "accelerator_usage": null,
+                "wattage": 37891933.0,
+                "processes": 373
+            },
+            {
+                "metric_id": "__knode4",
+                "timestamp": "Sat Dec  3 11:25:44 2022",
+                "cpu_usage": 27.316666666107878,
+                "memory_usage": 0.28837709871571593,
+                "network_usage": 2179505.51953182,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode5",
+                "timestamp": "Sat Dec  3 11:25:44 2022",
+                "cpu_usage": 18.891666667380704,
+                "memory_usage": 0.07910915257902842,
+                "network_usage": 833104.1157483307,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode1",
+                "timestamp": "Sat Dec  3 11:25:44 2022",
+                "cpu_usage": 9.983333333323856,
+                "memory_usage": 0.5028563795066414,
+                "network_usage": 328442.608607234,
+                "accelerator_usage": null,
+                "wattage": 39633122.0,
+                "processes": 278
+            },
+            {
+                "metric_id": "__knode2",
+                "timestamp": "Sat Dec  3 11:25:44 2022",
+                "cpu_usage": 3.349999999627485,
+                "memory_usage": 0.1810607563734696,
+                "network_usage": 1302198.4602216813,
+                "accelerator_usage": null,
+                "wattage": 37891933.0,
+                "processes": 373
+            },
+            {
+                "metric_id": "__knode4",
+                "timestamp": "Sat Dec  3 11:25:46 2022",
+                "cpu_usage": 27.316666666107878,
+                "memory_usage": 0.28837709871571593,
+                "network_usage": 2277015.9438868496,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode5",
+                "timestamp": "Sat Dec  3 11:25:46 2022",
+                "cpu_usage": 15.870833333271236,
+                "memory_usage": 0.11396964897663749,
+                "network_usage": 833124.4808489062,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode1",
+                "timestamp": "Sat Dec  3 11:25:46 2022",
+                "cpu_usage": 9.983333333323856,
+                "memory_usage": 0.5028563795066414,
+                "network_usage": 328442.60860723397,
+                "accelerator_usage": null,
+                "wattage": 39633122.0,
+                "processes": 278
+            },
+            {
+                "metric_id": "__knode2",
+                "timestamp": "Sat Dec  3 11:25:46 2022",
+                "cpu_usage": 3.349999999627485,
+                "memory_usage": 0.1810607563734696,
+                "network_usage": 1264614.66834448,
+                "accelerator_usage": null,
+                "wattage": 37891933.0,
+                "processes": 373
+            },
+            {
+                "metric_id": "__knode4",
+                "timestamp": "Sat Dec  3 11:25:48 2022",
+                "cpu_usage": 27.316666666107878,
+                "memory_usage": 0.28837709871571593,
+                "network_usage": 2106142.54355456,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode5",
+                "timestamp": "Sat Dec  3 11:25:48 2022",
+                "cpu_usage": 15.870833333271236,
+                "memory_usage": 0.11396964897663749,
+                "network_usage": 833144.816633118,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode1",
+                "timestamp": "Sat Dec  3 11:25:48 2022",
+                "cpu_usage": 9.983333333323856,
+                "memory_usage": 0.5028563795066414,
+                "network_usage": 328442.60860723397,
+                "accelerator_usage": null,
+                "wattage": 39633122.0,
+                "processes": 278
+            },
+            {
+                "metric_id": "__knode2",
+                "timestamp": "Sat Dec  3 11:25:48 2022",
+                "cpu_usage": 3.349999999627485,
+                "memory_usage": 0.1810607563734696,
+                "network_usage": 1500364.8187764094,
+                "accelerator_usage": null,
+                "wattage": 37891933.0,
+                "processes": 373
+            },
+            {
+                "metric_id": "__knode4",
+                "timestamp": "Sat Dec  3 11:25:50 2022",
+                "cpu_usage": 27.316666666107878,
+                "memory_usage": 0.28837709871571593,
+                "network_usage": 2192508.0511378334,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode5",
+                "timestamp": "Sat Dec  3 11:25:50 2022",
+                "cpu_usage": 15.870833333271236,
+                "memory_usage": 0.11396964897663749,
+                "network_usage": 833165.1915058147,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode1",
+                "timestamp": "Sat Dec  3 11:25:50 2022",
+                "cpu_usage": 9.983333333323856,
+                "memory_usage": 0.5028563795066414,
+                "network_usage": 328442.608607234,
+                "accelerator_usage": null,
+                "wattage": 39633122.0,
+                "processes": 278
+            },
+            {
+                "metric_id": "__knode2",
+                "timestamp": "Sat Dec  3 11:25:50 2022",
+                "cpu_usage": 3.349999999627485,
+                "memory_usage": 0.1810607563734696,
+                "network_usage": 1500364.8187764094,
+                "accelerator_usage": null,
+                "wattage": 37891933.0,
+                "processes": 373
+            },
+            {
+                "metric_id": "__knode4",
+                "timestamp": "Sat Dec  3 11:25:52 2022",
+                "cpu_usage": 27.316666666107878,
+                "memory_usage": 0.28837709871571593,
+                "network_usage": 1732260.6189585356,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode5",
+                "timestamp": "Sat Dec  3 11:25:52 2022",
+                "cpu_usage": 15.870833333271236,
+                "memory_usage": 0.11396964897663749,
+                "network_usage": 833185.5468342688,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode1",
+                "timestamp": "Sat Dec  3 11:25:52 2022",
+                "cpu_usage": 9.983333333323856,
+                "memory_usage": 0.5028563795066414,
+                "network_usage": 328442.608607234,
+                "accelerator_usage": null,
+                "wattage": 39633122.0,
+                "processes": 278
+            },
+            {
+                "metric_id": "__knode2",
+                "timestamp": "Sat Dec  3 11:25:52 2022",
+                "cpu_usage": 3.349999999627485,
+                "memory_usage": 0.1810607563734696,
+                "network_usage": 1500364.818776409,
+                "accelerator_usage": null,
+                "wattage": 37891933.0,
+                "processes": 373
+            },
+            {
+                "metric_id": "__knode4",
+                "timestamp": "Sat Dec  3 11:25:54 2022",
+                "cpu_usage": 27.316666666107878,
+                "memory_usage": 0.28837709871571593,
+                "network_usage": 1745894.7915515953,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode5",
+                "timestamp": "Sat Dec  3 11:25:54 2022",
+                "cpu_usage": 15.870833333271236,
+                "memory_usage": 0.11396964897663749,
+                "network_usage": 833205.853302117,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode1",
+                "timestamp": "Sat Dec  3 11:25:54 2022",
+                "cpu_usage": 9.983333333323856,
+                "memory_usage": 0.5028563795066414,
+                "network_usage": 328442.60860723397,
+                "accelerator_usage": null,
+                "wattage": 39633122.0,
+                "processes": 278
+            },
+            {
+                "metric_id": "__knode2",
+                "timestamp": "Sat Dec  3 11:25:54 2022",
+                "cpu_usage": 3.349999999627485,
+                "memory_usage": 0.1810607563734696,
+                "network_usage": 1500364.8187764094,
+                "accelerator_usage": null,
+                "wattage": 37891933.0,
+                "processes": 373
+            },
+            {
+                "metric_id": "__knode4",
+                "timestamp": "Sat Dec  3 11:25:56 2022",
+                "cpu_usage": 27.316666666107878,
+                "memory_usage": 0.28837709871571593,
+                "network_usage": 1759515.731272613,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode5",
+                "timestamp": "Sat Dec  3 11:25:56 2022",
+                "cpu_usage": 15.870833333271236,
+                "memory_usage": 0.11396964897663749,
+                "network_usage": 833226.1402257229,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode1",
+                "timestamp": "Sat Dec  3 11:25:56 2022",
+                "cpu_usage": 9.954166666663397,
+                "memory_usage": 0.5028511574952562,
+                "network_usage": 316531.043078108,
+                "accelerator_usage": null,
+                "wattage": 39633122.0,
+                "processes": 278
+            },
+            {
+                "metric_id": "__knode2",
+                "timestamp": "Sat Dec  3 11:25:56 2022",
+                "cpu_usage": 3.349999999627485,
+                "memory_usage": 0.1810607563734696,
+                "network_usage": 1500364.8187764094,
+                "accelerator_usage": null,
+                "wattage": 37891933.0,
+                "processes": 373
+            },
+            {
+                "metric_id": "__knode4",
+                "timestamp": "Sat Dec  3 11:25:58 2022",
+                "cpu_usage": 27.316666666107878,
+                "memory_usage": 0.28837709871571593,
+                "network_usage": 1773149.7932862323,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode5",
+                "timestamp": "Sat Dec  3 11:25:58 2022",
+                "cpu_usage": 15.870833333271236,
+                "memory_usage": 0.11396964897663749,
+                "network_usage": 564830.0450175114,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode1",
+                "timestamp": "Sat Dec  3 11:25:58 2022",
+                "cpu_usage": 9.954166666663397,
+                "memory_usage": 0.5028511574952562,
+                "network_usage": 305012.30049000285,
+                "accelerator_usage": null,
+                "wattage": 39633122.0,
+                "processes": 278
+            },
+            {
+                "metric_id": "__knode2",
+                "timestamp": "Sat Dec  3 11:25:58 2022",
+                "cpu_usage": 3.349999999627485,
+                "memory_usage": 0.1810607563734696,
+                "network_usage": 1500364.818776409,
+                "accelerator_usage": null,
+                "wattage": 37891933.0,
+                "processes": 373
+            },
+            {
+                "metric_id": "__knode4",
+                "timestamp": "Sat Dec  3 11:26:00 2022",
+                "cpu_usage": 27.316666666107878,
+                "memory_usage": 0.28837709871571593,
+                "network_usage": 1786836.3444702602,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode5",
+                "timestamp": "Sat Dec  3 11:26:00 2022",
+                "cpu_usage": 15.870833333271236,
+                "memory_usage": 0.11396964897663749,
+                "network_usage": 554542.7995815834,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode1",
+                "timestamp": "Sat Dec  3 11:26:00 2022",
+                "cpu_usage": 9.954166666663397,
+                "memory_usage": 0.5028511574952562,
+                "network_usage": 306635.9981919896,
+                "accelerator_usage": null,
+                "wattage": 39633122.0,
+                "processes": 278
+            },
+            {
+                "metric_id": "__knode2",
+                "timestamp": "Sat Dec  3 11:26:00 2022",
+                "cpu_usage": 3.349999999627485,
+                "memory_usage": 0.1810607563734696,
+                "network_usage": 1500364.8187764094,
+                "accelerator_usage": null,
+                "wattage": 37891933.0,
+                "processes": 373
+            },
+            {
+                "metric_id": "__knode4",
+                "timestamp": "Sat Dec  3 11:26:02 2022",
+                "cpu_usage": 27.22500000071402,
+                "memory_usage": 0.2884418815968639,
+                "network_usage": 1800516.3345079871,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode5",
+                "timestamp": "Sat Dec  3 11:26:02 2022",
+                "cpu_usage": 15.870833333271236,
+                "memory_usage": 0.11396964897663749,
+                "network_usage": 552372.2291799628,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode1",
+                "timestamp": "Sat Dec  3 11:26:02 2022",
+                "cpu_usage": 9.954166666663397,
+                "memory_usage": 0.5028511574952562,
+                "network_usage": 321714.5359620358,
+                "accelerator_usage": null,
+                "wattage": 39633122.0,
+                "processes": 278
+            },
+            {
+                "metric_id": "__knode2",
+                "timestamp": "Sat Dec  3 11:26:02 2022",
+                "cpu_usage": 3.349999999627485,
+                "memory_usage": 0.1810607563734696,
+                "network_usage": 1500364.8187764094,
+                "accelerator_usage": null,
+                "wattage": 37891933.0,
+                "processes": 373
+            },
+            {
+                "metric_id": "__knode4",
+                "timestamp": "Sat Dec  3 11:26:05 2022",
+                "cpu_usage": 27.22500000071402,
+                "memory_usage": 0.2884418815968639,
+                "network_usage": 1814196.3245457138,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode5",
+                "timestamp": "Sat Dec  3 11:26:05 2022",
+                "cpu_usage": 15.870833333271236,
+                "memory_usage": 0.11396964897663749,
+                "network_usage": 274737.4702832645,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode1",
+                "timestamp": "Sat Dec  3 11:26:05 2022",
+                "cpu_usage": 9.954166666663397,
+                "memory_usage": 0.5028511574952562,
+                "network_usage": 335443.2580966041,
+                "accelerator_usage": null,
+                "wattage": 39633122.0,
+                "processes": 278
+            },
+            {
+                "metric_id": "__knode2",
+                "timestamp": "Sat Dec  3 11:26:05 2022",
+                "cpu_usage": 3.349999999627485,
+                "memory_usage": 0.1810607563734696,
+                "network_usage": 1483415.9420292245,
+                "accelerator_usage": null,
+                "wattage": 37891933.0,
+                "processes": 373
+            },
+            {
+                "metric_id": "__knode4",
+                "timestamp": "Sat Dec  3 11:26:07 2022",
+                "cpu_usage": 27.22500000071402,
+                "memory_usage": 0.2884418815968639,
+                "network_usage": 1827827.8959982668,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode5",
+                "timestamp": "Sat Dec  3 11:26:07 2022",
+                "cpu_usage": 15.870833333271236,
+                "memory_usage": 0.11396964897663749,
+                "network_usage": 274031.4633538785,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode1",
+                "timestamp": "Sat Dec  3 11:26:07 2022",
+                "cpu_usage": 9.954166666663397,
+                "memory_usage": 0.5028511574952562,
+                "network_usage": 325650.0114944731,
+                "accelerator_usage": null,
+                "wattage": 39633122.0,
+                "processes": 278
+            },
+            {
+                "metric_id": "__knode2",
+                "timestamp": "Sat Dec  3 11:26:07 2022",
+                "cpu_usage": 3.349999999627485,
+                "memory_usage": 0.1810607563734696,
+                "network_usage": 1481472.0646350912,
+                "accelerator_usage": null,
+                "wattage": 37891933.0,
+                "processes": 373
+            },
+            {
+                "metric_id": "__knode4",
+                "timestamp": "Sat Dec  3 11:26:09 2022",
+                "cpu_usage": 27.22500000071402,
+                "memory_usage": 0.2884418815968639,
+                "network_usage": 1841409.0624266155,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode5",
+                "timestamp": "Sat Dec  3 11:26:09 2022",
+                "cpu_usage": 15.870833333271236,
+                "memory_usage": 0.11396964897663749,
+                "network_usage": 283243.3397968995,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode1",
+                "timestamp": "Sat Dec  3 11:26:09 2022",
+                "cpu_usage": 9.954166666663397,
+                "memory_usage": 0.5028511574952562,
+                "network_usage": 344071.3103625491,
+                "accelerator_usage": null,
+                "wattage": 39633122.0,
+                "processes": 278
+            },
+            {
+                "metric_id": "__knode2",
+                "timestamp": "Sat Dec  3 11:26:09 2022",
+                "cpu_usage": 3.349999999627485,
+                "memory_usage": 0.1810607563734696,
+                "network_usage": 1384180.806171913,
+                "accelerator_usage": null,
+                "wattage": 37891933.0,
+                "processes": 373
+            },
+            {
+                "metric_id": "__knode4",
+                "timestamp": "Sat Dec  3 11:26:11 2022",
+                "cpu_usage": 27.22500000071402,
+                "memory_usage": 0.2884418815968639,
+                "network_usage": 1855068.685462094,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode5",
+                "timestamp": "Sat Dec  3 11:26:11 2022",
+                "cpu_usage": 15.870833333271236,
+                "memory_usage": 0.11396964897663749,
+                "network_usage": 332568.55685379246,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode1",
+                "timestamp": "Sat Dec  3 11:26:11 2022",
+                "cpu_usage": 9.954166666663397,
+                "memory_usage": 0.5028511574952562,
+                "network_usage": 344071.3103625491,
+                "accelerator_usage": null,
+                "wattage": 36175937.0,
+                "processes": 278
+            },
+            {
+                "metric_id": "__knode2",
+                "timestamp": "Sat Dec  3 11:26:11 2022",
+                "cpu_usage": 3.349999999627485,
+                "memory_usage": 0.1810607563734696,
+                "network_usage": 1245199.0678170137,
+                "accelerator_usage": null,
+                "wattage": 36968628.0,
+                "processes": 372
+            },
+            {
+                "metric_id": "__knode4",
+                "timestamp": "Sat Dec  3 11:26:13 2022",
+                "cpu_usage": 27.22500000071402,
+                "memory_usage": 0.2884418815968639,
+                "network_usage": 1610815.811122951,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode5",
+                "timestamp": "Sat Dec  3 11:26:13 2022",
+                "cpu_usage": 15.870833333271236,
+                "memory_usage": 0.11396964897663749,
+                "network_usage": 332548.0060829143,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode1",
+                "timestamp": "Sat Dec  3 11:26:13 2022",
+                "cpu_usage": 9.954166666663397,
+                "memory_usage": 0.5028511574952562,
+                "network_usage": 344071.3103625491,
+                "accelerator_usage": null,
+                "wattage": 36175937.0,
+                "processes": 278
+            },
+            {
+                "metric_id": "__knode2",
+                "timestamp": "Sat Dec  3 11:26:13 2022",
+                "cpu_usage": 3.349999999627485,
+                "memory_usage": 0.1810607563734696,
+                "network_usage": 1190649.093215485,
+                "accelerator_usage": null,
+                "wattage": 36968628.0,
+                "processes": 372
+            },
+            {
+                "metric_id": "__knode4",
+                "timestamp": "Sat Dec  3 11:26:15 2022",
+                "cpu_usage": 27.22500000071402,
+                "memory_usage": 0.2884418815968639,
+                "network_usage": 560077.4542004481,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode5",
+                "timestamp": "Sat Dec  3 11:26:15 2022",
+                "cpu_usage": 7.041666666821897,
+                "memory_usage": 0.11380720468443552,
+                "network_usage": 332527.6800708237,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode1",
+                "timestamp": "Sat Dec  3 11:26:15 2022",
+                "cpu_usage": 9.954166666663397,
+                "memory_usage": 0.5028511574952562,
+                "network_usage": 344071.3103625491,
+                "accelerator_usage": null,
+                "wattage": 36175937.0,
+                "processes": 278
+            },
+            {
+                "metric_id": "__knode2",
+                "timestamp": "Sat Dec  3 11:26:15 2022",
+                "cpu_usage": 3.363333333594113,
+                "memory_usage": 0.1808539554031518,
+                "network_usage": 1115183.948069963,
+                "accelerator_usage": null,
+                "wattage": 36968628.0,
+                "processes": 372
+            },
+            {
+                "metric_id": "__knode4",
+                "timestamp": "Sat Dec  3 11:26:17 2022",
+                "cpu_usage": 27.22500000071402,
+                "memory_usage": 0.2884418815968639,
+                "network_usage": 49426.75381174887,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode5",
+                "timestamp": "Sat Dec  3 11:26:17 2022",
+                "cpu_usage": 7.041666666821897,
+                "memory_usage": 0.11380720468443552,
+                "network_usage": 332507.35405873304,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode1",
+                "timestamp": "Sat Dec  3 11:26:17 2022",
+                "cpu_usage": 9.954166666663397,
+                "memory_usage": 0.5028511574952562,
+                "network_usage": 344071.3103625491,
+                "accelerator_usage": null,
+                "wattage": 36175937.0,
+                "processes": 278
+            },
+            {
+                "metric_id": "__knode2",
+                "timestamp": "Sat Dec  3 11:26:17 2022",
+                "cpu_usage": 3.363333333594113,
+                "memory_usage": 0.1808539554031518,
+                "network_usage": 1096725.5682793453,
+                "accelerator_usage": null,
+                "wattage": 36968628.0,
+                "processes": 372
+            },
+            {
+                "metric_id": "__knode4",
+                "timestamp": "Sat Dec  3 11:26:19 2022",
+                "cpu_usage": 27.22500000071402,
+                "memory_usage": 0.2884418815968639,
+                "network_usage": 45416.43626748125,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode5",
+                "timestamp": "Sat Dec  3 11:26:19 2022",
+                "cpu_usage": 7.041666666821897,
+                "memory_usage": 0.11380720468443552,
+                "network_usage": 332486.96941391524,
+                "accelerator_usage": null,
+                "wattage": -1.0,
+                "processes": -1
+            },
+            {
+                "metric_id": "__knode1",
+                "timestamp": "Sat Dec  3 11:26:19 2022",
+                "cpu_usage": 9.954166666663397,
+                "memory_usage": 0.5028511574952562,
+                "network_usage": 344071.3103625491,
+                "accelerator_usage": null,
+                "wattage": 36175937.0,
+                "processes": 278
+            },
+            {
+                "metric_id": "__knode2",
+                "timestamp": "Sat Dec  3 11:26:19 2022",
+                "cpu_usage": 3.363333333594113,
+                "memory_usage": 0.1808539554031518,
+                "network_usage": 1613392.6006785806,
+                "accelerator_usage": null,
+                "wattage": 36968628.0,
+                "processes": 372
+            }
+        ],
+        "classification": [
+            {
+                "metric_id": "__id_f34ddf1a-a34f-46d9-b269-4765f872ab0f__pid_11__hostname_BARE_katib-study-78-c67z4xst--1-7l69x",
+                "timestamp": "Sat Dec  3 10:25:35 2022",
+                "value": 0.7498940863416884,
+                "measure": "f1-score",
+                "hyperparameters": "{\"learning_rate\": 0.01, \"weight_decay\": 0.01, \"hidden_layer_config\": [15], \"input_size\": 784, \"output_size\": 10}",
+                "classification_metrics": "{\"0\": {\"precision\": 0.681044957472661, \"recall\": 0.9241549876339654, \"f1-score\": 0.7841902763203917, \"support\": 1213}, \"1\": {\"precision\": 0.9265335235378032, \"recall\": 0.9572586588061901, \"f1-score\": 0.9416455237404856, \"support\": 1357}, \"2\": {\"precision\": 0.7055256064690026, \"recall\": 0.8610197368421053, \"f1-score\": 0.7755555555555556, \"support\": 1216}, \"3\": {\"precision\": 0.8353156450137237, \"recall\": 0.7551695616211745, \"f1-score\": 0.7932232841007819, \"support\": 1209}, \"4\": {\"precision\": 0.8386266094420601, \"recall\": 0.8314893617021276, \"f1-score\": 0.835042735042735, \"support\": 1175}, \"5\": {\"precision\": 0.45700712589073633, \"recall\": 0.9170638703527169, \"f1-score\": 0.6100190234622701, \"support\": 1049}, \"6\": {\"precision\": 0.9783464566929134, \"recall\": 0.42993079584775085, \"f1-score\": 0.5973557692307692, \"support\": 1156}, \"7\": {\"precision\": 0.9021558872305141, \"recall\": 0.84472049689441, \"f1-score\": 0.8724939855653568, \"support\": 1288}, \"8\": {\"precision\": 0.7691082802547771, \"recall\": 0.413527397260274, \"f1-score\": 0.5378619153674833, \"support\": 1168}, \"9\": {\"precision\": 0.9515072083879423, \"recall\": 0.621043627031651, \"f1-score\": 0.7515527950310559, \"support\": 1169}, \"accuracy\": 0.7594166666666666, \"macro avg\": {\"precision\": 0.8045171300392134, \"recall\": 0.7555378493992364, \"f1-score\": 0.7498940863416884, \"support\": 12000}, \"weighted avg\": {\"precision\": 0.8099659752441527, \"recall\": 0.7594166666666666, \"f1-score\": 0.7561089094493736, \"support\": 12000}}",
+                "process_id": 11,
+                "hostname": "BARE_katib-study-78-c67z4xst--1-7l69x",
+                "obj_hash": 8753427643664
+            },
+            {
+                "metric_id": "__id_1317d0e3-4275-4af0-842a-8d59943b6197__pid_11__hostname_BARE_katib-study-78-92l99czg--1-6j762",
+                "timestamp": "Sat Dec  3 10:26:11 2022",
+                "value": 0.7498940863416884,
+                "measure": "f1-score",
+                "hyperparameters": "{\"learning_rate\": 0.01, \"weight_decay\": 0.01, \"hidden_layer_config\": [15], \"input_size\": 784, \"output_size\": 10}",
+                "classification_metrics": "{\"0\": {\"precision\": 0.681044957472661, \"recall\": 0.9241549876339654, \"f1-score\": 0.7841902763203917, \"support\": 1213}, \"1\": {\"precision\": 0.9265335235378032, \"recall\": 0.9572586588061901, \"f1-score\": 0.9416455237404856, \"support\": 1357}, \"2\": {\"precision\": 0.7055256064690026, \"recall\": 0.8610197368421053, \"f1-score\": 0.7755555555555556, \"support\": 1216}, \"3\": {\"precision\": 0.8353156450137237, \"recall\": 0.7551695616211745, \"f1-score\": 0.7932232841007819, \"support\": 1209}, \"4\": {\"precision\": 0.8386266094420601, \"recall\": 0.8314893617021276, \"f1-score\": 0.835042735042735, \"support\": 1175}, \"5\": {\"precision\": 0.45700712589073633, \"recall\": 0.9170638703527169, \"f1-score\": 0.6100190234622701, \"support\": 1049}, \"6\": {\"precision\": 0.9783464566929134, \"recall\": 0.42993079584775085, \"f1-score\": 0.5973557692307692, \"support\": 1156}, \"7\": {\"precision\": 0.9021558872305141, \"recall\": 0.84472049689441, \"f1-score\": 0.8724939855653568, \"support\": 1288}, \"8\": {\"precision\": 0.7691082802547771, \"recall\": 0.413527397260274, \"f1-score\": 0.5378619153674833, \"support\": 1168}, \"9\": {\"precision\": 0.9515072083879423, \"recall\": 0.621043627031651, \"f1-score\": 0.7515527950310559, \"support\": 1169}, \"accuracy\": 0.7594166666666666, \"macro avg\": {\"precision\": 0.8045171300392134, \"recall\": 0.7555378493992364, \"f1-score\": 0.7498940863416884, \"support\": 12000}, \"weighted avg\": {\"precision\": 0.8099659752441527, \"recall\": 0.7594166666666666, \"f1-score\": 0.7561089094493736, \"support\": 12000}}",
+                "process_id": 11,
+                "hostname": "BARE_katib-study-78-92l99czg--1-6j762",
+                "obj_hash": 8788312792592
+            },
+            {
+                "metric_id": "__id_6f4058d8-45b0-4b96-9521-dcd692bb77cf__pid_11__hostname_BARE_katib-study-78-pg57spvr--1-nlfs5",
+                "timestamp": "Sat Dec  3 10:26:12 2022",
+                "value": 0.7498940863416884,
+                "measure": "f1-score",
+                "hyperparameters": "{\"learning_rate\": 0.01, \"weight_decay\": 0.01, \"hidden_layer_config\": [15], \"input_size\": 784, \"output_size\": 10}",
+                "classification_metrics": "{\"0\": {\"precision\": 0.681044957472661, \"recall\": 0.9241549876339654, \"f1-score\": 0.7841902763203917, \"support\": 1213}, \"1\": {\"precision\": 0.9265335235378032, \"recall\": 0.9572586588061901, \"f1-score\": 0.9416455237404856, \"support\": 1357}, \"2\": {\"precision\": 0.7055256064690026, \"recall\": 0.8610197368421053, \"f1-score\": 0.7755555555555556, \"support\": 1216}, \"3\": {\"precision\": 0.8353156450137237, \"recall\": 0.7551695616211745, \"f1-score\": 0.7932232841007819, \"support\": 1209}, \"4\": {\"precision\": 0.8386266094420601, \"recall\": 0.8314893617021276, \"f1-score\": 0.835042735042735, \"support\": 1175}, \"5\": {\"precision\": 0.45700712589073633, \"recall\": 0.9170638703527169, \"f1-score\": 0.6100190234622701, \"support\": 1049}, \"6\": {\"precision\": 0.9783464566929134, \"recall\": 0.42993079584775085, \"f1-score\": 0.5973557692307692, \"support\": 1156}, \"7\": {\"precision\": 0.9021558872305141, \"recall\": 0.84472049689441, \"f1-score\": 0.8724939855653568, \"support\": 1288}, \"8\": {\"precision\": 0.7691082802547771, \"recall\": 0.413527397260274, \"f1-score\": 0.5378619153674833, \"support\": 1168}, \"9\": {\"precision\": 0.9515072083879423, \"recall\": 0.621043627031651, \"f1-score\": 0.7515527950310559, \"support\": 1169}, \"accuracy\": 0.7594166666666666, \"macro avg\": {\"precision\": 0.8045171300392134, \"recall\": 0.7555378493992364, \"f1-score\": 0.7498940863416884, \"support\": 12000}, \"weighted avg\": {\"precision\": 0.8099659752441527, \"recall\": 0.7594166666666666, \"f1-score\": 0.7561089094493736, \"support\": 12000}}",
+                "process_id": 11,
+                "hostname": "BARE_katib-study-78-pg57spvr--1-nlfs5",
+                "obj_hash": 8791838087696
+            }
+        ]
+    },
+    "benchmark_configuration": {
+        "resources": {
+            "jobsCount": 3,
+            "workerCount": 3,
+            "metricsIP": "130.149.158.216",
+            "generateNewDockerImage": false,
+            "prometheus_url": "http://130.149.158.143:30041",
+            "cleanUp": true,
+            "limitResources": true,
+            "limitCpuTotal": "7000m",
+            "limitMemoryTotal": "400Gi",
+            "limitCpuWorker": "1000m",
+            "limitMemoryWorker": "4000Mi",
+            "experiment": {
+                "completionTime": "2022-12-03T10:26:16Z",
+                "conditions": [
+                    {
+                        "lastTransitionTime": "2022-12-03T10:23:31Z",
+                        "lastUpdateTime": "2022-12-03T10:23:31Z",
+                        "message": "Experiment is created",
+                        "reason": "ExperimentCreated",
+                        "status": "True",
+                        "type": "Created"
+                    },
+                    {
+                        "lastTransitionTime": "2022-12-03T10:26:16Z",
+                        "lastUpdateTime": "2022-12-03T10:26:16Z",
+                        "message": "Experiment is running",
+                        "reason": "ExperimentRunning",
+                        "status": "False",
+                        "type": "Running"
+                    },
+                    {
+                        "lastTransitionTime": "2022-12-03T10:26:16Z",
+                        "lastUpdateTime": "2022-12-03T10:26:16Z",
+                        "message": "Experiment has succeeded because max trial count has reached",
+                        "reason": "ExperimentMaxTrialsReached",
+                        "status": "True",
+                        "type": "Succeeded"
+                    }
+                ],
+                "currentOptimalTrial": {
+                    "bestTrialName": "katib-study-78-pg57spvr",
+                    "observation": {
+                        "metrics": [
+                            {
+                                "latest": "0.8099659752441527",
+                                "max": "0.8099659752441527",
+                                "min": "0.8099659752441527",
+                                "name": "precision"
+                            }
+                        ]
+                    },
+                    "parameterAssignments": [
+                        {
+                            "name": "lr",
+                            "value": "0.001"
+                        }
+                    ]
+                },
+                "startTime": "2022-12-03T10:23:31Z",
+                "succeededTrialList": [
+                    "katib-study-78-pg57spvr",
+                    "katib-study-78-c67z4xst",
+                    "katib-study-78-92l99czg"
+                ],
+                "trials": 3,
+                "trialsSucceeded": 3
+            }
+        }
+    }
+}
