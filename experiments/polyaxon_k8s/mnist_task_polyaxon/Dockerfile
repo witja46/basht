@@ -3,8 +3,10 @@ FROM python:3.9.6-slim
 RUN pip install pip --upgrade
 RUN pip install torch==1.10.2 torchvision==0.11.3
 RUN pip install optuna==2.10.1
+RUN pip install polyaxon
 
-COPY experiments/katib_k8s  experiments/katib_k8s
+
+COPY experiments/polyaxon_k8s  experiments/polyaxon_k8s
 #COPY data data
 COPY setup.py setup.py
 COPY ml_benchmark ml_benchmark
