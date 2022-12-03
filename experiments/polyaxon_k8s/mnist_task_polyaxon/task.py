@@ -8,6 +8,8 @@ import sys
 PROJECT_ROOT = os.path.abspath(os.path.join(__file__ ,"../../../../../"))
 sys.path.append(PROJECT_ROOT)
 from ml_benchmark.workload.mnist.mnist_task import MnistTask
+from torch import manual_seed
+from random import seed
 
 
 def train(times ,epoch):
@@ -47,14 +49,17 @@ def main():
 
 
 
-
+    #Fixing randomness
+    np.random.seed(100)
+    manual_seed(100) 
+    seed(100)
 
 
     #MnistTask
-    task = MnistTask(config_init={"epochs": epochs})
+    task = MnistTask(config_init={"epochs": 10})
     objective = task.create_objective()
     #TODO add the weight decay to the definition of the template
-    objective.set_hyperparameters({"learning_rate": lr, "weight_decay": 0.01})
+    objective.set_hyperparameters({"learning_rate": 0.01, "weight_decay": 0.01})
     objective.train()
     validation_scores = objective.validate()
     

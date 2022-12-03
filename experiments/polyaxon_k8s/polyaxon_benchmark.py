@@ -63,10 +63,12 @@ class PolyaxonBenchmark(Benchmark):
         self.workerMemory=resources.get("workerMemory",2)
         self.workerCount=resources.get("workerCount",5)
         self.jobsCount=resources.get("jobsCount",6) 
-        self.reqCpu = resources.get("requestCpu",10)
-        self.reqMem =  resources.get("requestMemory",10)
-        self.limitCpu = resources.get("limitCpu") 
-        self.limitMem = resources.get("limitMemory",20)
+        self.limitCpu_total = resources.get("limitCpuTotal",20) 
+        self.limitCpu_worker = resources.get("limitCpuWorker","1000m") 
+        self.limitMem_total = resources.get("limitMemoryTotal","200Gi")
+        self.limitMem_worker = resources.get("limitMemoryWorker",20)        
+
+
         self.limitResources = resources.get("limitResources",False)
         self.imagePullPolicy=resources.get("imagePullPolicy","IfNotPresent")
          
@@ -87,7 +89,7 @@ class PolyaxonBenchmark(Benchmark):
         res = os.popen('helm repo add polyaxon https://charts.polyaxon.com').read()
         log.info(res)
 
-        log.info("Deploying polyaxon to minikube:")
+        log.info("Deploying polyaxon to k8s:")
         #invoking polyaxon cli deploy comand
         res = self.cli_runner.invoke(deploy)
 
@@ -151,25 +153,61 @@ class PolyaxonBenchmark(Benchmark):
         experiment_definition = {
             "worker_num": self.workerCount,
             "jobs_num":self.jobsCount,
-            "worker_cpu": self.workerCpu,
-            "worker_mem": f"{self.workerMemory}Gi",
-            "study_name": self.study_name,
+            "worker_cpu_limit": f"{self.limitCpu_worker}",
+            "worker_mem_limit": f"{self.limitMem_worker}",
             "worker_image": f"scaleme100/{self.trial_tag}",
-            "image_pull_policy":self.imagePullPolicy,
-            "folder":self.trial_tag,
+            "study_name": self.study_name,
             "trialParameters":"${trialParameters.learningRate}",
-            "metrics_ip": self.metrics_ip,
+            "folder":self.trial_tag,
+            "metrics_ip":self.metrics_ip,
+            "image_pull_policy":self.imagePullPolicy
         }
+        
 
-        #loading and filling the template
-        with open(path.join(path.dirname(__file__), "experiment_template.yaml"), "r") as f:
-            job_template = Template(f.read())
-            job_yml_objects = job_template.substitute(experiment_definition)
+        if not self.limitResources:
+
+            #loading template without resources limits and fulling the template
+            with open(path.join(path.dirname(__file__), "experiment_template.yaml"), "r") as f:
+                job_template = Template(f.read())
+                job_yml_objects = job_template.substitute(experiment_definition)
+                
+                   
+           
+
+        else:
+        
+            resources_restrictions = {
+           
+                "limit_cpu":f"{self.limitCpu_total}",
+                "limit_mem":f"{self.limitMem_total}",
+                "quota_name":f"{self.namespace}-quota"
+            }     
+            with open(path.join(path.dirname(__file__), "ResourceQuota_template.yaml"), "r") as f:
+                job_template = Template(f.read())
+                job_yml_objects = job_template.substitute(resources_restrictions) 
+            with open(path.join(path.dirname(__file__), "ResourceQuota.yaml"), "w") as f:
+                f.write(job_yml_objects)
+            log.info("Resource Quota yaml created")
             
-        #writing the experiment definition into the file        
+            res = os.popen(f"kubectl apply -f ResourceQuota.yaml  -n {self.namespace}").read()
+            log.info(res)
+
+              #loading template without resources limits and fulling the template
+            with open(path.join(path.dirname(__file__), "expriment_template_resources.yaml"), "r") as f:
+                job_template = Template(f.read())
+                job_yml_objects = job_template.substitute(experiment_definition)
+                
+
+
+
+
+        
+        
+        #writing the experiment definition into the file
         with open(path.join(path.dirname(__file__), self.experiment_file_name), "w") as f:
             f.write(job_yml_objects)
-        log.info("Experiment yaml created")
+            log.info("Experiment yaml created")
+ 
       
         
         #only generating the docker image if specified so.
@@ -385,10 +423,10 @@ if __name__ == "__main__":
         "metricsIP": urlopen("https://checkip.amazonaws.com").read().decode("utf-8").strip(),
         "generateNewDockerImage":False,
         #"prometheus_url": "http://130.149.158.143:30041",
-           "cleanUp": True ,
-            "limitResources":False,
-            "limitCpu":10,
-            "limitMemory":10
+        "cleanUp": True ,
+        "limitResources":True,
+
+
 
 
     }
@@ -398,7 +436,7 @@ if __name__ == "__main__":
     runner.run()
 
     # bench= PolyaxonBenchmark(resources=resources)
-    #bench.deploy() 
+    # bench.deploy() 
     # bench.setup()
     # bench.run()
     # # bench.collect_run_results()
