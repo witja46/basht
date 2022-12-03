@@ -7,7 +7,8 @@ import sys
 PROJECT_ROOT = os.path.abspath(os.path.join(__file__ ,"../../../../../"))
 sys.path.append(PROJECT_ROOT)
 from ml_benchmark.workload.mnist.mnist_task import MnistTask
-
+from torch import manual_seed
+from random import seed
 
 def train(times ,epoch):
     loss = 1
@@ -29,8 +30,9 @@ def test():
 
 
 def main():
-   
-    
+    np.random.seed(100)
+    manual_seed(100) 
+    seed(100)
     #parsing arguments 
     parser = argparse.ArgumentParser(description="MNIST Example")
     parser.add_argument("--batch-size", type=int, default=64, metavar="N",
