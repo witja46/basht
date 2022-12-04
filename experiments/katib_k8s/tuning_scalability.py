@@ -26,15 +26,15 @@ if __name__ == "__main__":
         }
 
     imagePullPolicy = "IfNotPresent"
-    reps = 2
+    reps = 1
     for rep in range(1,reps+1):
         #for trials in [16,18,20,30,40]:
-        for trials in [1,2,4,6,8,10,12,14,16,18,20,22]:
-            
+       # for trials in [1,2,4,6,8,10,12,14,16,18,20,22]:
+        for trials in [24]:    
                 logging.info(f"Starting rep {rep} of Run with n_trails {trials}, and ImagePullPolicy {imagePullPolicy}")
                 try:
                     
-                    resources["studyName"] = f'study-rep-{rep}-trials-{trials}-{imagePullPolicy}'
+                    resources["studyName"] = f'study-rep-{rep}-trials-{trials}'
                     resources["repetition"] = rep
                     resources["undeploy"] = False
                     resources["deploy"]= False
