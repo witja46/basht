@@ -278,12 +278,23 @@ class PolyaxonBenchmark(Benchmark):
         done = 0
         for e in w.stream(c.list_namespaced_job, namespace=self.namespace):
             #TODO Handel failed jobs and errors or add timeout
-            if "object" in e and e["object"].status.completion_time is not None:
-                done = done + 1 
-                log.info(f'{done} jobs out of {self.jobsCount} succeded')
-                if(done == self.jobsCount):
+            if "object" in e and e["object"].status.completion_time is not None and e["object"].status.succeeded >= 1 :
+                runs = self.get_succeeded_runs()
+                log.info(f'{runs["count"]} jobs out of {self.jobsCount} succeded')
+            
+              #checking if all runs were finished
+                if(runs["count"] == self.jobsCount):
                     log.info("Finished all runs")
                     w.stop()
+               
+               
+               
+                # log.info( e["object"].status.conditions)
+                
+                # log.info(f'{done} jobs out of {self.jobsCount} succeded')
+                # if(done == self.jobsCount):
+                #     log.info("Finished all runs")
+                #     w.stop()
 
 
 
@@ -358,7 +369,9 @@ class PolyaxonBenchmark(Benchmark):
         # if res.exit_code != 0:
         #     log.info("Failed to delete project")
         #     raise Exception(f'Exit code: {res.exit_code}  Error message: \n{res.output}')
-        
+        if(self.limitResources):
+            res = os.popen("kubectl delete resourceQuota polyaxon-quota -n polyaxon").read()        
+            log.info(res)
 
         if(self.undeploying):
             log.info("Undeploying polyaxon:")
@@ -441,15 +454,16 @@ if __name__ == "__main__":
     resources={
         # "studyName":"",
         # "dockerImageTag":"mnist_task",
-        "jobsCount":1,
+        "jobsCount":5,
         "cleanUp":True,
-        "workerCount":1,
+        "workerCount":5,
         "loggingLevel":log.INFO,
         "metricsIP": urlopen("https://checkip.amazonaws.com").read().decode("utf-8").strip(),
         "generateNewDockerImage":False,
         #"prometheus_url": "http://130.149.158.143:30041",
         "cleanUp": True ,
         "limitResources":True,
+        "limitCpuTotal":6,
         "undeploy":False,
         "deploy":False
 
@@ -457,14 +471,14 @@ if __name__ == "__main__":
 
 
     }
-    # from ml_benchmark.benchmark_runner import BenchmarkRunner
-    # runner = BenchmarkRunner(
-    #     benchmark_cls=PolyaxonBenchmark, resources=resources)
-    # runner.run()
+    from ml_benchmark.benchmark_runner import BenchmarkRunner
+    runner = BenchmarkRunner(
+        benchmark_cls=PolyaxonBenchmark, resources=resources)
+    runner.run()
 
-    bench= PolyaxonBenchmark(resources=resources)
-    bench.deploy() 
-    bench.setup()
+    # bench= PolyaxonBenchmark(resources=resources)
+    # bench.deploy() 
+    # bench.setup()
     # bench.run()
     # # bench.collect_run_results()
 
