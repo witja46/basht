@@ -26,11 +26,17 @@ if __name__ == "__main__":
         }
 
     repetions = 2
-    for trials in [1,2,3,4]:
+    rep = 1
+    for trials in [1,2,4,6,8,10,12,14,16,18,20,22]:
             for imagePullPolicy in ["IfNotPresent"]:
-            
+
                 logging.info(f"Starting Run with n_trails {trials}, and ImagePullPolicy {imagePullPolicy}")
                 try:
+                    resources["studyName"] = f'study-rep-{rep}-trials-{trials}-{imagePullPolicy}'
+                    resources["repetition"] = rep
+
+                    resources["undeploy"] = False
+                    resources["deploy"]= False
                     resources["workerCount"] = trials
                     resources["jobsCount"] = trials
                     resources["imagePullPolicy"] = imagePullPolicy

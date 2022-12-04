@@ -1,14 +1,16 @@
 version: 1.1
 kind: operation
-name: polyaxon-study-91
+name: study-worker-500m-total-8-rep-1-trials-1
+termination:
+  maxRetries: 10
 matrix:
   kind: grid
-  numRuns: 5
-  concurrency: 5
+  numRuns: 1
+  concurrency: 1
   params:
     lr:
       kind: logspace
-      value: 0.001:0.9:5
+      value: 0.01:0.1:1
 component:
   inputs:
     - name: lr
@@ -18,14 +20,11 @@ component:
     container:
       imagePullPolicy: IfNotPresent
       image: scaleme100/mnist_task_polyaxon
-      resources:
-        limits:
-          cpu: 1000m
       command: [python3, experiments/polyaxon_k8s/mnist_task_polyaxon/task.py]
       args: ["--batch-size=64", "--lr={{ lr }}"]
       env:
         - name: STUDY_NAME
-          value: "polyaxon-study-91"
+          value: "study-worker-500m-total-8-rep-1-trials-1"
         - name: DB_CONN
           value: "postgresql://postgresadmin:admin123@postgres:5432/postgresdb"
         - name: "METRICS_STORAGE_HOST"

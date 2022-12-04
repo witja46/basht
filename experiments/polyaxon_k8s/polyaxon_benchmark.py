@@ -25,8 +25,9 @@ import requests
 import subprocess
 import psutil
 import logging as log
-from polyaxon.cli.projects import create
+from polyaxon.cli.projects import create, delete
 from polyaxon.cli.run import run
+from polyaxon.cli.operations import delete as delete_run
 from polyaxon.cli.admin import deploy,teardown
 from polyaxon.cli.port_forward import port_forward
 from polyaxon.cli.config import set
@@ -66,7 +67,10 @@ class PolyaxonBenchmark(Benchmark):
         self.limitCpu_total = resources.get("limitCpuTotal",20) 
         self.limitCpu_worker = resources.get("limitCpuWorker","1000m") 
         self.limitMem_total = resources.get("limitMemoryTotal","200Gi")
-        self.limitMem_worker = resources.get("limitMemoryWorker",20)        
+        self.limitMem_worker = resources.get("limitMemoryWorker",20)   
+
+        self.undeploying= resources.get("undeploy",True) 
+        self.deploying = resources.get("deploy",True)    
 
 
         self.limitResources = resources.get("limitResources",False)
@@ -84,24 +88,24 @@ class PolyaxonBenchmark(Benchmark):
             on a platform, e.g,. in the case of Kubernetes it referes to the steps nassary to deploy all pods
             and services in kubernetes.
         """
-        
-        log.info("Adding polyaxon to helm repo:")
-        res = os.popen('helm repo add polyaxon https://charts.polyaxon.com').read()
-        log.info(res)
+        if(self.deploying): 
+            log.info("Adding polyaxon to helm repo:")
+            res = os.popen('helm repo add polyaxon https://charts.polyaxon.com').read()
+            log.info(res)
 
-        log.info("Deploying polyaxon to k8s:")
-        #invoking polyaxon cli deploy comand
-        res = self.cli_runner.invoke(deploy)
+            log.info("Deploying polyaxon to k8s:")
+            #invoking polyaxon cli deploy comand
+            res = self.cli_runner.invoke(deploy)
 
-        if res.exit_code == 0:
-            log.info(res.output)
-            log.info("Polyaxon deployed")
-        elif res.exit_code == 1:
-            log.info(res.output)
-            log.info("Polyaxon was already deployed")
-        else:
-            log.info("Failed to deploy Polyaxon")
-            raise Exception(f'Exit code: {res.exit_code}  Error message: \n{res.output}')
+            if res.exit_code == 0:
+                log.info(res.output)
+                log.info("Polyaxon deployed")
+            elif res.exit_code == 1:
+                log.info(res.output)
+                log.info("Polyaxon was already deployed")
+            else:
+                log.info("Failed to deploy Polyaxon")
+                raise Exception(f'Exit code: {res.exit_code}  Error message: \n{res.output}')
 
 
         log.info("Waiting for all polyaxon pods to be ready:")
@@ -223,7 +227,19 @@ class PolyaxonBenchmark(Benchmark):
 
           
         sleep(2)
+        log.info("Creating new project:")
+        options = f'--name {self.study_name} --description '.split()
+        # adding the project description as the last argument  
+        options.append(f'{self.project_description}')
+        self.project_options = options
 
+        #invoking polyaxon project create comand
+        #TODO add error handling.
+        res = self.cli_runner.invoke(create,options)
+        log.info(res.output)
+        if res.exit_code != 0:
+            log.info("Failed to create projectcd ")
+            raise Exception(f'Exit code: {res.exit_code}  Error message: \n{res.output}')
 
         
             
@@ -234,18 +250,8 @@ class PolyaxonBenchmark(Benchmark):
         # project = requests.post(f'{self.polyaxon_addr}/api/v1/default/projects/create', json={"name": self.study_name, }) # Alternative way of creating the project crd with http request to the polyaxon api
 
          
-        log.info("Creating new project:")
-        options = f'--name {self.study_name} --description '.split()
-        # adding the project description as the last argument  
-        options.append(f'{self.project_description}')
+       
     
-        #invoking polyaxon project create comand
-        #TODO add error handling.
-        res = self.cli_runner.invoke(create,options)
-        log.info(res.output)
-        if res.exit_code != 0:
-            log.info("Failed to create projectcd ")
-            raise Exception(f'Exit code: {res.exit_code}  Error message: \n{res.output}')
 
 
       
@@ -328,83 +334,101 @@ class PolyaxonBenchmark(Benchmark):
 
     def undeploy(self):
         
+   
+        sleep(3)
+
+        #invoking polyaxon project delete comand
+        #TODO add error handling.
+        res = self.cli_runner.invoke(delete,["--project",self.study_name,"-y"])
+        log.info(res.output)
+        if res.exit_code != 0:
+            log.info("Failed to delete project")
+            raise Exception(f'Exit code: {res.exit_code}  Error message: \n{res.output}')
+
         if(self.post_forward_process):
             log.info("Terminating post  forwarding process:")
             process = psutil.Process(self.post_forward_process.pid)
             for proc in process.children(recursive=True):
                 proc.kill()
             process.kill()
+        #invoking polyaxon run  delete 
+        #TODO add error handling.
+        # res = self.cli_runner.invoke(delete_run,["--"])
+        # log.info(res.output)
+        # if res.exit_code != 0:
+        #     log.info("Failed to delete project")
+        #     raise Exception(f'Exit code: {res.exit_code}  Error message: \n{res.output}')
+        
 
-
-        log.info("Undeploying polyaxon:")
-        res = self.cli_runner.invoke(teardown,["--yes"])
-        #by teardown comand the polyaxon cli doesnt set exit_code if there are some problems
-        if("Polyaxon could not teardown the deployment" in res.output):
-            raise Exception(f'Exit code: {res.exit_code}  Error message: \n{res.output}')
-        elif(res.exit_code == 0):
-            print(res.exit_code)
-            log.info(res.output)
-        else:
-            raise Exception(f'Exit code: {res.exit_code}  Error message: \n{res.output}')
-   
-             
+        if(self.undeploying):
+            log.info("Undeploying polyaxon:")
+            res = self.cli_runner.invoke(teardown,["--yes"])
+            #by teardown comand the polyaxon cli doesnt set exit_code if there are some problems
+            if("Polyaxon could not teardown the deployment" in res.output):
+                raise Exception(f'Exit code: {res.exit_code}  Error message: \n{res.output}')
+            elif(res.exit_code == 0):
+                print(res.exit_code)
+                log.info(res.output)
+            else:
+                raise Exception(f'Exit code: {res.exit_code}  Error message: \n{res.output}')
     
-
-
-        # Waiting untill all polyaxon pods get terminated 
-        #TODO add logic in case of no existent polyaxon deployment 
-        config.load_kube_config()
-        w = watch.Watch()
-        c = client.CoreV1Api()
-        deployed = 0
-        to_undeploy= ["polyaxon-polyaxon-streams","polyaxon-polyaxon-operator","polyaxon-polyaxon-gateway","polyaxon-polyaxon-api"]
-        log.info("Waiting for polyaxon pods to be terminated:")
-        for e in w.stream(c.list_namespaced_pod, namespace=self.namespace):
-            ob = e["object"]
-               
-            log.debug(f'{deployed} pods out of 4 were killed')
-            log.debug("\n new in stream:\n")
-            log.debug(ob.metadata.name,ob.status.phase)
-            for name in to_undeploy:
-                if name in ob.metadata.name:
-
-                    if not ob.status.container_statuses[0].ready:
-                        log.info(f'Containers of {ob.metadata.name} are terminated')
-                        to_undeploy.remove(name)
-                        
-                        if not to_undeploy:
-                            w.stop()
-                            # log.info("Finished ")
-                            break
-        
-      
-        log.info("Killed all pods deleteing the namespace:")
-        res = c.delete_namespace_with_http_info(name=self.namespace)
+                
         
 
-        #TODO somehow handel the timouts?
-        log.info("Checking status of the deleted namespace:")  
-        for e in w.stream(c.list_namespace):
-            ob = e["object"]
-            # if the status of our namespace was changed we check if it the namespace was really removed from the cluster by requesting and expecting it to be not found
-            #TODO do this in other way
 
+            # Waiting untill all polyaxon pods get terminated 
+            #TODO add logic in case of no existent polyaxon deployment 
+            config.load_kube_config()
+            w = watch.Watch()
+            c = client.CoreV1Api()
+            deployed = 0
+            to_undeploy= ["polyaxon-polyaxon-streams","polyaxon-polyaxon-operator","polyaxon-polyaxon-gateway","polyaxon-polyaxon-api"]
+            log.info("Waiting for polyaxon pods to be terminated:")
+            for e in w.stream(c.list_namespaced_pod, namespace=self.namespace):
+                ob = e["object"]
+                
+                log.debug(f'{deployed} pods out of 4 were killed')
+                log.debug("\n new in stream:\n")
+                log.debug(ob.metadata.name,ob.status.phase)
+                for name in to_undeploy:
+                    if name in ob.metadata.name:
+
+                        if not ob.status.container_statuses[0].ready:
+                            log.info(f'Containers of {ob.metadata.name} are terminated')
+                            to_undeploy.remove(name)
+                            
+                            if not to_undeploy:
+                                w.stop()
+                                # log.info("Finished ")
+                                break
             
-            if ob.metadata.name == self.namespace:
-                try:
-                    log.debug(c.read_namespace_status_with_http_info(name=self.namespace))
-                except ApiException as err:
-                    log.info(err)
-                    log.info("Namespace sucessfully deleted")
-                    if self.clean_up:
-                        log.info("Deleteing task docker image from minikube")
-                        sleep(2)
-                        self.image_builder.cleanup(self.trial_tag)
-                    w.stop()
-                    break
+        
+            log.info("Killed all pods deleteing the namespace:")
+            res = c.delete_namespace_with_http_info(name=self.namespace)
+            
 
+            #TODO somehow handel the timouts?
+            log.info("Checking status of the deleted namespace:")  
+            for e in w.stream(c.list_namespace):
+                ob = e["object"]
+                # if the status of our namespace was changed we check if it the namespace was really removed from the cluster by requesting and expecting it to be not found
+                #TODO do this in other way
 
-        log.info("Deleting image from minikube")
+                
+                if ob.metadata.name == self.namespace:
+                    try:
+                        log.debug(c.read_namespace_status_with_http_info(name=self.namespace))
+                    except ApiException as err:
+                        log.info(err)
+                        log.info("Namespace sucessfully deleted")
+                        if self.clean_up:
+                            log.info("Deleteing task docker image from minikube")
+                            sleep(2)
+                            self.image_builder.cleanup(self.trial_tag)
+                        w.stop()
+                        break
+
+        #log.info("Deleting image from minikube")
         #self.image_builder.cleanup(self.trial_tag)
         log.info("Finished undeploying")
 
@@ -416,15 +440,17 @@ if __name__ == "__main__":
     resources={
         # "studyName":"",
         # "dockerImageTag":"mnist_task",
-        "jobsCount":5,
+        "jobsCount":1,
         "cleanUp":True,
-        "workerCount":5,
+        "workerCount":1,
         "loggingLevel":log.INFO,
         "metricsIP": urlopen("https://checkip.amazonaws.com").read().decode("utf-8").strip(),
         "generateNewDockerImage":False,
         #"prometheus_url": "http://130.149.158.143:30041",
         "cleanUp": True ,
-        "limitResources":True,
+        "limitResources":False,
+        "undeploy":False,
+        "deploy":False
 
 
 
