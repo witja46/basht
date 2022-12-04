@@ -45,6 +45,8 @@ class KatibBenchmark(Benchmark):
         self.limitMem_worker = resources.get("limitMemoryWorker",20)
         self.limitResources = resources.get("limitResources",False)
         self.imagePullPolicy=resources.get("imagePullPolicy","IfNotPresent")
+        self.undeploying = resources.get("undeploy",True)
+        self.deploying = resources.get("deploy",True)
 
         self.logging_level= self.resources.get("loggingLevel",log.INFO)
         log.basicConfig(format='%(asctime)s Katib Benchmark %(levelname)s: %(message)s',level=self.logging_level)
@@ -60,11 +62,11 @@ class KatibBenchmark(Benchmark):
             and services in kubernetes.
         """
         
-
-        log.info("Deploying katib:")
-        res = os.popen('kubectl apply -k "manifests/v1beta1/installs/katib-standalone"').read()
-        #res = os.popen('kubectl apply -k "manifests/v1beta1/installs/katib-standalone-postgres"').read()
-        log.info(res)
+        if(self.deploying):
+            log.info("Deploying katib:")
+            res = os.popen('kubectl apply -k "manifests/v1beta1/installs/katib-standalone"').read()
+            #res = os.popen('kubectl apply -k "manifests/v1beta1/installs/katib-standalone-postgres"').read()
+            log.info(res)
 
 
 
@@ -309,64 +311,68 @@ class KatibBenchmark(Benchmark):
         except ApiException as e:
             log.info("Exception when calling CustomObjectsApi->get_namespaced_custom_object_status: %s\n" % e)
 
+        if(self.limitResources):
+            res = os.popen("kubectl delete resourceQuota kubeflow-quota -n kubeflow").read()
+            log.info(res)
 
 
-        w = watch.Watch()
-        c = client.CoreV1Api()
-        log.info("Deleteing the namespace:")
-        #res = c.delete_namespace_with_http_info(name=self.namespace)    
-        #res = os.popen('kubectl delete --wait=false  -k "manifests/v1beta1/installs/katib-standalone-postgres"').read()
-        res = os.popen('kubectl delete --wait=false -k "manifests/v1beta1/installs/katib-standalone"').read()
-        log.info(res)
-        sleep(5)
-        try:
-            log.debug(c.read_namespace_status_with_http_info(name=self.namespace))
-        except ApiException as err:
-            log.info("Finished undeploying")
-
-            return
-        sleep(3)
-        res = os.popen('kubectl delete --wait=false crd  trials.kubeflow.org').read()
-        log.info(res)
-
-        
-        res = os.popen('kubectl patch  crd/trials.kubeflow.org -p  \'{"metadata":{"finalizers":null}}\'').read()
-
-
-        log.info(res)
-
-        log.info("Checking status of the  namespace:")
-
-        #if the namespace was still existent we must wait till it is really terminated
-        for e in w.stream(c.list_namespace):
-            ob = e["object"]
+        if(self.undeploying):
+            w = watch.Watch()
+            c = client.CoreV1Api()
+            log.info("Deleteing the namespace:")
+            #res = c.delete_namespace_with_http_info(name=self.namespace)    
+            #res = os.popen('kubectl delete --wait=false  -k "manifests/v1beta1/installs/katib-standalone-postgres"').read()
+            res = os.popen('kubectl delete --wait=false -k "manifests/v1beta1/installs/katib-standalone"').read()
+            log.info(res)
+            sleep(5)
             try:
                 log.debug(c.read_namespace_status_with_http_info(name=self.namespace))
             except ApiException as err:
                 log.info("Finished undeploying")
+
                 return
-            # if the status of our namespace was changed we check if it the namespace was really removed from the cluster by requesting and expecting it to be not found
-            if ob.metadata.name == self.namespace:
+            sleep(3)
+            res = os.popen('kubectl delete --wait=false crd  trials.kubeflow.org').read()
+            log.info(res)
+
+            
+            res = os.popen('kubectl patch  crd/trials.kubeflow.org -p  \'{"metadata":{"finalizers":null}}\'').read()
+
+
+            log.info(res)
+
+            log.info("Checking status of the  namespace:")
+
+            #if the namespace was still existent we must wait till it is really terminated
+            for e in w.stream(c.list_namespace):
+                ob = e["object"]
                 try:
                     log.debug(c.read_namespace_status_with_http_info(name=self.namespace))
                 except ApiException as err:
-                    
-                    if self.clean_up:
-                        log.info("Deleteing task docker image from k8s")
-                        sleep(2)
-                        self.image_builder.cleanup(f"scaleme100/{self.trial_tag}")
-                    
-                    
-                    if(err.status != 404):
-                        raise Exception("Something went wrong",err)
-                    else: 
-                        log.info("Namespace sucessfully deleted")
-                        w.stop()
+                    log.info("Finished undeploying")
+                    return
+                # if the status of our namespace was changed we check if it the namespace was really removed from the cluster by requesting and expecting it to be not found
+                if ob.metadata.name == self.namespace:
+                    try:
+                        log.debug(c.read_namespace_status_with_http_info(name=self.namespace))
+                    except ApiException as err:
+                        
+                        if self.clean_up:
+                            log.info("Deleteing task docker image from k8s")
+                            sleep(2)
+                            self.image_builder.cleanup(f"scaleme100/{self.trial_tag}")
+                        
+                        
+                        if(err.status != 404):
+                            raise Exception("Something went wrong",err)
+                        else: 
+                            log.info("Namespace sucessfully deleted")
+                            w.stop()
 
 
-        log.info("Finished undeploying")
+            log.info("Finished undeploying")
 
-      
+        
 
 
 
@@ -385,10 +391,12 @@ if __name__ == "__main__":
            # "prometheus_url": "http://130.149.158.143:30041",
             "cleanUp": True ,
             "limitResources":True,
-            "limitCpuTotal":"7000m",
+            "limitCpuTotal":"20",
             "limitMemoryTotal":"400Gi",
             "limitCpuWorker":"1000m",
-            "limitMemoryWorker":"4000Mi"
+            "limitMemoryWorker":"4000Mi",
+            # "undeploy":False,
+            # "deploy": True
             }
     # bench = KatibBenchmark(resources=resources)
     # bench.deploy()

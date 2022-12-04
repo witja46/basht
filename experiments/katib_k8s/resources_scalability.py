@@ -31,15 +31,18 @@ if __name__ == "__main__":
 
 
 
-
-    for cores_pro_worker in ["500m", "1000m","2000m"]:
-        for trials in [10,20]:
+    rep = 1
+    for cores_pro_worker in [ "1000m","2000m"]:
+        for trials in [10]:
             for cores_total in [4,6,8,10,12,14,16,18,20,24]:
-                
-            
+
+
                 sleep(3)
                 logging.info(f"Cpu Worker limit {cores_pro_worker} Total limit of cores {cores_total} Starting Run with n_trails {trials} ")
                 try:
+                    resources["studyName"] = f'study-worker-{cores_pro_worker}-total-{cores_total}-rep-{rep}-trials-{trials}'
+                    resources["undeploy"] = False
+                    resources["deploy"]= False
                     resources["workerCount"] = trials
                     resources["jobsCount"] = trials
                     resources["limitCpuTotal"] = cores_total       
