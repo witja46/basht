@@ -405,7 +405,8 @@ class PolyaxonBenchmark(Benchmark):
         
             log.info("Killed all pods deleteing the namespace:")
             res = c.delete_namespace_with_http_info(name=self.namespace)
-            
+           #kubectl delete crd operations.core.polyaxon.com 
+            #kubectl patch  crd/operations.core.polyaxon.com  -p  '{"metadata":{"finalizers":null}}'
 
             #TODO somehow handel the timouts?
             log.info("Checking status of the deleted namespace:")  
@@ -448,7 +449,7 @@ if __name__ == "__main__":
         "generateNewDockerImage":False,
         #"prometheus_url": "http://130.149.158.143:30041",
         "cleanUp": True ,
-        "limitResources":False,
+        "limitResources":True,
         "undeploy":False,
         "deploy":False
 
@@ -456,14 +457,14 @@ if __name__ == "__main__":
 
 
     }
-    from ml_benchmark.benchmark_runner import BenchmarkRunner
-    runner = BenchmarkRunner(
-        benchmark_cls=PolyaxonBenchmark, resources=resources)
-    runner.run()
+    # from ml_benchmark.benchmark_runner import BenchmarkRunner
+    # runner = BenchmarkRunner(
+    #     benchmark_cls=PolyaxonBenchmark, resources=resources)
+    # runner.run()
 
-    # bench= PolyaxonBenchmark(resources=resources)
-    # bench.deploy() 
-    # bench.setup()
+    bench= PolyaxonBenchmark(resources=resources)
+    bench.deploy() 
+    bench.setup()
     # bench.run()
     # # bench.collect_run_results()
 
