@@ -4,4 +4,4 @@ metadata:
   name: polyaxon-quota
 spec:
   hard:
-    limits.cpu: "6"
+    limits.cpu: "26"

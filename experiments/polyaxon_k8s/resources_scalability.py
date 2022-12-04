@@ -18,7 +18,7 @@ if __name__ == "__main__":
  
         "metricsIP": urlopen("https://checkip.amazonaws.com").read().decode("utf-8").strip(),
         "generateNewDockerImage": False,
-        # "prometheus_url": "http://130.149.158.143:30041",
+         "prometheus_url": "http://130.149.158.143:30041",
         "cleanUp": True ,
         "limitResources":True,
         "loggingLevel": logging.INFO,
@@ -27,8 +27,8 @@ if __name__ == "__main__":
 
     repetions = 2
     rep = 1
-    for cores_pro_worker in ["500m", "1000m","2000m"]:
-        for trials in [5,10,20]:
+    for cores_pro_worker in [ "1000m","2000m"]:
+        for trials in [10]:
             for cores_total in [4,6,8,10,12,14,16,18,20,24]:
                 
             

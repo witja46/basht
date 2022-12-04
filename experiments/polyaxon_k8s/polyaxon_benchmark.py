@@ -460,7 +460,7 @@ if __name__ == "__main__":
         "loggingLevel":log.INFO,
         "metricsIP": urlopen("https://checkip.amazonaws.com").read().decode("utf-8").strip(),
         "generateNewDockerImage":False,
-        #"prometheus_url": "http://130.149.158.143:30041",
+        "prometheus_url": "http://130.149.158.143:30041",
         "cleanUp": True ,
         "limitResources":True,
         "limitCpuTotal":6,

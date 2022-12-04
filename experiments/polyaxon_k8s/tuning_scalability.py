@@ -18,7 +18,7 @@ if __name__ == "__main__":
  
         "metricsIP": urlopen("https://checkip.amazonaws.com").read().decode("utf-8").strip(),
         "generateNewDockerImage": False,
-        # "prometheus_url": "http://130.149.158.143:30041",
+         "prometheus_url": "http://130.149.158.143:30041",
         "cleanUp": True ,
         "limitResources":False,
         "loggingLevel": logging.INFO,
@@ -27,7 +27,8 @@ if __name__ == "__main__":
 
     repetions = 2
     rep = 1
-    for trials in [1,2,4,6,8,10,12,14,16,18,20,22]:
+    for trials in [24,28,32,40,50,60,80,100]:
+   # for trials in [1,2,4,6,8,10,12,14,16,18,20,22]:
             for imagePullPolicy in ["IfNotPresent"]:
 
                 logging.info(f"Starting Run with n_trails {trials}, and ImagePullPolicy {imagePullPolicy}")
