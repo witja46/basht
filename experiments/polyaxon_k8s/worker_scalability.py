@@ -18,7 +18,7 @@ if __name__ == "__main__":
  
         "metricsIP": urlopen("https://checkip.amazonaws.com").read().decode("utf-8").strip(),
         "generateNewDockerImage": False,
-         #"prometheus_url": "http://130.149.158.143:30041",
+         "prometheus_url": "http://130.149.158.143:30041",
         "cleanUp": True ,
         "limitResources":True,
         "loggingLevel": logging.INFO,
@@ -27,8 +27,9 @@ if __name__ == "__main__":
 
     repetions = 2
     rep = 1
-    for cores_pro_worker in ["300","500m","600m","800m", "1000m",  "1200m",  "1400m", "1800m" , "2000m","2400m","2800m"]:
-        for trials in [5,10]:
+    
+    for trials in [5,10]:
+        for cores_pro_worker in ["300m","500m","600m","800m", "1000m",  "1200m",  "1400m", "1800m" , "2000m","2400m","2800m"]:
 
             cores_total = 60
             sleep(3)
@@ -37,7 +38,7 @@ if __name__ == "__main__":
                 resources["studyName"] = f'study-worker-{cores_pro_worker}-total-{cores_total}-rep-{rep}-trials-{trials}'
                 resources["undeploy"] = False
                 resources["deploy"]= False
-                
+                resources["type"] = "worker_scalability"        
                 resources["workerCount"] = trials
                 resources["jobsCount"] = trials
                 resources["limitCpuTotal"] = cores_total       
