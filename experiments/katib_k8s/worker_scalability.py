@@ -18,7 +18,7 @@ if __name__ == "__main__":
 
         "metricsIP": urlopen("https://checkip.amazonaws.com").read().decode("utf-8").strip(),
         "generateNewDockerImage": False,
-       #  "prometheus_url": "http://130.149.158.143:30041",
+         "prometheus_url": "http://130.149.158.143:30041",
         "cleanUp": True ,
         "limitResources":True,
         "loggingLevel": logging.INFO,
@@ -50,3 +50,4 @@ if __name__ == "__main__":
                 runner = None
             except Exception as e:
                 logging.warning(f'Failed Run  n_trails {trials}  {cores_pro_worker}- {e}')                                                                                         
+
