@@ -29,8 +29,8 @@ if __name__ == "__main__":
     reps = 1
     for rep in range(1,reps+1):
         #for trials in [16,18,20,30,40]:
-       # for trials in [1,2,4,6,8,10,12,14,16,18,20,22]:
-        for trials in [24]:    
+        for trials in [1,2,4,6,8,10,12,14,16,18,20,22]:
+       # for trials in [24]:    
                 logging.info(f"Starting rep {rep} of Run with n_trails {trials}, and ImagePullPolicy {imagePullPolicy}")
                 try:
                     
@@ -38,6 +38,8 @@ if __name__ == "__main__":
                     resources["repetition"] = rep
                     resources["undeploy"] = False
                     resources["deploy"]= False
+                    resources["limitCpuTotal"] = 80
+                    resources["limitCpuWorker"] = "1000m"
                     resources["workerCount"] = trials
                     resources["jobsCount"] = trials
                     resources["imagePullPolicy"] = imagePullPolicy
