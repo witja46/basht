@@ -1,0 +1,34 @@
+version: 1.1
+kind: operation
+name: study-worker-2000m-total-26-rep-1-trials-10
+termination:
+  maxRetries: 10
+matrix:
+  kind: grid
+  numRuns: 10
+  concurrency: 10
+  params:
+    lr:
+      kind: logspace
+      value: 0.001:0.9:10
+component:
+  inputs:
+    - name: lr
+      type: float
+  run:
+    kind: job
+    container:
+      imagePullPolicy: IfNotPresent
+      image: scaleme100/mnist_task_polyaxon
+      resources:
+        limits:
+          cpu: 2000m
+      command: [python3, experiments/polyaxon_k8s/mnist_task_polyaxon/task.py]
+      args: ["--batch-size=64", "--lr={{ lr }}"]
+      env:
+        - name: STUDY_NAME
+          value: "study-worker-2000m-total-26-rep-1-trials-10"
+        - name: DB_CONN
+          value: "postgresql://postgresadmin:admin123@postgres:5432/postgresdb"
+        - name: "METRICS_STORAGE_HOST"
+          value: "130.149.158.216"

@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: $quota_name
+spec:
+  hard:
+    limits.cpu: "$limit_cpu"
