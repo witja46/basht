@@ -383,9 +383,9 @@ if __name__ == "__main__":
             # "dockerUserLogin":"",
             # "dockerUserPassword":"",
             # "studyName":""
-            "jobsCount":3,
+            "jobsCount":1,
             # "dockerImageTag":"light_task",
-            "workerCount":3,
+            "workerCount":1,
             "metricsIP": urlopen("https://checkip.amazonaws.com").read().decode("utf-8").strip(),
             "generateNewDockerImage":False,
            # "prometheus_url": "http://130.149.158.143:30041",
