@@ -35,7 +35,7 @@ class KatibBenchmark(Benchmark):
         self.study_name= resources.get("studyName",f'katib-study-{random.randint(0, 100)}')
         self.workerCpu = resources.get("workerCpu",2)
         self.workerMemory= resources.get("workerMemory",2)
-        self.workerCount = resources.get("workerCount",5)
+        self.workerCount = resources.get("jobsCount",5)
         self.jobsCount = resources.get("jobsCount",6)
         self.reqCpu = resources.get("requestCpu",10)
         self.reqMem =  resources.get("requestMemory",10)
@@ -50,6 +50,14 @@ class KatibBenchmark(Benchmark):
 
         self.logging_level= self.resources.get("loggingLevel",log.INFO)
         log.basicConfig(format='%(asctime)s Katib Benchmark %(levelname)s: %(message)s',level=self.logging_level)
+        
+        PROJECT_ROOT = os.path.abspath(os.path.join(__file__ ,"../../../"))
+        self.benchmark_path = os.path.join(PROJECT_ROOT,"experiments/katib_k8s")
+        print(PROJECT_ROOT)
+        print( self.benchmark_path )
+        print(os.getcwd())  
+        os.chdir( self.benchmark_path )
+        print(os.getcwd())    
 
         
 
@@ -116,7 +124,8 @@ class KatibBenchmark(Benchmark):
         Every Operation that is needed before the actual optimization (trial) starts and that is not relevant
         for starting up workers or the necessary architecture.
         """
-           #creating experiment yaml          
+           #creating experiment yaml    
+   
              
         experiment_definition = {
             "worker_num": self.workerCount,
@@ -135,7 +144,7 @@ class KatibBenchmark(Benchmark):
         if not self.limitResources:
 
             #loading template without resources limits and fulling the template
-            with open(path.join(path.dirname(__file__), "experiment_template.yaml"), "r") as f:
+            with open(path.join( self.benchmark_path , "experiment_template.yaml"), "r") as f:
                 job_template = Template(f.read())
                 job_yml_objects = job_template.substitute(experiment_definition)
                 
@@ -150,10 +159,10 @@ class KatibBenchmark(Benchmark):
                 "limit_mem":f"{self.limitMem_total}",
                 "quota_name":f"{self.namespace}-quota"
             }     
-            with open(path.join(path.dirname(__file__), "ResourceQuota_template.yaml"), "r") as f:
+            with open(path.join( self.benchmark_path , "ResourceQuota_template.yaml"), "r") as f:
                 job_template = Template(f.read())
                 job_yml_objects = job_template.substitute(resources_restrictions) 
-            with open(path.join(path.dirname(__file__), "ResourceQuota.yaml"), "w") as f:
+            with open(path.join(self.benchmark_path , "ResourceQuota.yaml"), "w") as f:
                 f.write(job_yml_objects)
             log.info("Resource Quota yaml created")
             
@@ -161,7 +170,7 @@ class KatibBenchmark(Benchmark):
             log.info(res)
 
               #loading template without resources limits and fulling the template
-            with open(path.join(path.dirname(__file__), "expriment_template_resources.yaml"), "r") as f:
+            with open(path.join( self.benchmark_path , "expriment_template_resources.yaml"), "r") as f:
                 job_template = Template(f.read())
                 job_yml_objects = job_template.substitute(experiment_definition)
                 
@@ -172,7 +181,7 @@ class KatibBenchmark(Benchmark):
         
         
         #writing the experiment definition into the file
-        with open(path.join(path.dirname(__file__), self.experiment_file_name), "w") as f:
+        with open(path.join( self.benchmark_path , self.experiment_file_name), "w") as f:
             f.write(job_yml_objects)
             log.info("Experiment yaml created")
 
@@ -186,15 +195,17 @@ class KatibBenchmark(Benchmark):
             log.info("Creating task docker image")   
             #creating docker image inside of the minikube   
             self.image_builder = builder_from_string("docker")()
-            PROJECT_ROOT = os.path.abspath(os.path.join(__file__ ,"../../../"))
+            PROJECT_ROOT = os.path.abspath(os.path.join( self.benchmark_path  ,"../../../"))
             res = self.image_builder.deploy_image(
             f'experiments/katib_k8s/{self.trial_tag}/Dockerfile',f"scaleme100/{self.trial_tag}",PROJECT_ROOT)
             log.info(res)
             log.info(f"Image: {self.trial_tag}")  
-        with open(path.join(path.dirname(__file__), self.experiment_file_name), "r") as f:
+        
+        
+        with open(path.join( self.benchmark_path , self.experiment_file_name), "r") as f:
             self.body = yaml.safe_load(f)
         
-        sleep(10)
+        sleep(5)
     
 
     def run(self):
@@ -228,22 +239,44 @@ class KatibBenchmark(Benchmark):
         #The GET /apis/{group}/{version}/namespaces/{namespace}/{plural}/{name} endpoint doesnt support watch argument.
        
         #TODO changing to watching of the jobs instead of the experiment crd?
-        experiment = self.get_experiment()
-        while "status" not in experiment:
-            log.info("Waitinng for the status")
-            sleep(5)
-            experiment = self.get_experiment()
-            # log.info(experiment)
         
-    
-        while experiment["status"]["conditions"][-1]["type"]!="Succeeded":
-            experiment = self.get_experiment()
-            succeeded =  experiment["status"].get("trialsSucceeded",0)
+        log.info("Waiting for the run to finish:")
+        finished = False
+        
+        w = watch.Watch()
+        c = client.BatchV1Api()
+        done = 0
+        for e in w.stream(c.list_namespaced_job, namespace=self.namespace):
+            #TODO Handel failed jobs and errors or add timeout
+            if "object" in e and e["object"].status.completion_time is not None and e["object"].status.succeeded >= 1 :
+                experiment = self.get_experiment()
+                if "status" not in experiment:
+                    log.info("Waitinng for the status")
+                    sleep(5)
+                    # log.info(experiment)
+                
             
-            log.info(f'Status: {experiment["status"]["conditions"][-1]["reason"]} {succeeded} trials of {self.jobsCount} succeeded')
-            log.debug(experiment["status"])
-            
-            sleep(2)
+                else:
+                    succeeded =  experiment["status"].get("trialsSucceeded",0)
+                    
+                    log.info(f'Status: {experiment["status"]["conditions"][-1]["reason"]} {succeeded} trials of {self.jobsCount} succeeded')
+                    log.debug(experiment["status"])
+
+                    if(self.jobsCount == succeeded):
+                        log.info("Finished all runs")
+                        w.stop()
+               
+                    
+           
+        
+        
+        
+        
+        
+        
+        
+        
+   
             
     
     def collect_benchmark_metrics(self):
@@ -383,9 +416,9 @@ if __name__ == "__main__":
             # "dockerUserLogin":"",
             # "dockerUserPassword":"",
             # "studyName":""
-            "jobsCount":1,
+            "jobsCount":3,
             # "dockerImageTag":"light_task",
-            "workerCount":1,
+            "workerCount":3,
             "metricsIP": urlopen("https://checkip.amazonaws.com").read().decode("utf-8").strip(),
             "generateNewDockerImage":False,
            # "prometheus_url": "http://130.149.158.143:30041",
@@ -395,8 +428,8 @@ if __name__ == "__main__":
             "limitMemoryTotal":"400Gi",
             "limitCpuWorker":"1000m",
             "limitMemoryWorker":"4000Mi",
-            # "undeploy":False,
-            # "deploy": True
+             "undeploy":False,
+             "deploy": True
             }
     # bench = KatibBenchmark(resources=resources)
     # bench.deploy()
@@ -411,3 +444,8 @@ if __name__ == "__main__":
     runner = BenchmarkRunner(
         benchmark_cls=KatibBenchmark, resources=resources)
     runner.run()
+    PROJECT_ROOT = os.path.abspath(os.path.join(__file__ ,"../../../"))
+    path = os.path.join(PROJECT_ROOT,"experiments/katib_k8s")
+    print(PROJECT_ROOT)
+    print(path)
+    print(os.getcwd())

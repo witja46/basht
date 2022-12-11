@@ -1,1 +1,636 @@
-{"benchmark_metrics": {"latency": [{"metric_id": "__id_da790e30-f540-4da9-9fec-eede0fc2b70e__pid_887017__hostname_BARE_ise-students__function-name_deploy__objHash_8768266799294", "function_name": "deploy", "start_time": "2022-12-01 15:51:14.781154", "end_time": "2022-12-01 15:53:40.359255", "duration_sec": 145.578101}, {"metric_id": "__id_4014a081-ce15-4608-acfc-76c5acaf012b__pid_887017__hostname_BARE_ise-students__function-name_setup__objHash_8768266799294", "function_name": "setup", "start_time": "2022-12-01 15:53:40.396449", "end_time": "2022-12-01 15:53:42.399105", "duration_sec": 2.002656}, {"metric_id": "__id_b8e9dd65-43fa-4a72-ac9e-c050a035f3b9__pid_1__hostname_BARE_plx-operation-f1f2725e6cfc4f389f87c835a9cf40d7--1-p5wjm__function-name_train__objHash_8731941555353", "function_name": "train", "start_time": "2022-12-01 14:53:53.091034", "end_time": "2022-12-01 14:54:01.922895", "duration_sec": 8.831861}, {"metric_id": "__id_c9047666-3ef1-404f-94b6-19c607a83693__pid_1__hostname_BARE_plx-operation-f1f2725e6cfc4f389f87c835a9cf40d7--1-p5wjm__function-name_validate__objHash_8731941555353", "function_name": "validate", "start_time": "2022-12-01 14:54:02.004670", "end_time": "2022-12-01 14:54:02.313174", "duration_sec": 0.308504}, {"metric_id": "__id_6f21cc15-e7b1-485a-bf32-90fc5a17b2b0__pid_1__hostname_BARE_plx-operation-e8483a03fd424ccf9df21b69fda60832--1-g5p5z__function-name_train__objHash_8776392634261", "function_name": "train", "start_time": "2022-12-01 14:53:51.402502", "end_time": "2022-12-01 14:54:02.882155", "duration_sec": 11.479653}, {"metric_id": "__id_cdd8afb3-5a6d-4451-97a3-002242df236b__pid_1__hostname_BARE_plx-operation-e8483a03fd424ccf9df21b69fda60832--1-g5p5z__function-name_validate__objHash_8776392634261", "function_name": "validate", "start_time": "2022-12-01 14:54:02.953072", "end_time": "2022-12-01 14:54:03.173883", "duration_sec": 0.220811}, {"metric_id": "__id_0acb2386-9948-483a-a056-7d96637ca044__pid_887017__hostname_BARE_ise-students__function-name_run__objHash_8768266799294", "function_name": "run", "start_time": "2022-12-01 15:53:42.414269", "end_time": "2022-12-01 15:54:09.360995", "duration_sec": 26.946726}, {"metric_id": "__id_7d09264d-f3e1-4c97-a430-b2261018ddaf__pid_887017__hostname_BARE_ise-students__function-name_collect_run_results__objHash_8768266799294", "function_name": "collect_run_results", "start_time": "2022-12-01 15:54:09.374467", "end_time": "2022-12-01 15:54:09.401834", "duration_sec": 0.027367}, {"metric_id": "__id_367110a4-eb55-4349-927f-1887c525a729__pid_887017__hostname_BARE_ise-students__function-name_test__objHash_8768266799294", "function_name": "test", "start_time": "2022-12-01 15:54:09.414108", "end_time": "2022-12-01 15:54:09.414129", "duration_sec": 2.1e-05}, {"metric_id": "__id_a0cc8ba2-4c72-4b5a-9d94-93564d7588bf__pid_887017__hostname_BARE_ise-students__function-name_collect_benchmark_metrics__objHash_8768266799294", "function_name": "collect_benchmark_metrics", "start_time": "2022-12-01 15:54:09.427155", "end_time": "2022-12-01 15:54:09.452595", "duration_sec": 0.02544}], "resources": [{"metric_id": "__knode4", "timestamp": "Thu Dec  1 15:53:42 2022", "cpu_usage": 2.550000000046566, "memory_usage": 0.5705559856824962, "network_usage": 104856.14297610694, "accelerator_usage": null, "wattage": -1.0, "processes": -1}, {"metric_id": "__knode5", "timestamp": "Thu Dec  1 15:53:42 2022", "cpu_usage": 5.87083333327125, "memory_usage": 0.1472519759387612, "network_usage": 292224.0270011158, "accelerator_usage": null, "wattage": -1.0, "processes": -1}, {"metric_id": "__knode1", "timestamp": "Thu Dec  1 15:53:42 2022", "cpu_usage": 1.7416666666664185, "memory_usage": 0.7065190740037951, "network_usage": 87973.62352606108, "accelerator_usage": null, "wattage": 21778319.0, "processes": 247}, {"metric_id": "__knode2", "timestamp": "Thu Dec  1 15:53:42 2022", "cpu_usage": 2.2033333336002983, "memory_usage": 0.27269665319798, "network_usage": 905434.5941443995, "accelerator_usage": null, "wattage": 33348216.0, "processes": 392}, {"metric_id": "__knode4", "timestamp": "Thu Dec  1 15:53:44 2022", "cpu_usage": 2.550000000046566, "memory_usage": 0.5705559856824962, "network_usage": 104425.64608073205, "accelerator_usage": null, "wattage": -1.0, "processes": -1}, {"metric_id": "__knode5", "timestamp": "Thu Dec  1 15:53:44 2022", "cpu_usage": 5.87083333327125, "memory_usage": 0.1472519759387612, "network_usage": 292224.0270011158, "accelerator_usage": null, "wattage": -1.0, "processes": -1}, {"metric_id": "__knode1", "timestamp": "Thu Dec  1 15:53:44 2022", "cpu_usage": 1.7416666666664185, "memory_usage": 0.7065190740037951, "network_usage": 87973.62352606108, "accelerator_usage": null, "wattage": 21778319.0, "processes": 247}, {"metric_id": "__knode2", "timestamp": "Thu Dec  1 15:53:44 2022", "cpu_usage": 2.4883333328179873, "memory_usage": 0.27304253445104953, "network_usage": 897822.9632980046, "accelerator_usage": null, "wattage": 33348216.0, "processes": 392}, {"metric_id": "__knode4", "timestamp": "Thu Dec  1 15:53:46 2022", "cpu_usage": 2.550000000046566, "memory_usage": 0.5705559856824962, "network_usage": 66078.10342593891, "accelerator_usage": null, "wattage": -1.0, "processes": -1}, {"metric_id": "__knode5", "timestamp": "Thu Dec  1 15:53:46 2022", "cpu_usage": 8.620833333892122, "memory_usage": 0.12529618075690271, "network_usage": 292224.0270011158, "accelerator_usage": null, "wattage": -1.0, "processes": -1}, {"metric_id": "__knode1", "timestamp": "Thu Dec  1 15:53:46 2022", "cpu_usage": 1.7416666666664185, "memory_usage": 0.7065190740037951, "network_usage": 87973.62352606108, "accelerator_usage": null, "wattage": 21778319.0, "processes": 247}, {"metric_id": "__knode2", "timestamp": "Thu Dec  1 15:53:46 2022", "cpu_usage": 2.4883333328179873, "memory_usage": 0.27304253445104953, "network_usage": 815297.888487705, "accelerator_usage": null, "wattage": 33348216.0, "processes": 392}, {"metric_id": "__knode4", "timestamp": "Thu Dec  1 15:53:48 2022", "cpu_usage": 2.550000000046566, "memory_usage": 0.5705559856824962, "network_usage": 54060.23111639802, "accelerator_usage": null, "wattage": -1.0, "processes": -1}, {"metric_id": "__knode5", "timestamp": "Thu Dec  1 15:53:48 2022", "cpu_usage": 8.620833333892122, "memory_usage": 0.12529618075690271, "network_usage": 292224.0270011158, "accelerator_usage": null, "wattage": -1.0, "processes": -1}, {"metric_id": "__knode1", "timestamp": "Thu Dec  1 15:53:48 2022", "cpu_usage": 1.7416666666664185, "memory_usage": 0.7065190740037951, "network_usage": 87973.62352606108, "accelerator_usage": null, "wattage": 21778319.0, "processes": 247}, {"metric_id": "__knode2", "timestamp": "Thu Dec  1 15:53:48 2022", "cpu_usage": 2.4883333328179873, "memory_usage": 0.27304253445104953, "network_usage": 1056376.6972784265, "accelerator_usage": null, "wattage": 33348216.0, "processes": 392}, {"metric_id": "__knode4", "timestamp": "Thu Dec  1 15:53:50 2022", "cpu_usage": 2.550000000046566, "memory_usage": 0.5705559856824962, "network_usage": 38584.87449552973, "accelerator_usage": null, "wattage": -1.0, "processes": -1}, {"metric_id": "__knode5", "timestamp": "Thu Dec  1 15:53:50 2022", "cpu_usage": 8.620833333892122, "memory_usage": 0.12529618075690271, "network_usage": 292224.0270011158, "accelerator_usage": null, "wattage": -1.0, "processes": -1}, {"metric_id": "__knode1", "timestamp": "Thu Dec  1 15:53:50 2022", "cpu_usage": 1.7416666666664185, "memory_usage": 0.7065190740037951, "network_usage": 87973.6235260611, "accelerator_usage": null, "wattage": 21778319.0, "processes": 247}, {"metric_id": "__knode2", "timestamp": "Thu Dec  1 15:53:50 2022", "cpu_usage": 2.4883333328179873, "memory_usage": 0.27304253445104953, "network_usage": 1056376.6972784265, "accelerator_usage": null, "wattage": 33348216.0, "processes": 392}, {"metric_id": "__knode4", "timestamp": "Thu Dec  1 15:53:52 2022", "cpu_usage": 2.550000000046566, "memory_usage": 0.5705559856824962, "network_usage": 432455.6158625286, "accelerator_usage": null, "wattage": -1.0, "processes": -1}, {"metric_id": "__knode5", "timestamp": "Thu Dec  1 15:53:52 2022", "cpu_usage": 8.620833333892122, "memory_usage": 0.12529618075690271, "network_usage": 291827.3002656409, "accelerator_usage": null, "wattage": -1.0, "processes": -1}, {"metric_id": "__knode1", "timestamp": "Thu Dec  1 15:53:52 2022", "cpu_usage": 1.7416666666664185, "memory_usage": 0.7065190740037951, "network_usage": 83702.19960156849, "accelerator_usage": null, "wattage": 21778319.0, "processes": 247}, {"metric_id": "__knode2", "timestamp": "Thu Dec  1 15:53:52 2022", "cpu_usage": 2.4883333328179873, "memory_usage": 0.27304253445104953, "network_usage": 1056376.6972784265, "accelerator_usage": null, "wattage": 33348216.0, "processes": 392}, {"metric_id": "__knode4", "timestamp": "Thu Dec  1 15:53:55 2022", "cpu_usage": 2.550000000046566, "memory_usage": 0.5705559856824962, "network_usage": 432455.6158625286, "accelerator_usage": null, "wattage": -1.0, "processes": -1}, {"metric_id": "__knode5", "timestamp": "Thu Dec  1 15:53:55 2022", "cpu_usage": 8.620833333892122, "memory_usage": 0.12529618075690271, "network_usage": 291827.08315223886, "accelerator_usage": null, "wattage": -1.0, "processes": -1}, {"metric_id": "__knode1", "timestamp": "Thu Dec  1 15:53:55 2022", "cpu_usage": 1.7416666666664185, "memory_usage": 0.7065190740037951, "network_usage": 84060.82336161162, "accelerator_usage": null, "wattage": 21778319.0, "processes": 247}, {"metric_id": "__knode2", "timestamp": "Thu Dec  1 15:53:55 2022", "cpu_usage": 2.4883333328179873, "memory_usage": 0.27304253445104953, "network_usage": 1056376.6972784265, "accelerator_usage": null, "wattage": 33348216.0, "processes": 392}, {"metric_id": "__knode4", "timestamp": "Thu Dec  1 15:53:57 2022", "cpu_usage": 2.550000000046566, "memory_usage": 0.5705559856824962, "network_usage": 432455.6158625286, "accelerator_usage": null, "wattage": -1.0, "processes": -1}, {"metric_id": "__knode5", "timestamp": "Thu Dec  1 15:53:57 2022", "cpu_usage": 8.620833333892122, "memory_usage": 0.12529618075690271, "network_usage": 288505.49384021695, "accelerator_usage": null, "wattage": -1.0, "processes": -1}, {"metric_id": "__knode1", "timestamp": "Thu Dec  1 15:53:57 2022", "cpu_usage": 1.6937500000013586, "memory_usage": 0.7065198026565465, "network_usage": 87280.51887111562, "accelerator_usage": null, "wattage": 21778319.0, "processes": 247}, {"metric_id": "__knode2", "timestamp": "Thu Dec  1 15:53:57 2022", "cpu_usage": 2.4883333328179873, "memory_usage": 0.27304253445104953, "network_usage": 1056376.6972784265, "accelerator_usage": null, "wattage": 33348216.0, "processes": 392}, {"metric_id": "__knode4", "timestamp": "Thu Dec  1 15:53:59 2022", "cpu_usage": 2.550000000046566, "memory_usage": 0.5705559856824962, "network_usage": 432455.6158625286, "accelerator_usage": null, "wattage": -1.0, "processes": -1}, {"metric_id": "__knode5", "timestamp": "Thu Dec  1 15:53:59 2022", "cpu_usage": 8.620833333892122, "memory_usage": 0.12529618075690271, "network_usage": 288730.38034120755, "accelerator_usage": null, "wattage": -1.0, "processes": -1}, {"metric_id": "__knode1", "timestamp": "Thu Dec  1 15:53:59 2022", "cpu_usage": 1.6937500000013586, "memory_usage": 0.7065198026565465, "network_usage": 80299.68154834925, "accelerator_usage": null, "wattage": 21778319.0, "processes": 247}, {"metric_id": "__knode2", "timestamp": "Thu Dec  1 15:53:59 2022", "cpu_usage": 2.4883333328179873, "memory_usage": 0.27304253445104953, "network_usage": 1056376.6972784265, "accelerator_usage": null, "wattage": 33348216.0, "processes": 392}, {"metric_id": "__knode4", "timestamp": "Thu Dec  1 15:54:01 2022", "cpu_usage": 2.550000000046566, "memory_usage": 0.5705559856824962, "network_usage": 432455.6158625286, "accelerator_usage": null, "wattage": -1.0, "processes": -1}, {"metric_id": "__knode5", "timestamp": "Thu Dec  1 15:54:01 2022", "cpu_usage": 8.620833333892122, "memory_usage": 0.12529618075690271, "network_usage": 288955.4801058312, "accelerator_usage": null, "wattage": -1.0, "processes": -1}, {"metric_id": "__knode1", "timestamp": "Thu Dec  1 15:54:01 2022", "cpu_usage": 1.6937500000013586, "memory_usage": 0.7065198026565465, "network_usage": 77413.78257368537, "accelerator_usage": null, "wattage": 21778319.0, "processes": 247}, {"metric_id": "__knode2", "timestamp": "Thu Dec  1 15:54:01 2022", "cpu_usage": 2.4883333328179873, "memory_usage": 0.27304253445104953, "network_usage": 1056376.6972784265, "accelerator_usage": null, "wattage": 33348216.0, "processes": 392}, {"metric_id": "__knode4", "timestamp": "Thu Dec  1 15:54:03 2022", "cpu_usage": 46.07500000041909, "memory_usage": 0.4981323777290093, "network_usage": 432455.6158625286, "accelerator_usage": null, "wattage": -1.0, "processes": -1}, {"metric_id": "__knode5", "timestamp": "Thu Dec  1 15:54:03 2022", "cpu_usage": 8.620833333892122, "memory_usage": 0.12529618075690271, "network_usage": 289158.2191707444, "accelerator_usage": null, "wattage": -1.0, "processes": -1}, {"metric_id": "__knode1", "timestamp": "Thu Dec  1 15:54:03 2022", "cpu_usage": 1.6937500000013586, "memory_usage": 0.7065198026565465, "network_usage": 77507.00038473813, "accelerator_usage": null, "wattage": 21778319.0, "processes": 247}, {"metric_id": "__knode2", "timestamp": "Thu Dec  1 15:54:03 2022", "cpu_usage": 2.4883333328179873, "memory_usage": 0.27304253445104953, "network_usage": 1081602.0767634008, "accelerator_usage": null, "wattage": 33348216.0, "processes": 392}, {"metric_id": "__knode4", "timestamp": "Thu Dec  1 15:54:05 2022", "cpu_usage": 46.07500000041909, "memory_usage": 0.4981323777290093, "network_usage": 432455.6158625286, "accelerator_usage": null, "wattage": -1.0, "processes": -1}, {"metric_id": "__knode5", "timestamp": "Thu Dec  1 15:54:05 2022", "cpu_usage": 8.620833333892122, "memory_usage": 0.12529618075690271, "network_usage": 264875.0614619298, "accelerator_usage": null, "wattage": -1.0, "processes": -1}, {"metric_id": "__knode1", "timestamp": "Thu Dec  1 15:54:05 2022", "cpu_usage": 1.6937500000013586, "memory_usage": 0.7065198026565465, "network_usage": 74996.95499556605, "accelerator_usage": null, "wattage": 21778319.0, "processes": 247}, {"metric_id": "__knode2", "timestamp": "Thu Dec  1 15:54:05 2022", "cpu_usage": 2.4883333328179873, "memory_usage": 0.27304253445104953, "network_usage": 1083389.6830266584, "accelerator_usage": null, "wattage": 33348216.0, "processes": 392}, {"metric_id": "__knode4", "timestamp": "Thu Dec  1 15:54:07 2022", "cpu_usage": 46.07500000041909, "memory_usage": 0.4981323777290093, "network_usage": 432455.6158625286, "accelerator_usage": null, "wattage": -1.0, "processes": -1}, {"metric_id": "__knode5", "timestamp": "Thu Dec  1 15:54:07 2022", "cpu_usage": 8.620833333892122, "memory_usage": 0.12529618075690271, "network_usage": 265253.559402363, "accelerator_usage": null, "wattage": -1.0, "processes": -1}, {"metric_id": "__knode1", "timestamp": "Thu Dec  1 15:54:07 2022", "cpu_usage": 1.6937500000013586, "memory_usage": 0.7065198026565465, "network_usage": 74267.32674717388, "accelerator_usage": null, "wattage": 21778319.0, "processes": 247}, {"metric_id": "__knode2", "timestamp": "Thu Dec  1 15:54:07 2022", "cpu_usage": 2.4883333328179873, "memory_usage": 0.27304253445104953, "network_usage": 1112002.7902187249, "accelerator_usage": null, "wattage": 33348216.0, "processes": 392}], "classification": [{"metric_id": "__id_a94edec3-6926-4873-92df-0a290f0fd0dc__pid_1__hostname_BARE_plx-operation-f1f2725e6cfc4f389f87c835a9cf40d7--1-p5wjm", "timestamp": "Thu Dec  1 14:54:02 2022", "value": 0.7638640917539925, "measure": "f1-score", "hyperparameters": "{\"learning_rate\": 1.023292992280754, \"weight_decay\": 0.01, \"hidden_layer_config\": [15], \"input_size\": 784, \"output_size\": 10}", "classification_metrics": "{\"0\": {\"precision\": 0.8646734854445318, \"recall\": 0.9060181368507831, \"f1-score\": 0.8848631239935586, \"support\": 1213}, \"1\": {\"precision\": 0.6955844155844156, \"recall\": 0.9867354458364038, \"f1-score\": 0.8159658744667885, \"support\": 1357}, \"2\": {\"precision\": 0.8949343339587242, \"recall\": 0.7845394736842105, \"f1-score\": 0.8361086765994742, \"support\": 1216}, \"3\": {\"precision\": 0.9167556029882604, \"recall\": 0.7105045492142267, \"f1-score\": 0.8005591798695247, \"support\": 1209}, \"4\": {\"precision\": 0.9107344632768362, \"recall\": 0.6859574468085107, \"f1-score\": 0.7825242718446601, \"support\": 1175}, \"5\": {\"precision\": 0.6843003412969283, \"recall\": 0.7645376549094376, \"f1-score\": 0.7221972084646555, \"support\": 1049}, \"6\": {\"precision\": 0.9331476323119777, \"recall\": 0.8693771626297578, \"f1-score\": 0.9001343484102104, \"support\": 1156}, \"7\": {\"precision\": 0.5491659350307287, \"recall\": 0.9712732919254659, \"f1-score\": 0.7016264722378015, \"support\": 1288}, \"8\": {\"precision\": 0.9212962962962963, \"recall\": 0.5111301369863014, \"f1-score\": 0.6574889867841409, \"support\": 1168}, \"9\": {\"precision\": 0.6923076923076923, \"recall\": 0.4388366124893071, \"f1-score\": 0.53717277486911, \"support\": 1169}, \"accuracy\": 0.76875, \"macro avg\": {\"precision\": 0.8062900198496392, \"recall\": 0.7628909911334405, \"f1-score\": 0.7638640917539925, \"support\": 12000}, \"weighted avg\": {\"precision\": 0.8040604058269696, \"recall\": 0.76875, \"f1-score\": 0.7651993387291743, \"support\": 12000}}", "process_id": 1, "hostname": "BARE_plx-operation-f1f2725e6cfc4f389f87c835a9cf40d7--1-p5wjm", "obj_hash": 8731941555353}, {"metric_id": "__id_ea656a93-7a0a-4f2d-945a-49686782595e__pid_1__hostname_BARE_plx-operation-e8483a03fd424ccf9df21b69fda60832--1-g5p5z", "timestamp": "Thu Dec  1 14:54:03 2022", "value": 0.7875301848752728, "measure": "f1-score", "hyperparameters": "{\"learning_rate\": 1.2589254117941673, \"weight_decay\": 0.01, \"hidden_layer_config\": [15], \"input_size\": 784, \"output_size\": 10}", "classification_metrics": "{\"0\": {\"precision\": 0.9815950920245399, \"recall\": 0.5276174773289365, \"f1-score\": 0.6863270777479893, \"support\": 1213}, \"1\": {\"precision\": 0.988256549232159, \"recall\": 0.8061901252763449, \"f1-score\": 0.887987012987013, \"support\": 1357}, \"2\": {\"precision\": 0.8949343339587242, \"recall\": 0.7845394736842105, \"f1-score\": 0.8361086765994742, \"support\": 1216}, \"3\": {\"precision\": 0.9083895853423336, \"recall\": 0.7791563275434243, \"f1-score\": 0.8388245770258237, \"support\": 1209}, \"4\": {\"precision\": 0.754874651810585, \"recall\": 0.9225531914893617, \"f1-score\": 0.8303332056683264, \"support\": 1175}, \"5\": {\"precision\": 0.5890196078431372, \"recall\": 0.7159199237368923, \"f1-score\": 0.6462994836488812, \"support\": 1049}, \"6\": {\"precision\": 0.9655172413793104, \"recall\": 0.7993079584775087, \"f1-score\": 0.8745858968291529, \"support\": 1156}, \"7\": {\"precision\": 0.6855670103092784, \"recall\": 0.9293478260869565, \"f1-score\": 0.7890573500329598, \"support\": 1288}, \"8\": {\"precision\": 0.6440422322775264, \"recall\": 0.7311643835616438, \"f1-score\": 0.6848436246992783, \"support\": 1168}, \"9\": {\"precision\": 0.7353361945636624, \"recall\": 0.8793840889649273, \"f1-score\": 0.8009349435138294, \"support\": 1169}, \"accuracy\": 0.789, \"macro avg\": {\"precision\": 0.8147532498741257, \"recall\": 0.7875180776150206, \"f1-score\": 0.7875301848752728, \"support\": 12000}, \"weighted avg\": {\"precision\": 0.8195065838557742, \"recall\": 0.789, \"f1-score\": 0.7904572772918504, \"support\": 12000}}", "process_id": 1, "hostname": "BARE_plx-operation-e8483a03fd424ccf9df21b69fda60832--1-g5p5z", "obj_hash": 8776392634261}]}, "benchmark_configuration": {"resources": {"metricsIP": "130.149.158.216", "generateNewDockerImage": false, "prometheus_url": "http://130.149.158.143:30041", "cleanUp": true, "limitResources": false, "loggingLevel": 20, "studyName": "study-1-2", "workerCount": 2, "jobsCount": 2, "imagePullPolicy": "IfNotPresent"}}}
+{
+  "benchmark_metrics": {
+    "latency": [
+      {
+        "metric_id": "__id_da790e30-f540-4da9-9fec-eede0fc2b70e__pid_887017__hostname_BARE_ise-students__function-name_deploy__objHash_8768266799294",
+        "function_name": "deploy",
+        "start_time": "2022-12-01 15:51:14.781154",
+        "end_time": "2022-12-01 15:53:40.359255",
+        "duration_sec": 145.578101
+      },
+      {
+        "metric_id": "__id_4014a081-ce15-4608-acfc-76c5acaf012b__pid_887017__hostname_BARE_ise-students__function-name_setup__objHash_8768266799294",
+        "function_name": "setup",
+        "start_time": "2022-12-01 15:53:40.396449",
+        "end_time": "2022-12-01 15:53:42.399105",
+        "duration_sec": 2.002656
+      },
+      {
+        "metric_id": "__id_b8e9dd65-43fa-4a72-ac9e-c050a035f3b9__pid_1__hostname_BARE_plx-operation-f1f2725e6cfc4f389f87c835a9cf40d7--1-p5wjm__function-name_train__objHash_8731941555353",
+        "function_name": "train",
+        "start_time": "2022-12-01 14:53:53.091034",
+        "end_time": "2022-12-01 14:54:01.922895",
+        "duration_sec": 8.831861
+      },
+      {
+        "metric_id": "__id_c9047666-3ef1-404f-94b6-19c607a83693__pid_1__hostname_BARE_plx-operation-f1f2725e6cfc4f389f87c835a9cf40d7--1-p5wjm__function-name_validate__objHash_8731941555353",
+        "function_name": "validate",
+        "start_time": "2022-12-01 14:54:02.004670",
+        "end_time": "2022-12-01 14:54:02.313174",
+        "duration_sec": 0.308504
+      },
+      {
+        "metric_id": "__id_6f21cc15-e7b1-485a-bf32-90fc5a17b2b0__pid_1__hostname_BARE_plx-operation-e8483a03fd424ccf9df21b69fda60832--1-g5p5z__function-name_train__objHash_8776392634261",
+        "function_name": "train",
+        "start_time": "2022-12-01 14:53:51.402502",
+        "end_time": "2022-12-01 14:54:02.882155",
+        "duration_sec": 11.479653
+      },
+      {
+        "metric_id": "__id_cdd8afb3-5a6d-4451-97a3-002242df236b__pid_1__hostname_BARE_plx-operation-e8483a03fd424ccf9df21b69fda60832--1-g5p5z__function-name_validate__objHash_8776392634261",
+        "function_name": "validate",
+        "start_time": "2022-12-01 14:54:02.953072",
+        "end_time": "2022-12-01 14:54:03.173883",
+        "duration_sec": 0.220811
+      },
+      {
+        "metric_id": "__id_0acb2386-9948-483a-a056-7d96637ca044__pid_887017__hostname_BARE_ise-students__function-name_run__objHash_8768266799294",
+        "function_name": "run",
+        "start_time": "2022-12-01 15:53:42.414269",
+        "end_time": "2022-12-01 15:54:09.360995",
+        "duration_sec": 26.946726
+      },
+      {
+        "metric_id": "__id_7d09264d-f3e1-4c97-a430-b2261018ddaf__pid_887017__hostname_BARE_ise-students__function-name_collect_run_results__objHash_8768266799294",
+        "function_name": "collect_run_results",
+        "start_time": "2022-12-01 15:54:09.374467",
+        "end_time": "2022-12-01 15:54:09.401834",
+        "duration_sec": 0.027367
+      },
+      {
+        "metric_id": "__id_367110a4-eb55-4349-927f-1887c525a729__pid_887017__hostname_BARE_ise-students__function-name_test__objHash_8768266799294",
+        "function_name": "test",
+        "start_time": "2022-12-01 15:54:09.414108",
+        "end_time": "2022-12-01 15:54:09.414129",
+        "duration_sec": 2.1e-5
+      },
+      {
+        "metric_id": "__id_a0cc8ba2-4c72-4b5a-9d94-93564d7588bf__pid_887017__hostname_BARE_ise-students__function-name_collect_benchmark_metrics__objHash_8768266799294",
+        "function_name": "collect_benchmark_metrics",
+        "start_time": "2022-12-01 15:54:09.427155",
+        "end_time": "2022-12-01 15:54:09.452595",
+        "duration_sec": 0.02544
+      }
+    ],
+    "resources": [
+      {
+        "metric_id": "__knode4",
+        "timestamp": "Thu Dec  1 15:53:42 2022",
+        "cpu_usage": 2.550000000046566,
+        "memory_usage": 0.5705559856824962,
+        "network_usage": 104856.14297610694,
+        "accelerator_usage": null,
+        "wattage": -1.0,
+        "processes": -1
+      },
+      {
+        "metric_id": "__knode5",
+        "timestamp": "Thu Dec  1 15:53:42 2022",
+        "cpu_usage": 5.87083333327125,
+        "memory_usage": 0.1472519759387612,
+        "network_usage": 292224.0270011158,
+        "accelerator_usage": null,
+        "wattage": -1.0,
+        "processes": -1
+      },
+      {
+        "metric_id": "__knode1",
+        "timestamp": "Thu Dec  1 15:53:42 2022",
+        "cpu_usage": 1.7416666666664185,
+        "memory_usage": 0.7065190740037951,
+        "network_usage": 87973.62352606108,
+        "accelerator_usage": null,
+        "wattage": 21778319.0,
+        "processes": 247
+      },
+      {
+        "metric_id": "__knode2",
+        "timestamp": "Thu Dec  1 15:53:42 2022",
+        "cpu_usage": 2.2033333336002983,
+        "memory_usage": 0.27269665319798,
+        "network_usage": 905434.5941443995,
+        "accelerator_usage": null,
+        "wattage": 33348216.0,
+        "processes": 392
+      },
+      {
+        "metric_id": "__knode4",
+        "timestamp": "Thu Dec  1 15:53:44 2022",
+        "cpu_usage": 2.550000000046566,
+        "memory_usage": 0.5705559856824962,
+        "network_usage": 104425.64608073205,
+        "accelerator_usage": null,
+        "wattage": -1.0,
+        "processes": -1
+      },
+      {
+        "metric_id": "__knode5",
+        "timestamp": "Thu Dec  1 15:53:44 2022",
+        "cpu_usage": 5.87083333327125,
+        "memory_usage": 0.1472519759387612,
+        "network_usage": 292224.0270011158,
+        "accelerator_usage": null,
+        "wattage": -1.0,
+        "processes": -1
+      },
+      {
+        "metric_id": "__knode1",
+        "timestamp": "Thu Dec  1 15:53:44 2022",
+        "cpu_usage": 1.7416666666664185,
+        "memory_usage": 0.7065190740037951,
+        "network_usage": 87973.62352606108,
+        "accelerator_usage": null,
+        "wattage": 21778319.0,
+        "processes": 247
+      },
+      {
+        "metric_id": "__knode2",
+        "timestamp": "Thu Dec  1 15:53:44 2022",
+        "cpu_usage": 2.4883333328179873,
+        "memory_usage": 0.27304253445104953,
+        "network_usage": 897822.9632980046,
+        "accelerator_usage": null,
+        "wattage": 33348216.0,
+        "processes": 392
+      },
+      {
+        "metric_id": "__knode4",
+        "timestamp": "Thu Dec  1 15:53:46 2022",
+        "cpu_usage": 2.550000000046566,
+        "memory_usage": 0.5705559856824962,
+        "network_usage": 66078.10342593891,
+        "accelerator_usage": null,
+        "wattage": -1.0,
+        "processes": -1
+      },
+      {
+        "metric_id": "__knode5",
+        "timestamp": "Thu Dec  1 15:53:46 2022",
+        "cpu_usage": 8.620833333892122,
+        "memory_usage": 0.12529618075690271,
+        "network_usage": 292224.0270011158,
+        "accelerator_usage": null,
+        "wattage": -1.0,
+        "processes": -1
+      },
+      {
+        "metric_id": "__knode1",
+        "timestamp": "Thu Dec  1 15:53:46 2022",
+        "cpu_usage": 1.7416666666664185,
+        "memory_usage": 0.7065190740037951,
+        "network_usage": 87973.62352606108,
+        "accelerator_usage": null,
+        "wattage": 21778319.0,
+        "processes": 247
+      },
+      {
+        "metric_id": "__knode2",
+        "timestamp": "Thu Dec  1 15:53:46 2022",
+        "cpu_usage": 2.4883333328179873,
+        "memory_usage": 0.27304253445104953,
+        "network_usage": 815297.888487705,
+        "accelerator_usage": null,
+        "wattage": 33348216.0,
+        "processes": 392
+      },
+      {
+        "metric_id": "__knode4",
+        "timestamp": "Thu Dec  1 15:53:48 2022",
+        "cpu_usage": 2.550000000046566,
+        "memory_usage": 0.5705559856824962,
+        "network_usage": 54060.23111639802,
+        "accelerator_usage": null,
+        "wattage": -1.0,
+        "processes": -1
+      },
+      {
+        "metric_id": "__knode5",
+        "timestamp": "Thu Dec  1 15:53:48 2022",
+        "cpu_usage": 8.620833333892122,
+        "memory_usage": 0.12529618075690271,
+        "network_usage": 292224.0270011158,
+        "accelerator_usage": null,
+        "wattage": -1.0,
+        "processes": -1
+      },
+      {
+        "metric_id": "__knode1",
+        "timestamp": "Thu Dec  1 15:53:48 2022",
+        "cpu_usage": 1.7416666666664185,
+        "memory_usage": 0.7065190740037951,
+        "network_usage": 87973.62352606108,
+        "accelerator_usage": null,
+        "wattage": 21778319.0,
+        "processes": 247
+      },
+      {
+        "metric_id": "__knode2",
+        "timestamp": "Thu Dec  1 15:53:48 2022",
+        "cpu_usage": 2.4883333328179873,
+        "memory_usage": 0.27304253445104953,
+        "network_usage": 1056376.6972784265,
+        "accelerator_usage": null,
+        "wattage": 33348216.0,
+        "processes": 392
+      },
+      {
+        "metric_id": "__knode4",
+        "timestamp": "Thu Dec  1 15:53:50 2022",
+        "cpu_usage": 2.550000000046566,
+        "memory_usage": 0.5705559856824962,
+        "network_usage": 38584.87449552973,
+        "accelerator_usage": null,
+        "wattage": -1.0,
+        "processes": -1
+      },
+      {
+        "metric_id": "__knode5",
+        "timestamp": "Thu Dec  1 15:53:50 2022",
+        "cpu_usage": 8.620833333892122,
+        "memory_usage": 0.12529618075690271,
+        "network_usage": 292224.0270011158,
+        "accelerator_usage": null,
+        "wattage": -1.0,
+        "processes": -1
+      },
+      {
+        "metric_id": "__knode1",
+        "timestamp": "Thu Dec  1 15:53:50 2022",
+        "cpu_usage": 1.7416666666664185,
+        "memory_usage": 0.7065190740037951,
+        "network_usage": 87973.6235260611,
+        "accelerator_usage": null,
+        "wattage": 21778319.0,
+        "processes": 247
+      },
+      {
+        "metric_id": "__knode2",
+        "timestamp": "Thu Dec  1 15:53:50 2022",
+        "cpu_usage": 2.4883333328179873,
+        "memory_usage": 0.27304253445104953,
+        "network_usage": 1056376.6972784265,
+        "accelerator_usage": null,
+        "wattage": 33348216.0,
+        "processes": 392
+      },
+      {
+        "metric_id": "__knode4",
+        "timestamp": "Thu Dec  1 15:53:52 2022",
+        "cpu_usage": 2.550000000046566,
+        "memory_usage": 0.5705559856824962,
+        "network_usage": 432455.6158625286,
+        "accelerator_usage": null,
+        "wattage": -1.0,
+        "processes": -1
+      },
+      {
+        "metric_id": "__knode5",
+        "timestamp": "Thu Dec  1 15:53:52 2022",
+        "cpu_usage": 8.620833333892122,
+        "memory_usage": 0.12529618075690271,
+        "network_usage": 291827.3002656409,
+        "accelerator_usage": null,
+        "wattage": -1.0,
+        "processes": -1
+      },
+      {
+        "metric_id": "__knode1",
+        "timestamp": "Thu Dec  1 15:53:52 2022",
+        "cpu_usage": 1.7416666666664185,
+        "memory_usage": 0.7065190740037951,
+        "network_usage": 83702.19960156849,
+        "accelerator_usage": null,
+        "wattage": 21778319.0,
+        "processes": 247
+      },
+      {
+        "metric_id": "__knode2",
+        "timestamp": "Thu Dec  1 15:53:52 2022",
+        "cpu_usage": 2.4883333328179873,
+        "memory_usage": 0.27304253445104953,
+        "network_usage": 1056376.6972784265,
+        "accelerator_usage": null,
+        "wattage": 33348216.0,
+        "processes": 392
+      },
+      {
+        "metric_id": "__knode4",
+        "timestamp": "Thu Dec  1 15:53:55 2022",
+        "cpu_usage": 2.550000000046566,
+        "memory_usage": 0.5705559856824962,
+        "network_usage": 432455.6158625286,
+        "accelerator_usage": null,
+        "wattage": -1.0,
+        "processes": -1
+      },
+      {
+        "metric_id": "__knode5",
+        "timestamp": "Thu Dec  1 15:53:55 2022",
+        "cpu_usage": 8.620833333892122,
+        "memory_usage": 0.12529618075690271,
+        "network_usage": 291827.08315223886,
+        "accelerator_usage": null,
+        "wattage": -1.0,
+        "processes": -1
+      },
+      {
+        "metric_id": "__knode1",
+        "timestamp": "Thu Dec  1 15:53:55 2022",
+        "cpu_usage": 1.7416666666664185,
+        "memory_usage": 0.7065190740037951,
+        "network_usage": 84060.82336161162,
+        "accelerator_usage": null,
+        "wattage": 21778319.0,
+        "processes": 247
+      },
+      {
+        "metric_id": "__knode2",
+        "timestamp": "Thu Dec  1 15:53:55 2022",
+        "cpu_usage": 2.4883333328179873,
+        "memory_usage": 0.27304253445104953,
+        "network_usage": 1056376.6972784265,
+        "accelerator_usage": null,
+        "wattage": 33348216.0,
+        "processes": 392
+      },
+      {
+        "metric_id": "__knode4",
+        "timestamp": "Thu Dec  1 15:53:57 2022",
+        "cpu_usage": 2.550000000046566,
+        "memory_usage": 0.5705559856824962,
+        "network_usage": 432455.6158625286,
+        "accelerator_usage": null,
+        "wattage": -1.0,
+        "processes": -1
+      },
+      {
+        "metric_id": "__knode5",
+        "timestamp": "Thu Dec  1 15:53:57 2022",
+        "cpu_usage": 8.620833333892122,
+        "memory_usage": 0.12529618075690271,
+        "network_usage": 288505.49384021695,
+        "accelerator_usage": null,
+        "wattage": -1.0,
+        "processes": -1
+      },
+      {
+        "metric_id": "__knode1",
+        "timestamp": "Thu Dec  1 15:53:57 2022",
+        "cpu_usage": 1.6937500000013586,
+        "memory_usage": 0.7065198026565465,
+        "network_usage": 87280.51887111562,
+        "accelerator_usage": null,
+        "wattage": 21778319.0,
+        "processes": 247
+      },
+      {
+        "metric_id": "__knode2",
+        "timestamp": "Thu Dec  1 15:53:57 2022",
+        "cpu_usage": 2.4883333328179873,
+        "memory_usage": 0.27304253445104953,
+        "network_usage": 1056376.6972784265,
+        "accelerator_usage": null,
+        "wattage": 33348216.0,
+        "processes": 392
+      },
+      {
+        "metric_id": "__knode4",
+        "timestamp": "Thu Dec  1 15:53:59 2022",
+        "cpu_usage": 2.550000000046566,
+        "memory_usage": 0.5705559856824962,
+        "network_usage": 432455.6158625286,
+        "accelerator_usage": null,
+        "wattage": -1.0,
+        "processes": -1
+      },
+      {
+        "metric_id": "__knode5",
+        "timestamp": "Thu Dec  1 15:53:59 2022",
+        "cpu_usage": 8.620833333892122,
+        "memory_usage": 0.12529618075690271,
+        "network_usage": 288730.38034120755,
+        "accelerator_usage": null,
+        "wattage": -1.0,
+        "processes": -1
+      },
+      {
+        "metric_id": "__knode1",
+        "timestamp": "Thu Dec  1 15:53:59 2022",
+        "cpu_usage": 1.6937500000013586,
+        "memory_usage": 0.7065198026565465,
+        "network_usage": 80299.68154834925,
+        "accelerator_usage": null,
+        "wattage": 21778319.0,
+        "processes": 247
+      },
+      {
+        "metric_id": "__knode2",
+        "timestamp": "Thu Dec  1 15:53:59 2022",
+        "cpu_usage": 2.4883333328179873,
+        "memory_usage": 0.27304253445104953,
+        "network_usage": 1056376.6972784265,
+        "accelerator_usage": null,
+        "wattage": 33348216.0,
+        "processes": 392
+      },
+      {
+        "metric_id": "__knode4",
+        "timestamp": "Thu Dec  1 15:54:01 2022",
+        "cpu_usage": 2.550000000046566,
+        "memory_usage": 0.5705559856824962,
+        "network_usage": 432455.6158625286,
+        "accelerator_usage": null,
+        "wattage": -1.0,
+        "processes": -1
+      },
+      {
+        "metric_id": "__knode5",
+        "timestamp": "Thu Dec  1 15:54:01 2022",
+        "cpu_usage": 8.620833333892122,
+        "memory_usage": 0.12529618075690271,
+        "network_usage": 288955.4801058312,
+        "accelerator_usage": null,
+        "wattage": -1.0,
+        "processes": -1
+      },
+      {
+        "metric_id": "__knode1",
+        "timestamp": "Thu Dec  1 15:54:01 2022",
+        "cpu_usage": 1.6937500000013586,
+        "memory_usage": 0.7065198026565465,
+        "network_usage": 77413.78257368537,
+        "accelerator_usage": null,
+        "wattage": 21778319.0,
+        "processes": 247
+      },
+      {
+        "metric_id": "__knode2",
+        "timestamp": "Thu Dec  1 15:54:01 2022",
+        "cpu_usage": 2.4883333328179873,
+        "memory_usage": 0.27304253445104953,
+        "network_usage": 1056376.6972784265,
+        "accelerator_usage": null,
+        "wattage": 33348216.0,
+        "processes": 392
+      },
+      {
+        "metric_id": "__knode4",
+        "timestamp": "Thu Dec  1 15:54:03 2022",
+        "cpu_usage": 46.07500000041909,
+        "memory_usage": 0.4981323777290093,
+        "network_usage": 432455.6158625286,
+        "accelerator_usage": null,
+        "wattage": -1.0,
+        "processes": -1
+      },
+      {
+        "metric_id": "__knode5",
+        "timestamp": "Thu Dec  1 15:54:03 2022",
+        "cpu_usage": 8.620833333892122,
+        "memory_usage": 0.12529618075690271,
+        "network_usage": 289158.2191707444,
+        "accelerator_usage": null,
+        "wattage": -1.0,
+        "processes": -1
+      },
+      {
+        "metric_id": "__knode1",
+        "timestamp": "Thu Dec  1 15:54:03 2022",
+        "cpu_usage": 1.6937500000013586,
+        "memory_usage": 0.7065198026565465,
+        "network_usage": 77507.00038473813,
+        "accelerator_usage": null,
+        "wattage": 21778319.0,
+        "processes": 247
+      },
+      {
+        "metric_id": "__knode2",
+        "timestamp": "Thu Dec  1 15:54:03 2022",
+        "cpu_usage": 2.4883333328179873,
+        "memory_usage": 0.27304253445104953,
+        "network_usage": 1081602.0767634008,
+        "accelerator_usage": null,
+        "wattage": 33348216.0,
+        "processes": 392
+      },
+      {
+        "metric_id": "__knode4",
+        "timestamp": "Thu Dec  1 15:54:05 2022",
+        "cpu_usage": 46.07500000041909,
+        "memory_usage": 0.4981323777290093,
+        "network_usage": 432455.6158625286,
+        "accelerator_usage": null,
+        "wattage": -1.0,
+        "processes": -1
+      },
+      {
+        "metric_id": "__knode5",
+        "timestamp": "Thu Dec  1 15:54:05 2022",
+        "cpu_usage": 8.620833333892122,
+        "memory_usage": 0.12529618075690271,
+        "network_usage": 264875.0614619298,
+        "accelerator_usage": null,
+        "wattage": -1.0,
+        "processes": -1
+      },
+      {
+        "metric_id": "__knode1",
+        "timestamp": "Thu Dec  1 15:54:05 2022",
+        "cpu_usage": 1.6937500000013586,
+        "memory_usage": 0.7065198026565465,
+        "network_usage": 74996.95499556605,
+        "accelerator_usage": null,
+        "wattage": 21778319.0,
+        "processes": 247
+      },
+      {
+        "metric_id": "__knode2",
+        "timestamp": "Thu Dec  1 15:54:05 2022",
+        "cpu_usage": 2.4883333328179873,
+        "memory_usage": 0.27304253445104953,
+        "network_usage": 1083389.6830266584,
+        "accelerator_usage": null,
+        "wattage": 33348216.0,
+        "processes": 392
+      },
+      {
+        "metric_id": "__knode4",
+        "timestamp": "Thu Dec  1 15:54:07 2022",
+        "cpu_usage": 46.07500000041909,
+        "memory_usage": 0.4981323777290093,
+        "network_usage": 432455.6158625286,
+        "accelerator_usage": null,
+        "wattage": -1.0,
+        "processes": -1
+      },
+      {
+        "metric_id": "__knode5",
+        "timestamp": "Thu Dec  1 15:54:07 2022",
+        "cpu_usage": 8.620833333892122,
+        "memory_usage": 0.12529618075690271,
+        "network_usage": 265253.559402363,
+        "accelerator_usage": null,
+        "wattage": -1.0,
+        "processes": -1
+      },
+      {
+        "metric_id": "__knode1",
+        "timestamp": "Thu Dec  1 15:54:07 2022",
+        "cpu_usage": 1.6937500000013586,
+        "memory_usage": 0.7065198026565465,
+        "network_usage": 74267.32674717388,
+        "accelerator_usage": null,
+        "wattage": 21778319.0,
+        "processes": 247
+      },
+      {
+        "metric_id": "__knode2",
+        "timestamp": "Thu Dec  1 15:54:07 2022",
+        "cpu_usage": 2.4883333328179873,
+        "memory_usage": 0.27304253445104953,
+        "network_usage": 1112002.7902187249,
+        "accelerator_usage": null,
+        "wattage": 33348216.0,
+        "processes": 392
+      }
+    ],
+    "classification": [
+      {
+        "metric_id": "__id_a94edec3-6926-4873-92df-0a290f0fd0dc__pid_1__hostname_BARE_plx-operation-f1f2725e6cfc4f389f87c835a9cf40d7--1-p5wjm",
+        "timestamp": "Thu Dec  1 14:54:02 2022",
+        "value": 0.7638640917539925,
+        "measure": "f1-score",
+        "hyperparameters": "{\"learning_rate\": 1.023292992280754, \"weight_decay\": 0.01, \"hidden_layer_config\": [15], \"input_size\": 784, \"output_size\": 10}",
+        "classification_metrics": "{\"0\": {\"precision\": 0.8646734854445318, \"recall\": 0.9060181368507831, \"f1-score\": 0.8848631239935586, \"support\": 1213}, \"1\": {\"precision\": 0.6955844155844156, \"recall\": 0.9867354458364038, \"f1-score\": 0.8159658744667885, \"support\": 1357}, \"2\": {\"precision\": 0.8949343339587242, \"recall\": 0.7845394736842105, \"f1-score\": 0.8361086765994742, \"support\": 1216}, \"3\": {\"precision\": 0.9167556029882604, \"recall\": 0.7105045492142267, \"f1-score\": 0.8005591798695247, \"support\": 1209}, \"4\": {\"precision\": 0.9107344632768362, \"recall\": 0.6859574468085107, \"f1-score\": 0.7825242718446601, \"support\": 1175}, \"5\": {\"precision\": 0.6843003412969283, \"recall\": 0.7645376549094376, \"f1-score\": 0.7221972084646555, \"support\": 1049}, \"6\": {\"precision\": 0.9331476323119777, \"recall\": 0.8693771626297578, \"f1-score\": 0.9001343484102104, \"support\": 1156}, \"7\": {\"precision\": 0.5491659350307287, \"recall\": 0.9712732919254659, \"f1-score\": 0.7016264722378015, \"support\": 1288}, \"8\": {\"precision\": 0.9212962962962963, \"recall\": 0.5111301369863014, \"f1-score\": 0.6574889867841409, \"support\": 1168}, \"9\": {\"precision\": 0.6923076923076923, \"recall\": 0.4388366124893071, \"f1-score\": 0.53717277486911, \"support\": 1169}, \"accuracy\": 0.76875, \"macro avg\": {\"precision\": 0.8062900198496392, \"recall\": 0.7628909911334405, \"f1-score\": 0.7638640917539925, \"support\": 12000}, \"weighted avg\": {\"precision\": 0.8040604058269696, \"recall\": 0.76875, \"f1-score\": 0.7651993387291743, \"support\": 12000}}",
+        "process_id": 1,
+        "hostname": "BARE_plx-operation-f1f2725e6cfc4f389f87c835a9cf40d7--1-p5wjm",
+        "obj_hash": 8731941555353
+      },
+      {
+        "metric_id": "__id_ea656a93-7a0a-4f2d-945a-49686782595e__pid_1__hostname_BARE_plx-operation-e8483a03fd424ccf9df21b69fda60832--1-g5p5z",
+        "timestamp": "Thu Dec  1 14:54:03 2022",
+        "value": 0.7875301848752728,
+        "measure": "f1-score",
+        "hyperparameters": "{\"learning_rate\": 1.2589254117941673, \"weight_decay\": 0.01, \"hidden_layer_config\": [15], \"input_size\": 784, \"output_size\": 10}",
+        "classification_metrics": "{\"0\": {\"precision\": 0.9815950920245399, \"recall\": 0.5276174773289365, \"f1-score\": 0.6863270777479893, \"support\": 1213}, \"1\": {\"precision\": 0.988256549232159, \"recall\": 0.8061901252763449, \"f1-score\": 0.887987012987013, \"support\": 1357}, \"2\": {\"precision\": 0.8949343339587242, \"recall\": 0.7845394736842105, \"f1-score\": 0.8361086765994742, \"support\": 1216}, \"3\": {\"precision\": 0.9083895853423336, \"recall\": 0.7791563275434243, \"f1-score\": 0.8388245770258237, \"support\": 1209}, \"4\": {\"precision\": 0.754874651810585, \"recall\": 0.9225531914893617, \"f1-score\": 0.8303332056683264, \"support\": 1175}, \"5\": {\"precision\": 0.5890196078431372, \"recall\": 0.7159199237368923, \"f1-score\": 0.6462994836488812, \"support\": 1049}, \"6\": {\"precision\": 0.9655172413793104, \"recall\": 0.7993079584775087, \"f1-score\": 0.8745858968291529, \"support\": 1156}, \"7\": {\"precision\": 0.6855670103092784, \"recall\": 0.9293478260869565, \"f1-score\": 0.7890573500329598, \"support\": 1288}, \"8\": {\"precision\": 0.6440422322775264, \"recall\": 0.7311643835616438, \"f1-score\": 0.6848436246992783, \"support\": 1168}, \"9\": {\"precision\": 0.7353361945636624, \"recall\": 0.8793840889649273, \"f1-score\": 0.8009349435138294, \"support\": 1169}, \"accuracy\": 0.789, \"macro avg\": {\"precision\": 0.8147532498741257, \"recall\": 0.7875180776150206, \"f1-score\": 0.7875301848752728, \"support\": 12000}, \"weighted avg\": {\"precision\": 0.8195065838557742, \"recall\": 0.789, \"f1-score\": 0.7904572772918504, \"support\": 12000}}",
+        "process_id": 1,
+        "hostname": "BARE_plx-operation-e8483a03fd424ccf9df21b69fda60832--1-g5p5z",
+        "obj_hash": 8776392634261
+      }
+    ]
+  },
+  "benchmark_configuration": {
+    "resources": {
+      "metricsIP": "130.149.158.216",
+      "generateNewDockerImage": false,
+      "prometheus_url": "http://130.149.158.143:30041",
+      "cleanUp": true,
+      "limitResources": false,
+      "loggingLevel": 20,
+      "studyName": "study-1-2",
+      "workerCount": 2,
+      "jobsCount": 2,
+      "imagePullPolicy": "IfNotPresent"
+    }
+  }
+}

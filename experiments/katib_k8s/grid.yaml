@@ -3,7 +3,7 @@ apiVersion: kubeflow.org/v1beta1
 kind: Experiment
 metadata:
   namespace: kubeflow
-  name: study-worker-2000m-total-25-rep-1-trials-10
+  name: katib-study-81
 spec:
   objective:
     type: maximize
@@ -11,9 +11,9 @@ spec:
     objectiveMetricName: precision
   algorithm:
     algorithmName: grid
-  parallelTrialCount: 10
-  maxTrialCount: 10
-  maxFailedTrialCount: 10
+  parallelTrialCount: 3
+  maxTrialCount: 3
+  maxFailedTrialCount: 3
   parameters:
     - name: lr
       parameterType: double
@@ -39,7 +39,9 @@ spec:
                 imagePullPolicy: IfNotPresent
                 resources:
                   limits:
-                    cpu: 2000m
+                    cpu: 1000m
+                  requests:
+                    cpu: 700m
                 command:
                   - "python3"
                   - "experiments/katib_k8s/mnist_task_katib/task.py"
@@ -47,9 +49,9 @@ spec:
                   - "--lr=${trialParameters.learningRate}"
                 env:
                   - name: STUDY_NAME
-                    value: "study-worker-2000m-total-25-rep-1-trials-10"
+                    value: "katib-study-81"
                   - name: DB_CONN
                     value: "postgresql://postgresadmin:admin123@postgres:5432/postgresdb"
                   - name: "METRICS_STORAGE_HOST"
-                    value: "130.149.158.216"
+                    value: "134.101.4.161"
             restartPolicy: Never

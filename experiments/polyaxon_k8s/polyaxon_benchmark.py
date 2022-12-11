@@ -62,7 +62,7 @@ class PolyaxonBenchmark(Benchmark):
         self.study_name = resources.get("studyName",f'polyaxon-study-{random.randint(0, 100)}')
         self.workerCpu=resources.get("workerCpu",2)
         self.workerMemory=resources.get("workerMemory",2)
-        self.workerCount=resources.get("workerCount",5)
+        self.workerCount=resources.get("jobsCount",5)
         self.jobsCount=resources.get("jobsCount",6) 
         self.limitCpu_total = resources.get("limitCpuTotal",20) 
         self.limitCpu_worker = resources.get("limitCpuWorker","1000m") 
@@ -81,6 +81,13 @@ class PolyaxonBenchmark(Benchmark):
 
         self.logging_level= self.resources.get("loggingLevel",log.CRITICAL)
         log.basicConfig(format='%(asctime)s Polyaxon Benchmark %(levelname)s: %(message)s',level=self.logging_level)
+        PROJECT_ROOT = os.path.abspath(os.path.join(__file__ ,"../../../"))
+        self.benchmark_path = os.path.join(PROJECT_ROOT,"experiments/polyaxon_k8s")
+        print(PROJECT_ROOT)
+        print( self.benchmark_path )
+        print(os.getcwd())  
+        os.chdir( self.benchmark_path )
+        print(os.getcwd())    
         
     def deploy(self):
         """
@@ -171,7 +178,7 @@ class PolyaxonBenchmark(Benchmark):
         if not self.limitResources:
 
             #loading template without resources limits and fulling the template
-            with open(path.join(path.dirname(__file__), "experiment_template.yaml"), "r") as f:
+            with open(path.join(self.benchmark_path , "experiment_template.yaml"), "r") as f:
                 job_template = Template(f.read())
                 job_yml_objects = job_template.substitute(experiment_definition)
                 
@@ -186,10 +193,10 @@ class PolyaxonBenchmark(Benchmark):
                 "limit_mem":f"{self.limitMem_total}",
                 "quota_name":f"{self.namespace}-quota"
             }     
-            with open(path.join(path.dirname(__file__), "ResourceQuota_template.yaml"), "r") as f:
+            with open(path.join(self.benchmark_path , "ResourceQuota_template.yaml"), "r") as f:
                 job_template = Template(f.read())
                 job_yml_objects = job_template.substitute(resources_restrictions) 
-            with open(path.join(path.dirname(__file__), "ResourceQuota.yaml"), "w") as f:
+            with open(path.join(self.benchmark_path , "ResourceQuota.yaml"), "w") as f:
                 f.write(job_yml_objects)
             log.info("Resource Quota yaml created")
             
@@ -197,7 +204,7 @@ class PolyaxonBenchmark(Benchmark):
             log.info(res)
 
               #loading template without resources limits and fulling the template
-            with open(path.join(path.dirname(__file__), "expriment_template_resources.yaml"), "r") as f:
+            with open(path.join(self.benchmark_path , "expriment_template_resources.yaml"), "r") as f:
                 job_template = Template(f.read())
                 job_yml_objects = job_template.substitute(experiment_definition)
                 
@@ -208,7 +215,7 @@ class PolyaxonBenchmark(Benchmark):
         
         
         #writing the experiment definition into the file
-        with open(path.join(path.dirname(__file__), self.experiment_file_name), "w") as f:
+        with open(path.join(self.benchmark_path , self.experiment_file_name), "w") as f:
             f.write(job_yml_objects)
             log.info("Experiment yaml created")
  
@@ -219,7 +226,7 @@ class PolyaxonBenchmark(Benchmark):
             log.info("Creating task docker image")   
             #creating docker image inside of the minikube   
             self.image_builder = builder_from_string("docker")()
-            PROJECT_ROOT = os.path.abspath(os.path.join(__file__ ,"../../../"))
+            PROJECT_ROOT = os.path.abspath(os.path.join(self.benchmark_path  ,"../../../"))
             res = self.image_builder.deploy_image(
             f'experiments/polyaxon_k8s/{self.trial_tag}/Dockerfile',f"scaleme100/{self.trial_tag}",PROJECT_ROOT)
             log.info(res)
