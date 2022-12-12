@@ -130,7 +130,8 @@ dmypy.json
 .pyre/
 exp__*
 **/benchmark__**
-#!experiments/katib_k8s/benchmark__KatibBenchmark
+!experiments/katib_k8s/benchmark__KatibBenchmark
+!experiments/polyaxon_k8s/benchmark__PolyaxonBenchmark
 data/
 
 
