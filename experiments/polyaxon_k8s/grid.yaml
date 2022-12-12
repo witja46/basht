@@ -1,16 +1,16 @@
 version: 1.1
 kind: operation
-name: resources-rep-1-limitcputotal-10-polyaxon
+name: deploy-rep-2-limitcputotal-10-polyaxon-31787
 termination:
   maxRetries: 10
 matrix:
   kind: grid
-  numRuns: 2
-  concurrency: 2
+  numRuns: 1
+  concurrency: 1
   params:
     lr:
       kind: logspace
-      value: 0.001:0.9:2
+      value: 0.001:0.9:1
 component:
   inputs:
     - name: lr
@@ -22,12 +22,12 @@ component:
       image: scaleme100/mnist_task_polyaxon
       resources:
         limits:
-          cpu: 1000m
+          cpu: 4000m
       command: [python3, experiments/polyaxon_k8s/mnist_task_polyaxon/task.py]
       args: ["--batch-size=64", "--lr={{ lr }}"]
       env:
         - name: STUDY_NAME
-          value: "resources-rep-1-limitcputotal-10-polyaxon"
+          value: "deploy-rep-2-limitcputotal-10-polyaxon-31787"
         - name: DB_CONN
           value: "postgresql://postgresadmin:admin123@postgres:5432/postgresdb"
         - name: "METRICS_STORAGE_HOST"

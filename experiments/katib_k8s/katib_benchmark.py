@@ -30,7 +30,7 @@ class KatibBenchmark(Benchmark):
         self.experiment_file_name = "grid.yaml"
         self.metrics_ip = resources.get("metricsIP")
         self.generate_new_docker_image = resources.get("generateNewDockerImage",True)     
-        self.clean_up = self.resources.get("cleanUp",True)
+        self.clean_up = self.resources.get("cleanUp",False)
         self.trial_tag = resources.get("dockerImageTag","mnist_task_katib")
         self.study_name= resources.get("studyName",f'katib-study-{random.randint(0, 100)}')
         self.workerCpu = resources.get("workerCpu",2)
@@ -53,11 +53,10 @@ class KatibBenchmark(Benchmark):
         
         PROJECT_ROOT = os.path.abspath(os.path.join(__file__ ,"../../../"))
         self.benchmark_path = os.path.join(PROJECT_ROOT,"experiments/katib_k8s")
-        print(PROJECT_ROOT)
-        print( self.benchmark_path )
-        print(os.getcwd())  
+      
+     
         os.chdir( self.benchmark_path )
-        print(os.getcwd())    
+
 
         
 

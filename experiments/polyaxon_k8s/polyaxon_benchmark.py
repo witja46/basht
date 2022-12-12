@@ -55,7 +55,7 @@ class PolyaxonBenchmark(Benchmark):
         config.load_kube_config()
         self.generate_new_docker_image = resources.get("generateNewDockerImage",True)     
 
-        self.clean_up  = self.resources.get("cleanUp",True)
+        self.clean_up  = self.resources.get("cleanUp",False)
         self.create_clean_image = self.resources.get("createCleanImage",True) 
         self.metrics_ip = resources.get("metricsIP")
         self.trial_tag = resources.get("dockerImageTag", "mnist_task_polyaxon")
@@ -361,7 +361,7 @@ class PolyaxonBenchmark(Benchmark):
         log.info(res.output)
         if res.exit_code != 0:
             log.info("Failed to delete project")
-            raise Exception(f'Exit code: {res.exit_code}  Error message: \n{res.output}')
+           
 
         if(self.post_forward_process):
             log.info("Terminating post  forwarding process:")
@@ -385,7 +385,8 @@ class PolyaxonBenchmark(Benchmark):
             res = self.cli_runner.invoke(teardown,["--yes"])
             #by teardown comand the polyaxon cli doesnt set exit_code if there are some problems
             if("Polyaxon could not teardown the deployment" in res.output):
-                raise Exception(f'Exit code: {res.exit_code}  Error message: \n{res.output}')
+                # raise Exception(f'Exit code: {res.exit_code}  Error message: \n{res.output}')
+                log.info(res.output)
             elif(res.exit_code == 0):
                 print(res.exit_code)
                 log.info(res.output)
@@ -401,30 +402,35 @@ class PolyaxonBenchmark(Benchmark):
             config.load_kube_config()
             w = watch.Watch()
             c = client.CoreV1Api()
-            deployed = 0
-            to_undeploy= ["polyaxon-polyaxon-streams","polyaxon-polyaxon-operator","polyaxon-polyaxon-gateway","polyaxon-polyaxon-api"]
-            log.info("Waiting for polyaxon pods to be terminated:")
-            for e in w.stream(c.list_namespaced_pod, namespace=self.namespace):
-                ob = e["object"]
+            # deployed = 0
+            # to_undeploy= ["polyaxon-polyaxon-streams","polyaxon-polyaxon-operator","polyaxon-polyaxon-gateway","polyaxon-polyaxon-api"]
+            # log.info("Waiting for polyaxon pods to be terminated:")
+            # for e in w.stream(c.list_namespaced_pod, namespace=self.namespace):
+            #     ob = e["object"]
                 
-                log.debug(f'{deployed} pods out of 4 were killed')
-                log.debug("\n new in stream:\n")
-                log.debug(ob.metadata.name,ob.status.phase)
-                for name in to_undeploy:
-                    if name in ob.metadata.name:
+            #     log.debug(f'{deployed} pods out of 4 were killed')
+            #     log.debug("\n new in stream:\n")
+            #     log.debug(ob.metadata.name,ob.status.phase)
+            #     for name in to_undeploy:
+            #         if name in ob.metadata.name:
 
-                        if not ob.status.container_statuses[0].ready:
-                            log.info(f'Containers of {ob.metadata.name} are terminated')
-                            to_undeploy.remove(name)
+            #             if not ob.status.container_statuses[0].ready:
+            #                 log.info(f'Containers of {ob.metadata.name} are terminated')
+            #                 to_undeploy.remove(name)
                             
-                            if not to_undeploy:
-                                w.stop()
-                                # log.info("Finished ")
-                                break
+            #                 if not to_undeploy:
+            #                     w.stop()
+            #                     # log.info("Finished ")
+            #                     break
             
-        
-            log.info("Killed all pods deleteing the namespace:")
-            res = c.delete_namespace_with_http_info(name=self.namespace)
+            try:
+                log.info("Killed all pods deleteing the namespace:")
+                res = c.delete_namespace_with_http_info(name=self.namespace)
+            except ApiException as err:
+                if(err.status != 404):
+                    raise Exception("Something went wrong",err)
+                else:
+                    print(res)
            #kubectl delete crd operations.core.polyaxon.com 
             #kubectl patch  crd/operations.core.polyaxon.com  -p  '{"metadata":{"finalizers":null}}'
 

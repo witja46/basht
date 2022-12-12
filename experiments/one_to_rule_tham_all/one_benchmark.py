@@ -1,4 +1,5 @@
 import logging
+import random
 from os import path
 from time import sleep
 from experiments.katib_k8s.katib_benchmark import KatibBenchmark
@@ -12,9 +13,9 @@ if __name__ == "__main__":
 
     # read in base configuration
     experiments=[
-           {   "experiment_titel":"clean_up",
+        {   "experiment_titel":"clean_up",
             "variabel":"jobsCount",
-            "values":[1],
+            "values":[0],
 
             "metricsIP": urlopen("https://checkip.amazonaws.com").read().decode("utf-8").strip(),
           #  "prometheus_url": "http://130.149.158.143:30041",
@@ -29,15 +30,17 @@ if __name__ == "__main__":
  
             "cleanUp": True ,
             "undeploy":True,
-            "deploy": False,
+            "deploy": True,
 
-            "jobsCount":0
+            "jobsCount":0,
+            "limitCpuTotal":"",
+            "limitCpuWorker":"",
                        
-        },
+        },       
 
         {   "experiment_titel":"deploy",
-            "variabel":"jobsCount",
-            "values":[1],
+            "variabel":"limitCpuTotal",
+            "values":["10"],
 
             "metricsIP": urlopen("https://checkip.amazonaws.com").read().decode("utf-8").strip(),
           #  "prometheus_url": "http://130.149.158.143:30041",
@@ -46,15 +49,16 @@ if __name__ == "__main__":
             "generateNewDockerImage": False,
          #  "dockerImageTag":"",
                    
-            "limitResources":False,            
-            "limitCpuTotal":"",
-            "limitCpuWorker":"",
+            "limitResources":True,            
+          
  
             "cleanUp": True ,
             "undeploy":False,
             "deploy": True,
 
-            "jobsCount":0
+            "jobsCount":1,
+            "limitCpuTotal":"",
+            "limitCpuWorker":"4000m",
                        
         },
 
@@ -133,45 +137,55 @@ if __name__ == "__main__":
         
         ]
     
-    
+    runs_id = random.randint(0, 100000)
 
     reps = 2
     for rep in range(1,reps+1):
+        # katib_bench = KatibBenchmark(resources={})
+        # polyaxon_bench = PolyaxonBenchmark(resources={})
+        # katib_bench.undeploy()
+        # polyaxon_bench.undeploy()
+
         for exp in experiments:
 
             for var in exp["values"]:
                 resources = None
-              
+                
+                logging.info(f"Waiting 10 sec before starting {exp['experiment_titel']}")
+                sleep(10)
+
                 logging.info(f'Katib Starting rep {rep} of  {exp["experiment_titel"]} with {exp["variabel"]} of {var}  ')
                 try:
                     resources = exp.copy()
                     resources[exp["variabel"]] = var
-                    resources["studyName"] = f'study-rep-{rep}-{exp["variabel"]}-{var}-katib'.lower()
+                    resources["id"] = runs_id
+                    resources["studyName"] = f'study-rep-{rep}-{exp["variabel"]}-{var}-katib-{runs_id}'.lower()
                     resources["repetition"] = rep
                  
                 
                     runner = BenchmarkRunner(benchmark_cls=KatibBenchmark, resources=resources)
                     runner.run()
                    
-                    sleep(10)
                     runner = None
                 except Exception as e:
                     logging.warning(f'Failed Run  rep {rep} of  {exp["experiment_titel"]} with {exp["variabel"]} of {var}  ')
 
-
+                logging.info(f"Waiting 10 sec before starting {exp['experiment_titel']} on polyaxon")
+                sleep(10)
                 logging.info(f'Polyaxon Starting rep {rep} of  {exp["experiment_titel"]} with {exp["variabel"]} of {var}  ')
                 try:
                     resources = None
                     resources = exp.copy()
+                    resources["id"] = runs_id
                     resources[exp["variabel"]] = var
-                    resources["studyName"] = f'{exp["experiment_titel"]}-rep-{rep}-{exp["variabel"]}-{var}-polyaxon'.lower()
+                    resources["studyName"] = f'{exp["experiment_titel"]}-rep-{rep}-{exp["variabel"]}-{var}-polyaxon-{runs_id}'.lower()
                     resources["repetition"] = rep
                  
                 
                     runner = BenchmarkRunner(benchmark_cls=PolyaxonBenchmark, resources=resources)
                     runner.run()
                    
-                    sleep(10)
+                   
                     runner = None
                     
                 except Exception as e:
