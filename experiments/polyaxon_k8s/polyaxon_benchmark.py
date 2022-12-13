@@ -78,7 +78,7 @@ class PolyaxonBenchmark(Benchmark):
          
                 
 
-
+        self.titel = resources.get("experiment_titel","")
         self.logging_level= self.resources.get("loggingLevel",log.CRITICAL)
         log.basicConfig(format='%(asctime)s Polyaxon Benchmark %(levelname)s: %(message)s',level=self.logging_level)
         PROJECT_ROOT = os.path.abspath(os.path.join(__file__ ,"../../../"))
@@ -266,6 +266,8 @@ class PolyaxonBenchmark(Benchmark):
         log.info("Starting polyaxon experiment:")
         #invoking polyaxon run comand with following options
         options = f'-f {self.experiment_file_name} --project {self.study_name} --eager'.split()
+        if(self.titel == "clean_up"):
+            return
         
         res = self.cli_runner.invoke(run,options)
         log.info(res.output)

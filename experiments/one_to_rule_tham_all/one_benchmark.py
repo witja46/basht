@@ -13,45 +13,45 @@ if __name__ == "__main__":
 
     # read in base configuration
     experiments=[
-        {   "experiment_titel":"clean_up",
+          {   "experiment_titel":"clean_up",
             "variabel":"jobsCount",
-            "values":[0],
+            "values":[1],
 
             "metricsIP": urlopen("https://checkip.amazonaws.com").read().decode("utf-8").strip(),
-          #  "prometheus_url": "http://130.149.158.143:30041",
+            "prometheus_url": "http://130.149.158.143:30041",
             "loggingLevel": logging.INFO,
             "imagePullPolicy": "IfNotPresent",
             "generateNewDockerImage": False,
          #  "dockerImageTag":"",
-                   
-            "limitResources":False,            
+
+            "limitResources":False,
             "limitCpuTotal":"",
             "limitCpuWorker":"",
- 
+
             "cleanUp": True ,
             "undeploy":True,
             "deploy": True,
 
-            "jobsCount":0,
+            "jobsCount":1,
             "limitCpuTotal":"",
             "limitCpuWorker":"",
-                       
-        },       
+
+        },
 
         {   "experiment_titel":"deploy",
             "variabel":"limitCpuTotal",
             "values":["10"],
 
             "metricsIP": urlopen("https://checkip.amazonaws.com").read().decode("utf-8").strip(),
-          #  "prometheus_url": "http://130.149.158.143:30041",
+             "prometheus_url": "http://130.149.158.143:30041",
             "loggingLevel": logging.INFO,
             "imagePullPolicy": "IfNotPresent",
             "generateNewDockerImage": False,
          #  "dockerImageTag":"",
-                   
-            "limitResources":True,            
-          
- 
+
+            "limitResources":True,
+
+
             "cleanUp": True ,
             "undeploy":False,
             "deploy": True,
@@ -59,8 +59,9 @@ if __name__ == "__main__":
             "jobsCount":1,
             "limitCpuTotal":"",
             "limitCpuWorker":"4000m",
-                       
+
         },
+
 
         # {   "experiment_titel":"tuning_scalability",
         #     "variabel":"jobsCount",
@@ -86,10 +87,11 @@ if __name__ == "__main__":
         # },
         {   "experiment_titel":"resources",
             "variabel":"limitCpuTotal",
-            "values":["10"],
-
+            
+         "values":[4,5,6,7,8,9,10,12,14,16,18,20,22,25,30],
+            "values":[20,30],
             "metricsIP": urlopen("https://checkip.amazonaws.com").read().decode("utf-8").strip(),
-          #  "prometheus_url": "http://130.149.158.143:30041",
+            "prometheus_url": "http://130.149.158.143:30041",
             "loggingLevel": logging.INFO,
             "imagePullPolicy": "IfNotPresent",
             "generateNewDockerImage": False,
@@ -102,11 +104,208 @@ if __name__ == "__main__":
             "undeploy":False,
             "deploy": False,
 
-            "jobsCount":1,
+            "jobsCount":10,
             "limitCpuTotal":"",
             "limitCpuWorker":"1000m",
                        
         },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        {   "experiment_titel":"clean_up",
+            "variabel":"jobsCount",
+            "values":[1],
+
+            "metricsIP": urlopen("https://checkip.amazonaws.com").read().decode("utf-8").strip(),
+            "prometheus_url": "http://130.149.158.143:30041",
+            "loggingLevel": logging.INFO,
+            "imagePullPolicy": "IfNotPresent",
+            "generateNewDockerImage": False,
+         #  "dockerImageTag":"",
+
+            "limitResources":False,
+            "limitCpuTotal":"",
+            "limitCpuWorker":"",
+
+            "cleanUp": True ,
+            "undeploy":True,
+            "deploy": True,
+
+            "jobsCount":1,
+            "limitCpuTotal":"",
+            "limitCpuWorker":"",
+
+        },
+
+        {   "experiment_titel":"deploy",
+            "variabel":"limitCpuTotal",
+            "values":["10"],
+
+            "metricsIP": urlopen("https://checkip.amazonaws.com").read().decode("utf-8").strip(),
+             "prometheus_url": "http://130.149.158.143:30041",
+            "loggingLevel": logging.INFO,
+            "imagePullPolicy": "IfNotPresent",
+            "generateNewDockerImage": False,
+         #  "dockerImageTag":"",
+
+            "limitResources":True,
+
+
+            "cleanUp": True ,
+            "undeploy":False,
+            "deploy": True,
+
+            "jobsCount":1,
+            "limitCpuTotal":"",
+            "limitCpuWorker":"4000m",
+
+        },
+        
+        {"experiment_titel":"resources",
+        "variabel":"limitCpuTotal",
+        "values":[4,5,6,7,8,9,10,12,14,16,18,20,22,25,30],
+
+        "metricsIP": urlopen("https://checkip.amazonaws.com").read().decode("utf-8").strip(),
+        "prometheus_url": "http://130.149.158.143:30041",
+        "loggingLevel": logging.INFO,
+        "imagePullPolicy": "IfNotPresent",
+        "generateNewDockerImage": False,
+        #  "dockerImageTag":"",
+                
+        "limitResources":True,            
+        
+
+        "cleanUp": True ,
+        "undeploy":False,
+        "deploy": False,
+
+        "jobsCount":10,
+        "limitCpuTotal":"",
+        "limitCpuWorker":"2000m",
+                    
+        },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        {   "experiment_titel":"clean_up",
+            "variabel":"jobsCount",
+            "values":[1],
+
+            "metricsIP": urlopen("https://checkip.amazonaws.com").read().decode("utf-8").strip(),
+            "prometheus_url": "http://130.149.158.143:30041",
+            "loggingLevel": logging.INFO,
+            "imagePullPolicy": "IfNotPresent",
+            "generateNewDockerImage": False,
+         #  "dockerImageTag":"",
+
+            "limitResources":False,
+            "limitCpuTotal":"",
+            "limitCpuWorker":"",
+
+            "cleanUp": True ,
+            "undeploy":True,
+            "deploy": True,
+
+            "jobsCount":1,
+            "limitCpuTotal":"",
+            "limitCpuWorker":"",
+
+        },
+
+        {   "experiment_titel":"deploy",
+            "variabel":"limitCpuTotal",
+            "values":["10"],
+
+            "metricsIP": urlopen("https://checkip.amazonaws.com").read().decode("utf-8").strip(),
+             "prometheus_url": "http://130.149.158.143:30041",
+            "loggingLevel": logging.INFO,
+            "imagePullPolicy": "IfNotPresent",
+            "generateNewDockerImage": False,
+         #  "dockerImageTag":"",
+
+            "limitResources":True,
+
+
+            "cleanUp": True ,
+            "undeploy":False,
+            "deploy": True,
+
+            "jobsCount":1,
+            "limitCpuTotal":"",
+            "limitCpuWorker":"4000m",
+
+        },
+        
+        {"experiment_titel":"resources",
+        "variabel":"limitCpuTotal",
+        "values":[4,5,6,7,8,9,10,12,14,16,18,20,22,25,30],
+
+        "metricsIP": urlopen("https://checkip.amazonaws.com").read().decode("utf-8").strip(),
+          "prometheus_url": "http://130.149.158.143:30041",
+        "loggingLevel": logging.INFO,
+        "imagePullPolicy": "IfNotPresent",
+        "generateNewDockerImage": False,
+        #  "dockerImageTag":"",
+                
+        "limitResources":True,            
+        
+
+        "cleanUp": True ,
+        "undeploy":False,
+        "deploy": False,
+
+        "jobsCount":10,
+        "limitCpuTotal":"",
+        "limitCpuWorker":"500m",
+                    
+        },
+        
+        # {"experiment_titel":"resources",
+        # "variabel":"limitCpuTotal",
+        # "values":[20,30],
+
+        # "metricsIP": urlopen("https://checkip.amazonaws.com").read().decode("utf-8").strip(),
+        # #  "prometheus_url": "http://130.149.158.143:30041",
+        # "loggingLevel": logging.INFO,
+        # "imagePullPolicy": "IfNotPresent",
+        # "generateNewDockerImage": False,
+        # #  "dockerImageTag":"",
+                
+        # "limitResources":True,            
+        
+
+        # "cleanUp": True ,
+        # "undeploy":False,
+        # "deploy": False,
+
+        # "jobsCount":1,
+        # "limitCpuTotal":"",
+        # "limitCpuWorker":"500m",
+                    
+        # },
         # {   
         #     "experiment_titel":"worker",
         #     "variabel":"limitCpuWorker",
@@ -135,11 +334,13 @@ if __name__ == "__main__":
         
         
         
-        ]
-    
+        ] 
+
+
+
     runs_id = random.randint(0, 100000)
 
-    reps = 2
+    reps = 5
     for rep in range(1,reps+1):
         # katib_bench = KatibBenchmark(resources={})
         # polyaxon_bench = PolyaxonBenchmark(resources={})

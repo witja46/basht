@@ -47,6 +47,7 @@ class KatibBenchmark(Benchmark):
         self.imagePullPolicy=resources.get("imagePullPolicy","IfNotPresent")
         self.undeploying = resources.get("undeploy",True)
         self.deploying = resources.get("deploy",True)
+        self.titel = resources.get("experiment_titel","")
 
         self.logging_level= self.resources.get("loggingLevel",log.INFO)
         log.basicConfig(format='%(asctime)s Katib Benchmark %(levelname)s: %(message)s',level=self.logging_level)
@@ -208,7 +209,8 @@ class KatibBenchmark(Benchmark):
     
 
     def run(self):
-        
+        if(self.titel == "clean_up"):
+            return 
         log.info("Starting Katib experiment:")
         api_instance=  client.CustomObjectsApi()
 
