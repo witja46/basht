@@ -23,6 +23,8 @@ component:
       resources:
         limits:
           cpu: $worker_cpu_limit
+        requests:
+          cpu: $worker_cpu_limit
       command: [python3, experiments/polyaxon_k8s/$folder/task.py]
       args: ["--batch-size=64", "--lr={{ lr }}"]
       env:

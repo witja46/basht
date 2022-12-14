@@ -1,0 +1,166 @@
+experiments=[
+        {   "experiment_titel":"clean_up",
+            "variabel":"jobsCount",
+            "values":[1],
+
+            "metricsIP": urlopen("https://checkip.amazonaws.com").read().decode("utf-8").strip(),
+            "prometheus_url": "http://130.149.158.143:30041",
+            "loggingLevel": logging.INFO,
+            "imagePullPolicy": "IfNotPresent",
+            "generateNewDockerImage": False,
+         #  "dockerImageTag":"",
+
+            "limitResources":False,
+            "limitCpuTotal":"",
+            "limitCpuWorker":"",
+
+            "cleanUp": True ,
+            "undeploy":True,
+            "deploy": True,
+
+            "jobsCount":1,
+            "limitCpuTotal":"",
+            "limitCpuWorker":"",
+
+        },
+
+        {   "experiment_titel":"deploy",
+            "variabel":"limitCpuTotal",
+            "values":["10"],
+
+            "metricsIP": urlopen("https://checkip.amazonaws.com").read().decode("utf-8").strip(),
+            "prometheus_url": "http://130.149.158.143:30041",
+            "loggingLevel": logging.INFO,
+            "imagePullPolicy": "IfNotPresent",
+            "generateNewDockerImage": False,
+         #  "dockerImageTag":"",
+
+            "limitResources":True,
+
+
+            "cleanUp": True ,
+            "undeploy":False,
+            "deploy": True,
+
+            "jobsCount":1,
+            "limitCpuTotal":"",
+            "limitCpuWorker":"4000m",
+
+        },
+
+         {   "experiment_titel":"tuning_scalability",
+             "variabel":"jobsCount",
+             "values":[1,2,3,4,5,6,7,8,9,10,12,14,16,18,20],
+
+             "metricsIP": urlopen("https://checkip.amazonaws.com").read().decode("utf-8").strip(),
+             "prometheus_url": "http://130.149.158.143:30041",
+             "loggingLevel": logging.INFO,
+             "imagePullPolicy": "IfNotPresent",
+             "generateNewDockerImage": False,
+         #  "dockerImageTag":"",
+
+             "limitResources":False,
+             "limitCpuTotal":"",
+             "limitCpuWorker":"",
+
+             "cleanUp": True ,
+             "undeploy":False,
+             "deploy": False,
+
+             "jobsCount":0
+
+         },
+
+
+
+
+        ]
+
+
+expe_resources = [experiments
+   {   "experiment_titel":"resources",
+            "variabel":"limitCpuTotal",
+
+         "values":[6,8,10,12,14,16,18,20,22,24,25,30],
+            "metricsIP": urlopen("https://checkip.amazonaws.com").read().decode("utf-8").strip(),
+            "prometheus_url": "http://130.149.158.143:30041",
+            "loggingLevel": logging.INFO,
+            "imagePullPolicy": "IfNotPresent",
+            "generateNewDockerImage": False,
+         #  "dockerImageTag":"",
+
+            "limitResources":True,
+
+
+            "cleanUp": True ,
+            "undeploy":False,
+            "deploy": False,
+
+            "jobsCount":10,
+            "limitCpuTotal":"",
+            "limitCpuWorker":"1000m",
+
+        },
+       {"experiment_titel":"resources",
+        "variabel":"limitCpuTotal",
+        "values":[8,10,12,14,16,18,20,22,24,25,30],
+
+        "metricsIP": urlopen("https://checkip.amazonaws.com").read().decode("utf-8").strip(),
+        "prometheus_url": "http://130.149.158.143:30041",
+        "loggingLevel": logging.INFO,
+        "imagePullPolicy": "IfNotPresent",
+        "generateNewDockerImage": False,
+        #  "dockerImageTag":"",
+
+        "limitResources":True,
+
+
+        "cleanUp": True ,
+        "undeploy":False,
+        "deploy": False,
+
+        "jobsCount":10,
+        "limitCpuTotal":"",
+        "limitCpuWorker":"2000m",
+
+        },
+
+
+                {"experiment_titel":"resources",
+        "variabel":"limitCpuTotal",
+        "values":[5,6,8,10,12,14,16,18,20,22,24,25,30],
+
+        "metricsIP": urlopen("https://checkip.amazonaws.com").read().decode("utf-8").strip(),
+          "prometheus_url": "http://130.149.158.143:30041",
+        "loggingLevel": logging.INFO,
+        "imagePullPolicy": "IfNotPresent",
+        "generateNewDockerImage": False,
+        #  "dockerImageTag":"",
+
+        "limitResources":True,
+
+
+        "cleanUp": True ,
+        "undeploy":False,
+        "deploy": False,
+
+        "jobsCount":10,
+        "limitCpuTotal":"",
+        "limitCpuWorker":"500m",
+
+        },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+]

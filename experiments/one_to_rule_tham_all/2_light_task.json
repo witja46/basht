@@ -1,0 +1,30 @@
+{
+  "repetitions": 4,
+  "json_id": 2,
+  "clean_and_deploy": true,
+  "experiments": [
+    {
+      "experiment_titel": "tuning",
+      "variabel": "jobsCount",
+      "values": [1, 2],
+
+      "loggingLevel": "logging.INFO",
+      "imagePullPolicy": "IfNotPresent",
+      "generateNewDockerImage": false,
+      "dockerImageTag": "light_task",
+
+      "limitResources": true,
+      "limitCpuTotal": "20",
+      "limitCpuWorker": "100m",
+      "jobsCount": "",
+
+      "cleanUp": false,
+      "undeploy": false,
+      "deploy": false,
+
+      "generatePlots": true,
+      "latexTitle": "Tuning scalability experiment with the light tasks",
+      "latexDescritption": "Tuning scalability experimetns conducted on Variabel: Trials number [1,2,4,6,8,10,12,14,16,18,20,22]"
+    }
+  ]
+}

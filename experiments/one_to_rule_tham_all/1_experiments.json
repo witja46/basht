@@ -1,0 +1,73 @@
+{
+  "repetitions": 4,
+  "json_id": 23449,
+  "experiments": [
+    {
+      "experiment_titel": "clean_up",
+      "variabel": "jobsCount",
+      "values": [1],
+
+      "loggingLevel": "logging.INFO",
+      "imagePullPolicy": "IfNotPresent",
+      "generateNewDockerImage": "False",
+      "dockerImageTag": "",
+
+      "limitResources": "False",
+
+      "cleanUp": "True",
+      "undeploy": "True",
+      "deploy": "True",
+
+      "jobsCount": 1,
+      "limitCpuTotal": "",
+      "limitCpuWorker": "",
+      "generatePlots": "False"
+    },
+
+    {
+      "experiment_titel": "deploy",
+      "variabel": "limitCpuTotal",
+      "values": ["10"],
+
+      "loggingLevel": "logging.INFO",
+      "imagePullPolicy": "IfNotPresent",
+      "generateNewDockerImage": "False",
+      "dockerImageTag": "",
+
+      "limitResources": "True",
+
+      "cleanUp": "True",
+      "undeploy": "False",
+      "deploy": "True",
+
+      "jobsCount": 1,
+      "limitCpuTotal": "",
+      "limitCpuWorker": "4000m",
+      "generatePlots": "False"
+    },
+
+    {
+      "experiment_titel": "tuning_scalability",
+      "variabel": "jobsCount",
+      "values": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 14, 16, 18],
+
+      "loggingLevel": "logging.INFO",
+      "imagePullPolicy": "IfNotPresent",
+      "generateNewDockerImage": "False",
+      "dockerImageTag": "",
+
+      "limitResources": "False",
+      "limitCpuTotal": "",
+      "limitCpuWorker": "",
+
+      "cleanUp": "True",
+      "undeploy": "False",
+      "deploy": "False",
+
+      "jobsCount": 0,
+      "generatePlots": "True",
+      "latexTitle": "Tuning scalability experiment",
+      "latexDescritption": "Tuning scalability experimetns conducted on Variabel: Trials number [1,2,4,6,8,10,12,14,16,18,20,22]"
+    }
+  ]
+}

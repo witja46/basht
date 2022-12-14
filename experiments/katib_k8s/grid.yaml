@@ -3,7 +3,7 @@ apiVersion: kubeflow.org/v1beta1
 kind: Experiment
 metadata:
   namespace: kubeflow
-  name: study-rep-4-jobscount-20-katib-23449
+  name: clean_up-rep-2-jobscount-1-katib-2
 spec:
   objective:
     type: maximize
@@ -11,9 +11,9 @@ spec:
     objectiveMetricName: precision
   algorithm:
     algorithmName: grid
-  parallelTrialCount: 20
-  maxTrialCount: 20
-  maxFailedTrialCount: 20
+  parallelTrialCount: 1
+  maxTrialCount: 1
+  maxFailedTrialCount: 1
   parameters:
     - name: lr
       parameterType: double
@@ -44,9 +44,9 @@ spec:
                   - "--lr=${trialParameters.learningRate}"
                 env:
                   - name: STUDY_NAME
-                    value: "study-rep-4-jobscount-20-katib-23449"
+                    value: "clean_up-rep-2-jobscount-1-katib-2"
                   - name: DB_CONN
                     value: "postgresql://postgresadmin:admin123@postgres:5432/postgresdb"
                   - name: "METRICS_STORAGE_HOST"
-                    value: "130.149.158.216"
+                    value: "134.101.4.161"
             restartPolicy: Never

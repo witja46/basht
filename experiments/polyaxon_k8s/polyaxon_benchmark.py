@@ -58,7 +58,7 @@ class PolyaxonBenchmark(Benchmark):
         self.clean_up  = self.resources.get("cleanUp",False)
         self.create_clean_image = self.resources.get("createCleanImage",True) 
         self.metrics_ip = resources.get("metricsIP")
-        self.trial_tag = resources.get("dockerImageTag", "mnist_task_polyaxon")
+        self.trial_tag = f'{resources.get("dockerImageTag", "mnist_task")}_polyaxon'
         self.study_name = resources.get("studyName",f'polyaxon-study-{random.randint(0, 100)}')
         self.workerCpu=resources.get("workerCpu",2)
         self.workerMemory=resources.get("workerMemory",2)
@@ -81,13 +81,12 @@ class PolyaxonBenchmark(Benchmark):
         self.titel = resources.get("experiment_titel","")
         self.logging_level= self.resources.get("loggingLevel",log.CRITICAL)
         log.basicConfig(format='%(asctime)s Polyaxon Benchmark %(levelname)s: %(message)s',level=self.logging_level)
-        PROJECT_ROOT = os.path.abspath(os.path.join(__file__ ,"../../../"))
-        self.benchmark_path = os.path.join(PROJECT_ROOT,"experiments/polyaxon_k8s")
-        print(PROJECT_ROOT)
-        print( self.benchmark_path )
-        print(os.getcwd())  
-        os.chdir( self.benchmark_path )
-        print(os.getcwd())    
+        
+        self.project_root =  os.path.abspath(os.path.join(__file__ ,"../../../"))
+        self.benchmark_path = os.path.join(self.project_root,"experiments/polyaxon_k8s")
+        print(self.benchmark_path)
+   
+        os.chdir( self.benchmark_path )   
         
     def deploy(self):
         """
@@ -228,7 +227,7 @@ class PolyaxonBenchmark(Benchmark):
             self.image_builder = builder_from_string("docker")()
             PROJECT_ROOT = os.path.abspath(os.path.join(self.benchmark_path  ,"../../../"))
             res = self.image_builder.deploy_image(
-            f'experiments/polyaxon_k8s/{self.trial_tag}/Dockerfile',f"scaleme100/{self.trial_tag}",PROJECT_ROOT)
+            f'experiments/polyaxon_k8s/{self.trial_tag}/Dockerfile',f"scaleme100/{self.trial_tag}",self.project_root   )
             log.info(res)
             log.info(f"Image: {self.trial_tag}")  
 
@@ -468,19 +467,20 @@ if __name__ == "__main__":
     
     resources={
         # "studyName":"",
-        # "dockerImageTag":"mnist_task",
+         "dockerImageTag":"light_task",
         "jobsCount":5,
-        "cleanUp":True,
+        "cleanUp":False,
         "workerCount":5,
         "loggingLevel":log.INFO,
         "metricsIP": urlopen("https://checkip.amazonaws.com").read().decode("utf-8").strip(),
-        "generateNewDockerImage":False,
-        "prometheus_url": "http://130.149.158.143:30041",
-        "cleanUp": True ,
+        "generateNewDockerImage":True,
+        # "prometheus_url": "http://130.149.158.143:30041",
+        "cleanUp": False ,
         "limitResources":True,
-        "limitCpuTotal":6,
+        "limitCpuTotal":10,
+        "limitCpuWorker":"100m",
         "undeploy":False,
-        "deploy":False
+        "deploy":True
 
 
 

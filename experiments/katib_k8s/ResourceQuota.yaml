@@ -4,4 +4,4 @@ metadata:
   name: kubeflow-quota
 spec:
   hard:
-    limits.cpu: "10"
+    limits.cpu: "20"

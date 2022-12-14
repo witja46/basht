@@ -1,31 +1,30 @@
-from __future__ import print_function
-
-from polyaxon import tracking
 import argparse
 import logging
-import os
-import numpy as np
-import time
+from time import sleep
 from ml_benchmark.decorators import latency_decorator
 
 @latency_decorator
-def train(times ,epochs):
-    loss = 1
-    for epoch in range(epochs):
-        for x in np.arange(1,times + 1): 
-            loss = 1 - (x -1 ) / times
-            time.sleep(0.01)
-            msg = "Train Epoch: {} [{}/{} ({:.0f}%)]\tloss={:.4f}".format(
-                    epoch, x , times,
-                    100. * x / times, loss)
-            logging.info(msg)
+def train(time_sec):
+    
+ 
+    for x in range(time_sec):
+        sleep(1)
+        msg = f"Train time {x}/{time_sec}"
+        logging.info(msg)
+
+@latency_decorator
+def validate(time_sec):
 
 
-def test():
-
-    test_accuracy =0.8 
-    logging.info("Validation-accuracy={:.4f}\n".format(
+    for x in range(time_sec):
+        sleep(1)
+        msg = f"Validate time {x}/{time_sec}"
+        logging.info(msg)
+   
+    test_accuracy =0.7 
+    logging.info("precision={:.4f}\n".format(
         test_accuracy))
+
 
 
 def main():
@@ -52,16 +51,8 @@ def main():
     batch_size = args.batch_size
     lr = args.lr
     
-    train(batch_size,epochs)
-    test()
-    avg = {"recall":0.5,"f1-score":0.98,"precision":0.7} 
-    # Polyaxon
-    #initiating polyaxon tracking
-    tracking.init()    
-    #loging metrics 
-    tracking.log_metrics(recall=avg["recall"], )
-    #logging the results 
-    tracking.log_outputs(f1score=avg["f1-score"],precision=avg["precision"]) 
+    train(30)
+    validate(10) 
 
 
 

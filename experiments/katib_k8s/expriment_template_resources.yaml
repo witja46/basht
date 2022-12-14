@@ -41,7 +41,7 @@ spec:
                   limits:
                     cpu: $worker_cpu_limit
                   requests:
-                    cpu: 700m
+                    cpu: $worker_cpu_limit
                 command:
                   - "python3"
                   - "experiments/katib_k8s/$folder/task.py"

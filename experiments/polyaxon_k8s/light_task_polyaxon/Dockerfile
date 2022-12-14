@@ -4,8 +4,7 @@ RUN pip install pip --upgrade
 RUN pip install polyaxon
 
 
-COPY experiments experiments
-# COPY data data
+COPY experiments/polyaxon_k8s  experiments/polyaxon_k8s
 COPY setup.py setup.py
 COPY ml_benchmark ml_benchmark
 
@@ -13,4 +12,4 @@ COPY ml_benchmark ml_benchmark
 
 RUN pip install -e .
 
-CMD ["python", "experiments/polyaxon_minikube/task_light/task.py"]
+CMD ["python", "experiments/polyaxon_k8s/light_task_polyaxon/task.py"]

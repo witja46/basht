@@ -1,16 +1,16 @@
 version: 1.1
 kind: operation
-name: tuning_scalability-rep-4-jobscount-18-polyaxon-23449
+name: clean_up-rep-2-jobscount-1-polyaxon-2
 termination:
   maxRetries: 10
 matrix:
   kind: grid
-  numRuns: 18
-  concurrency: 18
+  numRuns: 1
+  concurrency: 1
   params:
     lr:
       kind: logspace
-      value: 0.01:0.1:18
+      value: 0.01:0.1:1
 component:
   inputs:
     - name: lr
@@ -24,8 +24,8 @@ component:
       args: ["--batch-size=64", "--lr={{ lr }}"]
       env:
         - name: STUDY_NAME
-          value: "tuning_scalability-rep-4-jobscount-18-polyaxon-23449"
+          value: "clean_up-rep-2-jobscount-1-polyaxon-2"
         - name: DB_CONN
           value: "postgresql://postgresadmin:admin123@postgres:5432/postgresdb"
         - name: "METRICS_STORAGE_HOST"
-          value: "130.149.158.216"
+          value: "134.101.4.161"
