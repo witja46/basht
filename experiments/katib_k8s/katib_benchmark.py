@@ -268,6 +268,7 @@ class KatibBenchmark(Benchmark):
                     if(self.jobsCount == succeeded):
                         log.info("Finished all runs")
                         w.stop()
+                    
                
                     
            
@@ -420,7 +421,7 @@ if __name__ == "__main__":
             # "dockerUserPassword":"",
             # "studyName":""
             "jobsCount":1,
-            "dockerImageTag":"light_task_katib",
+            "dockerImageTag":"light_task",
             "workerCount":1,
             "metricsIP": urlopen("https://checkip.amazonaws.com").read().decode("utf-8").strip(),
             "generateNewDockerImage":False,
@@ -429,10 +430,10 @@ if __name__ == "__main__":
             "limitResources":True,
             "limitCpuTotal":"20",
             "limitMemoryTotal":"400Gi",
-            "limitCpuWorker":"100m",
+            "limitCpuWorker":"5m",
             "limitMemoryWorker":"4000Mi",
-             "undeploy":False,
-             "deploy": False
+             "undeploy":True,
+             "deploy": True
             }
     # bench = KatibBenchmark(resources=resources)
     # bench.deploy()

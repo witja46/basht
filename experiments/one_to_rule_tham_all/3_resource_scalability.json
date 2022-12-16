@@ -1,0 +1,48 @@
+{Przerobic ta 2000m
+  "repetitions": 2,
+  "json_id": 2,
+  "clean_and_deploy": true,
+  "experiments": [
+    {
+      "experiment_titel": "resources",
+      "variabel": "limitCpuTotal",
+
+      "values": [6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 25, 30],
+      "prometheus_url": "http://130.149.158.143:30041",
+      "imagePullPolicy": "IfNotPresent",
+      "generateNewDockerImage": false,
+      "dockerImageTag": "mnist_task",
+
+      "limitResources": true,
+
+      "cleanUp": true,
+      "undeploy": false,
+      "deploy": false,
+
+      "jobsCount": 10,
+      "limitCpuTotal": "",
+      "limitCpuWorker": "1000m"
+    },
+    {
+      "experiment_titel": "resources",
+      "variabel": "limitCpuTotal",
+      "values": [8, 10, 12, 14, 16, 18, 20, 22, 24, 25, 30],
+
+      "imagePullPolicy": "IfNotPresent",
+      "generateNewDockerImage": false,
+      "dockerImageTag": "mnist_task",
+
+      "limitResources": true,
+
+      "cleanUp": true,
+      "undeploy": false,
+      "deploy": false,
+
+      "jobsCount": 10,
+      "limitCpuTotal": "",
+      "limitCpuWorker": "2000m"
+    }
+
+  
+  ]
+}

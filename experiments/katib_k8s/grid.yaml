@@ -3,7 +3,7 @@ apiVersion: kubeflow.org/v1beta1
 kind: Experiment
 metadata:
   namespace: kubeflow
-  name: clean_up-rep-2-jobscount-1-katib-2
+  name: katib-study-96
 spec:
   objective:
     type: maximize
@@ -35,16 +35,21 @@ spec:
           spec:
             containers:
               - name: training-container
-                image: scaleme100/mnist_task_katib
+                image: scaleme100/light_task_katib
                 imagePullPolicy: IfNotPresent
+                resources:
+                  limits:
+                    cpu: 5m
+                  requests:
+                    cpu: 5m
                 command:
                   - "python3"
-                  - "experiments/katib_k8s/mnist_task_katib/task.py"
+                  - "experiments/katib_k8s/light_task_katib/task.py"
                   - "--batch-size=64"
                   - "--lr=${trialParameters.learningRate}"
                 env:
                   - name: STUDY_NAME
-                    value: "clean_up-rep-2-jobscount-1-katib-2"
+                    value: "katib-study-96"
                   - name: DB_CONN
                     value: "postgresql://postgresadmin:admin123@postgres:5432/postgresdb"
                   - name: "METRICS_STORAGE_HOST"

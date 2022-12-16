@@ -18,7 +18,8 @@ def load_data(folder_name,json_id,exp_title,repetition):
     for file in folder:
         with open(f"{folder_name}/{file}","r") as f:
             exp = json.load(f)
-            if(exp["benchmark_configuration"]["resources"]["id"] == json_id and exp["benchmark_configuration"]["resources"]["experiment_titel"]== exp_title and exp["benchmark_configuration"]["resources"]["repetition"] == repetition):
+            exp_res= exp["benchmark_configuration"]["resources"]
+            if(exp_res.get("id","") == json_id and exp_res.get("experiment_titel","")== exp_title and exp["benchmark_configuration"]["resources"]["repetition"] == repetition):
                 data.append(exp)
     return data
 
@@ -317,6 +318,9 @@ def generate_all_metrics(data,sort_by):
 
 
     }
+    print("Metricsss")
+    for metric in metrics:
+        print("\subsection{"+ metric + "} \label{"+ metric+ "}")
 
     phases_durations = get_phases_durations(sorted)
     t = 0
@@ -341,7 +345,6 @@ def generate_all_metrics(data,sort_by):
         metrics["avg_trial_initialization_time"].append(avg_trial_initialization_time(train_times,sorted["run"][exp_num]["start_time"]))
         metrics["metrics_collection_time"].append(metrics_collection_time(validation_times,sorted["run"][exp_num]["end_time"]))
         exptime = total_experiment_time(sorted["deploy"][exp_num]["start_time"], sorted["collect_benchmark_metrics"][exp_num]["end_time"])
-        t+=exptime +20
         
         metrics["total_experiment_time"].append(exptime)
 
@@ -513,7 +516,7 @@ print("\n")
 def plot_metrics_from_yaml(json_path ,latex_string,variabel = ""):
     
 
-    with open(f"{json_path}","r") as f:
+    with open(f"{json_path}.json","r") as f:
          exp_json =  json.load(f)
 
     exp_array = exp_json["experiments"]
@@ -534,7 +537,7 @@ def plot_metrics_from_yaml(json_path ,latex_string,variabel = ""):
     # x = katib[sort_by]
     # x2 = polyaxon[sort_by]
 
-    plots_folder = f"Runs_{json_id}"
+    plots_folder = f"{json_path}"
     try:
         os.makedirs(plots_folder)
     except OSError:
@@ -542,8 +545,13 @@ def plot_metrics_from_yaml(json_path ,latex_string,variabel = ""):
     
     for exp in exp_array:
         variabels = exp["values"]
+        if(exp["experiment_titel"] == "clean_up"):
+            print("clean")
+        
+        elif(exp["experiment_titel"] == "deploy"):
+            print("deploy")
 
-        if(exp["generatePlots"] == "True"):
+        elif(exp["generatePlots"] ):
             print(exp["experiment_titel"])
             exp_titel = exp["experiment_titel"]
             sort_by =  exp["variabel"]
@@ -552,6 +560,7 @@ def plot_metrics_from_yaml(json_path ,latex_string,variabel = ""):
             polyaxon_exp_reps = []
 
             #geting metrics from each repetition         
+            # for rep in [1]:
             for rep in range(1,repetitions + 1):
                 katib_exp_data = load_data("../katib_k8s/benchmark__KatibBenchmark",json_id,exp_titel,rep)
                 polyaxon_exp_data = load_data("../polyaxon_k8s/benchmark__PolyaxonBenchmark",json_id,exp_titel,rep)
@@ -564,8 +573,9 @@ def plot_metrics_from_yaml(json_path ,latex_string,variabel = ""):
             
             katib = {}
             katib_sorted = {}
-        
+           
             #everaging the experiment
+            metrics_to_plot = exp_json["metrics_to_plot"][exp["experiment_titel"]]
             for metric in metrics_to_plot:
                 katib_sorted[metric]=[]
                 katib[metric] = []
@@ -585,55 +595,89 @@ def plot_metrics_from_yaml(json_path ,latex_string,variabel = ""):
 
 
 
-                    print(metric,var,arr_katib)
+                    print(metric,var,arr_katib,k)
 
-
+            print("xd dziala")
 
 
             for metric in metrics_to_plot:
+                for plot_num , plot in enumerate(metrics_to_plot[metric]):
+                  
                 
 
-                fig, ax = plt.subplots()
-           
-                ax.plot(x,katib[metric],"r", marker="o")
+                    fig, ax = plt.subplots()
             
-                ax.plot(x,polyaxon[metric],"b",marker="o")
-            
-                ax.set_xlabel(sort_by)
-                ax.set_ylabel(metrics_to_plot[metric]["y-label"])
-                ax.set_title(metrics_to_plot[metric]["title"])
-                ax.grid()
                 
-                ax.legend(["Katib","Polyaxon"])
-                if(metrics_to_plot[metric].get("y_ticks","")):
-                    print("in thath what she said")
-                    ax.set_yticks = metrics_to_plot[metric]["y_ticks"]
                 
-                exp_folder = f"{plots_folder}/{exp_titel}"
-                
-                try: 
-                    os.mkdir(exp_folder)
-                except OSError:
-                    print (" Creation of the directory %s failed" % plots_folder)
-                fig.savefig(f"{exp_folder}/{limitation}{sort_by}-{metric}.png")
+                    ax.set_xlabel(sort_by)
+                    ax.set_ylabel(plot["y-label"])
+                    ax.set_title(plot["title"])
 
-                latex_string+= "\subsection{" + metrics_to_plot[metric]["title"] + "}\label{plot:" + f"{limitation}{sort_by}-{metric}" + "}\n" 
-                latex_string+= "Some text\n" 
-                latex_string+= "\n" 
-                latex_string+= "\n" 
-                latex_string+= "\\begin{figure}[h]\n" 
-                latex_string+= "    \centering\n" 
-                latex_string+= "    \includegraphics[width=1\\textwidth]{img/plots/" + f"{limitation}{sort_by}-{metric}.png"+ "}\n" 
-                latex_string+= "    \caption{Tittel decription}\n" 
-                latex_string+= "    \label{fig:mesh1}\n" 
-                latex_string+= "\end{figure}\n" 
-                latex_string+= "\\newpage\n" 
-                latex_string+= "\n" 
-                latex_string+= "\n" 
+                    x_lim = plot.get("x_lim","")
+                    if(x_lim):
+                        plt.xlim(**x_lim)
+
+                    y_lim = plot.get("y_lim","")
+                    if(y_lim):
+                        plt.ylim(**y_lim)
+
+
+                    ax.plot(x,katib[metric],"r", marker="o")
+                
+                    ax.plot(x,polyaxon[metric],"b",marker="o")
+                    refrence = plot.get("refrence","")
+                    refrence_titel = plot.get("refrence_title","")
+                    refrence_marker = plot.get("refrence_marker",",")
+                    if(refrence):
+                        ax.plot(x,refrence,"g",marker=refrence_marker)
+                        ax.legend(["Katib","Polyaxon",refrence_titel])
+                    else:
+                        ax.legend(["Katib","Polyaxon"])
+
+                    
+                    y_ticks = plot.get("y_ticks","")
+                    if(y_ticks):
+                        plt.yticks(y_ticks,y_ticks)
+                    
+                    x_tickts = plot.get("x_ticks",variabels)
+                    if(x_tickts):
+                        plt.xticks(x_tickts,x_tickts)
+                    
+                                    
+                    # variabels    = list(range(0,22,1))
+                    
+                
+                    ax.grid()
+                    
+                    print(variabels)
+
+                    exp_folder = f"{plots_folder}/{exp_titel}"
+                    
+                    try: 
+                        os.mkdir(exp_folder)
+                    except OSError:
+                        print (" Creation of the directory %s failed" % plots_folder)
+                    fig.savefig(f"{exp_folder}/{limitation}{sort_by}-{metric}{plot_num}.png")
+
+                    latex_string+= "\subsection{" + plot["title"] + "}\label{plot:" + f"{limitation}{sort_by}-{metric}" + "}\n" 
+                    latex_string+= "Some text\n" 
+                    latex_string+= "\n" 
+                    latex_string+= "\n" 
+                    latex_string+= "\\begin{figure}[h]\n" 
+                    latex_string+= "    \centering\n" 
+                    latex_string+= "    \includegraphics[width=1\\textwidth]{img/plots/" + f"{limitation}{sort_by}-{metric}.png"+ "}\n" 
+                    latex_string+= "    \caption{Tittel decription}\n" 
+                    latex_string+= "    \label{fig:mesh1}\n" 
+                    latex_string+= "\end{figure}\n" 
+                    latex_string+= "\\newpage\n" 
+                    latex_string+= "\n" 
+                    latex_string+= "\n" 
  
     return latex_string
         #plt.show()
-plot_metrics_from_yaml("experiments_1.json","")
+plot_metrics_from_yaml("5_resources_1000","")
+plot_metrics_from_yaml("4_resources_500","")
+plot_metrics_from_yaml("1_tuning","")
 
 
 latex_string= "\\chapter{Plots}\n"
