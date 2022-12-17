@@ -57,7 +57,7 @@ class PolyaxonBenchmark(Benchmark):
 
         self.clean_up  = self.resources.get("cleanUp",False)
         self.create_clean_image = self.resources.get("createCleanImage",True) 
-        self.metrics_ip = resources.get("metricsIP")
+        self.metrics_ip = resources.get("metricsIP",urlopen("https://checkip.amazonaws.com").read().decode("utf-8").strip())
         self.trial_tag = f'{resources.get("dockerImageTag", "mnist_task")}_polyaxon'
         self.study_name = resources.get("studyName",f'polyaxon-study-{random.randint(0, 100)}')
         self.workerCpu=resources.get("workerCpu",2)

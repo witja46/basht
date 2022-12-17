@@ -9,6 +9,43 @@ from experiments.polyaxon_k8s.polyaxon_benchmark import PolyaxonBenchmark
 from ml_benchmark.benchmark_runner import BenchmarkRunner
 from urllib.request import urlopen
 
+
+
+def run_experiment(rep,exp,var,runs_id,pause_between,framework_name):
+    resources = None
+
+    logging.info(f"Waiting {pause_between} sec before starting {exp['latexTitle']} on {framework_name}")
+    sleep(pause_between)
+
+    logging.info(f'{framework_name} Starting rep {rep} of  {exp["latexTitle"]} with {exp["variabel"]} of {var}  ')
+    try:
+        resources = exp.copy()
+        resources[exp["variabel"]] = var
+        resources["id"] = runs_id
+        resources["studyName"] = f'{exp["experiment_titel"]}-rep-{rep}-{exp["variabel"]}-{var}-{framework_name}-{runs_id}'.lower()
+        resources["repetition"] = rep
+        
+        if(framework_name == "Katib"):
+            runner = BenchmarkRunner(benchmark_cls=KatibBenchmark, resources=resources)
+            runner.run()
+        elif(framework_name == "Polyaxon"):
+            runner = BenchmarkRunner(benchmark_cls=PolyaxonBenchmark, resources=resources)
+            runner.run()
+        else:
+            raise Exception(f'{framework_name} must be equel to eather "Katib" or "Polyaxon" ')
+        runner = None
+        logging.info(f"Waiting  {pause_between} sec before starting {exp['latexTitle']}")
+        sleep(pause_between)
+    except Exception as e:
+        logging.warning(f'Failed Run  rep {rep} of  {exp["experiment_titel"]} with {exp["variabel"]} of {var}  ')
+
+
+
+
+
+
+
+
 if __name__ == "__main__":
     metricsIP = urlopen("https://checkip.amazonaws.com").read().decode("utf-8").strip()
     logging.basicConfig(format='%(asctime)s Katib Benchmark %(levelname)s: %(message)s',level=logging.INFO)
@@ -74,7 +111,110 @@ if __name__ == "__main__":
     ]
 
 
-        # {   "experiment_titel":"resources",
+      
+        
+        
+        
+     
+    parser = ArgumentParser()
+    parser.add_argument("-f", "--file", dest="json_path",
+                        help="specify the experiments description json", metavar="FILE")
+    args = parser.parse_args()
+    
+    json_path =  args.json_path
+    with open(f"{json_path}","r") as f:
+         exp_json =  json.load(f)
+
+
+    experiments = exp_json["experiments"]
+    if(exp_json["clean_and_deploy"]):
+        experiments =  clean_and_deploy + experiments 
+    print(experiments)
+    
+    
+    repetitions = exp_json["repetitions"]
+
+    runs_id = exp_json["json_id"]
+    run_on_framworks = exp_json["run_on_framworks"]
+    pause_between= exp_json.get("pause_between",0)
+
+    limitation = ""
+    
+
+    for rep in range(1,repetitions+1):
+            # katib_bench = KatibBenchmark(resources={})
+            # polyaxon_bench = PolyaxonBenchmark(resources={})
+            # katib_bench.undeploy()
+            # polyaxon_bench.undeploy()
+
+
+
+            for exp in experiments:
+                
+                
+                
+                for var in exp["values"]:
+                    for framework_name in run_on_framworks:
+                        run_experiment(rep,exp,var,runs_id,pause_between,framework_name)
+                    
+                    
+                    
+                    
+                    # resources = None
+
+                    # logging.info(f"Waiting 10 sec before starting {exp['latexTitle']}")
+                    # sleep(10)
+
+                    # logging.info(f'Katib Starting rep {rep} of  {exp["latexTitle"]} with {exp["variabel"]} of {var}  ')
+                    # try:
+                    #     resources = exp.copy()
+                    #     resources[exp["variabel"]] = var
+                    #     resources["id"] = runs_id
+                    #     resources["studyName"] = f'{exp["experiment_titel"]}-rep-{rep}-{exp["variabel"]}-{var}-katib-{runs_id}'.lower()
+                    #     resources["repetition"] = rep
+
+                    #     runner = BenchmarkRunner(benchmark_cls=KatibBenchmark, resources=resources)
+                    #     runner.run()
+
+                    #     runner = None
+                    # except Exception as e:
+                    #     logging.warning(f'Failed Run  rep {rep} of  {exp["experiment_titel"]} with {exp["variabel"]} of {var}  ')
+
+                    # logging.info(f"Waiting 10 sec before starting {exp['latexTitle']} on polyaxon")
+                    # sleep(10)
+                    # logging.info(f'Polyaxon Starting rep {rep} of  {exp["latexTitle"]} with {exp["variabel"]} of {var}  ')
+                    # try:
+                    #     resources = None
+                    #     resources = exp.copy()
+                    #     resources["id"] = runs_id
+                    #     resources[exp["variabel"]] = var
+                    #     resources["studyName"] = f'{exp["experiment_titel"]}-rep-{rep}-{exp["variabel"]}-{var}-polyaxon-{runs_id}'.lower()
+                    #     resources["repetition"] = rep
+
+
+                    #     runner = BenchmarkRunner(benchmark_cls=PolyaxonBenchmark, resources=resources)
+                    #     runner.run()
+
+
+                    #     runner = None
+
+                    # except Exception as e:
+                    #     logging.warning(f'Failed Run  rep {rep} of  {exp["experiment_titel"]} with {exp["variabel"]} of {var}  ')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  # {   "experiment_titel":"resources",
         #     "variabel":"limitCpuTotal",
             
         #  "values":[4,5,6,7,8,9,10,12,14,16,18,20,22,25,30],
@@ -318,81 +458,4 @@ if __name__ == "__main__":
         #     "limitCpuTotal":20,
         #     "limitCpuWorker":"",
                        
-        # }
-        
-        
-        
-     
-    parser = ArgumentParser()
-    parser.add_argument("-f", "--file", dest="json_path",
-                        help="specify the experiments description json", metavar="FILE")
-    args = parser.parse_args()
-    
-    json_path =  args.json_path
-    with open(f"{json_path}","r") as f:
-         exp_json =  json.load(f)
-
-
-    experiments = exp_json["experiments"]
-    if(exp_json["clean_and_deploy"]):
-        experiments =  clean_and_deploy + experiments 
-    print(experiments)
-    
-    
-    repetitions = exp_json["repetitions"]
-
-    runs_id = exp_json["json_id"]
-
-    limitation = ""
-
-    for rep in range(1,repetitions):
-            # katib_bench = KatibBenchmark(resources={})
-            # polyaxon_bench = PolyaxonBenchmark(resources={})
-            # katib_bench.undeploy()
-            # polyaxon_bench.undeploy()
-
-            for exp in experiments:
-                
-                
-                print(exp)
-                for var in exp["values"]:
-                    resources = None
-
-                    logging.info(f"Waiting 10 sec before starting {exp['latexTitle']}")
-                    sleep(10)
-
-                    logging.info(f'Katib Starting rep {rep} of  {exp["latexTitle"]} with {exp["variabel"]} of {var}  ')
-                    try:
-                        resources = exp.copy()
-                        resources[exp["variabel"]] = var
-                        resources["id"] = runs_id
-                        resources["studyName"] = f'{exp["experiment_titel"]}-rep-{rep}-{exp["variabel"]}-{var}-katib-{runs_id}'.lower()
-                        resources["repetition"] = rep
-
-                        runner = BenchmarkRunner(benchmark_cls=KatibBenchmark, resources=resources)
-                        runner.run()
-
-                        runner = None
-                    except Exception as e:
-                        logging.warning(f'Failed Run  rep {rep} of  {exp["experiment_titel"]} with {exp["variabel"]} of {var}  ')
-
-                    logging.info(f"Waiting 10 sec before starting {exp['latexTitle']} on polyaxon")
-                    sleep(10)
-                    logging.info(f'Polyaxon Starting rep {rep} of  {exp["latexTitle"]} with {exp["variabel"]} of {var}  ')
-                    try:
-                        resources = None
-                        resources = exp.copy()
-                        resources["id"] = runs_id
-                        resources[exp["variabel"]] = var
-                        resources["studyName"] = f'{exp["experiment_titel"]}-rep-{rep}-{exp["variabel"]}-{var}-polyaxon-{runs_id}'.lower()
-                        resources["repetition"] = rep
-
-
-                        runner = BenchmarkRunner(benchmark_cls=PolyaxonBenchmark, resources=resources)
-                        runner.run()
-
-
-                        runner = None
-
-                    except Exception as e:
-                        logging.warning(f'Failed Run  rep {rep} of  {exp["experiment_titel"]} with {exp["variabel"]} of {var}  ')
+        # 

@@ -28,7 +28,7 @@ class KatibBenchmark(Benchmark):
         self.namespace="kubeflow"
         self.plural="experiments"
         self.experiment_file_name = "grid.yaml"
-        self.metrics_ip = resources.get("metricsIP")
+        self.metrics_ip = resources.get("metricsIP",urlopen("https://checkip.amazonaws.com").read().decode("utf-8").strip())
         self.generate_new_docker_image = resources.get("generateNewDockerImage",False)     
         self.clean_up = self.resources.get("cleanUp",False)
         self.trial_tag = f'{resources.get("dockerImageTag","mnist_task")}_katib'

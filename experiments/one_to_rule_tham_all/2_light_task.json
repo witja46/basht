@@ -1,12 +1,14 @@
 {
   "repetitions": 1,
   "json_id": 3,
-  "clean_and_deploy": true,
+  "clean_and_deploy": false,
+  "run_on_framworks": ["Katib", "Polyaxon"],
+  "pause_between": 0,
   "experiments": [
     {
       "experiment_titel": "tuning",
       "variabel": "jobsCount",
-      "values": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 14, 16, 18, 20, 25, 30],
+      "values": [1, 2],
 
       "loggingLevel": "logging.INFO",
       "imagePullPolicy": "IfNotPresent",
@@ -14,15 +16,14 @@
       "dockerImageTag": "light_task",
 
       "limitResources": true,
-      "limitCpuTotal": "200",
-      "limitCpuWorker": "50m",
+      "limitCpuTotal": "500",
+      "limitCpuWorker": "5m",
       "jobsCount": "",
 
       "cleanUp": false,
       "undeploy": false,
       "deploy": false,
 
-      "prometheus_url": "http://130.149.158.143:30041",
       "generatePlots": true,
       "latexTitle": "Tuning scalability experiment with the light tasks",
       "latexDescritption": "Tuning scalability experimetns with light task  conducted on Variabels: Trials number [1,2,3,4,5,6,7,8,9,10,12,14,16,18,20,25,30,40,50,100,150,200]"
