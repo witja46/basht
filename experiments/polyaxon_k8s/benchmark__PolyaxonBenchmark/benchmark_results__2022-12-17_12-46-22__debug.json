@@ -1,0 +1,1476 @@
+{
+    "benchmark_metrics": {
+        "latency": [
+            {
+                "metric_id": "__id_736ee450-58f5-4fce-85c3-c82e9dad6e95__pid_2593317__hostname_BARE_ise-students__function-name_deploy__objHash_8743811842214",
+                "function_name": "deploy",
+                "start_time": "2022-12-17 12:46:22.387178",
+                "end_time": "2022-12-17 12:46:25.760298",
+                "duration_sec": 3.37312
+            },
+            {
+                "metric_id": "__id_4af2fc3d-1776-4429-9939-50f0ecc9fdd2__pid_2593317__hostname_BARE_ise-students__function-name_setup__objHash_8743811842214",
+                "function_name": "setup",
+                "start_time": "2022-12-17 12:46:25.800528",
+                "end_time": "2022-12-17 12:46:28.182297",
+                "duration_sec": 2.381769
+            },
+            {
+                "metric_id": "__id_3229fa92-c306-45da-8f81-86f068421302__pid_1__hostname_BARE_plx-operation-f0d50ad3c0d34735807a1f5e6509bc38--1-67bg6__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:46:40.041257",
+                "end_time": "2022-12-17 11:47:10.078766",
+                "duration_sec": 30.037509
+            },
+            {
+                "metric_id": "__id_7e3fbf8d-dcd4-4927-b65f-182abe6263bb__pid_1__hostname_BARE_plx-operation-b593bc0a000342639b68eaaf00f4ab77--1-pj7p2__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:46:41.231457",
+                "end_time": "2022-12-17 11:47:11.274752",
+                "duration_sec": 30.043295
+            },
+            {
+                "metric_id": "__id_3647b105-02bf-40f1-84ba-0f2045ba4a70__pid_1__hostname_BARE_plx-operation-2613ee1f4332404a8762aa0190edb597--1-8tjjs__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:46:41.348906",
+                "end_time": "2022-12-17 11:47:11.382638",
+                "duration_sec": 30.033732
+            },
+            {
+                "metric_id": "__id_7d738b04-d9f6-49fe-a3e4-0f8293b9eaea__pid_1__hostname_BARE_plx-operation-b90d98d7858b4321a9efc9e615a3de83--1-5t6cd__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:46:41.330801",
+                "end_time": "2022-12-17 11:47:11.377633",
+                "duration_sec": 30.046832
+            },
+            {
+                "metric_id": "__id_eb0e80c3-c881-42a1-82d9-5cc100496770__pid_1__hostname_BARE_plx-operation-f4a081fc399342a091b6502e4235c24d--1-rpbrz__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:46:42.729315",
+                "end_time": "2022-12-17 11:47:12.769087",
+                "duration_sec": 30.039772
+            },
+            {
+                "metric_id": "__id_5b6fecee-caa3-4442-b8b0-05959ffb9c4e__pid_1__hostname_BARE_plx-operation-af353d1bac83451683e6a24b8750b7f5--1-wj4mc__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:46:42.938776",
+                "end_time": "2022-12-17 11:47:12.979479",
+                "duration_sec": 30.040703
+            },
+            {
+                "metric_id": "__id_7528f0c1-c970-462c-8e73-db4e8ed2ee46__pid_1__hostname_BARE_plx-operation-bb786a9d59ad4392a8f22d3074dcad6a--1-ktlj7__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:46:43.036798",
+                "end_time": "2022-12-17 11:47:13.074953",
+                "duration_sec": 30.038155
+            },
+            {
+                "metric_id": "__id_867b7759-2ae3-4396-aa51-715ceaf234f8__pid_1__hostname_BARE_plx-operation-e2e6005086e843308a5eb3e60e96c815--1-9kcmg__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:46:43.729660",
+                "end_time": "2022-12-17 11:47:13.764668",
+                "duration_sec": 30.035008
+            },
+            {
+                "metric_id": "__id_bd83e601-70cd-475e-9e33-7c41b7c23f12__pid_1__hostname_BARE_plx-operation-43b49670b83c489da921375ef59a627c--1-swcr2__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:46:43.874168",
+                "end_time": "2022-12-17 11:47:13.909266",
+                "duration_sec": 30.035098
+            },
+            {
+                "metric_id": "__id_206407c3-e9f4-409b-b567-ec9fe6d4c484__pid_1__hostname_BARE_plx-operation-3faf0e22046a4d3b978b16e0e8a63d87--1-2tml8__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:46:44.006655",
+                "end_time": "2022-12-17 11:47:14.052722",
+                "duration_sec": 30.046067
+            },
+            {
+                "metric_id": "__id_ba43e07b-70ba-4c4f-9f5b-88130c266a07__pid_1__hostname_BARE_plx-operation-b429d71963634a0c8af294df2165fb31--1-v4x48__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:46:44.630797",
+                "end_time": "2022-12-17 11:47:14.670819",
+                "duration_sec": 30.040022
+            },
+            {
+                "metric_id": "__id_c875b76f-4efc-4191-bf00-4f514b85135a__pid_1__hostname_BARE_plx-operation-cd6a9dc79247412d9f2468b74089f1e5--1-4nmgn__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:46:44.879573",
+                "end_time": "2022-12-17 11:47:14.909508",
+                "duration_sec": 30.029935
+            },
+            {
+                "metric_id": "__id_68d85a7e-2fa5-4ed5-92b9-0de117edc568__pid_1__hostname_BARE_plx-operation-56ab0ddf7f004fa39519a56642c187f7--1-lf7dm__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:46:45.367851",
+                "end_time": "2022-12-17 11:47:15.408151",
+                "duration_sec": 30.0403
+            },
+            {
+                "metric_id": "__id_3ff2b04f-72ba-439d-a552-6adf07f30d04__pid_1__hostname_BARE_plx-operation-1ce2bbb101284649ae828f1c2a872aa3--1-h97t4__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:46:45.311040",
+                "end_time": "2022-12-17 11:47:15.360533",
+                "duration_sec": 30.049493
+            },
+            {
+                "metric_id": "__id_ccd09196-ba18-4215-90b6-4197a50ec24e__pid_1__hostname_BARE_plx-operation-6fb06c3c49ea4f2babe5a0238fb6af44--1-x29rh__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:46:46.017931",
+                "end_time": "2022-12-17 11:47:16.059212",
+                "duration_sec": 30.041281
+            },
+            {
+                "metric_id": "__id_5bc9bece-f099-4d09-a866-7ce56f2817da__pid_1__hostname_BARE_plx-operation-31f8eb25828b4d0dbeda6ef29bc396d1--1-m58jk__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:46:46.534284",
+                "end_time": "2022-12-17 11:47:16.576125",
+                "duration_sec": 30.041841
+            },
+            {
+                "metric_id": "__id_7c4ac1b2-53ba-429a-88cf-58543faa4f2c__pid_1__hostname_BARE_plx-operation-533b076720834b71af80f664e60f1db5--1-h9m9j__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:46:46.662088",
+                "end_time": "2022-12-17 11:47:16.698145",
+                "duration_sec": 30.036057
+            },
+            {
+                "metric_id": "__id_247a2e7d-8313-4e68-8931-ba70e22505e2__pid_1__hostname_BARE_plx-operation-4781fbdbcede432999d2c155b2aaa0ed--1-lkwbv__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:46:46.810748",
+                "end_time": "2022-12-17 11:47:16.857016",
+                "duration_sec": 30.046268
+            },
+            {
+                "metric_id": "__id_4f83cac3-66e1-4500-b613-608c4805ec71__pid_1__hostname_BARE_plx-operation-3519565586474b38a9faec9c92a6a58b--1-s99n2__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:46:47.188520",
+                "end_time": "2022-12-17 11:47:17.224382",
+                "duration_sec": 30.035862
+            },
+            {
+                "metric_id": "__id_aa8046b3-5132-4fa8-ac43-1494b54999f0__pid_1__hostname_BARE_plx-operation-eb927a27d73648a7b49c296a47fe0587--1-scgcz__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:46:47.542735",
+                "end_time": "2022-12-17 11:47:17.576249",
+                "duration_sec": 30.033514
+            },
+            {
+                "metric_id": "__id_b6b56995-d7dd-4972-b069-df82061a0644__pid_1__hostname_BARE_plx-operation-1e01739eb33b4672afdd88395dc58f05--1-xgdkg__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:46:48.245250",
+                "end_time": "2022-12-17 11:47:18.284291",
+                "duration_sec": 30.039041
+            },
+            {
+                "metric_id": "__id_993adbc7-2851-472f-9096-f3af6e826c5d__pid_1__hostname_BARE_plx-operation-7db059ccf5a844ce98671d17a2d64421--1-gzv6r__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:46:48.366171",
+                "end_time": "2022-12-17 11:47:18.403356",
+                "duration_sec": 30.037185
+            },
+            {
+                "metric_id": "__id_18aa828a-6168-4837-930c-37224b0033d3__pid_1__hostname_BARE_plx-operation-306dfb7cab4a4c6d8e9e373013709905--1-cjr9d__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:46:48.675082",
+                "end_time": "2022-12-17 11:47:18.710037",
+                "duration_sec": 30.034955
+            },
+            {
+                "metric_id": "__id_2fef6e43-5239-450f-8dc6-fed11a0bb696__pid_1__hostname_BARE_plx-operation-00b9216bdd6048db8b8fc2002bde0e78--1-ft24b__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:46:49.705973",
+                "end_time": "2022-12-17 11:47:19.756720",
+                "duration_sec": 30.050747
+            },
+            {
+                "metric_id": "__id_75ea0bc8-2901-4225-926a-261c0b77196e__pid_1__hostname_BARE_plx-operation-7d8b889eef8042bb8461e5a7da9ce754--1-kgvg6__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:46:50.268334",
+                "end_time": "2022-12-17 11:47:20.305217",
+                "duration_sec": 30.036883
+            },
+            {
+                "metric_id": "__id_6f7d1b0f-90de-4b9e-8203-ac79199f4ac2__pid_1__hostname_BARE_plx-operation-f0d50ad3c0d34735807a1f5e6509bc38--1-67bg6__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:10.248684",
+                "end_time": "2022-12-17 11:47:20.932362",
+                "duration_sec": 10.683678
+            },
+            {
+                "metric_id": "__id_8adc2ae7-c2c0-4276-99e8-650ba2cdbe11__pid_1__hostname_BARE_plx-operation-3d8faad372cb489b8b91432e9e8d359e--1-j486s__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:46:51.162360",
+                "end_time": "2022-12-17 11:47:21.214250",
+                "duration_sec": 30.05189
+            },
+            {
+                "metric_id": "__id_0c93b4ac-5913-4a18-bc89-c7f3a2731edf__pid_1__hostname_BARE_plx-operation-ff7b22ce057d4a2d9d5c87995261ae17--1-vbg8x__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:46:51.635847",
+                "end_time": "2022-12-17 11:47:21.680411",
+                "duration_sec": 30.044564
+            },
+            {
+                "metric_id": "__id_5f6bc528-9727-4bf7-bf9c-ff31fe17d710__pid_1__hostname_BARE_plx-operation-c2059b05431b4de7afdcf4517e5cc7de--1-h897k__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:46:51.908457",
+                "end_time": "2022-12-17 11:47:21.957333",
+                "duration_sec": 30.048876
+            },
+            {
+                "metric_id": "__id_447e8d51-ef9c-4bfd-b6c5-9dee1da71ea8__pid_1__hostname_BARE_plx-operation-1c6202718fa1446382bc1ed5f2675b7f--1-xpv8x__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:46:51.963200",
+                "end_time": "2022-12-17 11:47:22.001059",
+                "duration_sec": 30.037859
+            },
+            {
+                "metric_id": "__id_6f812b71-2306-4b59-b9a0-9d5f603b720e__pid_1__hostname_BARE_plx-operation-b593bc0a000342639b68eaaf00f4ab77--1-pj7p2__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:11.447843",
+                "end_time": "2022-12-17 11:47:22.243664",
+                "duration_sec": 10.795821
+            },
+            {
+                "metric_id": "__id_a4085f00-c67d-4206-a4b1-8c10d80d132c__pid_1__hostname_BARE_plx-operation-2613ee1f4332404a8762aa0190edb597--1-8tjjs__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:11.636760",
+                "end_time": "2022-12-17 11:47:22.336791",
+                "duration_sec": 10.700031
+            },
+            {
+                "metric_id": "__id_88e3d302-ce8c-4e3b-8679-55c78f2ee9d0__pid_1__hostname_BARE_plx-operation-b90d98d7858b4321a9efc9e615a3de83--1-5t6cd__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:11.636384",
+                "end_time": "2022-12-17 11:47:22.335908",
+                "duration_sec": 10.699524
+            },
+            {
+                "metric_id": "__id_cef81998-f1ad-464d-8fac-260b99146d69__pid_1__hostname_BARE_plx-operation-998914fd287746cab82778e0c6c50cae--1-tl4jd__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:46:52.634967",
+                "end_time": "2022-12-17 11:47:22.677289",
+                "duration_sec": 30.042322
+            },
+            {
+                "metric_id": "__id_9d4a359c-ba4b-45c8-8c4d-37cfdda48d81__pid_1__hostname_BARE_plx-operation-fd918a10094f4435a8fc253b7ae70cac--1-hpf4r__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:46:53.064061",
+                "end_time": "2022-12-17 11:47:23.098135",
+                "duration_sec": 30.034074
+            },
+            {
+                "metric_id": "__id_623d95a1-8901-43d0-bca8-b8a3f7a32662__pid_1__hostname_BARE_plx-operation-5f832ff3c06b4abcace7bf15e878cf0c--1-x7d8v__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:46:53.185287",
+                "end_time": "2022-12-17 11:47:23.220909",
+                "duration_sec": 30.035622
+            },
+            {
+                "metric_id": "__id_6e638530-a570-408b-8d12-23064b657703__pid_1__hostname_BARE_plx-operation-3d93451fb0ab4c24bfd16fc679b83d67--1-sbtvv__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:46:53.280472",
+                "end_time": "2022-12-17 11:47:23.317668",
+                "duration_sec": 30.037196
+            },
+            {
+                "metric_id": "__id_e53ef3cc-10a0-4e00-9889-67ea57d2ca3e__pid_1__hostname_BARE_plx-operation-746840868cc746389b95a9c961879a9e--1-6wxrm__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:46:53.318560",
+                "end_time": "2022-12-17 11:47:23.354966",
+                "duration_sec": 30.036406
+            },
+            {
+                "metric_id": "__id_d0d42238-9e4d-46a7-9145-adc622b1debd__pid_1__hostname_BARE_plx-operation-ab92632eb784436aa784b6bc55112613--1-mk8v7__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:46:53.572221",
+                "end_time": "2022-12-17 11:47:23.609781",
+                "duration_sec": 30.03756
+            },
+            {
+                "metric_id": "__id_802cc358-4554-43ac-9d1d-0cbb2a91272f__pid_1__hostname_BARE_plx-operation-f4a081fc399342a091b6502e4235c24d--1-rpbrz__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:12.944725",
+                "end_time": "2022-12-17 11:47:23.639144",
+                "duration_sec": 10.694419
+            },
+            {
+                "metric_id": "__id_206af667-3947-4ec1-a2dd-785f3efef486__pid_1__hostname_BARE_plx-operation-c43b170ec39649eb9cef07e7114369b9--1-9fnwg__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:46:53.667832",
+                "end_time": "2022-12-17 11:47:23.707864",
+                "duration_sec": 30.040032
+            },
+            {
+                "metric_id": "__id_3d859c13-b515-4ac3-a309-30faa11f4a0a__pid_1__hostname_BARE_plx-operation-e2e6005086e843308a5eb3e60e96c815--1-9kcmg__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:14.106871",
+                "end_time": "2022-12-17 11:47:24.121035",
+                "duration_sec": 10.014164
+            },
+            {
+                "metric_id": "__id_e6546fbc-775c-42ff-89cf-978283a800a1__pid_1__hostname_BARE_plx-operation-af353d1bac83451683e6a24b8750b7f5--1-wj4mc__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:13.233609",
+                "end_time": "2022-12-17 11:47:24.031765",
+                "duration_sec": 10.798156
+            },
+            {
+                "metric_id": "__id_f01448ce-45bd-4b21-96fe-1015928123a6__pid_1__hostname_BARE_plx-operation-43b49670b83c489da921375ef59a627c--1-swcr2__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:14.177238",
+                "end_time": "2022-12-17 11:47:24.189580",
+                "duration_sec": 10.012342
+            },
+            {
+                "metric_id": "__id_0c49d50c-bc5d-4a6d-9892-9d0e8a12c366__pid_1__hostname_BARE_plx-operation-bb786a9d59ad4392a8f22d3074dcad6a--1-ktlj7__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:13.334070",
+                "end_time": "2022-12-17 11:47:24.129909",
+                "duration_sec": 10.795839
+            },
+            {
+                "metric_id": "__id_352e0b66-f221-4b8e-9190-580e71bf682d__pid_1__hostname_BARE_plx-operation-6d2aee9310894fb4bbd0847d60b369bf--1-p8bq5__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:46:54.171830",
+                "end_time": "2022-12-17 11:47:24.209184",
+                "duration_sec": 30.037354
+            },
+            {
+                "metric_id": "__id_35776b72-ff3d-4b41-b4e5-9dae54effbf4__pid_1__hostname_BARE_plx-operation-3faf0e22046a4d3b978b16e0e8a63d87--1-2tml8__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:14.324826",
+                "end_time": "2022-12-17 11:47:24.338038",
+                "duration_sec": 10.013212
+            },
+            {
+                "metric_id": "__id_31f40e77-a8f4-4fce-aade-1722cc357246__pid_1__hostname_BARE_plx-operation-98e72312867c454789d3e5870897d676--1-9g75c__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:46:54.309909",
+                "end_time": "2022-12-17 11:47:24.351049",
+                "duration_sec": 30.04114
+            },
+            {
+                "metric_id": "__id_662a00b3-2f0b-4486-b1b6-e8725abf2402__pid_1__hostname_BARE_plx-operation-cd6a9dc79247412d9f2468b74089f1e5--1-4nmgn__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:15.084801",
+                "end_time": "2022-12-17 11:47:25.095252",
+                "duration_sec": 10.010451
+            },
+            {
+                "metric_id": "__id_3e62a825-730e-4f50-8a71-5e72884df693__pid_1__hostname_BARE_plx-operation-1282378c53b346d59678f4ce3babf7d2--1-bhfmq__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:46:54.874775",
+                "end_time": "2022-12-17 11:47:24.914310",
+                "duration_sec": 30.039535
+            },
+            {
+                "metric_id": "__id_24c3243f-fd3d-4b39-9527-43fc4c747e49__pid_1__hostname_BARE_plx-operation-56ab0ddf7f004fa39519a56642c187f7--1-lf7dm__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:15.586331",
+                "end_time": "2022-12-17 11:47:25.599212",
+                "duration_sec": 10.012881
+            },
+            {
+                "metric_id": "__id_24e53651-9809-4078-83ee-f60bcd83ac05__pid_1__hostname_BARE_plx-operation-b429d71963634a0c8af294df2165fb31--1-v4x48__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:14.858288",
+                "end_time": "2022-12-17 11:47:25.538988",
+                "duration_sec": 10.6807
+            },
+            {
+                "metric_id": "__id_702cf9f3-01f5-4af8-b5c7-bb5ceb6ee9bf__pid_1__hostname_BARE_plx-operation-1ce2bbb101284649ae828f1c2a872aa3--1-h97t4__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:15.717212",
+                "end_time": "2022-12-17 11:47:25.730280",
+                "duration_sec": 10.013068
+            },
+            {
+                "metric_id": "__id_f49ec74d-ce7e-4bd7-8c41-d10409165d80__pid_1__hostname_BARE_plx-operation-e68ebbc0d1a24465ab2cabf860ce6b28--1-rk67t__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:46:55.668222",
+                "end_time": "2022-12-17 11:47:25.704446",
+                "duration_sec": 30.036224
+            },
+            {
+                "metric_id": "__id_01791b2f-a709-46a6-987a-8b824930fa7e__pid_1__hostname_BARE_plx-operation-f1b4b5bcc7e64e0da49daf64a65a386e--1-fldlp__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:46:55.836565",
+                "end_time": "2022-12-17 11:47:25.877768",
+                "duration_sec": 30.041203
+            },
+            {
+                "metric_id": "__id_861bd0a9-335c-42e0-a5a1-f16d9e34099e__pid_1__hostname_BARE_plx-operation-6fb06c3c49ea4f2babe5a0238fb6af44--1-x29rh__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:16.314735",
+                "end_time": "2022-12-17 11:47:26.327394",
+                "duration_sec": 10.012659
+            },
+            {
+                "metric_id": "__id_717fc629-791e-4d54-8128-5c16635a5614__pid_1__hostname_BARE_plx-operation-abec8fbb904d4198b32a52a1f565624f--1-8n6fr__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:46:56.632227",
+                "end_time": "2022-12-17 11:47:26.675817",
+                "duration_sec": 30.04359
+            },
+            {
+                "metric_id": "__id_9f783929-b64d-4e2d-978c-630abca49a43__pid_1__hostname_BARE_plx-operation-49121ff786574bafb4b75f4e966844b8--1-vch8g__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:46:56.664628",
+                "end_time": "2022-12-17 11:47:26.701750",
+                "duration_sec": 30.037122
+            },
+            {
+                "metric_id": "__id_981f33eb-2e71-45b8-b438-e01598a8be75__pid_1__hostname_BARE_plx-operation-533b076720834b71af80f664e60f1db5--1-h9m9j__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:16.886638",
+                "end_time": "2022-12-17 11:47:26.899213",
+                "duration_sec": 10.012575
+            },
+            {
+                "metric_id": "__id_c10f938b-adab-4b0a-ab17-07f9714a970c__pid_1__hostname_BARE_plx-operation-71f18d85c3c648cda424602463e2d1a3--1-6hgfs__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:46:56.775159",
+                "end_time": "2022-12-17 11:47:26.818223",
+                "duration_sec": 30.043064
+            },
+            {
+                "metric_id": "__id_455521c4-01b5-4532-ab82-72f0c718f421__pid_1__hostname_BARE_plx-operation-4781fbdbcede432999d2c155b2aaa0ed--1-lkwbv__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:17.117089",
+                "end_time": "2022-12-17 11:47:27.130460",
+                "duration_sec": 10.013371
+            },
+            {
+                "metric_id": "__id_f8229860-7bc6-4c94-8f0e-893b4a13a6b5__pid_1__hostname_BARE_plx-operation-24b8c1ca25f74f80a57c7b7164383e69--1-pxclg__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:46:56.965432",
+                "end_time": "2022-12-17 11:47:27.010167",
+                "duration_sec": 30.044735
+            },
+            {
+                "metric_id": "__id_0438ec7a-3e4a-42f8-80f7-1a210019cbcf__pid_1__hostname_BARE_plx-operation-3519565586474b38a9faec9c92a6a58b--1-s99n2__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:17.385866",
+                "end_time": "2022-12-17 11:47:27.397912",
+                "duration_sec": 10.012046
+            },
+            {
+                "metric_id": "__id_23765e29-2ddf-4f99-a211-0a344b3a4647__pid_1__hostname_BARE_plx-operation-31f8eb25828b4d0dbeda6ef29bc396d1--1-m58jk__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:16.832918",
+                "end_time": "2022-12-17 11:47:27.543950",
+                "duration_sec": 10.711032
+            },
+            {
+                "metric_id": "__id_51c13540-0a5b-4298-bfbe-35876cc3aa7c__pid_1__hostname_BARE_plx-operation-a1bc7599733b41babf448b8f1d203b13--1-w87vp__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:46:58.074017",
+                "end_time": "2022-12-17 11:47:28.113053",
+                "duration_sec": 30.039036
+            },
+            {
+                "metric_id": "__id_419d1f2c-b2bc-4774-bb04-c3bfda124b10__pid_1__hostname_BARE_plx-operation-9c0bcc3f26e84a7ca5017082de602f11--1-778p4__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:46:58.370074",
+                "end_time": "2022-12-17 11:47:28.402064",
+                "duration_sec": 30.03199
+            },
+            {
+                "metric_id": "__id_ad61d0b5-cca5-462b-b84d-0cb559f717c5__pid_1__hostname_BARE_plx-operation-7db059ccf5a844ce98671d17a2d64421--1-gzv6r__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:18.585839",
+                "end_time": "2022-12-17 11:47:28.599116",
+                "duration_sec": 10.013277
+            },
+            {
+                "metric_id": "__id_de32e308-6b4f-4d9e-90ab-971523eb3c6f__pid_1__hostname_BARE_plx-operation-eb927a27d73648a7b49c296a47fe0587--1-scgcz__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:17.746664",
+                "end_time": "2022-12-17 11:47:28.437998",
+                "duration_sec": 10.691334
+            },
+            {
+                "metric_id": "__id_a30561c6-07f0-4d49-93db-3a103e002c48__pid_1__hostname_BARE_plx-operation-a6070b9453c341cda4497162da37d49d--1-wr5jx__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:46:58.473595",
+                "end_time": "2022-12-17 11:47:28.515156",
+                "duration_sec": 30.041561
+            },
+            {
+                "metric_id": "__id_79c33ba6-1530-4562-b1fd-386cbdeb5f74__pid_1__hostname_BARE_plx-operation-11d008d0bdc5435ab2c76a22f082ca20--1-bf4h5__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:46:58.523099",
+                "end_time": "2022-12-17 11:47:28.560494",
+                "duration_sec": 30.037395
+            },
+            {
+                "metric_id": "__id_2e338918-82d9-4279-90ab-84a6244d3079__pid_1__hostname_BARE_plx-operation-306dfb7cab4a4c6d8e9e373013709905--1-cjr9d__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:18.884438",
+                "end_time": "2022-12-17 11:47:28.896349",
+                "duration_sec": 10.011911
+            },
+            {
+                "metric_id": "__id_31c8bcfa-6cb0-49d1-ac68-26d411d5bb94__pid_1__hostname_BARE_plx-operation-524112ca94ad46e7a3dcc92b1caf1525--1-v2t92__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:46:58.715089",
+                "end_time": "2022-12-17 11:47:28.754054",
+                "duration_sec": 30.038965
+            },
+            {
+                "metric_id": "__id_af70a80a-dcb7-4e7d-addc-88cc5d4a4606__pid_1__hostname_BARE_plx-operation-0c4d7b31cfef4f16afecae56e7eaaa85--1-57j5s__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:46:58.977293",
+                "end_time": "2022-12-17 11:47:29.008561",
+                "duration_sec": 30.031268
+            },
+            {
+                "metric_id": "__id_ed83ab52-4dde-478f-90f8-94f1b32dfc46__pid_1__hostname_BARE_plx-operation-01fa1a3dc95442189bb0621cbda5fb25--1-vt5h2__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:46:59.036682",
+                "end_time": "2022-12-17 11:47:29.074542",
+                "duration_sec": 30.03786
+            },
+            {
+                "metric_id": "__id_222cce4f-3847-494e-9df9-8669fbdc0cd7__pid_1__hostname_BARE_plx-operation-1e01739eb33b4672afdd88395dc58f05--1-xgdkg__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:18.440877",
+                "end_time": "2022-12-17 11:47:29.138742",
+                "duration_sec": 10.697865
+            },
+            {
+                "metric_id": "__id_bcbbc644-6d31-4b4f-b16a-65c29517649e__pid_1__hostname_BARE_plx-operation-00b9216bdd6048db8b8fc2002bde0e78--1-ft24b__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:20.029575",
+                "end_time": "2022-12-17 11:47:30.041757",
+                "duration_sec": 10.012182
+            },
+            {
+                "metric_id": "__id_569346be-304e-4433-9614-3cbf92625119__pid_1__hostname_BARE_plx-operation-e96f036b9d424428ad1e05e24cfb1e55--1-hbk2z__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:46:59.819053",
+                "end_time": "2022-12-17 11:47:29.859352",
+                "duration_sec": 30.040299
+            },
+            {
+                "metric_id": "__id_ffa8129c-c0aa-456d-aa20-b5d5f141d1e2__pid_1__hostname_BARE_plx-operation-2c49667ce87745ab94922fc4d9706721--1-f5hgn__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:46:59.978820",
+                "end_time": "2022-12-17 11:47:30.018219",
+                "duration_sec": 30.039399
+            },
+            {
+                "metric_id": "__id_9d7cf949-f274-4713-88f6-3a0cf38786dc__pid_1__hostname_BARE_plx-operation-7d8b889eef8042bb8461e5a7da9ce754--1-kgvg6__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:20.485361",
+                "end_time": "2022-12-17 11:47:30.496891",
+                "duration_sec": 10.01153
+            },
+            {
+                "metric_id": "__id_d2a31ffc-b66a-4055-9e27-0e9f19478f29__pid_1__hostname_BARE_plx-operation-fd79107d296047468d4c23ae3e2ef807--1-gt8mh__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:47:00.373444",
+                "end_time": "2022-12-17 11:47:30.408678",
+                "duration_sec": 30.035234
+            },
+            {
+                "metric_id": "__id_7245c9dd-2e9f-468c-a737-074a785f36e6__pid_1__hostname_BARE_plx-operation-00bb1f0dfd924f808aeec1f35f5eb57b--1-g98h8__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:47:00.678984",
+                "end_time": "2022-12-17 11:47:30.717649",
+                "duration_sec": 30.038665
+            },
+            {
+                "metric_id": "__id_7b4a4858-73bf-4e7d-b877-779cb7df7fec__pid_1__hostname_BARE_plx-operation-ae2303b81eb349e8918a6cffd67a4bb5--1-459cg__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:47:00.841059",
+                "end_time": "2022-12-17 11:47:30.879979",
+                "duration_sec": 30.03892
+            },
+            {
+                "metric_id": "__id_6814c1dd-ffb1-4d8d-a123-2dcef89a393f__pid_1__hostname_BARE_plx-operation-3d8faad372cb489b8b91432e9e8d359e--1-j486s__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:21.481308",
+                "end_time": "2022-12-17 11:47:31.494341",
+                "duration_sec": 10.013033
+            },
+            {
+                "metric_id": "__id_959081a9-3340-4777-ba45-fb90092fe550__pid_1__hostname_BARE_plx-operation-232f78f7c9d34a308c4df9e05bc21ff5--1-qqt6t__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:47:02.070602",
+                "end_time": "2022-12-17 11:47:32.106006",
+                "duration_sec": 30.035404
+            },
+            {
+                "metric_id": "__id_5d29718d-3ce3-4391-96c3-c923ff76e8c6__pid_1__hostname_BARE_plx-operation-643eed029f10445390fca280cb2f3d19--1-b2x85__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:47:01.970746",
+                "end_time": "2022-12-17 11:47:32.009694",
+                "duration_sec": 30.038948
+            },
+            {
+                "metric_id": "__id_1e50bc90-d405-4e1a-8893-dec63e067ce8__pid_1__hostname_BARE_plx-operation-1c6202718fa1446382bc1ed5f2675b7f--1-xpv8x__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:22.264270",
+                "end_time": "2022-12-17 11:47:32.275229",
+                "duration_sec": 10.010959
+            },
+            {
+                "metric_id": "__id_875967d4-612a-4fd2-a5b6-5fa3ab210a5e__pid_1__hostname_BARE_plx-operation-c2059b05431b4de7afdcf4517e5cc7de--1-h897k__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:22.351287",
+                "end_time": "2022-12-17 11:47:32.364371",
+                "duration_sec": 10.013084
+            },
+            {
+                "metric_id": "__id_37fc0763-8763-4e14-9326-ea0e72b48454__pid_1__hostname_BARE_plx-operation-ff7b22ce057d4a2d9d5c87995261ae17--1-vbg8x__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:21.848264",
+                "end_time": "2022-12-17 11:47:32.535332",
+                "duration_sec": 10.687068
+            },
+            {
+                "metric_id": "__id_c9543117-8859-4c26-9c32-90c887ecd4b5__pid_1__hostname_BARE_plx-operation-40419f562c284be6ba1a25ba3495aae3--1-f69pm__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:47:02.519354",
+                "end_time": "2022-12-17 11:47:32.559709",
+                "duration_sec": 30.040355
+            },
+            {
+                "metric_id": "__id_a7195625-8c5b-489a-91f3-4a0f714c1cd1__pid_1__hostname_BARE_plx-operation-1c7bcd64470c4e2fabf2d634b80a66f0--1-ffj82__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:47:02.829090",
+                "end_time": "2022-12-17 11:47:32.867865",
+                "duration_sec": 30.038775
+            },
+            {
+                "metric_id": "__id_901ff56c-9e80-4914-ae56-1f7ab5e6e690__pid_1__hostname_BARE_plx-operation-31163364b99f4a0a8b978a4e81d92d47--1-66rjc__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:47:02.764034",
+                "end_time": "2022-12-17 11:47:32.803524",
+                "duration_sec": 30.03949
+            },
+            {
+                "metric_id": "__id_97cdc3aa-05a1-4865-9469-f2b7abbd71c3__pid_1__hostname_BARE_plx-operation-e7567cbb7a9e449492103aadac6aff3d--1-mjwn2__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:47:02.936588",
+                "end_time": "2022-12-17 11:47:32.974408",
+                "duration_sec": 30.03782
+            },
+            {
+                "metric_id": "__id_37300705-8b43-46ce-9e57-b8e4f3ee7be5__pid_1__hostname_BARE_plx-operation-3940de8a0554460d97b6535366ef148b--1-4n2pm__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:47:03.169471",
+                "end_time": "2022-12-17 11:47:33.204918",
+                "duration_sec": 30.035447
+            },
+            {
+                "metric_id": "__id_7d7002fb-94c2-46ca-b41c-82ddae3f4734__pid_1__hostname_BARE_plx-operation-fd918a10094f4435a8fc253b7ae70cac--1-hpf4r__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:23.366138",
+                "end_time": "2022-12-17 11:47:33.379184",
+                "duration_sec": 10.013046
+            },
+            {
+                "metric_id": "__id_6976b08a-2772-47a9-a1f4-d5333717d447__pid_1__hostname_BARE_plx-operation-5f832ff3c06b4abcace7bf15e878cf0c--1-x7d8v__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:23.481220",
+                "end_time": "2022-12-17 11:47:33.495022",
+                "duration_sec": 10.013802
+            },
+            {
+                "metric_id": "__id_2fa7ca77-9e6b-45a5-9113-10d2e3c5f54f__pid_1__hostname_BARE_plx-operation-3d93451fb0ab4c24bfd16fc679b83d67--1-sbtvv__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:23.578495",
+                "end_time": "2022-12-17 11:47:33.590443",
+                "duration_sec": 10.011948
+            },
+            {
+                "metric_id": "__id_e01d47bb-a0b6-45c4-82d2-eaa8c382cc31__pid_1__hostname_BARE_plx-operation-746840868cc746389b95a9c961879a9e--1-6wxrm__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:23.627070",
+                "end_time": "2022-12-17 11:47:33.640489",
+                "duration_sec": 10.013419
+            },
+            {
+                "metric_id": "__id_b114e122-b670-4bff-b5d8-7b7047b23b1d__pid_1__hostname_BARE_plx-operation-998914fd287746cab82778e0c6c50cae--1-tl4jd__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:22.842111",
+                "end_time": "2022-12-17 11:47:33.542026",
+                "duration_sec": 10.699915
+            },
+            {
+                "metric_id": "__id_ec0d2a01-bfbe-47cd-a0fa-1f98a5a8aa70__pid_1__hostname_BARE_plx-operation-ab92632eb784436aa784b6bc55112613--1-mk8v7__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:23.788299",
+                "end_time": "2022-12-17 11:47:33.800716",
+                "duration_sec": 10.012417
+            },
+            {
+                "metric_id": "__id_51eabb97-3e5a-4729-ba27-e8747e6831aa__pid_1__hostname_BARE_plx-operation-70a5b0936f7744e29705b8a8deff2b83--1-hg5br__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:47:03.677297",
+                "end_time": "2022-12-17 11:47:33.714025",
+                "duration_sec": 30.036728
+            },
+            {
+                "metric_id": "__id_c4740f15-b955-4d27-8d7b-06de334e6672__pid_1__hostname_BARE_plx-operation-c43b170ec39649eb9cef07e7114369b9--1-9fnwg__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:23.979003",
+                "end_time": "2022-12-17 11:47:33.992082",
+                "duration_sec": 10.013079
+            },
+            {
+                "metric_id": "__id_b03ab9fb-4f99-45f2-84bb-8cd29211b66b__pid_1__hostname_BARE_plx-operation-6d2aee9310894fb4bbd0847d60b369bf--1-p8bq5__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:24.384489",
+                "end_time": "2022-12-17 11:47:34.396310",
+                "duration_sec": 10.011821
+            },
+            {
+                "metric_id": "__id_356af2a5-7fa2-47b5-82af-1ee834a63c11__pid_1__hostname_BARE_plx-operation-fc1877755632499c9859f33cea09b1ae--1-w75mv__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:47:04.076096",
+                "end_time": "2022-12-17 11:47:34.113926",
+                "duration_sec": 30.03783
+            },
+            {
+                "metric_id": "__id_46e8a5b9-1a9c-4149-a398-f6b71c5e7b47__pid_1__hostname_BARE_plx-operation-4145c6453d444b8c85118af35701d3de--1-n2cgc__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:47:04.174928",
+                "end_time": "2022-12-17 11:47:34.214110",
+                "duration_sec": 30.039182
+            },
+            {
+                "metric_id": "__id_81c9a565-0210-477c-9ae1-409a55dec706__pid_1__hostname_BARE_plx-operation-98e72312867c454789d3e5870897d676--1-9g75c__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:24.615466",
+                "end_time": "2022-12-17 11:47:34.628406",
+                "duration_sec": 10.01294
+            },
+            {
+                "metric_id": "__id_62ae81a4-652d-4dff-a5e5-9ec92bc529e7__pid_1__hostname_BARE_plx-operation-0d05bb2b37e341288dfa2c3d64e5f6e2--1-g8656__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:47:04.470052",
+                "end_time": "2022-12-17 11:47:34.508793",
+                "duration_sec": 30.038741
+            },
+            {
+                "metric_id": "__id_cb16059c-279f-49a1-bd74-39c85abae340__pid_1__hostname_BARE_plx-operation-c01a0c73218841cdb11a9bd34fd682f3--1-l75x2__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:47:04.764807",
+                "end_time": "2022-12-17 11:47:34.804922",
+                "duration_sec": 30.040115
+            },
+            {
+                "metric_id": "__id_4ccd3366-ae50-4018-b16c-b91abad6d6d0__pid_1__hostname_BARE_plx-operation-1282378c53b346d59678f4ce3babf7d2--1-bhfmq__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:25.178004",
+                "end_time": "2022-12-17 11:47:35.189935",
+                "duration_sec": 10.011931
+            },
+            {
+                "metric_id": "__id_4cff9bce-2f78-420b-b0a1-9795139540de__pid_1__hostname_BARE_plx-operation-78199e152bff4e0daa0e2d043659882a--1-zqv8b__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:47:05.071425",
+                "end_time": "2022-12-17 11:47:35.109991",
+                "duration_sec": 30.038566
+            },
+            {
+                "metric_id": "__id_11a09796-0a58-4ff5-90b9-caa762b7323a__pid_1__hostname_BARE_plx-operation-86f91133c7d04f1b8e0972351b9ce781--1-6vxcw__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:47:05.243350",
+                "end_time": "2022-12-17 11:47:35.280868",
+                "duration_sec": 30.037518
+            },
+            {
+                "metric_id": "__id_de8d64e8-b5a8-4f38-9f1a-3fc0cd418fed__pid_1__hostname_BARE_plx-operation-4075eb777cfd4c1da402f1e05cd9cc15--1-wshn4__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:47:05.574143",
+                "end_time": "2022-12-17 11:47:35.611200",
+                "duration_sec": 30.037057
+            },
+            {
+                "metric_id": "__id_8f10842e-a64e-41ed-95b9-74bbd37fe036__pid_1__hostname_BARE_plx-operation-e68ebbc0d1a24465ab2cabf860ce6b28--1-rk67t__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:25.887788",
+                "end_time": "2022-12-17 11:47:35.900399",
+                "duration_sec": 10.012611
+            },
+            {
+                "metric_id": "__id_4b1cb0b4-8162-49d1-9b9f-c2330a85a246__pid_1__hostname_BARE_plx-operation-331e41462c184c8e8d0368b8efb5d46a--1-46rjn__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:47:05.969957",
+                "end_time": "2022-12-17 11:47:36.010658",
+                "duration_sec": 30.040701
+            },
+            {
+                "metric_id": "__id_956163e0-ec7e-453e-93ca-7222a1d62bf1__pid_1__hostname_BARE_plx-operation-06cfc94f772b4ec796049155fcefe3d0--1-5jpjg__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:47:06.008519",
+                "end_time": "2022-12-17 11:47:36.047707",
+                "duration_sec": 30.039188
+            },
+            {
+                "metric_id": "__id_7966e0d8-c6c5-43cb-a4d4-069cbf3f62f6__pid_1__hostname_BARE_plx-operation-b8fc9bb605b948f0b57a8fb08f11c126--1-zxvcd__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:47:06.572443",
+                "end_time": "2022-12-17 11:47:36.611616",
+                "duration_sec": 30.039173
+            },
+            {
+                "metric_id": "__id_7c0c8dfc-77f1-4dc6-b850-12edf7d394c6__pid_1__hostname_BARE_plx-operation-f1b4b5bcc7e64e0da49daf64a65a386e--1-fldlp__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:26.052129",
+                "end_time": "2022-12-17 11:47:36.829069",
+                "duration_sec": 10.77694
+            },
+            {
+                "metric_id": "__id_19879776-f611-45d8-bb44-680284687e11__pid_1__hostname_BARE_plx-operation-49121ff786574bafb4b75f4e966844b8--1-vch8g__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:26.885255",
+                "end_time": "2022-12-17 11:47:36.896950",
+                "duration_sec": 10.011695
+            },
+            {
+                "metric_id": "__id_3428aebf-00a0-4176-b908-263ceec278eb__pid_1__hostname_BARE_plx-operation-71f18d85c3c648cda424602463e2d1a3--1-6hgfs__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:27.179548",
+                "end_time": "2022-12-17 11:47:37.193001",
+                "duration_sec": 10.013453
+            },
+            {
+                "metric_id": "__id_734f1462-e500-4f11-a68c-5397a4112d6a__pid_1__hostname_BARE_plx-operation-24b8c1ca25f74f80a57c7b7164383e69--1-pxclg__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:27.282647",
+                "end_time": "2022-12-17 11:47:37.296891",
+                "duration_sec": 10.014244
+            },
+            {
+                "metric_id": "__id_95887e58-c8ce-49a8-9333-02f581d787e5__pid_1__hostname_BARE_plx-operation-108533b8e46d4a13a22353b313e89bb0--1-glcxn__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:47:07.064738",
+                "end_time": "2022-12-17 11:47:37.103385",
+                "duration_sec": 30.038647
+            },
+            {
+                "metric_id": "__id_c7bd5383-ba5b-4d7a-80e1-85bdc56a4455__pid_1__hostname_BARE_plx-operation-074187cded48463abafb612a8a7a2c91--1-tgmf5__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:47:07.232964",
+                "end_time": "2022-12-17 11:47:37.272017",
+                "duration_sec": 30.039053
+            },
+            {
+                "metric_id": "__id_3877c31a-b531-457b-acc0-d63081a7c2f0__pid_1__hostname_BARE_plx-operation-bd54e921dd034ee8a94e6c85ad38cd13--1-hsfjt__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:47:07.265072",
+                "end_time": "2022-12-17 11:47:37.307995",
+                "duration_sec": 30.042923
+            },
+            {
+                "metric_id": "__id_ef78c206-dc3e-43e8-a8e9-148120dde230__pid_1__hostname_BARE_plx-operation-41715e8ab2da4f2abddc7a1d02f42d9d--1-27xnl__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:47:07.363200",
+                "end_time": "2022-12-17 11:47:37.401770",
+                "duration_sec": 30.03857
+            },
+            {
+                "metric_id": "__id_0144a3f7-de74-4e3f-956e-4ea27efd3242__pid_1__hostname_BARE_plx-operation-abec8fbb904d4198b32a52a1f565624f--1-8n6fr__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:26.857542",
+                "end_time": "2022-12-17 11:47:37.633054",
+                "duration_sec": 10.775512
+            },
+            {
+                "metric_id": "__id_c4de5b5b-3ce4-46ab-81e3-4cf138487e6d__pid_1__hostname_BARE_plx-operation-c4acc858cea042d19c5c04e2aa9e9c86--1-9ps6c__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:47:07.611583",
+                "end_time": "2022-12-17 11:47:37.654321",
+                "duration_sec": 30.042738
+            },
+            {
+                "metric_id": "__id_d36a398b-9981-4de6-b34e-1b968d312a6a__pid_1__hostname_BARE_plx-operation-da7970e606de42899124ae9789819bb0--1-mvhmc__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:47:07.914260",
+                "end_time": "2022-12-17 11:47:37.953613",
+                "duration_sec": 30.039353
+            },
+            {
+                "metric_id": "__id_1b95c5d5-1514-46bf-9c07-819f5dfe88fb__pid_1__hostname_BARE_plx-operation-a1bc7599733b41babf448b8f1d203b13--1-w87vp__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:28.287904",
+                "end_time": "2022-12-17 11:47:38.299117",
+                "duration_sec": 10.011213
+            },
+            {
+                "metric_id": "__id_95a35b1f-61e9-4253-9082-ab23a7fa7268__pid_1__hostname_BARE_plx-operation-eeb6d497f40d4a53bc47126eb9dcc204--1-s4c8m__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:47:08.168198",
+                "end_time": "2022-12-17 11:47:38.202749",
+                "duration_sec": 30.034551
+            },
+            {
+                "metric_id": "__id_7a302ef6-38aa-453f-bbe2-d82ebc848c9f__pid_1__hostname_BARE_plx-operation-7df38bbaea904e92a38e5f4487122bf0--1-wwf6d__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:47:08.170291",
+                "end_time": "2022-12-17 11:47:38.205197",
+                "duration_sec": 30.034906
+            },
+            {
+                "metric_id": "__id_7b8ef6ba-76b7-4d24-8c80-dd590f115860__pid_1__hostname_BARE_plx-operation-9c0bcc3f26e84a7ca5017082de602f11--1-778p4__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:28.584223",
+                "end_time": "2022-12-17 11:47:38.596546",
+                "duration_sec": 10.012323
+            },
+            {
+                "metric_id": "__id_df4dd717-4071-47a7-aa4d-a1f9cb725f95__pid_1__hostname_BARE_plx-operation-a6070b9453c341cda4497162da37d49d--1-wr5jx__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:28.774894",
+                "end_time": "2022-12-17 11:47:38.788511",
+                "duration_sec": 10.013617
+            },
+            {
+                "metric_id": "__id_52037d72-b611-4ed6-b06d-e3a3969c260b__pid_1__hostname_BARE_plx-operation-11d008d0bdc5435ab2c76a22f082ca20--1-bf4h5__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:28.831454",
+                "end_time": "2022-12-17 11:47:38.844357",
+                "duration_sec": 10.012903
+            },
+            {
+                "metric_id": "__id_d9a14d98-bfa8-496c-b89f-f2862269a912__pid_1__hostname_BARE_plx-operation-524112ca94ad46e7a3dcc92b1caf1525--1-v2t92__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:29.027205",
+                "end_time": "2022-12-17 11:47:39.041667",
+                "duration_sec": 10.014462
+            },
+            {
+                "metric_id": "__id_e31d0a92-b4eb-419b-8067-74ba9f05c799__pid_1__hostname_BARE_plx-operation-0c4d7b31cfef4f16afecae56e7eaaa85--1-57j5s__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:29.193134",
+                "end_time": "2022-12-17 11:47:39.206055",
+                "duration_sec": 10.012921
+            },
+            {
+                "metric_id": "__id_f5b76af7-51c6-498c-89a9-4203d9e02991__pid_1__hostname_BARE_plx-operation-e4ef8a649ec84e0ca1496c3e3bb078a4--1-tnlql__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:47:09.265043",
+                "end_time": "2022-12-17 11:47:39.300357",
+                "duration_sec": 30.035314
+            },
+            {
+                "metric_id": "__id_ee69869a-df70-439e-af98-220769a32e93__pid_1__hostname_BARE_plx-operation-1f44c5713b21491bb98f87098c3c7830--1-qcdmq__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:47:09.665175",
+                "end_time": "2022-12-17 11:47:39.703453",
+                "duration_sec": 30.038278
+            },
+            {
+                "metric_id": "__id_7e4375b2-2a21-4261-8d2c-fafe0305fc46__pid_1__hostname_BARE_plx-operation-c00980e6eeed41b4a2b41e3af903d799--1-vpm9f__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:47:09.762236",
+                "end_time": "2022-12-17 11:47:39.800648",
+                "duration_sec": 30.038412
+            },
+            {
+                "metric_id": "__id_17f1fdf4-1874-4053-8ff6-6534998d002d__pid_1__hostname_BARE_plx-operation-e96f036b9d424428ad1e05e24cfb1e55--1-hbk2z__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:30.127460",
+                "end_time": "2022-12-17 11:47:40.140238",
+                "duration_sec": 10.012778
+            },
+            {
+                "metric_id": "__id_097dd5a9-a59d-4a96-8525-61e3fba3912d__pid_1__hostname_BARE_plx-operation-2c49667ce87745ab94922fc4d9706721--1-f5hgn__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:30.282319",
+                "end_time": "2022-12-17 11:47:40.295013",
+                "duration_sec": 10.012694
+            },
+            {
+                "metric_id": "__id_6330995d-6b5f-45ec-843a-77de23ac6bd7__pid_1__hostname_BARE_plx-operation-01fa1a3dc95442189bb0621cbda5fb25--1-vt5h2__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:29.330385",
+                "end_time": "2022-12-17 11:47:40.229646",
+                "duration_sec": 10.899261
+            },
+            {
+                "metric_id": "__id_60fc4233-af89-4f21-959f-d692b4b80330__pid_1__hostname_BARE_plx-operation-84c649c8298445a1a664dff6ea9facc5--1-r4cfd__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:47:10.172801",
+                "end_time": "2022-12-17 11:47:40.211242",
+                "duration_sec": 30.038441
+            },
+            {
+                "metric_id": "__id_7b6af9d7-c506-40cc-8e9f-870ff7898f4c__pid_1__hostname_BARE_plx-operation-35ab742eb71142e0935d7aa08dacf4b3--1-r7fcc__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:47:10.263749",
+                "end_time": "2022-12-17 11:47:40.298403",
+                "duration_sec": 30.034654
+            },
+            {
+                "metric_id": "__id_7f416aac-bb5e-411c-82c3-00e6fbd6f2a7__pid_1__hostname_BARE_plx-operation-fd79107d296047468d4c23ae3e2ef807--1-gt8mh__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:30.586012",
+                "end_time": "2022-12-17 11:47:40.598136",
+                "duration_sec": 10.012124
+            },
+            {
+                "metric_id": "__id_8f8fd240-5ae6-4af9-9ab9-e5cca59d24a5__pid_1__hostname_BARE_plx-operation-65d3c51820a14d889df00af6c706b7e8--1-r2wb7__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:47:10.473694",
+                "end_time": "2022-12-17 11:47:40.514279",
+                "duration_sec": 30.040585
+            },
+            {
+                "metric_id": "__id_a6664b64-4aed-42f2-a42d-a1051dc31cfe__pid_1__hostname_BARE_plx-operation-e6602e5001cf4b618e61aa4746fbcc9e--1-8g98h__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:47:10.704516",
+                "end_time": "2022-12-17 11:47:40.743630",
+                "duration_sec": 30.039114
+            },
+            {
+                "metric_id": "__id_7e77d5a8-aa5b-4161-a5d3-a8ec90f0731f__pid_1__hostname_BARE_plx-operation-00bb1f0dfd924f808aeec1f35f5eb57b--1-g98h8__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:30.975781",
+                "end_time": "2022-12-17 11:47:40.986630",
+                "duration_sec": 10.010849
+            },
+            {
+                "metric_id": "__id_27bce565-7ee4-4144-8ed7-bd1dd6765f75__pid_1__hostname_BARE_plx-operation-8538e03b01ab4ed4b59f8cef443462b1--1-d7f7c__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:47:11.275252",
+                "end_time": "2022-12-17 11:47:41.315194",
+                "duration_sec": 30.039942
+            },
+            {
+                "metric_id": "__id_fa06fc93-044f-41d3-959c-996d03df2ebf__pid_1__hostname_BARE_plx-operation-ae2303b81eb349e8918a6cffd67a4bb5--1-459cg__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:31.044822",
+                "end_time": "2022-12-17 11:47:41.832857",
+                "duration_sec": 10.788035
+            },
+            {
+                "metric_id": "__id_d1ab05aa-888b-48b6-b989-0a1bfb89a889__pid_1__hostname_BARE_plx-operation-232f78f7c9d34a308c4df9e05bc21ff5--1-qqt6t__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:32.285461",
+                "end_time": "2022-12-17 11:47:42.297099",
+                "duration_sec": 10.011638
+            },
+            {
+                "metric_id": "__id_153cc065-c95f-4b5e-868f-be7f19bc4240__pid_1__hostname_BARE_plx-operation-bc741b2cc1854e849b169774373817eb--1-bxnrp__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:47:12.063204",
+                "end_time": "2022-12-17 11:47:42.103075",
+                "duration_sec": 30.039871
+            },
+            {
+                "metric_id": "__id_1b11fe6a-8f92-4072-9de6-635f5a75117a__pid_1__hostname_BARE_plx-operation-643eed029f10445390fca280cb2f3d19--1-b2x85__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:32.367959",
+                "end_time": "2022-12-17 11:47:42.381198",
+                "duration_sec": 10.013239
+            },
+            {
+                "metric_id": "__id_97fbe5a5-d88d-4be9-9fc3-bb42a3a3b4a9__pid_1__hostname_BARE_plx-operation-96e4ea6f3d524a75be6b80f4b54e7271--1-rtcf4__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:47:12.175378",
+                "end_time": "2022-12-17 11:47:42.214399",
+                "duration_sec": 30.039021
+            },
+            {
+                "metric_id": "__id_6fdbaa4b-7834-4a1e-b9e3-11649e096316__pid_1__hostname_BARE_plx-operation-40419f562c284be6ba1a25ba3495aae3--1-f69pm__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:32.829370",
+                "end_time": "2022-12-17 11:47:42.842553",
+                "duration_sec": 10.013183
+            },
+            {
+                "metric_id": "__id_aeb441e9-d5c2-464e-843d-8a113738cee3__pid_1__hostname_BARE_plx-operation-dcbe895c7a974196b763d36f333e49ac--1-p7mh5__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:47:12.676561",
+                "end_time": "2022-12-17 11:47:42.715495",
+                "duration_sec": 30.038934
+            },
+            {
+                "metric_id": "__id_95e8fa39-4f0a-4f23-afab-ff50522d0fa1__pid_1__hostname_BARE_plx-operation-31163364b99f4a0a8b978a4e81d92d47--1-66rjc__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:33.078226",
+                "end_time": "2022-12-17 11:47:43.091588",
+                "duration_sec": 10.013362
+            },
+            {
+                "metric_id": "__id_5781423f-2aa6-4338-8773-948bd775493e__pid_1__hostname_BARE_plx-operation-3940de8a0554460d97b6535366ef148b--1-4n2pm__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:33.388055",
+                "end_time": "2022-12-17 11:47:43.399329",
+                "duration_sec": 10.011274
+            },
+            {
+                "metric_id": "__id_8eecdcfd-68dc-496f-a2e9-30f9bf19f3ff__pid_1__hostname_BARE_plx-operation-1c7bcd64470c4e2fabf2d634b80a66f0--1-ffj82__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:33.051384",
+                "end_time": "2022-12-17 11:47:43.741006",
+                "duration_sec": 10.689622
+            },
+            {
+                "metric_id": "__id_bcafca6d-15bf-4627-883e-099ba286d729__pid_1__hostname_BARE_plx-operation-b34e7e5906764dfb9389b6c092ecd383--1-5r6z2__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:47:13.675796",
+                "end_time": "2022-12-17 11:47:43.716649",
+                "duration_sec": 30.040853
+            },
+            {
+                "metric_id": "__id_83b0f61a-8402-4610-bf9c-76f9fe342727__pid_1__hostname_BARE_plx-operation-e7567cbb7a9e449492103aadac6aff3d--1-mjwn2__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:33.151898",
+                "end_time": "2022-12-17 11:47:43.928916",
+                "duration_sec": 10.777018
+            },
+            {
+                "metric_id": "__id_9505fd97-c9b8-4386-8a4f-8c8c034aff54__pid_1__hostname_BARE_plx-operation-70a5b0936f7744e29705b8a8deff2b83--1-hg5br__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:33.964762",
+                "end_time": "2022-12-17 11:47:43.975164",
+                "duration_sec": 10.010402
+            },
+            {
+                "metric_id": "__id_601a4f93-ef8f-4703-8666-cfceb282b9d4__pid_1__hostname_BARE_plx-operation-4145c6453d444b8c85118af35701d3de--1-n2cgc__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:34.464766",
+                "end_time": "2022-12-17 11:47:44.475165",
+                "duration_sec": 10.010399
+            },
+            {
+                "metric_id": "__id_8f56b976-988b-4670-8bcf-d91b1698a552__pid_1__hostname_BARE_plx-operation-fc1877755632499c9859f33cea09b1ae--1-w75mv__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:34.464279",
+                "end_time": "2022-12-17 11:47:44.477556",
+                "duration_sec": 10.013277
+            },
+            {
+                "metric_id": "__id_8b3fbac3-e578-43a6-84b8-b51cac998738__pid_1__hostname_BARE_plx-operation-0d05bb2b37e341288dfa2c3d64e5f6e2--1-g8656__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:34.783781",
+                "end_time": "2022-12-17 11:47:44.795541",
+                "duration_sec": 10.01176
+            },
+            {
+                "metric_id": "__id_64a12094-2c37-4e8b-b736-22f871fbcac3__pid_1__hostname_BARE_plx-operation-c01a0c73218841cdb11a9bd34fd682f3--1-l75x2__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:35.076315",
+                "end_time": "2022-12-17 11:47:45.088966",
+                "duration_sec": 10.012651
+            },
+            {
+                "metric_id": "__id_203f5212-dac8-404f-8c72-26deb04ce360__pid_1__hostname_BARE_plx-operation-9e196c525c3040ec92730dc81745a234--1-t65l9__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:47:14.974137",
+                "end_time": "2022-12-17 11:47:45.011504",
+                "duration_sec": 30.037367
+            },
+            {
+                "metric_id": "__id_e171ecdd-7ca4-48d1-b694-4fb2c96e8150__pid_1__hostname_BARE_plx-operation-22c9075cc2fe4b0cbe44b6c97fb60d9d--1-zhfkl__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:47:14.972624",
+                "end_time": "2022-12-17 11:47:45.011527",
+                "duration_sec": 30.038903
+            },
+            {
+                "metric_id": "__id_64e9db1c-b5eb-4eab-ac60-45d35e5c7304__pid_1__hostname_BARE_plx-operation-13e7fbe243304f25989001e07bfe23b2--1-qncbf__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:47:14.967835",
+                "end_time": "2022-12-17 11:47:45.007596",
+                "duration_sec": 30.039761
+            },
+            {
+                "metric_id": "__id_07b62a51-57ed-4c1d-afea-743c157f213d__pid_1__hostname_BARE_plx-operation-78199e152bff4e0daa0e2d043659882a--1-zqv8b__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:35.364431",
+                "end_time": "2022-12-17 11:47:45.375497",
+                "duration_sec": 10.011066
+            },
+            {
+                "metric_id": "__id_6ea010e7-353d-49e0-b177-9804263bf975__pid_1__hostname_BARE_plx-operation-23a0c9eb0db34a20bbf07d57ee426eed--1-8fhqt__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:47:15.363392",
+                "end_time": "2022-12-17 11:47:45.406779",
+                "duration_sec": 30.043387
+            },
+            {
+                "metric_id": "__id_08f72c38-56ee-4732-9b3f-b8fdf0e472fc__pid_1__hostname_BARE_plx-operation-4075eb777cfd4c1da402f1e05cd9cc15--1-wshn4__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:35.787089",
+                "end_time": "2022-12-17 11:47:45.797986",
+                "duration_sec": 10.010897
+            },
+            {
+                "metric_id": "__id_8a69044b-cc02-4417-a457-250943498ad3__pid_1__hostname_BARE_plx-operation-ef621b62a4e7408aba0a47153443b3f7--1-rz2dq__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:47:15.571627",
+                "end_time": "2022-12-17 11:47:45.608900",
+                "duration_sec": 30.037273
+            },
+            {
+                "metric_id": "__id_56f591ec-2e5e-4ac2-ab2f-2a408aa954d6__pid_1__hostname_BARE_plx-operation-331e41462c184c8e8d0368b8efb5d46a--1-46rjn__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:36.278517",
+                "end_time": "2022-12-17 11:47:46.289554",
+                "duration_sec": 10.011037
+            },
+            {
+                "metric_id": "__id_eb58127c-4177-4a46-b3f1-c55926b4927c__pid_1__hostname_BARE_plx-operation-06cfc94f772b4ec796049155fcefe3d0--1-5jpjg__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:36.314607",
+                "end_time": "2022-12-17 11:47:46.327752",
+                "duration_sec": 10.013145
+            },
+            {
+                "metric_id": "__id_8014011a-6071-4d38-93c8-3ec14dc75028__pid_1__hostname_BARE_plx-operation-86f91133c7d04f1b8e0972351b9ce781--1-6vxcw__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:35.541183",
+                "end_time": "2022-12-17 11:47:46.334233",
+                "duration_sec": 10.79305
+            },
+            {
+                "metric_id": "__id_c7776d75-066b-499b-88d7-6234f6815883__pid_1__hostname_BARE_plx-operation-b8fc9bb605b948f0b57a8fb08f11c126--1-zxvcd__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:36.877439",
+                "end_time": "2022-12-17 11:47:46.888236",
+                "duration_sec": 10.010797
+            },
+            {
+                "metric_id": "__id_5fc4aa58-eda8-4189-91ec-5fd0511fb562__pid_1__hostname_BARE_plx-operation-108533b8e46d4a13a22353b313e89bb0--1-glcxn__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:37.386706",
+                "end_time": "2022-12-17 11:47:47.398078",
+                "duration_sec": 10.011372
+            },
+            {
+                "metric_id": "__id_480f2c35-2485-4c38-abdd-04ea989f53a6__pid_1__hostname_BARE_plx-operation-bd54e921dd034ee8a94e6c85ad38cd13--1-hsfjt__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:37.581094",
+                "end_time": "2022-12-17 11:47:47.592927",
+                "duration_sec": 10.011833
+            },
+            {
+                "metric_id": "__id_6dfdb4ef-4286-4aed-9eb0-ef0580be8f9d__pid_1__hostname_BARE_plx-operation-41715e8ab2da4f2abddc7a1d02f42d9d--1-27xnl__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:37.682393",
+                "end_time": "2022-12-17 11:47:47.695857",
+                "duration_sec": 10.013464
+            },
+            {
+                "metric_id": "__id_b07a91a7-40b1-4300-a4cb-4774990683c0__pid_1__hostname_BARE_plx-operation-c4acc858cea042d19c5c04e2aa9e9c86--1-9ps6c__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:37.929485",
+                "end_time": "2022-12-17 11:47:47.940293",
+                "duration_sec": 10.010808
+            },
+            {
+                "metric_id": "__id_386076d1-7545-4ee9-aa71-9cb61b5c1afd__pid_1__hostname_BARE_plx-operation-da7970e606de42899124ae9789819bb0--1-mvhmc__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:38.216304",
+                "end_time": "2022-12-17 11:47:48.226770",
+                "duration_sec": 10.010466
+            },
+            {
+                "metric_id": "__id_874c345d-9343-4f1c-9e52-775bef395007__pid_1__hostname_BARE_plx-operation-074187cded48463abafb612a8a7a2c91--1-tgmf5__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:37.529808",
+                "end_time": "2022-12-17 11:47:48.340900",
+                "duration_sec": 10.811092
+            },
+            {
+                "metric_id": "__id_2c8326f9-d852-44ed-be55-ccec36330023__pid_1__hostname_BARE_plx-operation-eeb6d497f40d4a53bc47126eb9dcc204--1-s4c8m__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:38.467631",
+                "end_time": "2022-12-17 11:47:48.479568",
+                "duration_sec": 10.011937
+            },
+            {
+                "metric_id": "__id_dec9b7d8-8f56-4283-91b2-a6941bdd69fd__pid_1__hostname_BARE_plx-operation-7df38bbaea904e92a38e5f4487122bf0--1-wwf6d__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:38.473143",
+                "end_time": "2022-12-17 11:47:48.484417",
+                "duration_sec": 10.011274
+            },
+            {
+                "metric_id": "__id_80dd9cab-37ca-4d53-96b9-dbd49e350fc4__pid_1__hostname_BARE_plx-operation-e4ef8a649ec84e0ca1496c3e3bb078a4--1-tnlql__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:39.583507",
+                "end_time": "2022-12-17 11:47:49.595399",
+                "duration_sec": 10.011892
+            },
+            {
+                "metric_id": "__id_a60c4072-0b91-4109-89b3-09828d36d9c1__pid_1__hostname_BARE_plx-operation-1f44c5713b21491bb98f87098c3c7830--1-qcdmq__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:39.982168",
+                "end_time": "2022-12-17 11:47:49.993711",
+                "duration_sec": 10.011543
+            },
+            {
+                "metric_id": "__id_415663de-7de7-4027-b38e-85cb1146f41e__pid_1__hostname_BARE_plx-operation-c00980e6eeed41b4a2b41e3af903d799--1-vpm9f__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:40.174472",
+                "end_time": "2022-12-17 11:47:50.187617",
+                "duration_sec": 10.013145
+            },
+            {
+                "metric_id": "__id_4ab4f250-f522-4f3a-9c2a-8e95d1376b81__pid_1__hostname_BARE_plx-operation-84c649c8298445a1a664dff6ea9facc5--1-r4cfd__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:40.479357",
+                "end_time": "2022-12-17 11:47:50.491398",
+                "duration_sec": 10.012041
+            },
+            {
+                "metric_id": "__id_bb6944c7-15f8-4adb-b9b6-66ddc90e907b__pid_1__hostname_BARE_plx-operation-35ab742eb71142e0935d7aa08dacf4b3--1-r7fcc__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:40.585965",
+                "end_time": "2022-12-17 11:47:50.596808",
+                "duration_sec": 10.010843
+            },
+            {
+                "metric_id": "__id_aaf39841-5706-4b76-afc4-a3330c94351e__pid_1__hostname_BARE_plx-operation-65d3c51820a14d889df00af6c706b7e8--1-r2wb7__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:40.781964",
+                "end_time": "2022-12-17 11:47:50.795619",
+                "duration_sec": 10.013655
+            },
+            {
+                "metric_id": "__id_b0d55826-6e34-4d6f-8e0f-7117b4f21021__pid_1__hostname_BARE_plx-operation-e6602e5001cf4b618e61aa4746fbcc9e--1-8g98h__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:41.028273",
+                "end_time": "2022-12-17 11:47:51.040348",
+                "duration_sec": 10.012075
+            },
+            {
+                "metric_id": "__id_b3ff0846-36c6-427e-8ec9-7f8c1617276e__pid_1__hostname_BARE_plx-operation-8538e03b01ab4ed4b59f8cef443462b1--1-d7f7c__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:41.586103",
+                "end_time": "2022-12-17 11:47:51.598155",
+                "duration_sec": 10.012052
+            },
+            {
+                "metric_id": "__id_f924bf78-db81-4379-9e3d-639993ec4df4__pid_1__hostname_BARE_plx-operation-bc741b2cc1854e849b169774373817eb--1-bxnrp__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:42.474232",
+                "end_time": "2022-12-17 11:47:52.486313",
+                "duration_sec": 10.012081
+            },
+            {
+                "metric_id": "__id_d492c236-bef0-4ee3-96d4-d8a79aad9189__pid_1__hostname_BARE_plx-operation-96e4ea6f3d524a75be6b80f4b54e7271--1-rtcf4__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:42.569845",
+                "end_time": "2022-12-17 11:47:52.583294",
+                "duration_sec": 10.013449
+            },
+            {
+                "metric_id": "__id_2248a0cb-8503-46a3-b1fe-000c85f118ba__pid_1__hostname_BARE_plx-operation-dcbe895c7a974196b763d36f333e49ac--1-p7mh5__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:42.979767",
+                "end_time": "2022-12-17 11:47:52.993144",
+                "duration_sec": 10.013377
+            },
+            {
+                "metric_id": "__id_46b0e20a-c001-4ec9-9c72-d1388ae392ab__pid_1__hostname_BARE_plx-operation-b34e7e5906764dfb9389b6c092ecd383--1-5r6z2__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:44.063963",
+                "end_time": "2022-12-17 11:47:54.076895",
+                "duration_sec": 10.012932
+            },
+            {
+                "metric_id": "__id_cf7b66c3-50b0-4f38-8063-96530a55c5fe__pid_1__hostname_BARE_plx-operation-9e196c525c3040ec92730dc81745a234--1-t65l9__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:45.282187",
+                "end_time": "2022-12-17 11:47:55.294263",
+                "duration_sec": 10.012076
+            },
+            {
+                "metric_id": "__id_a8048838-d01f-4c47-a1c3-462601aa3c86__pid_1__hostname_BARE_plx-operation-22c9075cc2fe4b0cbe44b6c97fb60d9d--1-zhfkl__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:45.372085",
+                "end_time": "2022-12-17 11:47:55.384958",
+                "duration_sec": 10.012873
+            },
+            {
+                "metric_id": "__id_8ff8d5e3-cd81-4122-a4ca-9b0a157f189c__pid_1__hostname_BARE_plx-operation-13e7fbe243304f25989001e07bfe23b2--1-qncbf__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:45.374260",
+                "end_time": "2022-12-17 11:47:55.387611",
+                "duration_sec": 10.013351
+            },
+            {
+                "metric_id": "__id_5ae2f887-8b4e-45da-bd85-7cf6f9c8b5b9__pid_1__hostname_BARE_plx-operation-23a0c9eb0db34a20bbf07d57ee426eed--1-8fhqt__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:45.678752",
+                "end_time": "2022-12-17 11:47:55.690286",
+                "duration_sec": 10.011534
+            },
+            {
+                "metric_id": "__id_af75f60b-2fa7-4ede-a56c-1aae97992a45__pid_1__hostname_BARE_plx-operation-ef621b62a4e7408aba0a47153443b3f7--1-rz2dq__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:47:45.878485",
+                "end_time": "2022-12-17 11:47:55.890303",
+                "duration_sec": 10.011818
+            },
+            {
+                "metric_id": "__id_3cf941ea-dbd7-488c-95b9-5fe976a9fb95__pid_2593317__hostname_BARE_ise-students__function-name_run__objHash_8743811842214",
+                "function_name": "run",
+                "start_time": "2022-12-17 12:46:28.196414",
+                "end_time": "2022-12-17 12:48:17.094371",
+                "duration_sec": 108.897957
+            },
+            {
+                "metric_id": "__id_f3606cc5-9a4f-4211-a948-b539b80d71e0__pid_2593317__hostname_BARE_ise-students__function-name_collect_run_results__objHash_8743811842214",
+                "function_name": "collect_run_results",
+                "start_time": "2022-12-17 12:48:17.107869",
+                "end_time": "2022-12-17 12:48:17.136007",
+                "duration_sec": 0.028138
+            },
+            {
+                "metric_id": "__id_8b9bcba6-db61-443e-9cb5-783b781de0a2__pid_2593317__hostname_BARE_ise-students__function-name_test__objHash_8743811842214",
+                "function_name": "test",
+                "start_time": "2022-12-17 12:48:17.148214",
+                "end_time": "2022-12-17 12:48:17.148246",
+                "duration_sec": 3.2e-05
+            },
+            {
+                "metric_id": "__id_6b84607a-dcfb-4925-8d7c-ab637ffefbe9__pid_2593317__hostname_BARE_ise-students__function-name_collect_benchmark_metrics__objHash_8743811842214",
+                "function_name": "collect_benchmark_metrics",
+                "start_time": "2022-12-17 12:48:17.159915",
+                "end_time": "2022-12-17 12:48:17.186985",
+                "duration_sec": 0.02707
+            }
+        ],
+        "resources": [],
+        "classification": []
+    },
+    "benchmark_configuration": {
+        "resources": {
+            "experiment_titel": "tuning",
+            "variabel": "jobsCount",
+            "values": [
+                100
+            ],
+            "loggingLevel": "logging.INFO",
+            "imagePullPolicy": "IfNotPresent",
+            "generateNewDockerImage": false,
+            "dockerImageTag": "light_task",
+            "limitResources": true,
+            "limitCpuTotal": "500",
+            "limitCpuWorker": "150m",
+            "jobsCount": 100,
+            "cleanUp": false,
+            "undeploy": false,
+            "deploy": true,
+            "generatePlots": true,
+            "latexTitle": "Tuning scalability experiment with the light tasks",
+            "latexDescritption": "Tuning scalability experimetns with light task  conducted on Variabels: Trials number [1,2,3,4,5,6,7,8,9,10,12,14,16,18,20,25,30,40,50,100,150,200]",
+            "id": 3111111,
+            "studyName": "tuning-rep-1-jobscount-100-polyaxon-3111111",
+            "repetition": 1
+        }
+    }
+}

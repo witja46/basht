@@ -1,0 +1,433 @@
+{
+    "benchmark_metrics": {
+        "latency": [
+            {
+                "metric_id": "__id_c46a67df-d110-4366-ab33-6ef1324c4648__pid_2602759__hostname_BARE_ise-students__function-name_deploy__objHash_8758624655330",
+                "function_name": "deploy",
+                "start_time": "2022-12-17 13:10:52.467931",
+                "end_time": "2022-12-17 13:13:03.291318",
+                "duration_sec": 130.823387
+            },
+            {
+                "metric_id": "__id_9ec37356-e2bf-46a4-9a03-6491326a9721__pid_2602759__hostname_BARE_ise-students__function-name_setup__objHash_8758624655330",
+                "function_name": "setup",
+                "start_time": "2022-12-17 13:13:03.330633",
+                "end_time": "2022-12-17 13:13:08.762974",
+                "duration_sec": 5.432341
+            },
+            {
+                "metric_id": "__id_d87ed0f6-e2d1-48fc-a2f1-24edbf15d7d0__pid_12__hostname_BARE_tuning-rep-1-jobscount-10-katib-3111111-dhvzncpf--1-bhzhl__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 12:14:14.633533",
+                "end_time": "2022-12-17 12:14:44.728350",
+                "duration_sec": 30.094817
+            },
+            {
+                "metric_id": "__id_88189766-b30f-4282-b527-f3a926eff3f7__pid_11__hostname_BARE_tuning-rep-1-jobscount-10-katib-3111111-xkcxbtv7--1-gnjnw__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 12:14:14.736578",
+                "end_time": "2022-12-17 12:14:44.776295",
+                "duration_sec": 30.039717
+            },
+            {
+                "metric_id": "__id_255f97a6-53e6-468f-b9f7-db38f69f1e06__pid_11__hostname_BARE_tuning-rep-1-jobscount-10-katib-3111111-p872c9mn--1-nvvhs__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 12:14:14.641717",
+                "end_time": "2022-12-17 12:14:44.727707",
+                "duration_sec": 30.08599
+            },
+            {
+                "metric_id": "__id_53f3a6af-4fa0-4509-ae1e-74fec4e95a67__pid_11__hostname_BARE_tuning-rep-1-jobscount-10-katib-3111111-58hzxvfh--1-d22cx__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 12:14:14.737315",
+                "end_time": "2022-12-17 12:14:44.775820",
+                "duration_sec": 30.038505
+            },
+            {
+                "metric_id": "__id_f7aec9ed-319c-4998-a537-384a78b0f3f6__pid_11__hostname_BARE_tuning-rep-1-jobscount-10-katib-3111111-b4hfcdgj--1-dr2q4__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 12:14:14.742879",
+                "end_time": "2022-12-17 12:14:44.784461",
+                "duration_sec": 30.041582
+            },
+            {
+                "metric_id": "__id_bff5ad83-7fa3-45bc-a2db-55994ca1124a__pid_11__hostname_BARE_tuning-rep-1-jobscount-10-katib-3111111-g89qrrl7--1-jjh9z__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 12:14:19.513253",
+                "end_time": "2022-12-17 12:14:49.556505",
+                "duration_sec": 30.043252
+            },
+            {
+                "metric_id": "__id_3ae8b0dc-79c9-4fc7-b510-3c1edb6a454e__pid_11__hostname_BARE_tuning-rep-1-jobscount-10-katib-3111111-4w6nw75c--1-wq9mw__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 12:14:20.573217",
+                "end_time": "2022-12-17 12:14:50.615849",
+                "duration_sec": 30.042632
+            },
+            {
+                "metric_id": "__id_4ab2d59a-0ee1-4a3d-88d7-cec2c30c9b78__pid_11__hostname_BARE_tuning-rep-1-jobscount-10-katib-3111111-659v8h7v--1-mp8hp__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 12:14:21.064701",
+                "end_time": "2022-12-17 12:14:51.106765",
+                "duration_sec": 30.042064
+            },
+            {
+                "metric_id": "__id_b54dc878-6ded-406b-85ef-20d6f59e8bca__pid_12__hostname_BARE_tuning-rep-1-jobscount-10-katib-3111111-j9nrszkd--1-fwk6v__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 12:14:21.273475",
+                "end_time": "2022-12-17 12:14:51.310726",
+                "duration_sec": 30.037251
+            },
+            {
+                "metric_id": "__id_87801cba-96d7-42f6-a672-e6a0a0751553__pid_12__hostname_BARE_tuning-rep-1-jobscount-10-katib-3111111-tj6ck24b--1-2kpbf__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 12:14:21.271040",
+                "end_time": "2022-12-17 12:14:51.310390",
+                "duration_sec": 30.03935
+            },
+            {
+                "metric_id": "__id_86413a64-02ea-42e8-9251-1f0b79647644__pid_11__hostname_BARE_tuning-rep-1-jobscount-10-katib-3111111-58hzxvfh--1-d22cx__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 12:14:44.947365",
+                "end_time": "2022-12-17 12:14:54.958378",
+                "duration_sec": 10.011013
+            },
+            {
+                "metric_id": "__id_d99a75dd-0504-4190-8d4f-bf5c95f81ca2__pid_11__hostname_BARE_tuning-rep-1-jobscount-10-katib-3111111-xkcxbtv7--1-gnjnw__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 12:14:44.944931",
+                "end_time": "2022-12-17 12:14:54.957674",
+                "duration_sec": 10.012743
+            },
+            {
+                "metric_id": "__id_1f39b8a7-ff26-4f0b-8292-54681ca0188b__pid_11__hostname_BARE_tuning-rep-1-jobscount-10-katib-3111111-p872c9mn--1-nvvhs__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 12:14:44.945475",
+                "end_time": "2022-12-17 12:14:54.956411",
+                "duration_sec": 10.010936
+            },
+            {
+                "metric_id": "__id_5fcdcf01-dfcb-43a7-b9a6-6c2c89ce02ca__pid_12__hostname_BARE_tuning-rep-1-jobscount-10-katib-3111111-dhvzncpf--1-bhzhl__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 12:14:44.943500",
+                "end_time": "2022-12-17 12:14:54.956455",
+                "duration_sec": 10.012955
+            },
+            {
+                "metric_id": "__id_14c51d3d-c5b4-46d6-91c2-94f256acfdfd__pid_11__hostname_BARE_tuning-rep-1-jobscount-10-katib-3111111-b4hfcdgj--1-dr2q4__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 12:14:45.029675",
+                "end_time": "2022-12-17 12:14:55.042607",
+                "duration_sec": 10.012932
+            },
+            {
+                "metric_id": "__id_25888795-9d57-4b5a-a28e-9826b4a0892c__pid_11__hostname_BARE_tuning-rep-1-jobscount-10-katib-3111111-g89qrrl7--1-jjh9z__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 12:14:49.820285",
+                "end_time": "2022-12-17 12:14:59.835108",
+                "duration_sec": 10.014823
+            },
+            {
+                "metric_id": "__id_261782a4-3c36-45ec-8e55-67de0e7a4652__pid_11__hostname_BARE_tuning-rep-1-jobscount-10-katib-3111111-4w6nw75c--1-wq9mw__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 12:14:50.880404",
+                "end_time": "2022-12-17 12:15:00.895168",
+                "duration_sec": 10.014764
+            },
+            {
+                "metric_id": "__id_9fe3e85f-acad-4d8f-bc23-0404e0860342__pid_11__hostname_BARE_tuning-rep-1-jobscount-10-katib-3111111-659v8h7v--1-mp8hp__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 12:14:51.284221",
+                "end_time": "2022-12-17 12:15:01.298131",
+                "duration_sec": 10.01391
+            },
+            {
+                "metric_id": "__id_5bc7f9e0-84ba-498d-8b51-9aa485311d43__pid_12__hostname_BARE_tuning-rep-1-jobscount-10-katib-3111111-tj6ck24b--1-2kpbf__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 12:14:51.480887",
+                "end_time": "2022-12-17 12:15:01.494866",
+                "duration_sec": 10.013979
+            },
+            {
+                "metric_id": "__id_e4e3c2c7-d787-4451-a79f-f841c5ddbaa7__pid_12__hostname_BARE_tuning-rep-1-jobscount-10-katib-3111111-j9nrszkd--1-fwk6v__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 12:14:51.478497",
+                "end_time": "2022-12-17 12:15:01.491633",
+                "duration_sec": 10.013136
+            },
+            {
+                "metric_id": "__id_3eb40243-ea03-4ce1-9975-41cc2066a383__pid_2604738__hostname_BARE_ise-students__function-name_deploy__objHash_8786159871112",
+                "function_name": "deploy",
+                "start_time": "2022-12-17 13:16:05.909554",
+                "end_time": "2022-12-17 13:16:05.948920",
+                "duration_sec": 0.039366
+            },
+            {
+                "metric_id": "__id_afce42fd-7642-43c9-a336-0d425f095453__pid_2604738__hostname_BARE_ise-students__function-name_setup__objHash_8786159871112",
+                "function_name": "setup",
+                "start_time": "2022-12-17 13:16:05.986422",
+                "end_time": "2022-12-17 13:16:11.309656",
+                "duration_sec": 5.323234
+            },
+            {
+                "metric_id": "__id_9326f5c9-d1ae-4b86-aca9-0c33bb51551a__pid_11__hostname_BARE_tuning0-rep-1-jobscount-10-katib-3111111-fprcjsd5--1-wrbr7__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 12:16:57.737849",
+                "end_time": "2022-12-17 12:17:27.776939",
+                "duration_sec": 30.03909
+            },
+            {
+                "metric_id": "__id_8e253ead-9ea0-4f2f-ae0e-5667ce75a222__pid_13__hostname_BARE_tuning0-rep-1-jobscount-10-katib-3111111-fx54d42f--1-lrjsp__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 12:16:58.067605",
+                "end_time": "2022-12-17 12:17:28.108544",
+                "duration_sec": 30.040939
+            },
+            {
+                "metric_id": "__id_b27c57b5-40ac-47b7-8c70-0e7b5fc86aa5__pid_11__hostname_BARE_tuning0-rep-1-jobscount-10-katib-3111111-rldfg25f--1-fmcrv__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 12:16:58.333966",
+                "end_time": "2022-12-17 12:17:28.375075",
+                "duration_sec": 30.041109
+            },
+            {
+                "metric_id": "__id_b2adf91e-e1aa-4c0a-9ab7-e1f7a9a9a3ab__pid_11__hostname_BARE_tuning0-rep-1-jobscount-10-katib-3111111-p8lxb298--1-ml9w6__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 12:16:58.366270",
+                "end_time": "2022-12-17 12:17:28.408570",
+                "duration_sec": 30.0423
+            },
+            {
+                "metric_id": "__id_6d2d45b8-1572-461b-b9e7-770002c2a3a8__pid_12__hostname_BARE_tuning0-rep-1-jobscount-10-katib-3111111-g2zvhf98--1-qdsfd__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 12:16:58.468300",
+                "end_time": "2022-12-17 12:17:28.510207",
+                "duration_sec": 30.041907
+            },
+            {
+                "metric_id": "__id_0efaddc4-aa99-420c-8ba5-38774997bf78__pid_11__hostname_BARE_tuning0-rep-1-jobscount-10-katib-3111111-6sr84gl6--1-84zf6__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 12:16:58.639425",
+                "end_time": "2022-12-17 12:17:28.679171",
+                "duration_sec": 30.039746
+            },
+            {
+                "metric_id": "__id_a3482bca-2e01-49af-9565-272f75e687fa__pid_11__hostname_BARE_tuning0-rep-1-jobscount-10-katib-3111111-xjgjshbm--1-xpmqs__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 12:16:58.835870",
+                "end_time": "2022-12-17 12:17:28.873453",
+                "duration_sec": 30.037583
+            },
+            {
+                "metric_id": "__id_209e8c95-0fb7-4ad4-92df-2ac8d2f962d3__pid_11__hostname_BARE_tuning0-rep-1-jobscount-10-katib-3111111-hw4tcbl9--1-dfjb2__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 12:16:59.136813",
+                "end_time": "2022-12-17 12:17:29.176785",
+                "duration_sec": 30.039972
+            },
+            {
+                "metric_id": "__id_11ba7020-08f8-4696-8cac-68902fd0f6a8__pid_11__hostname_BARE_tuning0-rep-1-jobscount-10-katib-3111111-dl56jd8v--1-jbq9r__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 12:16:59.107229",
+                "end_time": "2022-12-17 12:17:29.149619",
+                "duration_sec": 30.04239
+            },
+            {
+                "metric_id": "__id_d9a7f7a6-3fe8-417f-bac5-ab922fab2ae8__pid_11__hostname_BARE_tuning0-rep-1-jobscount-10-katib-3111111-fz8ns52n--1-dm6bk__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 12:16:59.569345",
+                "end_time": "2022-12-17 12:17:29.614542",
+                "duration_sec": 30.045197
+            },
+            {
+                "metric_id": "__id_1bbc0169-d4d2-49da-b05d-40dda9955b1b__pid_11__hostname_BARE_tuning0-rep-1-jobscount-10-katib-3111111-fprcjsd5--1-wrbr7__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 12:17:27.942280",
+                "end_time": "2022-12-17 12:17:37.956032",
+                "duration_sec": 10.013752
+            },
+            {
+                "metric_id": "__id_ade27114-67fb-44b5-b253-f1327be6100d__pid_13__hostname_BARE_tuning0-rep-1-jobscount-10-katib-3111111-fx54d42f--1-lrjsp__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 12:17:28.282266",
+                "end_time": "2022-12-17 12:17:38.295821",
+                "duration_sec": 10.013555
+            },
+            {
+                "metric_id": "__id_0f961cc5-61ec-4c9f-87d0-b27e41fe0635__pid_11__hostname_BARE_tuning0-rep-1-jobscount-10-katib-3111111-rldfg25f--1-fmcrv__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 12:17:28.549215",
+                "end_time": "2022-12-17 12:17:38.563574",
+                "duration_sec": 10.014359
+            },
+            {
+                "metric_id": "__id_61091196-fe00-45f3-9de7-6017acb68a80__pid_11__hostname_BARE_tuning0-rep-1-jobscount-10-katib-3111111-p8lxb298--1-ml9w6__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 12:17:28.586419",
+                "end_time": "2022-12-17 12:17:38.600308",
+                "duration_sec": 10.013889
+            },
+            {
+                "metric_id": "__id_01001f28-ef42-4300-a63c-947f814c8487__pid_12__hostname_BARE_tuning0-rep-1-jobscount-10-katib-3111111-g2zvhf98--1-qdsfd__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 12:17:28.685270",
+                "end_time": "2022-12-17 12:17:38.698278",
+                "duration_sec": 10.013008
+            },
+            {
+                "metric_id": "__id_13c4be3b-6362-43bf-8f30-552b44955fd5__pid_11__hostname_BARE_tuning0-rep-1-jobscount-10-katib-3111111-6sr84gl6--1-84zf6__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 12:17:28.841975",
+                "end_time": "2022-12-17 12:17:38.856164",
+                "duration_sec": 10.014189
+            },
+            {
+                "metric_id": "__id_503017f4-3392-4773-856e-371e363d5c4e__pid_11__hostname_BARE_tuning0-rep-1-jobscount-10-katib-3111111-xjgjshbm--1-xpmqs__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 12:17:29.041269",
+                "end_time": "2022-12-17 12:17:39.053307",
+                "duration_sec": 10.012038
+            },
+            {
+                "metric_id": "__id_adfe20f7-c5d2-4b6e-b548-de535541b2a2__pid_11__hostname_BARE_tuning0-rep-1-jobscount-10-katib-3111111-hw4tcbl9--1-dfjb2__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 12:17:29.340531",
+                "end_time": "2022-12-17 12:17:39.354137",
+                "duration_sec": 10.013606
+            },
+            {
+                "metric_id": "__id_86eefa5f-86d2-48c7-80fa-12ca2641d16a__pid_11__hostname_BARE_tuning0-rep-1-jobscount-10-katib-3111111-dl56jd8v--1-jbq9r__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 12:17:29.510384",
+                "end_time": "2022-12-17 12:17:39.525457",
+                "duration_sec": 10.015073
+            },
+            {
+                "metric_id": "__id_ca539b8b-9767-458a-a7ed-7969510be41e__pid_11__hostname_BARE_tuning0-rep-1-jobscount-10-katib-3111111-fz8ns52n--1-dm6bk__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 12:17:29.885425",
+                "end_time": "2022-12-17 12:17:39.898222",
+                "duration_sec": 10.012797
+            },
+            {
+                "metric_id": "__id_60467454-8f7f-4106-ada0-9cc8ced98565__pid_2604738__hostname_BARE_ise-students__function-name_run__objHash_8786159871112",
+                "function_name": "run",
+                "start_time": "2022-12-17 13:16:11.323688",
+                "end_time": "2022-12-17 13:17:49.241008",
+                "duration_sec": 97.91732
+            },
+            {
+                "metric_id": "__id_fd3aee24-9585-49e6-835c-f3577160517d__pid_2604738__hostname_BARE_ise-students__function-name_collect_run_results__objHash_8786159871112",
+                "function_name": "collect_run_results",
+                "start_time": "2022-12-17 13:17:49.255636",
+                "end_time": "2022-12-17 13:17:49.272159",
+                "duration_sec": 0.016523
+            },
+            {
+                "metric_id": "__id_47734c39-d833-4240-b52d-155fec0517b8__pid_2604738__hostname_BARE_ise-students__function-name_test__objHash_8786159871112",
+                "function_name": "test",
+                "start_time": "2022-12-17 13:17:49.284029",
+                "end_time": "2022-12-17 13:17:49.299296",
+                "duration_sec": 0.015267
+            },
+            {
+                "metric_id": "__id_9f426d4f-82f4-44b1-a4fb-2b11b69bd59d__pid_2604738__hostname_BARE_ise-students__function-name_collect_benchmark_metrics__objHash_8786159871112",
+                "function_name": "collect_benchmark_metrics",
+                "start_time": "2022-12-17 13:17:49.310712",
+                "end_time": "2022-12-17 13:17:49.310729",
+                "duration_sec": 1.7e-05
+            }
+        ],
+        "resources": [],
+        "classification": []
+    },
+    "benchmark_configuration": {
+        "resources": {
+            "experiment_titel": "tuning0",
+            "variabel": "jobsCount",
+            "values": [
+                10
+            ],
+            "loggingLevel": "logging.INFO",
+            "imagePullPolicy": "IfNotPresent",
+            "generateNewDockerImage": false,
+            "dockerImageTag": "light_task",
+            "limitResources": true,
+            "limitCpuTotal": "500",
+            "limitCpuWorker": "150m",
+            "jobsCount": 10,
+            "cleanUp": false,
+            "undeploy": true,
+            "deploy": false,
+            "generatePlots": true,
+            "latexTitle": "Tuning scalability experiment with the light tasks",
+            "latexDescritption": "Tuning scalability experimetns with light task  conducted on Variabels: Trials number [1,2,3,4,5,6,7,8,9,10,12,14,16,18,20,25,30,40,50,100,150,200]",
+            "id": 3111111,
+            "studyName": "tuning0-rep-1-jobscount-10-katib-3111111",
+            "repetition": 1,
+            "experiment": {
+                "completionTime": "2022-12-17T12:17:47Z",
+                "conditions": [
+                    {
+                        "lastTransitionTime": "2022-12-17T12:16:11Z",
+                        "lastUpdateTime": "2022-12-17T12:16:11Z",
+                        "message": "Experiment is created",
+                        "reason": "ExperimentCreated",
+                        "status": "True",
+                        "type": "Created"
+                    },
+                    {
+                        "lastTransitionTime": "2022-12-17T12:17:47Z",
+                        "lastUpdateTime": "2022-12-17T12:17:47Z",
+                        "message": "Experiment is running",
+                        "reason": "ExperimentRunning",
+                        "status": "False",
+                        "type": "Running"
+                    },
+                    {
+                        "lastTransitionTime": "2022-12-17T12:17:47Z",
+                        "lastUpdateTime": "2022-12-17T12:17:47Z",
+                        "message": "Experiment has succeeded because max trial count has reached",
+                        "reason": "ExperimentMaxTrialsReached",
+                        "status": "True",
+                        "type": "Succeeded"
+                    }
+                ],
+                "currentOptimalTrial": {
+                    "bestTrialName": "tuning0-rep-1-jobscount-10-katib-3111111-rldfg25f",
+                    "observation": {
+                        "metrics": [
+                            {
+                                "latest": "0.7000",
+                                "max": "0.7000",
+                                "min": "0.7000",
+                                "name": "precision"
+                            }
+                        ]
+                    },
+                    "parameterAssignments": [
+                        {
+                            "name": "lr",
+                            "value": "0.001"
+                        }
+                    ]
+                },
+                "startTime": "2022-12-17T12:16:11Z",
+                "succeededTrialList": [
+                    "tuning0-rep-1-jobscount-10-katib-3111111-rldfg25f",
+                    "tuning0-rep-1-jobscount-10-katib-3111111-p8lxb298",
+                    "tuning0-rep-1-jobscount-10-katib-3111111-hw4tcbl9",
+                    "tuning0-rep-1-jobscount-10-katib-3111111-dl56jd8v",
+                    "tuning0-rep-1-jobscount-10-katib-3111111-fprcjsd5",
+                    "tuning0-rep-1-jobscount-10-katib-3111111-fx54d42f",
+                    "tuning0-rep-1-jobscount-10-katib-3111111-6sr84gl6",
+                    "tuning0-rep-1-jobscount-10-katib-3111111-g2zvhf98",
+                    "tuning0-rep-1-jobscount-10-katib-3111111-fz8ns52n",
+                    "tuning0-rep-1-jobscount-10-katib-3111111-xjgjshbm"
+                ],
+                "trials": 10,
+                "trialsSucceeded": 10
+            }
+        }
+    }
+}

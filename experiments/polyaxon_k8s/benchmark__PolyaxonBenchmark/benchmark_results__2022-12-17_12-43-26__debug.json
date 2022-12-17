@@ -1,0 +1,118 @@
+{
+    "benchmark_metrics": {
+        "latency": [
+            {
+                "metric_id": "__id_dcf99af7-3f8d-4896-8292-377778b43545__pid_2591717__hostname_BARE_ise-students__function-name_deploy__objHash_8776672110044",
+                "function_name": "deploy",
+                "start_time": "2022-12-17 12:43:29.038622",
+                "end_time": "2022-12-17 12:43:32.356645",
+                "duration_sec": 3.318023
+            },
+            {
+                "metric_id": "__id_22f6f0de-eea1-4993-8dd0-078782e12bf5__pid_2591717__hostname_BARE_ise-students__function-name_setup__objHash_8776672110044",
+                "function_name": "setup",
+                "start_time": "2022-12-17 12:43:32.393501",
+                "end_time": "2022-12-17 12:43:34.749534",
+                "duration_sec": 2.356033
+            },
+            {
+                "metric_id": "__id_4863119c-8d63-48f9-bcda-14703a5c68e4__pid_1__hostname_BARE_plx-operation-8ad38d758dc14331a3c9baa2193b196a--1-x5hcw__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:43:45.639627",
+                "end_time": "2022-12-17 11:44:15.680976",
+                "duration_sec": 30.041349
+            },
+            {
+                "metric_id": "__id_b01bf6ce-f252-478c-b474-fd71cd35ee61__pid_1__hostname_BARE_plx-operation-9afa01e93449436cad83dc7d4f88c7eb--1-mrbdb__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:43:45.740899",
+                "end_time": "2022-12-17 11:44:15.780606",
+                "duration_sec": 30.039707
+            },
+            {
+                "metric_id": "__id_5f412d2d-eb69-4a4d-b298-c8241a2902d0__pid_1__hostname_BARE_plx-operation-e4b9497814ea4074956bc29377a341e5--1-vthvm__function-name_train__objHash_30",
+                "function_name": "train",
+                "start_time": "2022-12-17 11:43:45.831667",
+                "end_time": "2022-12-17 11:44:15.871977",
+                "duration_sec": 30.04031
+            },
+            {
+                "metric_id": "__id_26ec468b-b6ed-4867-9745-7bfb77176a02__pid_1__hostname_BARE_plx-operation-8ad38d758dc14331a3c9baa2193b196a--1-x5hcw__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:44:15.844156",
+                "end_time": "2022-12-17 11:44:26.536190",
+                "duration_sec": 10.692034
+            },
+            {
+                "metric_id": "__id_973cda22-0bf0-45d3-a50a-c3004c75a70b__pid_1__hostname_BARE_plx-operation-9afa01e93449436cad83dc7d4f88c7eb--1-mrbdb__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:44:15.945431",
+                "end_time": "2022-12-17 11:44:26.634000",
+                "duration_sec": 10.688569
+            },
+            {
+                "metric_id": "__id_1478b500-b8aa-41db-96fa-279e9bfb2df2__pid_1__hostname_BARE_plx-operation-e4b9497814ea4074956bc29377a341e5--1-vthvm__function-name_validate__objHash_10",
+                "function_name": "validate",
+                "start_time": "2022-12-17 11:44:16.049140",
+                "end_time": "2022-12-17 11:44:26.732762",
+                "duration_sec": 10.683622
+            },
+            {
+                "metric_id": "__id_7ec0dd47-c100-4973-bcb2-b92b94091405__pid_2591717__hostname_BARE_ise-students__function-name_run__objHash_8776672110044",
+                "function_name": "run",
+                "start_time": "2022-12-17 12:43:34.763633",
+                "end_time": "2022-12-17 12:44:41.148015",
+                "duration_sec": 66.384382
+            },
+            {
+                "metric_id": "__id_f0435b3a-6138-45b9-b68b-2522feeddc7e__pid_2591717__hostname_BARE_ise-students__function-name_collect_run_results__objHash_8776672110044",
+                "function_name": "collect_run_results",
+                "start_time": "2022-12-17 12:44:41.162549",
+                "end_time": "2022-12-17 12:44:41.186009",
+                "duration_sec": 0.02346
+            },
+            {
+                "metric_id": "__id_e6406bd4-d97a-416b-8bcb-acdfabada151__pid_2591717__hostname_BARE_ise-students__function-name_test__objHash_8776672110044",
+                "function_name": "test",
+                "start_time": "2022-12-17 12:44:41.197931",
+                "end_time": "2022-12-17 12:44:41.197951",
+                "duration_sec": 2e-05
+            },
+            {
+                "metric_id": "__id_0810cf5d-7335-4890-a0db-f7cf07a9c727__pid_2591717__hostname_BARE_ise-students__function-name_collect_benchmark_metrics__objHash_8776672110044",
+                "function_name": "collect_benchmark_metrics",
+                "start_time": "2022-12-17 12:44:41.209155",
+                "end_time": "2022-12-17 12:44:41.230176",
+                "duration_sec": 0.021021
+            }
+        ],
+        "resources": [],
+        "classification": []
+    },
+    "benchmark_configuration": {
+        "resources": {
+            "experiment_titel": "tuning",
+            "variabel": "jobsCount",
+            "values": [
+                3
+            ],
+            "loggingLevel": "logging.INFO",
+            "imagePullPolicy": "IfNotPresent",
+            "generateNewDockerImage": false,
+            "dockerImageTag": "light_task",
+            "limitResources": true,
+            "limitCpuTotal": "500",
+            "limitCpuWorker": "150m",
+            "jobsCount": 3,
+            "cleanUp": false,
+            "undeploy": false,
+            "deploy": true,
+            "generatePlots": true,
+            "latexTitle": "Tuning scalability experiment with the light tasks",
+            "latexDescritption": "Tuning scalability experimetns with light task  conducted on Variabels: Trials number [1,2,3,4,5,6,7,8,9,10,12,14,16,18,20,25,30,40,50,100,150,200]",
+            "id": 3111111,
+            "studyName": "tuning-rep-1-jobscount-3-polyaxon-3111111",
+            "repetition": 1
+        }
+    }
+}
