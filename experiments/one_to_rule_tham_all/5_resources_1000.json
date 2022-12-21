@@ -1,13 +1,14 @@
 {
-  "repetitions": 1,
-  "json_id": 69,
+  "repetitions":4 ,
+  "json_id": 5999692251,
   "clean_and_deploy": true,
+    "run_on_framworks": ["Katib", "Polyaxon"],
   "experiments": [
     {
       "experiment_titel": "resources",
       "variabel": "limitCpuTotal",
-
-      "values": [6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 25, 30],
+	
+      "values": [ 8, 10, 12, 14, 16, 18, 20, 22, 24,26 ],
       "prometheus_url": "http://130.149.158.143:30041",
       "imagePullPolicy": "IfNotPresent",
       "generateNewDockerImage": false,
