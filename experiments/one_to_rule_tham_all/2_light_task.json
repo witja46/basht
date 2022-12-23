@@ -2,13 +2,13 @@
   "repetitions": 1,
   "json_id": 12111,
   "clean_and_deploy": false,
-  "run_on_framworks": ["Katib","Polyaxon"],
+  "run_on_framworks": ["Katib", "Polyaxon"],
   "pause_between": 15,
   "experiments": [
     {
       "experiment_titel": "tuning",
       "variabel": "jobsCount",
-      "values": [1,2,5,10,15,20,30,40,50,100,150,200,300],
+      "values": [1, 2, 5, 10, 15, 20, 30, 40, 50, 100, 150, 200, 300],
       "prometheus_url": "http://130.149.158.143:30041",
       "loggingLevel": "logging.INFO",
       "imagePullPolicy": "IfNotPresent",
@@ -30,15 +30,48 @@
     }
   ],
   "metrics_to_plot": {
-    "tuning_scalability": {
+    "tuning": {
       "run": [
         {
           "title": "Duration of the tuning phase (run fuction)",
           "y-label": "Tuning phase time",
-          "x_ticks": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 14, 16, 18],
-          "refrence": [10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10],
+
           "refrence_title": "Perfect scaling",
           "refrence_marker": ",",
+          "grid": true
+        },
+
+        {
+          "title": "Duration of the tuning phase (run fuction)",
+          "y-label": "Tuning phase time",
+          "y_lim": { "top": 150, "bottom": 0 },
+          "x_lim": { "right": 55 },
+          "x_ticks": [1, 2, 5, 10, 15, 20, 30, 40, 50],
+          "limit_right": 10,
+          "refrence_title": "Perfect scaling",
+          "refrence_marker": ",",
+          "grid": true
+        },
+        {
+          "title": "Duration of the tuning phase (run fuction)",
+          "y-label": "Tuning phase time",
+          "y_lim": { "top": 130, "bottom": 60 },
+          "x_lim": { "right": 55 },
+          "x_ticks": [1, 2, 5, 10, 15, 20, 30, 40, 50],
+          "limit_right": 10,
+          "refrence_title": "Perfect scaling",
+          "refrence_marker": ",",
+          "grid": true
+        },
+        {
+          "title": "Duration of the tuning phase (run fuction)",
+          "y-label": "Tuning phase time",
+          "x_lim": { "right": 55 },
+          "x_ticks": [1, 2, 5, 10, 15, 20, 30, 40, 50],
+          "limit_right": 9,
+          "refrence_title": "Aproximated sequential execution",
+          "refrence_marker": ",",
+          "refrence": [40, 80, 200, 400, 600, 800, 1200, 1600, 2000],
           "grid": true
         }
       ],
@@ -46,8 +79,11 @@
         {
           "title": "Average duration of trial training",
           "y-label": "Average trial traing time",
+          "y_lim": { "top": 30.1, "bottom": 30 },
+          "description": "Average duration of training function execution stayed as wanted by 30 seconds.",
           "refrence": "",
-          "grid": true
+          "grid": true,
+          "add_to_latex": true
         }
       ],
       "first_trial_initialization_time": [
@@ -56,6 +92,16 @@
           "y-label": "first trial initialization time",
           "refrence": "",
           "grid": true
+        },
+        {
+          "title": "Time needed for initialization of first trial training in range 1 to 50 trials",
+          "y-label": "first trial initialization time",
+          "refrence": "",
+          "grid": true,
+          "y_lim": { "top": 60, "bottom": 0 },
+
+          "x_lim": { "right": 55 },
+          "x_ticks": [1, 2, 5, 10, 15, 20, 30, 50]
         }
       ],
       "first_finished_trial_time": [
@@ -72,6 +118,16 @@
           "y-label": "last trial initialization time",
           "refrence": "",
           "grid": true
+        },
+        {
+          "title": "Time needed for initialization of the last trial training in range 1 to 50 trials",
+          "y-label": "last trial initialization time",
+          "refrence": "",
+          "grid": true,
+          "y_lim": { "top": 80, "bottom": 0 },
+
+          "x_lim": { "right": 55 },
+          "x_ticks": [1, 2, 5, 10, 15, 20, 30, 40, 50]
         }
       ],
 
@@ -81,6 +137,16 @@
           "y-label": "avg trial initialization time",
           "refrence": "",
           "grid": true
+        },
+        {
+          "title": "Average Time needed for initialization of  trials training in range 1 to 50",
+          "y-label": "avg trial initialization time",
+          "refrence": "",
+          "grid": true,
+          "y_lim": { "top": 80, "bottom": 0 },
+
+          "x_lim": { "right": 55 },
+          "x_ticks": [1, 2, 5, 10, 15, 20, 30, 40, 50]
         }
       ],
       "metrics_collection_time": [
@@ -90,6 +156,17 @@
           "refrence": "",
           "grid": true,
           "description": "Time from ending of last validation to the end of the run phase"
+        },
+        {
+          "title": "time needed for collection of all trial metrics in range 1-50 trials",
+          "y-label": "metrics_collection_time",
+          "refrence": "",
+          "grid": true,
+          "description": "Time from ending of last validation to the end of the run phase",
+          "y_lim": { "top": 16, "bottom": 2 },
+          "y_ticks": [4, 6, 8, 10, 12, 14, 16],
+          "x_lim": { "right": 55 },
+          "x_ticks": [1, 2, 5, 10, 15, 20, 30, 40, 50]
         }
       ],
 
@@ -99,6 +176,16 @@
           "y-label": "max train overlap time",
           "refrence": "",
           "grid": true
+        },
+        {
+          "title": "Maximal Duration of parallel execution of trials trainig ",
+          "y-label": "max train overlap time",
+          "refrence": "",
+          "grid": true,
+          "y_lim": { "top": 80, "bottom": 0 },
+
+          "x_lim": { "right": 55 },
+          "x_ticks": [1, 2, 5, 10, 15, 20, 30, 40, 50]
         }
       ],
       "max_train_overlaps_number": [
@@ -107,6 +194,17 @@
           "y-label": "max number of trials run in parrallel",
           "refrence": "",
           "grid": true
+        },
+
+        {
+          "title": "Maximal number of trials that were  runing in Parallel",
+          "y-label": "max number of trials run in parrallel",
+          "refrence": "",
+          "grid": true,
+          "y_lim": { "top": 80, "bottom": 0 },
+
+          "x_lim": { "right": 55 },
+          "x_ticks": [1, 2, 5, 10, 15, 20, 30, 40, 50]
         }
       ],
       "total_trials_validation_time": [
@@ -122,9 +220,7 @@
         {
           "title": "Summed time of all trials trianing",
           "y-label": "trials training times sum",
-          "refrence": [
-            10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 120, 140, 160, 180
-          ],
+
           "refrence_title": "Perfect scaling",
           "refrence_marker": ",",
 
@@ -133,14 +229,10 @@
         {
           "title": "Summed time of all trials trianing range 1-10 trials",
           "y-label": "trials training times sum",
-          "x_ticks": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-          "refrence": [
-            10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 120, 140, 160, 180
-          ],
+
           "refrence_title": "Perfect scaling",
           "refrence_marker": ",",
-          "x_lim": 8,
-          "y_lim": 200,
+
           "grid": true
         }
       ],

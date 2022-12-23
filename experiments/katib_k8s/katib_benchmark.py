@@ -269,6 +269,16 @@ class KatibBenchmark(Benchmark):
                         log.info("Finished all runs")
                         w.stop()
                     
+                    if(self.jobsCount == succeeded + 1):
+                        while(self.jobsCount != succeeded):
+                            log.info("Waiting for the last trial")
+                            print(succeeded)
+                            succeeded =   self.get_experiment()["status"].get("trialsSucceeded",0)
+                            sleep(1)
+                        w.stop()    
+                            
+
+                    
                
                     
            
@@ -374,6 +384,10 @@ class KatibBenchmark(Benchmark):
 
             
             res = os.popen('kubectl patch  crd/trials.kubeflow.org -p  \'{"metadata":{"finalizers":null}}\'').read()
+
+
+            log.info(res)
+            res = os.popen('kubectl patch  crd/experiments.kubeflow.org -p  \'{"metadata":{"finalizers":null}}\'').read()
 
 
             log.info(res)

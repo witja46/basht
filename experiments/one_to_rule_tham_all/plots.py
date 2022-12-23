@@ -292,6 +292,8 @@ def total_experiment_time(deploy_start_time,collect_benchmar_metrics_end_time):
     return ((collect_benchmar_metrics_end_time) - (deploy_start_time)).total_seconds()
 
 
+collection_times = []
+
 def generate_all_metrics(data,sort_by):
     sorted = sort_experiments(data,sort_by)
     convert_string_timestamps(sorted)
@@ -325,7 +327,7 @@ def generate_all_metrics(data,sort_by):
     phases_durations = get_phases_durations(sorted)
     t = 0
     for exp_num,exp in enumerate(sorted["resources"]):
-        print(exp)
+     
         validation_times = sorted["validate"][exp_num]
         train_times = sorted["train"][exp_num]
         max_train_overlap_time, max_train_overlaps_number = max_parrallel_time(train_times)
@@ -343,9 +345,11 @@ def generate_all_metrics(data,sort_by):
         metrics["last_trial_initialization_time"].append(last_trial_initialization_time(train_times,sorted["run"][exp_num]["start_time"]))
         metrics["first_finished_trial_time"].append(first_finished_trial_time(train_times,sorted["run"][exp_num]["start_time"]))
         metrics["avg_trial_initialization_time"].append(avg_trial_initialization_time(train_times,sorted["run"][exp_num]["start_time"]))
-        metrics["metrics_collection_time"].append(metrics_collection_time(validation_times,sorted["run"][exp_num]["end_time"]))
-        exptime = total_experiment_time(sorted["deploy"][exp_num]["start_time"], sorted["collect_benchmark_metrics"][exp_num]["end_time"])
+        mct = metrics_collection_time(validation_times,sorted["run"][exp_num]["end_time"])
         
+        metrics["metrics_collection_time"].append(mct)
+        exptime = total_experiment_time(sorted["deploy"][exp_num]["start_time"], sorted["collect_benchmark_metrics"][exp_num]["end_time"])
+
         metrics["total_experiment_time"].append(exptime)
 
    # add last trial initialization: ö
@@ -354,6 +358,7 @@ def generate_all_metrics(data,sort_by):
    #experiment duration Ö
    # first finished trial 
    # wyliczyc ile to wszystko trwalo 
+
     metrics["experiment_time"] = t
     return  {sort_by:sorted[sort_by]} |  phases_durations | metrics
 
@@ -523,13 +528,9 @@ def plot_metrics_from_yaml(json_path ,latex_string,variabel = ""):
     repetitions = exp_json["repetitions"]
     json_id = exp_json["json_id"]
     limitation = ""
-
+    print(json_path)
 
     print(json.dumps(exp_json, indent=4))
-
-    latex_string+= "\n\section{" + "section_name" + "}\label{sec:moti}\n" 
-    latex_string+= variabel
-    latex_string+="\n"   
 
    
     # latex_string = f' {katib["experiment_time"]}, {polyaxon["experiment_time"]}, ' + latex_string
@@ -542,7 +543,9 @@ def plot_metrics_from_yaml(json_path ,latex_string,variabel = ""):
         os.makedirs(plots_folder)
     except OSError:
         print ("Creation of the directory %s failed" % plots_folder)
-    
+    all_katib = []
+    all_polyaxon = []
+
     for exp in exp_array:
         variabels = exp["values"]
         if(exp["experiment_titel"] == "clean_up"):
@@ -552,7 +555,17 @@ def plot_metrics_from_yaml(json_path ,latex_string,variabel = ""):
             print("deploy")
 
         elif(exp["generatePlots"] ):
-            print(exp["experiment_titel"])
+           
+     
+            
+            section_name= exp["latexTitle"]
+            latex_string+= "\n\section{" + section_name + "}\label{sec:" + json_path[2:] +  "}\n" 
+            latex_string+= variabel
+            latex_string+="\n" 
+            latex_string+=exp.get("latexDescritption","") + "\n"
+              
+
+
             exp_titel = exp["experiment_titel"]
             sort_by =  exp["variabel"]
             x = exp["values"]
@@ -567,7 +580,7 @@ def plot_metrics_from_yaml(json_path ,latex_string,variabel = ""):
 
                 katib_exp_data_reps.append( generate_all_metrics(katib_exp_data,sort_by))
                 polyaxon_exp_reps.append(generate_all_metrics(polyaxon_exp_data,sort_by))
-
+           
             polyaxon = {}
             polyaxon_sorted = {}
             
@@ -583,35 +596,51 @@ def plot_metrics_from_yaml(json_path ,latex_string,variabel = ""):
                 polyaxon_sorted[metric] = []
 
                 for k , var in enumerate(variabels):
+              
+              
                     arr_katib =  list(map(lambda x : x[metric][k],katib_exp_data_reps )) 
                     arr_polyaxon =  list(map(lambda x : x[metric][k],polyaxon_exp_reps )) 
-                    arr_katib.sort()
-                    arr_polyaxon.sort()
+                    # arr_katib.sort()
+                    # arr_polyaxon.sort()
+                    
+
+                    # print(metric,var,len(arr_polyaxon),arr_katib)
+
 
                     katib_sorted[metric].append(arr_katib)
                     katib[metric].append(mean(arr_katib))
                     polyaxon[metric].append(mean(arr_polyaxon))
                     polyaxon_sorted[metric].append(arr_polyaxon)
-
-
-
-                    print(metric,var,arr_katib,k)
-
+            all_katib.append(katib_sorted)
+            all_polyaxon.append(polyaxon_sorted)
             print("xd dziala")
 
 
             for metric in metrics_to_plot:
                 for plot_num , plot in enumerate(metrics_to_plot[metric]):
-                  
+                    x = exp["values"]
                 
 
                     fig, ax = plt.subplots()
             
                 
-                
+                    katib_to_plot = katib[metric]
+                    polyaxon_to_plot = polyaxon[metric]
+
+
                     ax.set_xlabel(sort_by)
                     ax.set_ylabel(plot["y-label"])
                     ax.set_title(plot["title"])
+
+                    limit_right = plot.get("limit_right","")
+                    if(limit_right):
+                        x = x[:limit_right]
+                        katib_to_plot = katib_to_plot[:limit_right]
+                        polyaxon_to_plot = polyaxon_to_plot[:limit_right]
+                        print(katib_to_plot)
+                        print(x)
+                        print(polyaxon_to_plot)
+
 
                     x_lim = plot.get("x_lim","")
                     if(x_lim):
@@ -622,9 +651,9 @@ def plot_metrics_from_yaml(json_path ,latex_string,variabel = ""):
                         plt.ylim(**y_lim)
 
 
-                    ax.plot(x,katib[metric],"r", marker="o")
+                    ax.plot(x,katib_to_plot,"r", marker="o")
                 
-                    ax.plot(x,polyaxon[metric],"b",marker="o")
+                    ax.plot(x,polyaxon_to_plot,"b",marker="o")
                     refrence = plot.get("refrence","")
                     refrence_titel = plot.get("refrence_title","")
                     refrence_marker = plot.get("refrence_marker",",")
@@ -649,7 +678,7 @@ def plot_metrics_from_yaml(json_path ,latex_string,variabel = ""):
                 
                     ax.grid()
                     
-                    print(variabels)
+                 
 
                     exp_folder = f"{plots_folder}/{exp_titel}"
                     
@@ -659,25 +688,83 @@ def plot_metrics_from_yaml(json_path ,latex_string,variabel = ""):
                         print (" Creation of the directory %s failed" % plots_folder)
                     fig.savefig(f"{exp_folder}/{limitation}{sort_by}-{metric}{plot_num}.png")
 
-                    latex_string+= "\subsection{" + plot["title"] + "}\label{plot:" + f"{limitation}{sort_by}-{metric}" + "}\n" 
-                    latex_string+= "Some text\n" 
+                    if(plot.get("description",True)):
+                        latex_string+= "\subsection{" + plot["title"] + "}\label{plot:" + f"{limitation}{sort_by}-{metric}{plot_num}" + "}\n" 
+                        latex_string+= plot.get("description","Some text" )
+                        latex_string+= "\n" 
+                        latex_string+= "\n" 
+                        latex_string+= "\\begin{figure}[h]\n" 
+                        latex_string+= "    \centering\n" 
+                        latex_string+= "    \includegraphics[width=1\\textwidth]{img/plots/" + f"{plots_folder}/{limitation}{sort_by}-{metric}{plot_num}.png"+ "}\n" 
+                        latex_string+= "    \caption{Tittel decription}\n" 
+                        latex_string+= "    \label{fig:mesh1}\n" 
+                        latex_string+= "\end{figure}\n" 
+                        latex_string+= "\\newpage\n" 
+                        latex_string+= "\n" 
+                    
                     latex_string+= "\n" 
-                    latex_string+= "\n" 
-                    latex_string+= "\\begin{figure}[h]\n" 
-                    latex_string+= "    \centering\n" 
-                    latex_string+= "    \includegraphics[width=1\\textwidth]{img/plots/" + f"{limitation}{sort_by}-{metric}.png"+ "}\n" 
-                    latex_string+= "    \caption{Tittel decription}\n" 
-                    latex_string+= "    \label{fig:mesh1}\n" 
-                    latex_string+= "\end{figure}\n" 
-                    latex_string+= "\\newpage\n" 
-                    latex_string+= "\n" 
-                    latex_string+= "\n" 
- 
-    return latex_string
+    
+  
+    return latex_string,all_katib,all_polyaxon
         #plt.show()
-plot_metrics_from_yaml("5_resources_1000","")
-plot_metrics_from_yaml("4_resources_500","")
-plot_metrics_from_yaml("1_tuning","")
+
+res = [plot_metrics_from_yaml("1_tuning",""),
+ plot_metrics_from_yaml("2_light_task",""),
+plot_metrics_from_yaml("5_resources_1000_noreq",""),
+plot_metrics_from_yaml("5_resources_1000",""),
+plot_metrics_from_yaml("4_resources_500",""),
+plot_metrics_from_yaml("4_resources_500_noreq",""),
+plot_metrics_from_yaml("6_tuning_1CPU","")
+]
+print(collection_times)
+
+latex_string = ""
+katib = []
+polyaxon = []
+  
+metrics_katib = {
+        "first_trial_initialization_time":[],
+        "avg_trial_execution_time":[],
+        "avg_trial_validation_time":[],
+        "avg_trial_initialization_time":[],
+        "metrics_collection_time":[],
+        "first_finished_trial_time":[],
+    }
+
+metrics_polyaxon = {
+        "first_trial_initialization_time":[],
+        "avg_trial_execution_time":[],
+        "avg_trial_validation_time":[],
+        "avg_trial_initialization_time":[],
+        "metrics_collection_time":[],
+        "first_finished_trial_time":[],
+    }
+
+for (latex , all_katib, all_polyaxon)  in res:
+    latex_string+=latex
+    print("\n afdsf \n ",all_katib)
+    for met in metrics_katib:
+        for i, rep in enumerate(all_katib):
+            flatten = [item for sublist in rep[met] for item in sublist]
+            metrics_katib[met].append(flatten)
+            print("\n",met, rep[met],len(rep[met]),len(flatten))
+
+   
+    
+print(metrics_katib)
+for met in metrics_katib:
+    flatten = [item for sublist in metrics_katib[met] for item in sublist]
+    print(len(flatten))
+    metrics_katib[met] = flatten
+print(metrics_katib)
+
+
+
+print(len(metrics_katib["first_trial_initialization_time"]))
+latex_string = "\chapter{evaluation} \n" + latex_string
+with open(f"latex.txt", "w") as outfile:
+    outfile.write(latex_string)
+
 
 
 latex_string= "\\chapter{Plots}\n"

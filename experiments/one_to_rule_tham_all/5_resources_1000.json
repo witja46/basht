@@ -1,14 +1,14 @@
 {
-  "repetitions":4 ,
+  "repetitions": 3,
   "json_id": 5999692251,
   "clean_and_deploy": true,
-    "run_on_framworks": ["Katib", "Polyaxon"],
+  "run_on_framworks": ["Katib", "Polyaxon"],
   "experiments": [
     {
       "experiment_titel": "resources",
       "variabel": "limitCpuTotal",
-	
-      "values": [ 8, 10, 12, 14, 16, 18, 20, 22, 24,26 ],
+
+      "values": [8, 10, 12, 14, 16, 18, 20, 22, 24, 26],
       "prometheus_url": "http://130.149.158.143:30041",
       "imagePullPolicy": "IfNotPresent",
       "generateNewDockerImage": false,
@@ -42,7 +42,11 @@
         {
           "title": "Duration of the tuning phase (run fuction)",
           "y-label": "Tuning phase time",
-          "y_lim": { "top": 250, "bottom": 100 },
+          "y_ticks": [
+            0, 20, 40, 60, 80, 100, 120, 140, 160, 180, 200, 220, 240, 260, 280
+          ],
+
+          "y_lim": { "top": 280, "bottom": 100 },
           "refrence_title": "Perfect scaling",
           "refrence_marker": ",",
           "grid": true

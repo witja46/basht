@@ -20,7 +20,9 @@ def validate(time_sec):
         sleep(1)
         msg = f"Validate time {x}/{time_sec}"
         logging.info(msg)
-   
+    test_accuracy =0.7 
+    logging.info("precision={:.4f}\n".format(
+        test_accuracy))
    
 
 
@@ -51,9 +53,7 @@ def main():
     
     train(30)
     validate(10) 
-    test_accuracy =0.7 
-    logging.info("precision={:.4f}\n".format(
-        test_accuracy))
+
 
 
 

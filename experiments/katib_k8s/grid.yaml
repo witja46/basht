@@ -3,7 +3,7 @@ apiVersion: kubeflow.org/v1beta1
 kind: Experiment
 metadata:
   namespace: kubeflow
-  name: tuning-rep-1-jobscount-2-katib-3
+  name: tuningo1aa-rep-1-jobscount-20-katib-3111111
 spec:
   objective:
     type: maximize
@@ -11,9 +11,9 @@ spec:
     objectiveMetricName: precision
   algorithm:
     algorithmName: grid
-  parallelTrialCount: 2
-  maxTrialCount: 2
-  maxFailedTrialCount: 2
+  parallelTrialCount: 20
+  maxTrialCount: 20
+  maxFailedTrialCount: 20
   parameters:
     - name: lr
       parameterType: double
@@ -39,9 +39,9 @@ spec:
                 imagePullPolicy: IfNotPresent
                 resources:
                   limits:
-                    cpu: 5m
+                    cpu: 510m
                   requests:
-                    cpu: 5m
+                    cpu: 510m
                 command:
                   - "python3"
                   - "experiments/katib_k8s/light_task_katib/task.py"
@@ -49,7 +49,7 @@ spec:
                   - "--lr=${trialParameters.learningRate}"
                 env:
                   - name: STUDY_NAME
-                    value: "tuning-rep-1-jobscount-2-katib-3"
+                    value: "tuningo1aa-rep-1-jobscount-20-katib-3111111"
                   - name: DB_CONN
                     value: "postgresql://postgresadmin:admin123@postgres:5432/postgresdb"
                   - name: "METRICS_STORAGE_HOST"

@@ -42,30 +42,30 @@ if __name__ == "__main__":
     #       print(res["limitCpuWorker"],res["limitCpuTotal"])    
    
     folder_name = "../katib_k8s/benchmark__KatibBenchmark"
-    # folder_name = "../polyaxon_k8s/benchmark__PolyaxonBenchmark"
+    folder_name = "../polyaxon_k8s/benchmark__PolyaxonBenchmark"
 
-    folder = os.listdir(f"./{folder_name}")
-    folder.sort()
-    data = []
-    for file in folder:
-        with open(f"{folder_name}/{file}","r") as f:
-            exp = json.load(f)
-            exp_res= exp["benchmark_configuration"]["resources"]
+    # folder = os.listdir(f"./{folder_name}")
+    # folder.sort()
+    # data = []
+    # for file in folder:
+    #     with open(f"{folder_name}/{file}","r") as f:
+    #         exp = json.load(f)
+    #         exp_res= exp["benchmark_configuration"]["resources"]
             
           
-            if(exp_res.get("experiment_titel","")== "deploy"):
-              for lat in exp["benchmark_metrics"]["latency"]:
-                if(lat["function_name"]=="deploy"):
+    #         if(exp_res.get("experiment_titel","")== "deploy"):
+    #           for lat in exp["benchmark_metrics"]["latency"]:
+    #             if(lat["function_name"]=="deploy"):
 
-                  if(lat["duration_sec"] > 40):
-                    data.append(lat["duration_sec"])
-                    print(lat["duration_sec"])
-    print("mean time = ", mean(data))
+    #               if(lat["duration_sec"] > 40):
+    #                 data.append(lat["duration_sec"])
+    #                 print(lat["duration_sec"])
+    # print("mean time = ", mean(data))
           
 
 
 
-    id = 69
+    id = 5999692251
     print("guwno")
     limitCpuWorker  ="1000m"
     folder = os.listdir(f"./{folder_name}")
@@ -76,9 +76,9 @@ if __name__ == "__main__":
             exp = json.load(f)
             exp_res= exp["benchmark_configuration"]["resources"]
             
-            if(exp_res.get("id","") == id and exp_res["limitCpuWorker"]== limitCpuWorker):
+            if(exp_res.get("id","") == id and exp_res["repetition"]== 4):
                 data.append(exp)
                 print(exp_res["limitCpuWorker"],exp_res["limitCpuTotal"],exp_res["repetition"],exp_res["values"],file,)
-                exp["benchmark_configuration"]["resources"]["values"] = [6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 25, 30]
+                exp["benchmark_configuration"]["resources"]["repetition"] = 3
                 # with open(f"{folder_name}/{file}", "w") as outfile:
-                #     json.dump(exp, outfile)
+                #       json.dump(exp, outfile)

@@ -1,13 +1,15 @@
 {
-  "repetitions": 1,
-  "json_id": 27488,
+  "repetitions": 2,
+  "json_id": 44444444,
   "clean_and_deploy": true,
+  "run_on_framworks": ["Katib", "Polyaxon"],
   "experiments": [
     {
       "experiment_titel": "resources",
       "variabel": "limitCpuTotal",
-      "values": [5, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 25, 30],
 
+      "values": [8, 10, 12, 14, 16, 18, 20, 22, 24, 26],
+      "prometheus_url": "http://130.149.158.143:30041",
       "imagePullPolicy": "IfNotPresent",
       "generateNewDockerImage": false,
       "dockerImageTag": "mnist_task",
@@ -22,10 +24,11 @@
       "limitCpuTotal": "",
       "limitCpuWorker": "500m",
       "generatePlots": true,
-      "latexTitle": "resources worker limit 500m",
-      "latexDescritption": " ressources scalability with the limit for the worker set to 500m"
+      "latexTitle": "resources worker limit and request 500m",
+      "latexDescritption": " ressources scalability with the limit and request for the worker set to 500m"
     }
   ],
+
   "metrics_to_plot": {
     "resources": {
       "run": [

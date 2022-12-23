@@ -1,0 +1,1541 @@
+\chapter{evaluation} 
+
+\section{Tuning scalability experiment with mnist task and no limits}\label{sec:tuning}
+
+Tuning scalability experimetns(4 repetitions) without restrictions conducted on Variabel: Trials number [1,2,4,6,8,10,12,14,16,18,20,22]
+\subsection{Duration of the tuning phase (run fuction)}\label{plot:jobsCount-run0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/1_tuning/jobsCount-run0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Duration of the tuning phase (run fuction)}\label{plot:jobsCount-run1}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/1_tuning/jobsCount-run1.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Average duration of trial training}\label{plot:jobsCount-avg_trial_execution_time0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/1_tuning/jobsCount-avg_trial_execution_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Average duration of trial training in range 1-8 trials}\label{plot:jobsCount-avg_trial_execution_time1}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/1_tuning/jobsCount-avg_trial_execution_time1.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Time needed for initialization of first trial training}\label{plot:jobsCount-first_trial_initialization_time0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/1_tuning/jobsCount-first_trial_initialization_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Time needed for the first trial to be finished}\label{plot:jobsCount-first_finished_trial_time0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/1_tuning/jobsCount-first_finished_trial_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Time needed for initialization of the last trial training}\label{plot:jobsCount-last_trial_initialization_time0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/1_tuning/jobsCount-last_trial_initialization_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Average Time needed for initialization of  trials training}\label{plot:jobsCount-avg_trial_initialization_time0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/1_tuning/jobsCount-avg_trial_initialization_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{time needed for collection of all trial metrics}\label{plot:jobsCount-metrics_collection_time0}
+Time from ending of last validation to the end of the run phase
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/1_tuning/jobsCount-metrics_collection_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Maximal Duration of parallel execution of trials trainig }\label{plot:jobsCount-max_train_overlap_time0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/1_tuning/jobsCount-max_train_overlap_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Maximal number of trials that were  runing in Parallel}\label{plot:jobsCount-max_train_overlaps_number0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/1_tuning/jobsCount-max_train_overlaps_number0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Summed time of all trials validations}\label{plot:jobsCount-total_trials_validation_time0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/1_tuning/jobsCount-total_trials_validation_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Summed time of all trials trianing}\label{plot:jobsCount-total_trials_execution_time0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/1_tuning/jobsCount-total_trials_execution_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Summed time of all trials trianing range 1-8 trials}\label{plot:jobsCount-total_trials_execution_time1}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/1_tuning/jobsCount-total_trials_execution_time1.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Time from begining of first validation to the end of last one}\label{plot:jobsCount-trials_validation_phase_time0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/1_tuning/jobsCount-trials_validation_phase_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Time from begining of first trial training to the end of last one}\label{plot:jobsCount-trials_execution_phase_time0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/1_tuning/jobsCount-trials_execution_phase_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Average duration of trial validation}\label{plot:jobsCount-avg_trial_validation_time0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/1_tuning/jobsCount-avg_trial_validation_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Duration of whole experiment from deploy till end}\label{plot:jobsCount-total_experiment_time0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/1_tuning/jobsCount-total_experiment_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+
+\section{Tuning scalability experiment with the light tasks}\label{sec:light_task}
+
+Tuning scalability experimetns with light task  conducted on Variabels: Trials number  [1,2,5,10,15,20,30,40,50,100,150,200,300],
+\subsection{Duration of the tuning phase (run fuction)}\label{plot:jobsCount-run0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/2_light_task/jobsCount-run0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Duration of the tuning phase (run fuction)}\label{plot:jobsCount-run1}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/2_light_task/jobsCount-run1.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Duration of the tuning phase (run fuction)}\label{plot:jobsCount-run2}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/2_light_task/jobsCount-run2.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Duration of the tuning phase (run fuction)}\label{plot:jobsCount-run3}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/2_light_task/jobsCount-run3.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Average duration of trial training}\label{plot:jobsCount-avg_trial_execution_time0}
+Average duration of training function execution stayed as wanted by 30 seconds.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/2_light_task/jobsCount-avg_trial_execution_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Time needed for initialization of first trial training}\label{plot:jobsCount-first_trial_initialization_time0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/2_light_task/jobsCount-first_trial_initialization_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Time needed for initialization of first trial training in range 1 to 50 trials}\label{plot:jobsCount-first_trial_initialization_time1}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/2_light_task/jobsCount-first_trial_initialization_time1.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Time needed for the first trial to be finished}\label{plot:jobsCount-first_finished_trial_time0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/2_light_task/jobsCount-first_finished_trial_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Time needed for initialization of the last trial training}\label{plot:jobsCount-last_trial_initialization_time0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/2_light_task/jobsCount-last_trial_initialization_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Time needed for initialization of the last trial training in range 1 to 50 trials}\label{plot:jobsCount-last_trial_initialization_time1}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/2_light_task/jobsCount-last_trial_initialization_time1.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Average Time needed for initialization of  trials training}\label{plot:jobsCount-avg_trial_initialization_time0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/2_light_task/jobsCount-avg_trial_initialization_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Average Time needed for initialization of  trials training in range 1 to 50}\label{plot:jobsCount-avg_trial_initialization_time1}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/2_light_task/jobsCount-avg_trial_initialization_time1.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{time needed for collection of all trial metrics}\label{plot:jobsCount-metrics_collection_time0}
+Time from ending of last validation to the end of the run phase
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/2_light_task/jobsCount-metrics_collection_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{time needed for collection of all trial metrics in range 1-50 trials}\label{plot:jobsCount-metrics_collection_time1}
+Time from ending of last validation to the end of the run phase
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/2_light_task/jobsCount-metrics_collection_time1.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Maximal Duration of parallel execution of trials trainig }\label{plot:jobsCount-max_train_overlap_time0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/2_light_task/jobsCount-max_train_overlap_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Maximal Duration of parallel execution of trials trainig }\label{plot:jobsCount-max_train_overlap_time1}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/2_light_task/jobsCount-max_train_overlap_time1.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Maximal number of trials that were  runing in Parallel}\label{plot:jobsCount-max_train_overlaps_number0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/2_light_task/jobsCount-max_train_overlaps_number0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Maximal number of trials that were  runing in Parallel}\label{plot:jobsCount-max_train_overlaps_number1}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/2_light_task/jobsCount-max_train_overlaps_number1.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Summed time of all trials validations}\label{plot:jobsCount-total_trials_validation_time0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/2_light_task/jobsCount-total_trials_validation_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Summed time of all trials trianing}\label{plot:jobsCount-total_trials_execution_time0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/2_light_task/jobsCount-total_trials_execution_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Summed time of all trials trianing range 1-10 trials}\label{plot:jobsCount-total_trials_execution_time1}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/2_light_task/jobsCount-total_trials_execution_time1.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Time from begining of first validation to the end of last one}\label{plot:jobsCount-trials_validation_phase_time0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/2_light_task/jobsCount-trials_validation_phase_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Time from begining of first trial training to the end of last one}\label{plot:jobsCount-trials_execution_phase_time0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/2_light_task/jobsCount-trials_execution_phase_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Average duration of trial validation}\label{plot:jobsCount-avg_trial_validation_time0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/2_light_task/jobsCount-avg_trial_validation_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Duration of whole experiment from deploy till end}\label{plot:jobsCount-total_experiment_time0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/2_light_task/jobsCount-total_experiment_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+
+\section{resources worker limit 1000m}\label{sec:resources_1000_noreq}
+
+ ressources scalability with the limit for the worker set to 1000m
+\subsection{Duration of the tuning phase (run fuction)}\label{plot:limitCpuTotal-run0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/5_resources_1000_noreq/limitCpuTotal-run0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Duration of the tuning phase (run fuction)}\label{plot:limitCpuTotal-run1}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/5_resources_1000_noreq/limitCpuTotal-run1.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Average duration of trial training}\label{plot:limitCpuTotal-avg_trial_execution_time0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/5_resources_1000_noreq/limitCpuTotal-avg_trial_execution_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Time needed for initialization of first trial training}\label{plot:limitCpuTotal-first_trial_initialization_time0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/5_resources_1000_noreq/limitCpuTotal-first_trial_initialization_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Time needed for the first trial to be finished}\label{plot:limitCpuTotal-first_finished_trial_time0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/5_resources_1000_noreq/limitCpuTotal-first_finished_trial_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Time needed for initialization of the last trial training}\label{plot:limitCpuTotal-last_trial_initialization_time0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/5_resources_1000_noreq/limitCpuTotal-last_trial_initialization_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Average Time needed for initialization of  trials training}\label{plot:limitCpuTotal-avg_trial_initialization_time0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/5_resources_1000_noreq/limitCpuTotal-avg_trial_initialization_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{time needed for collection of all trial metrics}\label{plot:limitCpuTotal-metrics_collection_time0}
+Time from ending of last validation to the end of the run phase
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/5_resources_1000_noreq/limitCpuTotal-metrics_collection_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Maximal Duration of parallel execution of trials trainig }\label{plot:limitCpuTotal-max_train_overlap_time0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/5_resources_1000_noreq/limitCpuTotal-max_train_overlap_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Maximal number of trials that were  runing in Parallel}\label{plot:limitCpuTotal-max_train_overlaps_number0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/5_resources_1000_noreq/limitCpuTotal-max_train_overlaps_number0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Summed time of all trials validations}\label{plot:limitCpuTotal-total_trials_validation_time0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/5_resources_1000_noreq/limitCpuTotal-total_trials_validation_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Summed time of all trials trianing}\label{plot:limitCpuTotal-total_trials_execution_time0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/5_resources_1000_noreq/limitCpuTotal-total_trials_execution_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Time from begining of first validation to the end of last one}\label{plot:limitCpuTotal-trials_validation_phase_time0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/5_resources_1000_noreq/limitCpuTotal-trials_validation_phase_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Time from begining of first trial training to the end of last one}\label{plot:limitCpuTotal-trials_execution_phase_time0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/5_resources_1000_noreq/limitCpuTotal-trials_execution_phase_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Average duration of trial validation}\label{plot:limitCpuTotal-avg_trial_validation_time0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/5_resources_1000_noreq/limitCpuTotal-avg_trial_validation_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Duration of whole experiment from deploy till end}\label{plot:limitCpuTotal-total_experiment_time0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/5_resources_1000_noreq/limitCpuTotal-total_experiment_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+
+\section{resources worker limit 1000m}\label{sec:resources_1000}
+
+ ressources scalability with the limit for the worker set to 1000m
+\subsection{Duration of the tuning phase (run fuction)}\label{plot:limitCpuTotal-run0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/5_resources_1000/limitCpuTotal-run0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Duration of the tuning phase (run fuction)}\label{plot:limitCpuTotal-run1}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/5_resources_1000/limitCpuTotal-run1.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Average duration of trial training}\label{plot:limitCpuTotal-avg_trial_execution_time0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/5_resources_1000/limitCpuTotal-avg_trial_execution_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Time needed for initialization of first trial training}\label{plot:limitCpuTotal-first_trial_initialization_time0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/5_resources_1000/limitCpuTotal-first_trial_initialization_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Time needed for the first trial to be finished}\label{plot:limitCpuTotal-first_finished_trial_time0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/5_resources_1000/limitCpuTotal-first_finished_trial_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Time needed for initialization of the last trial training}\label{plot:limitCpuTotal-last_trial_initialization_time0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/5_resources_1000/limitCpuTotal-last_trial_initialization_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Average Time needed for initialization of  trials training}\label{plot:limitCpuTotal-avg_trial_initialization_time0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/5_resources_1000/limitCpuTotal-avg_trial_initialization_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{time needed for collection of all trial metrics}\label{plot:limitCpuTotal-metrics_collection_time0}
+Time from ending of last validation to the end of the run phase
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/5_resources_1000/limitCpuTotal-metrics_collection_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Maximal Duration of parallel execution of trials trainig }\label{plot:limitCpuTotal-max_train_overlap_time0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/5_resources_1000/limitCpuTotal-max_train_overlap_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Maximal number of trials that were  runing in Parallel}\label{plot:limitCpuTotal-max_train_overlaps_number0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/5_resources_1000/limitCpuTotal-max_train_overlaps_number0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Summed time of all trials validations}\label{plot:limitCpuTotal-total_trials_validation_time0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/5_resources_1000/limitCpuTotal-total_trials_validation_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Summed time of all trials trianing}\label{plot:limitCpuTotal-total_trials_execution_time0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/5_resources_1000/limitCpuTotal-total_trials_execution_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Time from begining of first validation to the end of last one}\label{plot:limitCpuTotal-trials_validation_phase_time0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/5_resources_1000/limitCpuTotal-trials_validation_phase_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Time from begining of first trial training to the end of last one}\label{plot:limitCpuTotal-trials_execution_phase_time0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/5_resources_1000/limitCpuTotal-trials_execution_phase_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Average duration of trial validation}\label{plot:limitCpuTotal-avg_trial_validation_time0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/5_resources_1000/limitCpuTotal-avg_trial_validation_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Duration of whole experiment from deploy till end}\label{plot:limitCpuTotal-total_experiment_time0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/5_resources_1000/limitCpuTotal-total_experiment_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+
+\section{resources worker limit and request 500m}\label{sec:resources_500}
+
+ ressources scalability with the limit and request for the worker set to 500m
+\subsection{Duration of the tuning phase (run fuction)}\label{plot:limitCpuTotal-run0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/4_resources_500/limitCpuTotal-run0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Duration of the tuning phase (run fuction)}\label{plot:limitCpuTotal-run1}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/4_resources_500/limitCpuTotal-run1.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Average duration of trial training}\label{plot:limitCpuTotal-avg_trial_execution_time0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/4_resources_500/limitCpuTotal-avg_trial_execution_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Time needed for initialization of first trial training}\label{plot:limitCpuTotal-first_trial_initialization_time0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/4_resources_500/limitCpuTotal-first_trial_initialization_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Time needed for the first trial to be finished}\label{plot:limitCpuTotal-first_finished_trial_time0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/4_resources_500/limitCpuTotal-first_finished_trial_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Time needed for initialization of the last trial training}\label{plot:limitCpuTotal-last_trial_initialization_time0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/4_resources_500/limitCpuTotal-last_trial_initialization_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Average Time needed for initialization of  trials training}\label{plot:limitCpuTotal-avg_trial_initialization_time0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/4_resources_500/limitCpuTotal-avg_trial_initialization_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Average Time needed for initialization of  trials training}\label{plot:limitCpuTotal-avg_trial_initialization_time1}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/4_resources_500/limitCpuTotal-avg_trial_initialization_time1.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{time needed for collection of all trial metrics}\label{plot:limitCpuTotal-metrics_collection_time0}
+Time from ending of last validation to the end of the run phase
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/4_resources_500/limitCpuTotal-metrics_collection_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Maximal Duration of parallel execution of trials trainig }\label{plot:limitCpuTotal-max_train_overlap_time0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/4_resources_500/limitCpuTotal-max_train_overlap_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Maximal number of trials that were  runing in Parallel}\label{plot:limitCpuTotal-max_train_overlaps_number0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/4_resources_500/limitCpuTotal-max_train_overlaps_number0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Summed time of all trials validations}\label{plot:limitCpuTotal-total_trials_validation_time0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/4_resources_500/limitCpuTotal-total_trials_validation_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Summed time of all trials trianing}\label{plot:limitCpuTotal-total_trials_execution_time0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/4_resources_500/limitCpuTotal-total_trials_execution_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Time from begining of first validation to the end of last one}\label{plot:limitCpuTotal-trials_validation_phase_time0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/4_resources_500/limitCpuTotal-trials_validation_phase_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Time from begining of first trial training to the end of last one}\label{plot:limitCpuTotal-trials_execution_phase_time0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/4_resources_500/limitCpuTotal-trials_execution_phase_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Average duration of trial validation}\label{plot:limitCpuTotal-avg_trial_validation_time0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/4_resources_500/limitCpuTotal-avg_trial_validation_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Duration of whole experiment from deploy till end}\label{plot:limitCpuTotal-total_experiment_time0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/4_resources_500/limitCpuTotal-total_experiment_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+
+\section{resources worker limit 500m}\label{sec:resources_500_noreq}
+
+ ressources scalability with the limit for the worker set to 500m
+\subsection{Duration of the tuning phase (run fuction)}\label{plot:limitCpuTotal-run0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/4_resources_500_noreq/limitCpuTotal-run0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Duration of the tuning phase (run fuction)}\label{plot:limitCpuTotal-run1}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/4_resources_500_noreq/limitCpuTotal-run1.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Average duration of trial training}\label{plot:limitCpuTotal-avg_trial_execution_time0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/4_resources_500_noreq/limitCpuTotal-avg_trial_execution_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Time needed for initialization of first trial training}\label{plot:limitCpuTotal-first_trial_initialization_time0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/4_resources_500_noreq/limitCpuTotal-first_trial_initialization_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Time needed for the first trial to be finished}\label{plot:limitCpuTotal-first_finished_trial_time0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/4_resources_500_noreq/limitCpuTotal-first_finished_trial_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Time needed for initialization of the last trial training}\label{plot:limitCpuTotal-last_trial_initialization_time0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/4_resources_500_noreq/limitCpuTotal-last_trial_initialization_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Average Time needed for initialization of  trials training}\label{plot:limitCpuTotal-avg_trial_initialization_time0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/4_resources_500_noreq/limitCpuTotal-avg_trial_initialization_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Average Time needed for initialization of  trials training}\label{plot:limitCpuTotal-avg_trial_initialization_time1}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/4_resources_500_noreq/limitCpuTotal-avg_trial_initialization_time1.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{time needed for collection of all trial metrics}\label{plot:limitCpuTotal-metrics_collection_time0}
+Time from ending of last validation to the end of the run phase
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/4_resources_500_noreq/limitCpuTotal-metrics_collection_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Maximal Duration of parallel execution of trials trainig }\label{plot:limitCpuTotal-max_train_overlap_time0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/4_resources_500_noreq/limitCpuTotal-max_train_overlap_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Maximal number of trials that were  runing in Parallel}\label{plot:limitCpuTotal-max_train_overlaps_number0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/4_resources_500_noreq/limitCpuTotal-max_train_overlaps_number0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Summed time of all trials validations}\label{plot:limitCpuTotal-total_trials_validation_time0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/4_resources_500_noreq/limitCpuTotal-total_trials_validation_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Summed time of all trials trianing}\label{plot:limitCpuTotal-total_trials_execution_time0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/4_resources_500_noreq/limitCpuTotal-total_trials_execution_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Time from begining of first validation to the end of last one}\label{plot:limitCpuTotal-trials_validation_phase_time0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/4_resources_500_noreq/limitCpuTotal-trials_validation_phase_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Time from begining of first trial training to the end of last one}\label{plot:limitCpuTotal-trials_execution_phase_time0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/4_resources_500_noreq/limitCpuTotal-trials_execution_phase_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Average duration of trial validation}\label{plot:limitCpuTotal-avg_trial_validation_time0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/4_resources_500_noreq/limitCpuTotal-avg_trial_validation_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Duration of whole experiment from deploy till end}\label{plot:limitCpuTotal-total_experiment_time0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/4_resources_500_noreq/limitCpuTotal-total_experiment_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+
+\section{Tuning scalability experiment with the mnist  tasks}\label{sec:tuning_1CPU}
+
+Tuning scalability experimetns with mnist task  conducted on Variabels: Trials number  [1,2,3,4,5,6,7,8,9,10,12,14,16,18,20],
+\subsection{Duration of the tuning phase (run fuction)}\label{plot:jobsCount-run0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/6_tuning_1CPU/jobsCount-run0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Duration of the tuning phase (run fuction)}\label{plot:jobsCount-run1}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/6_tuning_1CPU/jobsCount-run1.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Average duration of trial training}\label{plot:jobsCount-avg_trial_execution_time0}
+In comparision to the avg trial training by no limit tuning scalability,the diffrence between katib and polyaxon is much smaller still a little bit unexpeted the the avg are not equel withch they schould toerticly be, as every trial executes the same amount of work . Simmilar patter of rising avg time is hear to see, the time stay about equel up to 5 trials runing in parralle than we habe a rise up to 8-9 trials and again up 10 to 20 trials we agingo upwards  
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/6_tuning_1CPU/jobsCount-avg_trial_execution_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Time needed for initialization of first trial training}\label{plot:jobsCount-first_trial_initialization_time0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/6_tuning_1CPU/jobsCount-first_trial_initialization_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Time needed for the first trial to be finished}\label{plot:jobsCount-first_finished_trial_time0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/6_tuning_1CPU/jobsCount-first_finished_trial_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Time needed for initialization of the last trial training}\label{plot:jobsCount-last_trial_initialization_time0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/6_tuning_1CPU/jobsCount-last_trial_initialization_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Average Time needed for initialization of  trials training}\label{plot:jobsCount-avg_trial_initialization_time0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/6_tuning_1CPU/jobsCount-avg_trial_initialization_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{time needed for collection of all trial metrics}\label{plot:jobsCount-metrics_collection_time0}
+Time from ending of last validation to the end of the run phase
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/6_tuning_1CPU/jobsCount-metrics_collection_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Maximal Duration of parallel execution of trials trainig }\label{plot:jobsCount-max_train_overlap_time0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/6_tuning_1CPU/jobsCount-max_train_overlap_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Maximal number of trials that were  runing in Parallel}\label{plot:jobsCount-max_train_overlaps_number0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/6_tuning_1CPU/jobsCount-max_train_overlaps_number0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Summed time of all trials validations}\label{plot:jobsCount-total_trials_validation_time0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/6_tuning_1CPU/jobsCount-total_trials_validation_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Summed time of all trials trianing}\label{plot:jobsCount-total_trials_execution_time0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/6_tuning_1CPU/jobsCount-total_trials_execution_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Summed time of all trials trianing range 1-10 trials}\label{plot:jobsCount-total_trials_execution_time1}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/6_tuning_1CPU/jobsCount-total_trials_execution_time1.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Time from begining of first validation to the end of last one}\label{plot:jobsCount-trials_validation_phase_time0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/6_tuning_1CPU/jobsCount-trials_validation_phase_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Time from begining of first trial training to the end of last one}\label{plot:jobsCount-trials_execution_phase_time0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/6_tuning_1CPU/jobsCount-trials_execution_phase_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Average duration of trial validation}\label{plot:jobsCount-avg_trial_validation_time0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/6_tuning_1CPU/jobsCount-avg_trial_validation_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+
+\subsection{Duration of whole experiment from deploy till end}\label{plot:jobsCount-total_experiment_time0}
+Some text
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/plots/6_tuning_1CPU/jobsCount-total_experiment_time0.png}
+    \caption{Tittel decription}
+    \label{fig:mesh1}
+\end{figure}
+\newpage
+
+

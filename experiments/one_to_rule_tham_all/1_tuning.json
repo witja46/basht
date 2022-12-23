@@ -1,51 +1,10 @@
 {
   "repetitions": 4,
   "json_id": 23449,
+  "clean_and_deploy": false,
+  "run_on_framworks": ["Katib", "Polyaxon"],
+  "pause_between": 15,
   "experiments": [
-    {
-      "experiment_titel": "clean_up",
-      "variabel": "jobsCount",
-      "values": [1],
-
-      "loggingLevel": "logging.INFO",
-      "imagePullPolicy": "IfNotPresent",
-      "generateNewDockerImage": "False",
-      "dockerImageTag": "",
-
-      "limitResources": "False",
-
-      "cleanUp": "True",
-      "undeploy": "True",
-      "deploy": "True",
-
-      "jobsCount": 1,
-      "limitCpuTotal": "",
-      "limitCpuWorker": "",
-      "generatePlots": false
-    },
-
-    {
-      "experiment_titel": "deploy",
-      "variabel": "limitCpuTotal",
-      "values": ["10"],
-
-      "loggingLevel": "logging.INFO",
-      "imagePullPolicy": "IfNotPresent",
-      "generateNewDockerImage": "False",
-      "dockerImageTag": "",
-
-      "limitResources": "True",
-
-      "cleanUp": "True",
-      "undeploy": "False",
-      "deploy": "True",
-
-      "jobsCount": 1,
-      "limitCpuTotal": "",
-      "limitCpuWorker": "4000m",
-      "generatePlots": false
-    },
-
     {
       "experiment_titel": "tuning_scalability",
       "variabel": "jobsCount",
@@ -66,8 +25,8 @@
 
       "jobsCount": 0,
       "generatePlots": true,
-      "latexTitle": "Tuning scalability experiment",
-      "latexDescritption": "Tuning scalability experimetns conducted on Variabel: Trials number [1,2,4,6,8,10,12,14,16,18,20,22]"
+      "latexTitle": "Tuning scalability experiment with mnist task and no limits",
+      "latexDescritption": "Tuning scalability experimetns(4 repetitions) without restrictions conducted on Variabel: Trials number [1,2,4,6,8,10,12,14,16,18,20,22]"
     }
   ],
   "metrics_to_plot": {
@@ -81,6 +40,17 @@
           "refrence_title": "Perfect scaling",
           "refrence_marker": ",",
           "grid": true
+        },
+        {
+          "title": "Duration of the tuning phase (run fuction)",
+          "y-label": "Tuning phase time",
+          "x_ticks": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 14, 16, 18],
+          "refrence": [
+            15, 30, 45, 60, 75, 90, 105, 120, 135, 150, 180, 210, 240, 270
+          ],
+          "refrence_title": "Aproximated sequential execution",
+          "refrence_marker": ",",
+          "grid": true
         }
       ],
       "avg_trial_execution_time": [
@@ -89,6 +59,16 @@
           "y-label": "Average trial traing time",
           "refrence": "",
           "grid": true
+        },
+        {
+          "title": "Average duration of trial training in range 1-8 trials",
+          "y-label": "Average trial traing time",
+          "refrence": "",
+          "grid": true,
+          "y_lim": { "top": 50, "bottom": 0 },
+
+          "x_lim": { "right": 9 },
+          "x_ticks": [1, 2, 3, 4, 5, 6, 7, 8]
         }
       ],
       "first_trial_initialization_time": [
@@ -172,14 +152,23 @@
           "grid": true
         },
         {
-          "title": "Summed time of all trials trianing range 1-10 trials",
+          "title": "Summed time of all trials trianing range 1-8 trials",
           "y-label": "trials training times sum",
-          "x_ticks": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+
           "refrence": [
             10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 120, 140, 160, 180
           ],
-          "refrence_title": "Perfect scaling",
+          "refrence_title": "Perfect scaling aproximation",
+
           "refrence_marker": ",",
+          "y_lim": { "top": 250, "bottom": 0 },
+
+          "x_lim": { "right": 9 },
+          "x_ticks": [1, 2, 3, 4, 5, 6, 7, 8],
+          "y_ticks": [
+            0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150,
+            160, 170, 180, 190, 200, 210
+          ],
 
           "grid": true
         }
