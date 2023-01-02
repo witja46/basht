@@ -1,14 +1,14 @@
 {
-  "repetitions": 1,
-  "json_id": 12111,
-  "clean_and_deploy": false,
+  "repetitions": 3,
+  "json_id": 19212322,
+  "clean_and_deploy": true,
   "run_on_framworks": ["Katib","Polyaxon"],
   "pause_between": 15,
   "experiments": [
     {
       "experiment_titel": "tuning",
       "variabel": "jobsCount",
-      "values": [1,2,5,10,15,20,30,40,50,100,150,200,300],
+      "values": [1,2,5,10,15,20,30,40,50,75,100,150,200,300],
       "prometheus_url": "http://130.149.158.143:30041",
       "loggingLevel": "logging.INFO",
       "imagePullPolicy": "IfNotPresent",
@@ -16,7 +16,7 @@
       "dockerImageTag": "light_task",
 
       "limitResources": true,
-      "limitCpuTotal": "15000",
+      "limitCpuTotal": "95000",
       "limitCpuWorker": "150m",
       "jobsCount": "",
 
