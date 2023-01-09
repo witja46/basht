@@ -272,7 +272,35 @@ def last_trial_initialization_time(train_times_array,run_start_time):
     
 
 
-    return (last_trial["start_time"] - (run_start_time)).total_seconds() 
+    return (last_trial["start_time"] - (run_start_time)).total_seconds()
+
+def last_trial_initialization_time_minus_first_trial(train_times_array,run_start_time):
+    
+   
+    train_times_array.sort(key=lambda x :x["start_time"])
+    last_trial= train_times_array[-1]
+    first_trial = train_times_array[0]
+    
+
+
+    return (last_trial["start_time"] - first_trial["start_time"]).total_seconds()
+
+def train_overlap_2(train_times_array):
+    
+   
+    train_times_array.sort(key=lambda x :x["start_time"])
+    last_initializided_trial= train_times_array[-1]
+
+     
+    train_times_array.sort(key=lambda x :x["end_time"])
+    first_finished_trial= train_times_array[0]
+    
+    dur = ( (first_finished_trial["end_time"])-last_initializided_trial["start_time"]).total_seconds()
+    if(dur > 0):
+        return dur
+    else:
+        return 0 
+
 
 def avg_trial_initialization_time(train_times_array,run_start_time):
  
@@ -291,6 +319,8 @@ def metrics_collection_time(train_times_array,run_end_time):
 def total_experiment_time(deploy_start_time,collect_benchmar_metrics_end_time):
     return ((collect_benchmar_metrics_end_time) - (deploy_start_time)).total_seconds()
 
+
+collection_times = []
 
 def generate_all_metrics(data,sort_by):
     sorted = sort_experiments(data,sort_by)
@@ -314,7 +344,9 @@ def generate_all_metrics(data,sort_by):
         "metrics_collection_time":[],
         "total_experiment_time":[],
         "first_finished_trial_time":[],
-        "experiment_time":0
+        "experiment_time":0,
+        "train_ovelap_2":[],
+        "last_trial_initialization_time_minus_first_trial":[]
 
 
     }
@@ -325,11 +357,11 @@ def generate_all_metrics(data,sort_by):
     phases_durations = get_phases_durations(sorted)
     t = 0
     for exp_num,exp in enumerate(sorted["resources"]):
-        print(exp)
+     
         validation_times = sorted["validate"][exp_num]
         train_times = sorted["train"][exp_num]
         max_train_overlap_time, max_train_overlaps_number = max_parrallel_time(train_times)
-
+        metrics["train_ovelap_2"].append(train_overlap_2(train_times))
         metrics["max_train_overlap_time"].append(max_train_overlap_time)
         metrics["max_train_overlaps_number"].append(max_train_overlaps_number)
         metrics["total_trials_validation_time"].append(total_trials_validation_time(validation_times))
@@ -340,12 +372,16 @@ def generate_all_metrics(data,sort_by):
         metrics["avg_trial_execution_time"].append(avg_trial_time(train_times,exp_num))
         metrics["avg_trial_validation_time"].append(avg_trial_time(validation_times,exp_num))
 
+        metrics["last_trial_initialization_time_minus_first_trial"].append(last_trial_initialization_time_minus_first_trial(train_times,sorted["run"][exp_num]["start_time"]))
+
         metrics["last_trial_initialization_time"].append(last_trial_initialization_time(train_times,sorted["run"][exp_num]["start_time"]))
         metrics["first_finished_trial_time"].append(first_finished_trial_time(train_times,sorted["run"][exp_num]["start_time"]))
         metrics["avg_trial_initialization_time"].append(avg_trial_initialization_time(train_times,sorted["run"][exp_num]["start_time"]))
-        metrics["metrics_collection_time"].append(metrics_collection_time(validation_times,sorted["run"][exp_num]["end_time"]))
-        exptime = total_experiment_time(sorted["deploy"][exp_num]["start_time"], sorted["collect_benchmark_metrics"][exp_num]["end_time"])
+        mct = metrics_collection_time(validation_times,sorted["run"][exp_num]["end_time"])
         
+        metrics["metrics_collection_time"].append(mct)
+        exptime = total_experiment_time(sorted["deploy"][exp_num]["start_time"], sorted["collect_benchmark_metrics"][exp_num]["end_time"])
+
         metrics["total_experiment_time"].append(exptime)
 
    # add last trial initialization: ö
@@ -354,6 +390,7 @@ def generate_all_metrics(data,sort_by):
    #experiment duration Ö
    # first finished trial 
    # wyliczyc ile to wszystko trwalo 
+
     metrics["experiment_time"] = t
     return  {sort_by:sorted[sort_by]} |  phases_durations | metrics
 
@@ -409,109 +446,165 @@ metrics_to_plot = {
     #     "grid":"true",
 
     # },
-     "run":{
-        "title":"Duration of the tuning phase (run fuction)",
-        "y-label":"Tuning phase time",
-        "refrence":"",
-        "grid":"true",
-    },
-     "avg_trial_execution_time":{
-        "title":"Average duration of trial training",
-        "y-label":"Average trial traing time",
-        "refrence":"",
-        "grid":"true",
-    },
-     "first_trial_initialization_time":{
-        "title":"Time needed for initialization of first trial training",
-        "y-label":"first trial initialization time",
-        "refrence":"",
-        "grid":"true",
-    },
-    "first_finished_trial_time":{
-        "title":"Time needed for the first trial to be finished",
-        "y-label":"first finished trial time",
-        "refrence":"",
-        "grid":"true",
-    },
-    "last_trial_initialization_time":{
-        "title":"Time needed for initialization of the last trial training",
-        "y-label":"last trial initialization time",
-        "refrence":"",
-        "grid":"true",
-    },
-
-    "avg_trial_initialization_time":{
-        "title":"Average Time needed for initialization of  trials training",
-        "y-label":"avg trial initialization time",
-        "refrence":"",
-        "grid":"true",
-    },
-    "metrics_collection_time":{
-        "title":"time needed for collection of all trial metrics",
-        "y-label":"metrics_collection_time",
-        "refrence":"",
-        "grid":"true",
-        "description":"Time from ending of last validation to the end of the run phase"
-    },
-
-
-
-     "max_train_overlap_time":{
-        "title":"Maximal Duration of parallel execution of trials trainig ",
-        "y-label":"max train overlap time",
-        "refrence":"",
-        "grid":"true",
-    },
-    "max_train_overlaps_number":{
-        "title":"Maximal number of trials that were  runing in Parallel",
-        "y-label":"max number of trials run in parrallel",
-        "refrence":"",
-        "grid":"true",
-    },
-    "total_trials_validation_time":{
-        "title":"Summed time of all trials validations",
-        "y-label":"trials validation times sum",
-        "refrence":"",
-        "grid":"true",
-    },
-   
-    "total_trials_execution_time":{
-        "title":"Summed time of all trials trianing",
-        "y-label":"trials training times sum",
-        "refrence":"",
-        "grid":"true",
-    },
-    "trials_validation_phase_time":{
-        "title":"Time from begining of first validation to the end of last one",
-        "y-label":"trials validation phase time",
-        "refrence":"",
-        "grid":"true",
-    },
-    "trials_execution_phase_time":{
-        "title":"Time from begining of first trial training to the end of last one",
-        "y-label":"trials training phase time",
-        "refrence":"",
-        "grid":"true",
-    },
-   
-    "avg_trial_validation_time":{
-        "title":"Average duration of trial validation",
-        "y-label":"Average trial validation time",
-        "refrence":"",
-        "grid":"true",
-    },
-     "total_experiment_time":{
-        "title":"Duration of whole experiment from deploy till end",
-        "y-label":"Experiment duration",
-        "refrence":"",
-        "grid":"true",
-    },
+    "run" :{ 
+       "title ": "Duration of the tuning phase (run function)", 
+       "y-label": "Tuning phase time in sec ", 
+       "refrence":"  ", 
+       "grid": "true", 
+   }, 
+    "avg_trial_execution_time":{ 
+       "title": "Average duration of trial training", 
+       "y-label": "Average trial training time in sec", 
+       "refrence":"  ", 
+       "grid": "true", 
+   }, 
+    "first_trial_initialization_time":{ 
+       "title": "Time needed for initialization of first trial training", 
+       "y-label": "first trial initialization time in sec", 
+       "refrence":"  ", 
+       "grid": "true", 
+   }, 
+   "first_finished_trial_time":{ 
+       "title": "Time needed for the first trial to be finished", 
+       "y-label": "first finished trial time in sec", 
+       "refrence":"  ", 
+       "grid": "true", 
+   }, 
+   "last_trial_initialization_time":{ 
+       "title": "Time needed for initialization of the last trial training", 
+       "y-label": "last trial initialization time in sec", 
+       "refrence":"  ", 
+       "grid": "true", 
+   }, 
+  
+   "avg_trial_initialization_time":{ 
+       "title": "Average Time needed for initialization of trials training", 
+       "y-label": "avg trial initialization time in sec", 
+       "refrence":"  ", 
+       "grid": "true", 
+   }, 
+   "metrics_collection_time":{ 
+       "title": "time needed for collection of all trial metrics", 
+       "y-label": "metrics collection time in sec", 
+       "refrence":"  ", 
+       "grid": "true", 
+       "description": "Time from the ending of the last validation to the end of the run phase." 
+   }, 
+   "train_ovelap_2":{ 
+        "title": "Maximal Duration of parallel execution of all trials ", 
+       "y-label": "Max train overlap time in sec", 
+       "refrence":"  ", 
+       "grid": "true", 
+  
+  
+  
+   } 
+, 
+  
+  
+    "max_train_overlap_time":{ 
+       "title": "Maximal Duration of parallel execution of trials training ", 
+       "y-label": "max train overlap time in sec", 
+       "refrence":"  ", 
+       "grid": "true", 
+   }, 
+   "max_train_overlaps_number":{ 
+       "title": "Maximal number of trials that were running in Parallel", 
+       "y-label": "Max number of trials run in parallel", 
+       "refrence":"  ", 
+       "grid": "true", 
+   }, 
+   "total_trials_validation_time":{ 
+       "title": "Summed time of all trials validations", 
+       "y-label": "trials validation times sum in sec", 
+       "refrence":"  ", 
+       "grid": "true", 
+   }, 
+    
+   "total_trials_execution_time":{ 
+       "title": "Summed time of all trials training", 
+       "y-label": "trials training times sum in sec", 
+       "refrence":"  ", 
+       "grid": "true", 
+   }, 
+   "trials_validation_phase_time":{ 
+       "title": "Time from the begining of first validation to the end of last one", 
+       "y-label": "trials validation phase time in sec", 
+       "refrence":"  ", 
+       "grid": "true", 
+   }, 
+   "trials_execution_phase_time":{ 
+       "title": "Time from beginning of first trial training to the end of last one", 
+       "y-label": "trials training phase time in sec", 
+       "refrence":"  ", 
+       "grid": "true", 
+   }, 
+    
+   "avg_trial_validation_time":{ 
+       "title": "Average duration of trial validation", 
+       "y-label": "Average trial validation time in sec", 
+       "refrence":"  ", 
+       "grid": "true", 
+   }, 
+    "total_experiment_time":{ 
+       "title": "Duration of the whole experiment from deploy till the end", 
+       "y-label": "Experiment duration in sec", 
+       "refrence":"  ", 
+       "grid": "true", 
+   }, 
+   "last_trial_initialization_time_minus_first_trial":{ 
+          "title": "Time between last trial initialization and first trial initialization", 
+       "y-label": "Time difference in sec", 
+       "refrence":"  ", 
+       "grid": "true", 
+  
+   }
 
 
 }
 
 print("\n")
+def generete_deploy_times():
+ 
+    folders_paths = [ "../katib_k8s/benchmark__KatibBenchmark", "../polyaxon_k8s/benchmark__PolyaxonBenchmark"]
+    data = [[],[]]
+    for i, path in enumerate(folders_paths):
 
+        folder = os.listdir(f"./{path}")
+        folder.sort()
+  
+        for file in folder:
+            with open(f"{path}/{file}","r") as f:
+                exp = json.load(f)
+                exp_res= exp["benchmark_configuration"]["resources"]
+                
+            
+                if(exp_res.get("experiment_titel","")== "deploy"):
+                  for lat in exp["benchmark_metrics"]["latency"]:
+                    if(lat["function_name"]=="deploy"):
+
+                      if(lat["duration_sec"] > 0):
+                        data[i].append(lat["duration_sec"])
+                        print(lat["duration_sec"])
+    plt.clf()
+    n, bins, patches = plt.hist(data,bins=8,histtype ='bar',color=["red","blue"],label=["Katib","Polyaxon"],linewidth = 1.2,edgecolor='black')
+    print(len(data[0]),len(data[1]))        
+    plt.yticks(list(range(0,20,1)))
+    plt.legend()
+    plt.title("All collected Deploy times")
+    plt.savefig(f"All experiments histograms/deploy_histogram.png")
+
+    plt.clf()
+    plt.title("Mean deploy times")
+            
+    ax = plt.bar(["Katib","Polyaxon"],[mean(data[0]), mean(data[1])],color=["red","blue"])
+    plt.legend()
+    for p in ax.patches:
+            plt.annotate(int(p.get_height()), (p.get_x() + 0.3, p.get_height()+0.02))
+    plt.savefig(f"All experiments histograms/mean_deploy_times.png")
+           
+
+generete_deploy_times()
 
 def plot_metrics_from_yaml(json_path ,latex_string,variabel = ""):
     
@@ -523,13 +616,9 @@ def plot_metrics_from_yaml(json_path ,latex_string,variabel = ""):
     repetitions = exp_json["repetitions"]
     json_id = exp_json["json_id"]
     limitation = ""
+    # print(json_path)
 
-
-    print(json.dumps(exp_json, indent=4))
-
-    latex_string+= "\n\section{" + "section_name" + "}\label{sec:moti}\n" 
-    latex_string+= variabel
-    latex_string+="\n"   
+    # print(json.dumps(exp_json, indent=4))
 
    
     # latex_string = f' {katib["experiment_time"]}, {polyaxon["experiment_time"]}, ' + latex_string
@@ -542,7 +631,9 @@ def plot_metrics_from_yaml(json_path ,latex_string,variabel = ""):
         os.makedirs(plots_folder)
     except OSError:
         print ("Creation of the directory %s failed" % plots_folder)
-    
+    all_katib = []
+    all_polyaxon = []
+
     for exp in exp_array:
         variabels = exp["values"]
         if(exp["experiment_titel"] == "clean_up"):
@@ -552,7 +643,17 @@ def plot_metrics_from_yaml(json_path ,latex_string,variabel = ""):
             print("deploy")
 
         elif(exp["generatePlots"] ):
-            print(exp["experiment_titel"])
+           
+     
+            
+            section_name= exp["latexTitle"]
+            latex_string+= "\n\section{" + section_name + "}\label{sec:" + json_path[2:] +  "}\n" 
+            latex_string+= variabel
+            latex_string+="\n" 
+            latex_string+=exp.get("latexDescritption","") + "\n"
+              
+
+
             exp_titel = exp["experiment_titel"]
             sort_by =  exp["variabel"]
             x = exp["values"]
@@ -567,7 +668,7 @@ def plot_metrics_from_yaml(json_path ,latex_string,variabel = ""):
 
                 katib_exp_data_reps.append( generate_all_metrics(katib_exp_data,sort_by))
                 polyaxon_exp_reps.append(generate_all_metrics(polyaxon_exp_data,sort_by))
-
+           
             polyaxon = {}
             polyaxon_sorted = {}
             
@@ -583,35 +684,53 @@ def plot_metrics_from_yaml(json_path ,latex_string,variabel = ""):
                 polyaxon_sorted[metric] = []
 
                 for k , var in enumerate(variabels):
+              
+              
                     arr_katib =  list(map(lambda x : x[metric][k],katib_exp_data_reps )) 
                     arr_polyaxon =  list(map(lambda x : x[metric][k],polyaxon_exp_reps )) 
-                    arr_katib.sort()
-                    arr_polyaxon.sort()
+                    # arr_katib.sort()
+                    # arr_polyaxon.sort()
+                    
+
+                    # print(metric,var,len(arr_polyaxon),arr_katib)
+
 
                     katib_sorted[metric].append(arr_katib)
                     katib[metric].append(mean(arr_katib))
                     polyaxon[metric].append(mean(arr_polyaxon))
                     polyaxon_sorted[metric].append(arr_polyaxon)
-
-
-
-                    print(metric,var,arr_katib,k)
-
+            all_katib.append(katib_sorted)
+            all_polyaxon.append(polyaxon_sorted)
             print("xd dziala")
 
 
             for metric in metrics_to_plot:
                 for plot_num , plot in enumerate(metrics_to_plot[metric]):
-                  
+                    x = exp["values"]
+                    # print("curent plot in genereation " ,plot_num,plot)
+
                 
 
                     fig, ax = plt.subplots()
             
                 
-                
+                    katib_to_plot = katib[metric]
+                    polyaxon_to_plot = polyaxon[metric]
+
+
                     ax.set_xlabel(sort_by)
                     ax.set_ylabel(plot["y-label"])
                     ax.set_title(plot["title"])
+
+                    limit_right = plot.get("limit_right","")
+                    if(limit_right):
+                        x = x[:limit_right]
+                        katib_to_plot = katib_to_plot[:limit_right]
+                        polyaxon_to_plot = polyaxon_to_plot[:limit_right]
+                        # print(katib_to_plot)
+                        # print(x)
+                        # print(polyaxon_to_plot)
+
 
                     x_lim = plot.get("x_lim","")
                     if(x_lim):
@@ -622,9 +741,9 @@ def plot_metrics_from_yaml(json_path ,latex_string,variabel = ""):
                         plt.ylim(**y_lim)
 
 
-                    ax.plot(x,katib[metric],"r", marker="o")
+                    ax.plot(x,katib_to_plot,"r", marker="o")
                 
-                    ax.plot(x,polyaxon[metric],"b",marker="o")
+                    ax.plot(x,polyaxon_to_plot,"b",marker="o")
                     refrence = plot.get("refrence","")
                     refrence_titel = plot.get("refrence_title","")
                     refrence_marker = plot.get("refrence_marker",",")
@@ -649,7 +768,7 @@ def plot_metrics_from_yaml(json_path ,latex_string,variabel = ""):
                 
                     ax.grid()
                     
-                    print(variabels)
+                 
 
                     exp_folder = f"{plots_folder}/{exp_titel}"
                     
@@ -659,25 +778,417 @@ def plot_metrics_from_yaml(json_path ,latex_string,variabel = ""):
                         print (" Creation of the directory %s failed" % plots_folder)
                     fig.savefig(f"{exp_folder}/{limitation}{sort_by}-{metric}{plot_num}.png")
 
-                    latex_string+= "\subsection{" + plot["title"] + "}\label{plot:" + f"{limitation}{sort_by}-{metric}" + "}\n" 
-                    latex_string+= "Some text\n" 
+                    if(plot.get("description",True)):
+                        latex_string+= "\subsection{" + plot["title"] + "}\label{plot:" + f"{limitation}{sort_by}-{metric}{plot_num}" + "}\n" 
+                        latex_string+= plot.get("description","Some text" )
+                        latex_string+= "\n" 
+                        latex_string+= "\n" 
+                        latex_string+= "\\begin{figure}[h]\n" 
+                        latex_string+= "    \centering\n" 
+                        latex_string+= "    \includegraphics[width=1\\textwidth]{img/plots/" + f"{plots_folder}/{limitation}{sort_by}-{metric}{plot_num}.png"+ "}\n" 
+                        latex_string+= "    \caption{Tittel decription}\n" 
+                        latex_string+= "    \label{fig:mesh1}\n" 
+                        latex_string+= "\end{figure}\n" 
+                        latex_string+= "\\newpage\n" 
+                        latex_string+= "\n" 
+                    
                     latex_string+= "\n" 
-                    latex_string+= "\n" 
-                    latex_string+= "\\begin{figure}[h]\n" 
-                    latex_string+= "    \centering\n" 
-                    latex_string+= "    \includegraphics[width=1\\textwidth]{img/plots/" + f"{limitation}{sort_by}-{metric}.png"+ "}\n" 
-                    latex_string+= "    \caption{Tittel decription}\n" 
-                    latex_string+= "    \label{fig:mesh1}\n" 
-                    latex_string+= "\end{figure}\n" 
-                    latex_string+= "\\newpage\n" 
-                    latex_string+= "\n" 
-                    latex_string+= "\n" 
- 
-    return latex_string
+    
+  
+    return latex_string,all_katib,all_polyaxon
         #plt.show()
-plot_metrics_from_yaml("5_resources_1000","")
-plot_metrics_from_yaml("4_resources_500","")
-plot_metrics_from_yaml("1_tuning","")
+
+
+print(collection_times)
+
+latex_string = ""
+katib = []
+polyaxon = []
+  
+metrics_katib = {
+        "first_trial_initialization_time":[],
+        "avg_trial_execution_time":[],
+        "avg_trial_validation_time":[],
+        "avg_trial_initialization_time":[],
+        "metrics_collection_time":[],
+        "first_finished_trial_time":[],
+        "run":[]
+    }
+
+metrics_polyaxon = {
+        "first_trial_initialization_time":[],
+        "avg_trial_execution_time":[],
+        "avg_trial_validation_time":[],
+        "avg_trial_initialization_time":[],
+        "metrics_collection_time":[],
+        "first_finished_trial_time":[],
+        "run":[]
+    }
+
+
+
+# for (latex , all_katib, all_polyaxon)  in res:
+#     latex_string+=latex
+#     print("\n afdsf \n ",all_katib)
+#     for met in metrics_katib:
+#         for i, rep in enumerate(all_katib):
+#             flatten = [item for sublist in rep[met] for item in sublist]
+#             metrics_katib[met].append(flatten)
+        
+#         for i, rep in enumerate(all_polyaxon):
+#             flatten = [item for sublist in rep[met] for item in sublist]
+#             metrics_polyaxon[met].append(flatten)
+
+    
+       #     print("\n",met, rep[met],len(rep[met]),len(flatten))
+
+
+
+bar_plots = ["run","avg_trial_execution_time"]
+    
+#print(metrics_katib)
+def plot_histograms(histograms_to_plot,res,folder):
+    katib = []
+    polyaxon = []
+
+    metrics_katib = {
+        "first_trial_initialization_time":[],
+        "avg_trial_execution_time":[],
+        "avg_trial_validation_time":[],
+        "avg_trial_initialization_time":[],
+        "metrics_collection_time":[],
+        "first_finished_trial_time":[],
+        "run":[]
+    }
+
+    metrics_polyaxon = {
+        "first_trial_initialization_time":[],
+        "avg_trial_execution_time":[],
+        "avg_trial_validation_time":[],
+        "avg_trial_initialization_time":[],
+        "metrics_collection_time":[],
+        "first_finished_trial_time":[],
+        "run":[]
+    }
+
+
+
+    for (latex , all_katib, all_polyaxon)  in res:
+        # latex_string+=latex
+        print("\n afdsf \n ",all_katib)
+        for met in metrics_katib:
+            for i, rep in enumerate(all_katib):
+                flatten = [item for sublist in rep[met] for item in sublist]
+                metrics_katib[met].append(flatten)
+            
+            for i, rep in enumerate(all_polyaxon):
+                flatten = [item for sublist in rep[met] for item in sublist]
+                metrics_polyaxon[met].append(flatten)
+    for metric in histograms_to_plot:
+        print(len(flatten))
+        metrics_katib[metric] = [item for sublist in metrics_katib[metric] for item in sublist]
+        metrics_polyaxon[metric] = [item for sublist in metrics_polyaxon[metric] for item in sublist]
+
+
+        for plot_num , plot in enumerate(histograms_to_plot[metric]):
+            
+            title = plot.get("title",metric)
+            bins = plot.get("bins","")
+            plt.clf()
+            plt.title(title)
+
+            if(bins):
+                n, bins, patches = plt.hist([metrics_katib[metric],metrics_polyaxon[metric]],histtype ='bar',color=["red","blue"],label=["Katib","Polyaxon"],linewidth = 1.2,edgecolor='black' ,bins=bins)
+            else:
+                n, bins, patches = plt.hist([metrics_katib[metric],metrics_polyaxon[metric]],histtype ='bar',color=["red","blue"],linewidth = 1.2,edgecolor='black' )
+            
+
+            exp_folder = folder
+            try: 
+                os.mkdir(exp_folder)
+            except OSError:
+                print (" Creation of the directory %s failed" )
+            
+            plt.xticks(bins)
+            plt.legend(["Katib","Polyaxon"])
+            if(metric in bar_plots):
+                plt.clf()
+                plt.title(title)
+                
+                ax = plt.bar(["Katib","Polyaxon"],[mean(metrics_katib[metric]), mean(metrics_polyaxon[metric])],color=["red","blue"])
+                for p in ax.patches:
+                    plt.annotate(int(p.get_height()), (p.get_x() + 0.3, p.get_height()+0.02))
+
+            
+            
+            plt.savefig(f"{exp_folder}/{metric}{plot_num}.png")
+
+res = [
+# plot_metrics_from_yaml("1_tuning",""),
+# plot_metrics_from_yaml("2_light_task",""),
+#  plot_metrics_from_yaml("5_resources_1000",""),
+# plot_metrics_from_yaml("4_resources_500",""),
+# plot_metrics_from_yaml("6_tuning_1CPU","")
+# plot_metrics_from_yaml("5_resources_1000_noreq",""),
+# plot_metrics_from_yaml("4_resources_500_noreq",""),
+]
+
+tuning = [
+    plot_metrics_from_yaml("1_tuning",""),
+plot_metrics_from_yaml("2_light_task",""),
+
+plot_metrics_from_yaml("6_tuning_1CPU","")
+    
+]
+histograms_to_plot_tuning = {
+        "first_trial_initialization_time":[
+ 
+           
+                       {
+                "title": "First trial initiaition times Histogram tunning experiments",
+                "histtype":"bar",
+                "linewidth":1.2,
+                "bins": [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65,70,75],
+
+            },
+                       {
+                "histtype":"bar",
+                "linewidth":1.2,
+                "bins": 10,
+
+            },
+        ],
+          "metrics_collection_time":[   {
+            "title":"Metrics collection times histrogram tuning experiments",
+                "histtype":"bar",
+                "linewidth":1.2,
+                "bins":[0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28]
+        
+            }],
+
+        "avg_trial_execution_time":[   {
+                "title": "Average trial execution times from tuning experiments",
+                "histtype":"bar",
+                "linewidth":1.2,
+
+             
+        
+            }],
+        "avg_trial_validation_time":[   {
+                "histtype":"bar",
+                "linewidth":1.2,
+        
+            }],
+        "avg_trial_initialization_time":[   {
+            "title":"Average trial inititiation time histogram tuning experiments",
+                "histtype":"bar",
+                "linewidth":1.2,
+                "bins":[0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110],
+        
+            },
+             {
+            "title":"Average trial inititiation time histogram tuning experiments",
+                "histtype":"bar",
+                "linewidth":1.2,
+        
+            }
+            
+            
+            ],
+      
+        "first_finished_trial_time":[   {
+                "histtype":"bar",
+                "linewidth":1.2,
+        
+            }],
+             "run":[   {
+                "title":"Mean run phase time from tuning experiments in Seconds",
+                "histtype":"bar",
+                "linewidth":1.2,
+        
+            }],
+    }
+
+plot_histograms(histograms_to_plot_tuning,tuning,folder = "Histograms_tuning")
+
+
+
+
+
+
+histograms_to_plot_resources = {
+        "first_trial_initialization_time":[
+ 
+           
+                       {
+                "title": "First trial initiaition times Histogram resources experiments",
+                "histtype":"bar",
+                "linewidth":1.2,
+                "bins": [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65,70,75],
+
+            },
+                       {
+                "histtype":"bar",
+                "linewidth":1.2,
+                "bins": 10,
+
+            },
+        ],
+          "metrics_collection_time":[   {
+            "title":"Metrics collection times histrogram from resources experiments",
+                "histtype":"bar",
+                "linewidth":1.2,
+                "bins":[0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28]
+        
+            }],
+
+        "avg_trial_execution_time":[   {
+                "title": "Average trial execution time from resources experiments",
+                "histtype":"bar",
+                "linewidth":1.2,
+
+             
+        
+            }],
+        "avg_trial_validation_time":[   {
+                "histtype":"bar",
+                "linewidth":1.2,
+        
+            }],
+        "avg_trial_initialization_time":[   {
+            "title":"Average trial inititiation time histogram resources experiments",
+                "histtype":"bar",
+                "linewidth":1.2,
+                "bins":[0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110],
+        
+            },
+             {
+            "title":"Average trial inititiation time histogram resources experiments",
+                "histtype":"bar",
+                "linewidth":1.2,
+        
+            }
+            
+            
+            ],
+      
+        "first_finished_trial_time":[   {
+                "histtype":"bar",
+                "linewidth":1.2,
+        
+            }],
+             "run":[   {
+                "title":"Mean run phase time from resources experiments in Seconds",
+                "histtype":"bar",
+                "linewidth":1.2,
+        
+            }],
+    }
+
+resources =[
+     plot_metrics_from_yaml("5_resources_1000",""),
+plot_metrics_from_yaml("4_resources_500",""),
+
+]
+plot_histograms(histograms_to_plot_resources,resources,folder = "Histograms_resources")
+
+
+histograms_to_plot_all_exp = {
+        "first_trial_initialization_time":[
+ 
+           
+                       {
+                "title": "First trial initiaition times Histogram all experiments",
+                "histtype":"bar",
+                "linewidth":1.2,
+                "bins": [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65,70,75],
+
+            },
+                       {
+                "histtype":"bar",
+                "linewidth":1.2,
+                "bins": 10,
+
+            },
+        ],
+          "metrics_collection_time":[   {
+            "title":"Metrics collection times histrogram from all experiments",
+                "histtype":"bar",
+                "linewidth":1.2,
+                "bins":[0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28]
+        
+            }],
+
+        "avg_trial_execution_time":[   {
+                "title": "Average trial execution time from all experiments",
+                "histtype":"bar",
+                "linewidth":1.2,
+
+             
+        
+            }],
+        "avg_trial_validation_time":[   {
+                "histtype":"bar",
+                "linewidth":1.2,
+        
+            }],
+        "avg_trial_initialization_time":[   {
+            "title":"Average trial inititiation time histogram all experiments",
+                "histtype":"bar",
+                "linewidth":1.2,
+                "bins":[0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110],
+        
+            },
+             {
+            "title":"Average trial inititiation time histogram all experiments",
+                "histtype":"bar",
+                "linewidth":1.2,
+        
+            }
+            
+            
+            ],
+      
+        "first_finished_trial_time":[   {
+                "histtype":"bar",
+                "linewidth":1.2,
+        
+            }],
+             "run":[   {
+                "title":"Mean run phase time from all experiments in Seconds",
+                "histtype":"bar",
+                "linewidth":1.2,
+        
+            }],
+    }
+
+
+
+
+
+all = resources + tuning
+plot_histograms(histograms_to_plot_all_exp,all,folder = "Histograms_all")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+print(len(metrics_katib["first_trial_initialization_time"]))
+latex_string = "\chapter{evaluation} \n" + latex_string
+with open(f"latex.txt", "w") as outfile:
+    outfile.write(latex_string)
+
 
 
 latex_string= "\\chapter{Plots}\n"

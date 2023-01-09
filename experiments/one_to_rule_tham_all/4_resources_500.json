@@ -1,14 +1,14 @@
 {
-  "repetitions":5 ,
+  "repetitions": 2,
   "json_id": 44444444,
   "clean_and_deploy": true,
-    "run_on_framworks": ["Katib", "Polyaxon"],
+  "run_on_framworks": ["Katib", "Polyaxon"],
   "experiments": [
     {
       "experiment_titel": "resources",
       "variabel": "limitCpuTotal",
 
-      "values": [ 8, 10, 12, 14, 16, 18, 20, 22, 24,26 ],
+      "values": [8, 10, 12, 14, 16, 18, 20, 22, 24, 26],
       "prometheus_url": "http://130.149.158.143:30041",
       "imagePullPolicy": "IfNotPresent",
       "generateNewDockerImage": false,
@@ -28,21 +28,21 @@
       "latexDescritption": " ressources scalability with the limit and request for the worker set to 500m"
     }
   ],
-  
-"metrics_to_plot": {
+
+  "metrics_to_plot": {
     "resources": {
       "run": [
         {
-          "title": "Duration of the tuning phase (run fuction)",
-          "y-label": "Tuning phase time",
+          "title": "Duration of the tuning phase (run function)",
+          "y-label": "Tuning phase time in sec",
 
           "refrence_title": "Perfect scaling",
           "refrence_marker": ",",
           "grid": true
         },
         {
-          "title": "Duration of the tuning phase (run fuction)",
-          "y-label": "Tuning phase time",
+          "title": "Duration of the tuning phase (run function)",
+          "y-label": "Tuning phase time in sec",
           "y_lim": { "top": 350, "bottom": 200 },
 
           "refrence_title": "Perfect scaling",
@@ -53,7 +53,7 @@
       "avg_trial_execution_time": [
         {
           "title": "Average duration of trial training",
-          "y-label": "Average trial traing time",
+          "y-label": "Average trial traing time in sec",
           "refrence": "",
           "grid": true
         }
@@ -61,7 +61,7 @@
       "first_trial_initialization_time": [
         {
           "title": "Time needed for initialization of first trial training",
-          "y-label": "first trial initialization time",
+          "y-label": "first trial initialization time in sec",
           "refrence": "",
           "grid": true
         }
@@ -69,7 +69,7 @@
       "first_finished_trial_time": [
         {
           "title": "Time needed for the first trial to be finished",
-          "y-label": "first finished trial time",
+          "y-label": "first finished trial time in sec",
           "refrence": "",
           "grid": true
         }
@@ -77,7 +77,7 @@
       "last_trial_initialization_time": [
         {
           "title": "Time needed for initialization of the last trial training",
-          "y-label": "last trial initialization time",
+          "y-label": "last trial initialization time in sec",
           "refrence": "",
           "grid": true
         }
@@ -86,13 +86,13 @@
       "avg_trial_initialization_time": [
         {
           "title": "Average Time needed for initialization of  trials training",
-          "y-label": "avg trial initialization time",
+          "y-label": "avg trial initialization time in sec",
           "refrence": "",
           "grid": true
         },
         {
           "title": "Average Time needed for initialization of  trials training",
-          "y-label": "avg trial initialization time",
+          "y-label": "avg trial initialization time in sec",
           "refrence": "",
           "y_lim": { "top": 100 },
           "grid": true
@@ -101,7 +101,7 @@
       "metrics_collection_time": [
         {
           "title": "time needed for collection of all trial metrics",
-          "y-label": "metrics_collection_time",
+          "y-label": "metrics_collection_time in sec",
           "refrence": "",
           "grid": true,
           "description": "Time from ending of last validation to the end of the run phase"
@@ -110,16 +110,16 @@
 
       "max_train_overlap_time": [
         {
-          "title": "Maximal Duration of parallel execution of trials trainig ",
-          "y-label": "max train overlap time",
+          "title": "Maximal Duration of parallel execution of trials training ",
+          "y-label": "max train overlap time in sec",
           "refrence": "",
           "grid": true
         }
       ],
       "max_train_overlaps_number": [
         {
-          "title": "Maximal number of trials that were  runing in Parallel",
-          "y-label": "max number of trials run in parrallel",
+          "title": "Maximal number of trials that were running in Parallel",
+          "y-label": "max number of trials run in parallel",
           "refrence": "",
           "grid": true
         }
@@ -127,7 +127,7 @@
       "total_trials_validation_time": [
         {
           "title": "Summed time of all trials validations",
-          "y-label": "trials validation times sum",
+          "y-label": "trials validation times sum in sec",
           "refrence": "",
           "grid": true
         }
@@ -135,8 +135,8 @@
 
       "total_trials_execution_time": [
         {
-          "title": "Summed time of all trials trianing",
-          "y-label": "trials training times sum",
+          "title": "Summed time of all trials training",
+          "y-label": "trials training times sum in sec",
 
           "refrence_title": "Perfect scaling",
           "refrence_marker": ",",
@@ -146,16 +146,16 @@
       ],
       "trials_validation_phase_time": [
         {
-          "title": "Time from begining of first validation to the end of last one",
-          "y-label": "trials validation phase time",
+          "title": "Time from the begining of first validation to the end of last one",
+          "y-label": "trials validation phase time in sec",
           "refrence": "",
           "grid": true
         }
       ],
       "trials_execution_phase_time": [
         {
-          "title": "Time from begining of first trial training to the end of last one",
-          "y-label": "trials training phase time",
+          "title": "Time from beginning of first trial training to the end of last one",
+          "y-label": "trials training phase time in sec",
           "refrence": "",
           "grid": true
         }
@@ -164,15 +164,15 @@
       "avg_trial_validation_time": [
         {
           "title": "Average duration of trial validation",
-          "y-label": "Average trial validation time",
+          "y-label": "Average trial validation time in sec",
           "refrence": "",
           "grid": true
         }
       ],
       "total_experiment_time": [
         {
-          "title": "Duration of whole experiment from deploy till end",
-          "y-label": "Experiment duration",
+          "title": "Duration of the whole experiment from deploy till the end",
+          "y-label": "Experiment duration in sec",
           "refrence": "",
           "grid": true
         }

@@ -1,0 +1,176 @@
+{
+  "repetitions": 1,
+  "json_id": 69,
+  "clean_and_deploy": true,
+  "experiments": [
+    {
+      "experiment_titel": "resources",
+      "variabel": "limitCpuTotal",
+
+      "values": [6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 25, 30],
+      "prometheus_url": "http://130.149.158.143:30041",
+      "imagePullPolicy": "IfNotPresent",
+      "generateNewDockerImage": false,
+      "dockerImageTag": "mnist_task",
+
+      "limitResources": true,
+
+      "cleanUp": true,
+      "undeploy": false,
+      "deploy": false,
+
+      "jobsCount": 10,
+      "limitCpuTotal": "",
+      "limitCpuWorker": "1000m",
+      "generatePlots": true,
+      "latexTitle": "resources worker limit 1000m",
+      "latexDescritption": " ressources scalability with the limit for the worker set to 1000m"
+    }
+  ],
+  "metrics_to_plot": {
+    "resources": {
+      "run": [
+        {
+          "title": "Duration of the tuning phase (run fuction)",
+          "y-label": "Tuning phase time",
+
+          "refrence_title": "Perfect scaling",
+          "refrence_marker": ",",
+          "grid": true
+        },
+        {
+          "title": "Duration of the tuning phase (run fuction)",
+          "y-label": "Tuning phase time",
+          "refrence_title": "Perfect scaling",
+          "refrence_marker": ",",
+          "grid": true,
+          "y_lim": { "top": 280, "bottom": 100 },
+          "y_ticks": [
+            0, 20, 40, 60, 80, 100, 120, 140, 160, 180, 200, 220, 240, 260, 280
+          ],
+          "x_ticks": [8, 10, 12, 14, 16, 18, 20, 22, 24, 26]
+        }
+      ],
+      "avg_trial_execution_time": [
+        {
+          "title": "Average duration of trial training",
+          "y-label": "Average trial traing time",
+          "refrence": "",
+          "grid": true
+        }
+      ],
+      "first_trial_initialization_time": [
+        {
+          "title": "Time needed for initialization of first trial training",
+          "y-label": "first trial initialization time",
+          "refrence": "",
+          "grid": true
+        }
+      ],
+      "first_finished_trial_time": [
+        {
+          "title": "Time needed for the first trial to be finished",
+          "y-label": "first finished trial time",
+          "refrence": "",
+          "grid": true
+        }
+      ],
+      "last_trial_initialization_time": [
+        {
+          "title": "Time needed for initialization of the last trial training",
+          "y-label": "last trial initialization time",
+          "refrence": "",
+          "grid": true
+        }
+      ],
+
+      "avg_trial_initialization_time": [
+        {
+          "title": "Average Time needed for initialization of  trials training",
+          "y-label": "avg trial initialization time",
+          "refrence": "",
+          "grid": true
+        }
+      ],
+      "metrics_collection_time": [
+        {
+          "title": "time needed for collection of all trial metrics",
+          "y-label": "metrics_collection_time",
+          "refrence": "",
+          "grid": true,
+          "description": "Time from ending of last validation to the end of the run phase"
+        }
+      ],
+
+      "max_train_overlap_time": [
+        {
+          "title": "Maximal Duration of parallel execution of trials trainig ",
+          "y-label": "max train overlap time",
+          "refrence": "",
+          "grid": true
+        }
+      ],
+      "max_train_overlaps_number": [
+        {
+          "title": "Maximal number of trials that were  runing in Parallel",
+          "y-label": "max number of trials run in parrallel",
+          "refrence": "",
+          "grid": true
+        }
+      ],
+      "total_trials_validation_time": [
+        {
+          "title": "Summed time of all trials validations",
+          "y-label": "trials validation times sum",
+          "refrence": "",
+          "grid": true
+        }
+      ],
+
+      "total_trials_execution_time": [
+        {
+          "title": "Summed time of all trials trianing",
+          "y-label": "trials training times sum",
+
+          "refrence_title": "Perfect scaling",
+          "refrence_marker": ",",
+
+          "grid": true
+        }
+      ],
+      "trials_validation_phase_time": [
+        {
+          "title": "Time from begining of first validation to the end of last one",
+          "y-label": "trials validation phase time",
+          "refrence": "",
+          "grid": true
+        }
+      ],
+      "trials_execution_phase_time": [
+        {
+          "title": "Time from begining of first trial training to the end of last one",
+          "y-label": "trials training phase time",
+          "refrence": "",
+          "grid": true
+        }
+      ],
+
+      "avg_trial_validation_time": [
+        {
+          "title": "Average duration of trial validation",
+          "y-label": "Average trial validation time",
+          "refrence": "",
+          "grid": true
+        }
+      ],
+      "total_experiment_time": [
+        {
+          "title": "Duration of whole experiment from deploy till end",
+          "y-label": "Experiment duration",
+          "refrence": "",
+          "grid": true
+        }
+      ]
+    }
+  }
+}
