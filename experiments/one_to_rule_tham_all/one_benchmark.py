@@ -83,7 +83,7 @@ if __name__ == "__main__":
 
         {   "experiment_titel":"deploy",
             "variabel":"limitCpuTotal",
-            "values":["10"],
+            "values":["50"],
 
             "metricsIP": urlopen("https://checkip.amazonaws.com").read().decode("utf-8").strip(),
             #  "prometheus_url": "http://130.149.158.143:30041",
@@ -101,7 +101,7 @@ if __name__ == "__main__":
 
             "jobsCount":1,
             "limitCpuTotal":"",
-            "limitCpuWorker":"4000m",
+            "limitCpuWorker":"6000m",
             "generatePlots": True,
             "latexTitle": "Deploy operation",
             "latexDescritption": "Deploy executed on the begining and in between the experiments"

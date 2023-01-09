@@ -1,50 +1,42 @@
 {
-  "repetitions":5 ,
-  "json_id": 44444444,
-  "clean_and_deploy": true,
-    "run_on_framworks": ["Katib", "Polyaxon"],
+  "repetitions": 1,
+  "json_id": 311123111,
+  "clean_and_deploy": false,
+  "run_on_framworks": ["Katib"],
+  "pause_between": 0,
   "experiments": [
     {
-      "experiment_titel": "resources",
-      "variabel": "limitCpuTotal",
+      "experiment_titel": "tuninasdg0",
+      "variabel": "jobsCount",
+      "values": [1],
 
-      "values": [ 8, 10, 12, 14, 16, 18, 20, 22, 24,26 ],
-      "prometheus_url": "http://130.149.158.143:30041",
+      "loggingLevel": "logging.INFO",
       "imagePullPolicy": "IfNotPresent",
       "generateNewDockerImage": false,
-      "dockerImageTag": "mnist_task",
+      "dockerImageTag": "light_task",
 
       "limitResources": true,
+      "limitCpuTotal": "500",
+      "limitCpuWorker": "150m",
+      "jobsCount": "",
 
-      "cleanUp": true,
+      "cleanUp": false,
       "undeploy": false,
-      "deploy": false,
+      "deploy": true,
 
-      "jobsCount": 10,
-      "limitCpuTotal": "",
-      "limitCpuWorker": "500m",
       "generatePlots": true,
-      "latexTitle": "resources worker limit and request 500m",
-      "latexDescritption": " ressources scalability with the limit and request for the worker set to 500m"
+      "latexTitle": "Tuning scalability experiment with the light tasks",
+      "latexDescritption": "Tuning scalability experimetns with light task  conducted on Variabels: Trials number [1,2,3,4,5,6,7,8,9,10,12,14,16,18,20,25,30,40,50,100,150,200]"
     }
   ],
-  
-"metrics_to_plot": {
-    "resources": {
+  "metrics_to_plot": {
+    "tuning_scalability": {
       "run": [
         {
           "title": "Duration of the tuning phase (run fuction)",
           "y-label": "Tuning phase time",
-
-          "refrence_title": "Perfect scaling",
-          "refrence_marker": ",",
-          "grid": true
-        },
-        {
-          "title": "Duration of the tuning phase (run fuction)",
-          "y-label": "Tuning phase time",
-          "y_lim": { "top": 350, "bottom": 200 },
-
+          "x_ticks": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 14, 16, 18],
+          "refrence": [10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10],
           "refrence_title": "Perfect scaling",
           "refrence_marker": ",",
           "grid": true
@@ -89,13 +81,6 @@
           "y-label": "avg trial initialization time",
           "refrence": "",
           "grid": true
-        },
-        {
-          "title": "Average Time needed for initialization of  trials training",
-          "y-label": "avg trial initialization time",
-          "refrence": "",
-          "y_lim": { "top": 100 },
-          "grid": true
         }
       ],
       "metrics_collection_time": [
@@ -137,10 +122,25 @@
         {
           "title": "Summed time of all trials trianing",
           "y-label": "trials training times sum",
-
+          "refrence": [
+            10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 120, 140, 160, 180
+          ],
           "refrence_title": "Perfect scaling",
           "refrence_marker": ",",
 
+          "grid": true
+        },
+        {
+          "title": "Summed time of all trials trianing range 1-10 trials",
+          "y-label": "trials training times sum",
+          "x_ticks": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+          "refrence": [
+            10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 120, 140, 160, 180
+          ],
+          "refrence_title": "Perfect scaling",
+          "refrence_marker": ",",
+          "x_lim": 8,
+          "y_lim": 200,
           "grid": true
         }
       ],
@@ -180,3 +180,4 @@
     }
   }
 }
+

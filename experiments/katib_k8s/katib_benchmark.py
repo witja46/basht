@@ -251,7 +251,7 @@ class KatibBenchmark(Benchmark):
         done = 0
         for e in w.stream(c.list_namespaced_job, namespace=self.namespace):
             #TODO Handel failed jobs and errors or add timeout
-            if "object" in e and e["object"].status.completion_time is not None and e["object"].status.succeeded >= 1 :
+            if "object" in e and e["object"].status.completion_time is not None:
                 experiment = self.get_experiment()
                 if "status" not in experiment:
                     log.info("Waitinng for the status")
@@ -260,16 +260,29 @@ class KatibBenchmark(Benchmark):
                 
             
                 else:
+                    experiment = self.get_experiment()
                     succeeded =  experiment["status"].get("trialsSucceeded",0)
                     
                     log.info(f'Status: {experiment["status"]["conditions"][-1]["reason"]} {succeeded} trials of {self.jobsCount} succeeded')
                     log.debug(experiment["status"])
 
                     if(self.jobsCount == succeeded):
+
                         log.info("Finished all runs")
                         w.stop()
+                   
+                    if( succeeded > 1 and succeeded  + 1 == self.jobsCount):
+                        while(succeeded != self.jobsCount):
+                            sleep(0.5)
+                            log.info("Waiting for the last trial")
+                            experiment = self.get_experiment()
+                            succeeded =  experiment["status"].get("trialsSucceeded",0)
+                        w.stop()
+                            
+                
+
                     
-               
+                    
                     
            
         
@@ -348,7 +361,14 @@ class KatibBenchmark(Benchmark):
         except ApiException as e:
             log.info("Exception when calling CustomObjectsApi->get_namespaced_custom_object_status: %s\n" % e)
 
+        res = os.popen('kubectl patch  crd/trials.kubeflow.org -p  \'{"metadata":{"finalizers":null}}\'').read()
+
+
+        log.info(res)
+
         if(self.limitResources):
+
+
             res = os.popen("kubectl delete resourceQuota kubeflow-quota -n kubeflow").read()
             log.info(res)
 
@@ -420,23 +440,23 @@ if __name__ == "__main__":
             # "dockerUserLogin":"",
             # "dockerUserPassword":"",
             # "studyName":""
-            "jobsCount":1,
-            "dockerImageTag":"light_task",
+            "jobsCount":10,
+            "dockerImageTag":"mnist_task",
             "workerCount":1,
             "metricsIP": urlopen("https://checkip.amazonaws.com").read().decode("utf-8").strip(),
             "generateNewDockerImage":False,
-           # "prometheus_url": "http://130.149.158.143:30041",
+           "prometheus_url": "http://130.149.158.143:30041",
             "cleanUp": False ,
             "limitResources":True,
-            "limitCpuTotal":"20",
+            "limitCpuTotal":"18",
             "limitMemoryTotal":"400Gi",
-            "limitCpuWorker":"5m",
+            "limitCpuWorker":"1000m",
             "limitMemoryWorker":"4000Mi",
              "undeploy":True,
              "deploy": True
             }
-    # bench = KatibBenchmark(resources=resources)
-    # bench.deploy()
+    bench = KatibBenchmark(resources=resources)
+    bench.deploy()
     # bench.setup()
     # bench.run()
     # bench.collect_run_results()
@@ -444,10 +464,10 @@ if __name__ == "__main__":
 
 
 
-    from ml_benchmark.benchmark_runner import BenchmarkRunner
-    runner = BenchmarkRunner(
-        benchmark_cls=KatibBenchmark, resources=resources)
-    runner.run()
+    #from ml_benchmark.benchmark_runner import BenchmarkRunner
+    #runner = BenchmarkRunner(
+   #     benchmark_cls=KatibBenchmark, resources=resources)
+   # runner.run()
     PROJECT_ROOT = os.path.abspath(os.path.join(__file__ ,"../../../"))
     path = os.path.join(PROJECT_ROOT,"experiments/katib_k8s")
     print(PROJECT_ROOT)

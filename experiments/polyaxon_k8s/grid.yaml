@@ -1,6 +1,6 @@
 version: 1.1
 kind: operation
-name: tuning-rep-1-jobscount-1-polyaxon-3
+name: clean_up-rep-1-jobscount-1-polyaxon-19212322
 termination:
   maxRetries: 10
 matrix:
@@ -10,7 +10,7 @@ matrix:
   params:
     lr:
       kind: logspace
-      value: 0.001:0.9:1
+      value: 0.01:0.1:1
 component:
   inputs:
     - name: lr
@@ -19,18 +19,13 @@ component:
     kind: job
     container:
       imagePullPolicy: IfNotPresent
-      image: scaleme100/light_task_polyaxon
-      resources:
-        limits:
-          cpu: 5m
-        requests:
-          cpu: 5m
-      command: [python3, experiments/polyaxon_k8s/light_task_polyaxon/task.py]
+      image: scaleme100/mnist_task_polyaxon
+      command: [python3, experiments/polyaxon_k8s/mnist_task_polyaxon/task.py]
       args: ["--batch-size=64", "--lr={{ lr }}"]
       env:
         - name: STUDY_NAME
-          value: "tuning-rep-1-jobscount-1-polyaxon-3"
+          value: "clean_up-rep-1-jobscount-1-polyaxon-19212322"
         - name: DB_CONN
           value: "postgresql://postgresadmin:admin123@postgres:5432/postgresdb"
         - name: "METRICS_STORAGE_HOST"
-          value: "134.101.4.161"
+          value: "130.149.158.216"
